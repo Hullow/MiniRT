@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/20 17:30:31 by pberset          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:57:59 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
 # include <math.h>
+# include <errno.h>
+#include <stdio.h>
 
 // Returns 1 if the file extension is wrong or the file does not exist. Otherwise 0
 int	rt_check_ext(char *file);

@@ -25,7 +25,8 @@ MLX			= $(MLXDIR)libmlx.a
 HEADSRC		= $(HEADDIR)$(NAME).h
 
 # Source files
-MAIN		= miniRT
+MAIN		= miniRT \
+			rt_file_check
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN)))
 
