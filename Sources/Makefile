@@ -7,6 +7,7 @@ CC			= cc
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror -lm
 DFLAGS		= -g3
+MLXFLAGS	= -L$(MLXDIR) -lmlx -I$(MLXDIR) -lXext -lX11
 
 # Folders
 SRCDIR		= src/
@@ -41,7 +42,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(MLX) -o $(NAME)
+	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(MLXFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
