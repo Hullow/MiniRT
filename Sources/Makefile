@@ -1,45 +1,55 @@
 # Target executable/library name
-NAME	= miniRT
+NAME		= miniRT
 
 # Compiler
-CC	= cc
+CC			= cc
 
 # Compiler flags
-CFLAGS	= -Wall -Wextra -Werror -lm
-DFLAGS	= -g3
+CFLAGS		= -Wall -Wextra -Werror -lm
+DFLAGS		= -g3
 
 # Folders
 SRCDIR		= src/
 OBJDIR		= obj/
 HEADDIR		= header/
+
+# Libs
 LIBFTDIR	= libft/
-LIBFT		=$(LIBFTDIR)libft.a
+LIBFT		= $(LIBFTDIR)libft.a
+
+MLXDIR		= mlx/
+MLX			= $(MLXDIR)libmlx.a
 
 # Header files
-HEADSRC	= $(HEADDIR)$(NAME).h
+HEADSRC		= $(HEADDIR)$(NAME).h
 
 # Source files
-MAIN	= miniRT
+MAIN		= miniRT
 
-SRC	= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN)))
+SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN)))
 
 # Object files
-OBJ	= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN)))
+OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN)))
 
 # Default target
-all: $(LIBFT) $(OBJDIR) $(NAME) 
+all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME) 
 	@echo "Compilation of $(NAME) done!"
 
 # Build target
 $(NAME): $(OBJ)
 	@echo "Building $(NAME)..."
 	@cp $(LIBFT) $(NAME)
+	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	@$(CC) $(OBJ) $(NAME).a $(LIBFT) -o $(NAME)
+	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(MLX) -o $(NAME)
 
 # Build libft
 $(LIBFT):
 	@make -C $(LIBFTDIR) all
+
+# Build MLX
+$(MLX):
+	@make -C $(MLXDIR) all
 
 # Create object files directory
 $(OBJDIR):
@@ -63,6 +73,7 @@ fclean: clean
 	@echo "Removing $(NAME)..."
 	@rm -rf $(NAME)
 	@make -C $(LIBFTDIR) fclean
+	@make -C $(MLXDIR) clean
 
 # Rebuild from scratch
 re: fclean
