@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/20 10:58:38 by pberset          ###   ########.fr       */
+/*   Updated: 2025/02/20 17:30:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,10 @@
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
 # include <math.h>
+
+// Returns 1 if the file extension is wrong or the file does not exist. Otherwise 0
+int	rt_check_ext(char *file);
+// Returns 1 if the sccene.rt file contains wrong data. Otherwise 0
+int	rt_check_scene(char *file);
 
 #endif

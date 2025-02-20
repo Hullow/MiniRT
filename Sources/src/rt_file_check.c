@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.c                                           :+:      :+:    :+:   */
+/*   rt_file_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/20 17:29:03 by pberset          ###   ########.fr       */
+/*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
+/*   Updated: 2025/02/20 17:41:45 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/miniRT.h"
 
-int	main(int argc, char *argv[])
+int	rt_check_ext(char *file)
 {
-	if (argc != 2 || rt_check_ext(argv[1]))
+	int	fd;
+	fd = open(file, O_RDONLY);
+	if (fd != 0)
 	{
-		ft_puterr_fd("error: one <file>.rt expected\n");
+		ft_puterr_fd("error: file does not exist\n");
 		return (1);
 	}
-	if (rt_check_scene(argv[1]))
-		return (2);
+	else
+		close(fd);
+	//check ext.rt
+	return (0);
+}
+
+int	rt_check_scene(char *file)
+{
 	return (0);
 }
