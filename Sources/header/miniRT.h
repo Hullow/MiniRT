@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 16:52:15 by pberset          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:03:20 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@
 
 # define VECTOR 0
 # define POINT 1
+# define COLOR 2
 
 # define EPSILON 0.00001
 
 /* A tuple:
 	- has a type (int): either a vector (0) or a point (1)
 	- has three coordinates:
-		- x (float): lateral->to the right
-		- y (float): vertical->up
-		- z (float): depth->away from us */
+		- x (float): lateral->to the right || RED
+		- y (float): vertical->up || GREEN
+		- z (float): depth->away from us || BLUE*/
 typedef struct s_tuple {
 	float	x;
 	float	y;
@@ -40,69 +41,43 @@ typedef struct s_tuple {
 typedef struct s_ambient
 {
 	float	ratio;
-	int		r;
-	int		g;
-	int		b;
+	t_tuple	*color;
 }	t_ambient;
 
 typedef struct s_camera
 {
-	float	x_coord;
-	float	y_coord;
-	float	z_coord;
-	float	x_ort;
-	float	y_ort;
-	float	z_ort;
+	t_tuple	*coord;
+	t_tuple	*orient;
 }	t_camera;
 
 typedef struct s_light
 {
-	float	x_coord;
-	float	y_coord;
-	float	z_coord;
+	t_tuple	*coord;
 	float	ratio;
-	int		r;
-	int		g;
-	int		b;
+	t_tuple	*color;
 }	t_light;
 
 typedef struct s_sphere
 {
-	float	x_coord;
-	float	y_coord;
-	float	z_coord;
+	t_tuple	*coord;
 	float	diameter;
-	int		r;
-	int		g;
-	int		b;
+	t_tuple	*color;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	float	x_coord;
-	float	y_coord;
-	float	z_coord;
-	float	x_norm;
-	float	y_norm;
-	float	z_norm;
-	int		r;
-	int		g;
-	int		b;
+	t_tuple	*coord;
+	t_tuple	*norm;
+	t_tuple	*color;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	float	x_coord;
-	float	y_coord;
-	float	z_coord;
-	float	x_norm;
-	float	y_norm;
-	float	z_norm;
+	t_tuple	*coord;
+	t_tuple	*norm;
 	float	diameter;
 	float	height;
-	int		r;
-	int		g;
-	int		b;
+	t_tuple	*color;
 }	t_cylinder;
 
 typedef struct s_scene
