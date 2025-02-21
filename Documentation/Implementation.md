@@ -8,6 +8,14 @@
 	- y: pointing up
 	- z: pointing away from us
 
+## Colors
+- From the subject RGB 0-255 (int)
+- From the book 0-1 (float)
+	- x = r
+	- y = g
+	- z = b
+- TODO: a converter
+
 ## Comparing numbers
 - Two floats : use `|a - b| < e`, where e is a very small number like 0.0001 (`1e-4` in C)
 - Comparing to infinity: use a very large number, like `1e10`
