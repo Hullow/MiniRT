@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:55:47 by pberset           #+#    #+#             */
-/*   Updated: 2024/05/27 13:49:49 by pberset          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:20:48 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ char	**ft_split(char const *s, char c);
 // Ignores all space(3) from the beginning of *str 
 // and applies the first +/- sign found. 
 int		ft_atoi(const char *str);
+// Returns the long converted value of char *str. 
+// Ignores all space(3) from the beginning of *str 
+// and applies the first +/- sign found. 
+long	ft_atol(const char *str);
+// Returns the float converted value of char *str. 
+// Ignores all space(3) from the beginning of *str 
+// and applies the first +/- sign found. 
+float	ft_atof(const char *str);
+// Returns the double converted value of char *str. 
+// Ignores all space(3) from the beginning of *str 
+// and applies the first +/- sign found. 
+double	ft_atod(const char *str);
 // Returns 1 if int c is a char digit or letter. Otherwise 0
 int		ft_isalnum(int c);
 // Returns 1 if int c is a letter. Otherwise 0

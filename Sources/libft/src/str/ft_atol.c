@@ -1,47 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_file_check.c                                    :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 11:00:01 by pberset          ###   ########.fr       */
+/*   Created: 2023/08/18 16:51:28 by pberset           #+#    #+#             */
+/*   Updated: 2025/02/21 10:18:48 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/miniRT.h"
+#include "../../header/libft.h"
 
-int	rt_check_ext(char *file)
+static int	ft_sign(char c)
 {
-	int		fd;
-	size_t	i;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		perror(file);
-		return (1);
-	}
-	else
-	{
-		if (close(fd) == -1)
-		{
-			perror(file);
-			return (2);
-		}
-	}
-	i = ft_strlen(file);
-	if (ft_strncmp(&file[i - 3], ".rt", 3))
-	{
-		ft_puterr_fd("error: not a .rt file\n");
-		return (3);
-	}
-	return (0);
+	if (c == '-')
+		return (-1);
+	return (1);
 }
 
-int	rt_check_scene(char *file)
+long	ft_atol(const char *str)
 {
-	(void)file;
-	return (0);
+	long	output;
+	int		sign;
+
+	output = 0;
+	sign = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		sign *= ft_sign(*str);
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		output = output * 10 + (*str - '0');
+		str++;
+	}
+	return (output * sign);
 }
