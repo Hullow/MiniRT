@@ -14,7 +14,7 @@
 	- x = r
 	- y = g
 	- z = b
-- TODO: a converter
+- Use t_tuple	*divide_tuple_by_scalar(t_tuple *a, float scalar)
 
 ## Comparing numbers
 - Two floats : use `|a - b| < e`, where e is a very small number like 0.0001 (`1e-4` in C)
