@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 15:36:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/21 16:48:04 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ t_tuple		*negate_tuple(t_tuple *a);
 t_tuple		*multiply_tuple_by_scalar(t_tuple *a, float scalar);
 t_tuple		*divide_tuple_by_scalar(t_tuple *a, float scalar);
 float		magnitude(t_tuple *tuple);
+t_tuple		*normalize(t_tuple *tuple);
+float		*dot_product(t_tuple *a, t_tuple *b);
+t_tuple		*cross_product(t_tuple *a, t_tuple *b);
 
 #endif
