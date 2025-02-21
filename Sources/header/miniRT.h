@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/20 18:49:58 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/21 15:36:46 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define VECTOR 0
 # define POINT 1
 
-# define EPSILON 0.0001
+# define EPSILON 0.00001
 
 /* A tuple:
 	- has a type (int): either a vector (0) or a point (1)
@@ -49,6 +49,10 @@ t_tuple		*point(float x, float y, float z);
 t_tuple		*vector(float x, float y, float z);
 int			is_equal_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*add_tuple(t_tuple *a, t_tuple *b);
-t_tuple		*substract_tuple(t_tuple *minuend, t_tuple *subtrahend);
+t_tuple		*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend);
+t_tuple		*negate_tuple(t_tuple *a);
+t_tuple		*multiply_tuple_by_scalar(t_tuple *a, float scalar);
+t_tuple		*divide_tuple_by_scalar(t_tuple *a, float scalar);
+float		magnitude(t_tuple *tuple);
 
 #endif
