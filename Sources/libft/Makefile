@@ -59,6 +59,9 @@ SRCNUM	= ft_itoa \
 
 SRCSTR	= ft_strlen \
 	ft_atoi \
+	ft_atol \
+	ft_atof \
+	ft_atod \
 	ft_strrchr \
 	ft_split \
 	ft_strtrim \

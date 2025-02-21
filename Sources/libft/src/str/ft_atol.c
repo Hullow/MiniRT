@@ -1,29 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.c                                           :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 13:57:20 by pberset          ###   ########.fr       */
+/*   Created: 2023/08/18 16:51:28 by pberset           #+#    #+#             */
+/*   Updated: 2025/02/21 10:18:48 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/miniRT.h"
+#include "../../header/libft.h"
 
-int	main(int argc, char *argv[])
+static int	ft_sign(char c)
 {
-	if (argc != 2)
+	if (c == '-')
+		return (-1);
+	return (1);
+}
+
+long	ft_atol(const char *str)
+{
+	long	output;
+	int		sign;
+
+	output = 0;
+	sign = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		ft_puterr_fd("error: one <file>.rt expected\n");
-		return (1);
+		sign *= ft_sign(*str);
+		str++;
 	}
-	if (rt_check_ext(argv[1]))
-		return (2);
-	if (rt_extract_scene(argv[1]))
-		return (3);
-	if (rt_check_scene(argv[1]))
-		return (4);
-	return (0);
+	while (*str >= '0' && *str <= '9')
+	{
+		output = output * 10 + (*str - '0');
+		str++;
+	}
+	return (output * sign);
 }
