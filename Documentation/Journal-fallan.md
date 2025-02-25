@@ -15,3 +15,7 @@ tuple manipulation functions add_tuple(), subtract_tuple() and is_equal_tuple()
 - Discussed floats vs double with pberset, decided to use float (less space)
 - Tuples: wrote some basic tests of functions, added NULL checks, finished writing functions, need final tests for dot-product and cross-product
 - Preparing to merge
+- Merged with pberset's branch
+
+# 25/2/25
+- Tested magnitude, dot product, cross product functions

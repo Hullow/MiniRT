@@ -6,11 +6,13 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:38:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/21 16:35:12 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/25 15:32:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/miniRT.h"
+
+
 
 /* returns the magnitude (length) of a vector */
 float	magnitude(t_tuple *tuple)
@@ -49,15 +51,16 @@ t_tuple	*normalize(t_tuple *tuple)
 }
 
 /* returns the dot product for two (3d) vectors */
-float	*dot_product(t_tuple *a, t_tuple *b)
+float	dot_product(t_tuple *a, t_tuple *b)
 {
 	if (!a || !b)
-		return (NULL);
+		return (0);
 	if (a->type != VECTOR || b->type != VECTOR)
 	{
 		printf("dot_product: one or both tuples are not vectors\n");	
-		return (NULL);
+		return (0);
 	}
+	printf("dot product: a->x is %f, b->x is %f\n", a->x, b->x);
 	return ((a->x * b->x) + (a->y * b->y) + (a->z * b->z));
 }
 

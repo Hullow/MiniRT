@@ -6,16 +6,133 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:35:34 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/21 16:43:08 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/25 16:45:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../miniRT.h"
+#include "../../header/miniRT.h"
 
+typedef struct s_projectile {
+	t_tuple	*position; /* position */
+	t_tuple	*velocity; /* vector */
+}	t_projectile;
+
+typedef struct s_environment {
+	t_tuple	*gravity; /* vector */
+	t_tuple	*wind; /* vector */
+}	t_environment;
+
+void	free_projectile_and_environment(t_projectile *proj, t_environment *env)
+{
+	if (proj)
+	{
+		free(proj->position);
+		free(proj->velocity);
+		free(proj);
+	}
+	if (env)
+	{
+		free(env->gravity);
+		free(env->wind);
+		free(env);
+	}
+}
+
+/* initiates a environment t_environment, given:
+- an initial position (a t_tuple POINT)
+- an initial wind (a t_tuple VECTOR)
+if either position and/or wind is NULL, sets default values */
+t_environment	*init_environment(t_tuple *gravity, t_tuple *wind)
+{
+	t_environment	*env;
+
+	if (!gravity)
+	{
+		gravity = malloc (sizeof(t_tuple));
+		if (!gravity)
+			return (NULL);
+		gravity = vector(0, -5, 0);
+		printf("environment initial gravity set to default (0, -2, 0)\n");
+	}
+	if (!wind)
+	{
+		wind = malloc (sizeof(t_tuple));
+		if (!wind)
+			return (NULL);
+		wind = vector(0.2, 0.1, -0.05);
+		printf("environment initial wind set to default (0.2, 0.1, -0.05)\n");
+	}
+	env = malloc (sizeof(t_environment));
+	if (!env)
+		return (NULL);
+	env->gravity = gravity;
+	env->wind = wind;
+	return (env);
+}
+
+/* initiates a projectile t_projectile, given:
+- an initial position (a t_tuple POINT)
+- an initial velocity (a t_tuple VECTOR)
+if either position and/or velocity is NULL, sets default values */
+t_projectile	*init_projectile(t_tuple *position, t_tuple *velocity)
+{
+	t_projectile 	*proj;
+
+	if (!position)
+	{
+		position = malloc (sizeof(t_tuple));
+		if (!position)
+			return (NULL);
+		position = point(15, 15, 15);
+		printf("projectile initial position set to default (15, 15, 15)\n");
+	}
+	if (!velocity)
+	{
+		velocity = malloc (sizeof(t_tuple));
+		if (!velocity)
+			return (NULL);
+		velocity = vector(5, 0, 5);
+		printf("projectile initial velocity set to default (5, 0, 5)\n");
+	}
+	proj = malloc (sizeof(t_projectile));
+	if (!proj)
+		return (NULL);
+	proj->position = position;
+	proj->velocity = velocity;
+	return (proj);
+}
+
+/* updates and returns projectile position and velocity based on 
+initial params + environment */
+t_projectile	*tick(t_environment *env, t_projectile *proj)
+{
+	proj->position = add_tuple(proj->position, proj->velocity);
+	proj->velocity = add_tuple(proj->velocity, env->gravity);
+	proj->velocity = add_tuple(proj->velocity, env->wind);
+	printf("tick: position is now (%f, %f, %f)\n", proj->position->x, proj->position->y, proj->position->z);
+	return (proj);
+}
+
+
+void	test_proj_sim()
+{
+	t_projectile *proj = init_projectile(NULL, NULL);
+	t_environment	*env = init_environment(NULL, NULL);
+	while (proj->position->y >= 0)
+	{
+		tick(env, proj);
+		sleep(1);	
+	}
+	printf("proj has hit the ground at position (%f, %f, %f) with velocity (%f, %f, %f), stopping simulation\n",
+	proj->position->x, proj->position->y, proj->position->z,
+	proj->velocity->x, proj->velocity->y, proj->velocity->z);
+	free_projectile_and_environment(proj, env);
+}
 
 /* main to test the functions */
 int	main()
 {
+	test_proj_sim();
 
 	// t_tuple *neg_b = vector(-0.1000001, 0.4, -15.0);
 	// t_tuple *c = point(0.2000001, -0.8, 30.00001);
@@ -68,19 +185,32 @@ int	main()
 	// 	printf("divide double_b by 2 != b\n");
 
 
-	t_tuple *b = vector(0.10, -0.4, 15.0);
-	t_tuple *double_b = vector(0.20, -0.8, 30.0);
-	if (is_equal_tuple(multiply_tuple_by_scalar(b, 2), double_b))
-		printf("multiply b by 2 == double_b\n");
-	else
-		printf("multiply b by 2 != double_b\n");
+	// t_tuple *b = vector(0.10, -0.4, 15.0);
+	// t_tuple *double_b = vector(0.20, -0.8, 30.0);
+	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 2), double_b))
+	// 	printf("multiply b by 2 == double_b\n");
+	// else
+	// 	printf("multiply b by 2 != double_b\n");
 
 	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 0), vector(0,0,0)))
 	// 	printf("multiply b by 0 == 0\n");
 	// else
 	// 	printf("multiply b by 0 != 0\n");
+
+
+	/* magnitude, dot product, cross product */
+	/*****************************************/
+	// printf("sample vector has magnitude: %f; squared: %f\n", magnitude(sample_vector), powf(magnitude(sample_vector), 2));
+
+	// t_tuple	*sample_vector = vector(4, 0, 0);
+	// t_tuple	*normd = normalize(sample_vector);
+	// printf("sample vector normalised is (%f, %f, %f) and has magnitude %f\n", normd->x, normd->y, normd->z, magnitude(normd));
 	
-	t_tuple	*unit_vector = vector(1, 1, 1.0);
-	printf("\n", magnitude(unit_vector));
+	// printf("dot product of sample vector and another vector is %f\n", dot_product(sample_vector, vector(-4, 3, 3)));
+	// t_tuple	*cross = cross_product(vector(0, -1, 0), vector(0, 0, -1));
+	// printf("the cross product (0, -1, 0) x (0, 0, -1) is (%f, %f, %f)\n", cross->x, cross->y, cross->z);
+	// t_tuple	*cross2 = cross_product(vector(0, 0, -1), vector(0, -1, 0));
+	// printf("the cross product (0, 0, -1) x (0, -1, 0) is (%f, %f, %f)\n", cross2->x, cross2->y, cross2->z);
+	
 	return (0);
 }

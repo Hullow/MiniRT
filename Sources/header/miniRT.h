@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 17:03:20 by pberset          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:16:36 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_tuple		*multiply_tuple_by_scalar(t_tuple *a, float scalar);
 t_tuple		*divide_tuple_by_scalar(t_tuple *a, float scalar);
 float		magnitude(t_tuple *tuple);
 t_tuple		*normalize(t_tuple *tuple);
-float		*dot_product(t_tuple *a, t_tuple *b);
+float		dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
 // Returns 1 if the file extension is wrong. Otherwise 0
 int	rt_check_ext(char *file);
