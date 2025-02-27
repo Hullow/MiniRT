@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 11:32:49 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/27 11:46:25 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,20 @@ int	rt_check_ext(char *file)
 
 static int	rt_check_line(char *line)
 {
-	//int	found_id;
+	int		found_id;
 	char	*err_line;
 
 	err_line = line;
 	while (*line)
 	{
-		if (!ft_isalnum(*line) && !ft_isspace(*line) && *line != ',' && *line != '-' && *line != ' ' && *line != '.')
+		while (ft_isspace(*line) || *line == ' ')
+			line++;
+		if (!ft_isalnum(*line) && !ft_isspace(*line) && *line != ',' && *line != '-' && *line != '.')
 		{
 			ft_puterr_fd("error: invalid char found\n");
 			ft_printf("%s -> %c\n", err_line, *line);
 			return (1);
 		}
-		while (ft_isspace(*line))
-			line++;
-		if (ft_isalpha(*line))
-			ft_printf("id found: %c\n", *line);
-		if(ft_isdigit(*line))
-			ft_printf("value found: %c\n", *line);
 		line++;
 	}
 	return (0);
@@ -65,7 +61,8 @@ int	rt_extract_scene(char *file, t_scene *scene)
 	line = get_next_line(fd);
 	while(line != NULL && *line != 0)
 	{
-		rt_check_line(line);
+		if (rt_check_line(line))
+			break ;
 		free(line);
 		line = NULL;
 		line = get_next_line(fd);
