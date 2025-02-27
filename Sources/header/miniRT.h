@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 10:28:35 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/27 14:33:14 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ int	rt_check_scene(char *file);
 // Extracts the values contained in .rt file and stores them in a struct
 // Returns 1 if the struct is successfully created. Otherwise 0
 int	rt_extract_scene(char *file, t_scene *scene);
+// Checks the line for an unique object and assigns it in scene if found
+int	rt_unique_object(char *line, t_scene *scene;)
 
 #endif

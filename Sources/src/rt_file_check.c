@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 11:46:25 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/27 15:30:03 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,6 @@ int	rt_check_ext(char *file)
 	{
 		ft_puterr_fd("error: not a .rt file\n");
 		return (1);
-	}
-	return (0);
-}
-
-static int	rt_check_line(char *line)
-{
-	int		found_id;
-	char	*err_line;
-
-	err_line = line;
-	while (*line)
-	{
-		while (ft_isspace(*line) || *line == ' ')
-			line++;
-		if (!ft_isalnum(*line) && !ft_isspace(*line) && *line != ',' && *line != '-' && *line != '.')
-		{
-			ft_puterr_fd("error: invalid char found\n");
-			ft_printf("%s -> %c\n", err_line, *line);
-			return (1);
-		}
-		line++;
 	}
 	return (0);
 }
@@ -61,10 +40,9 @@ int	rt_extract_scene(char *file, t_scene *scene)
 	line = get_next_line(fd);
 	while(line != NULL && *line != 0)
 	{
-		if (rt_check_line(line))
-			break ;
+		rt_unique_object(line, scene);
+		rt_multiple_objects(line, scene);
 		free(line);
-		line = NULL;
 		line = get_next_line(fd);
 	}
 	if (line != NULL)
@@ -72,11 +50,7 @@ int	rt_extract_scene(char *file, t_scene *scene)
 		free(line);
 		line = NULL;
 	}
+	close(fd);
 	return (0);
 }
 
-int	rt_check_scene(char *file)
-{
-	(void)file;
-	return (0);
-}
