@@ -18,10 +18,12 @@
 
 - get next line et compter les éléments de chaque type ligne par ligne
 	- si pas d'identifier en première donnée de la ligne -> error
-	- si un des 3 éléments obligatoires != 0 -> error
+	- si un des 3 éléments obligatoires != 1 -> error
 	- fini close (fd)
 	- malloc les éléments pertinents dans la scene 
 		- array pour les 3 objets, unique pour les 3 obligatoires
+	- open(file)
 	- get next line et assigner ligne par ligne aux éléments de la scene
 	- Si à la fin d'une ligne il reste des éléments non lus ou il manque des variables non assignées -> error
+	- fini close(fd)
 
