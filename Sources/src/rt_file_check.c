@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 13:59:08 by pberset          ###   ########.fr       */
+/*   Updated: 2025/02/27 11:32:49 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,55 @@ int	rt_check_ext(char *file)
 	return (0);
 }
 
-int	rt_extract_scene(char *file)
+static int	rt_check_line(char *line)
 {
-	int	fd;
+	//int	found_id;
+	char	*err_line;
 
+	err_line = line;
+	while (*line)
+	{
+		if (!ft_isalnum(*line) && !ft_isspace(*line) && *line != ',' && *line != '-' && *line != ' ' && *line != '.')
+		{
+			ft_puterr_fd("error: invalid char found\n");
+			ft_printf("%s -> %c\n", err_line, *line);
+			return (1);
+		}
+		while (ft_isspace(*line))
+			line++;
+		if (ft_isalpha(*line))
+			ft_printf("id found: %c\n", *line);
+		if(ft_isdigit(*line))
+			ft_printf("value found: %c\n", *line);
+		line++;
+	}
+	return (0);
+}
+
+int	rt_extract_scene(char *file, t_scene *scene)
+{
+	int		fd;
+	char	*line;
+
+	(void)scene;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
 		perror(file);
 		return (1);
+	}
+	line = get_next_line(fd);
+	while(line != NULL && *line != 0)
+	{
+		rt_check_line(line);
+		free(line);
+		line = NULL;
+		line = get_next_line(fd);
+	}
+	if (line != NULL)
+	{
+		free(line);
+		line = NULL;
 	}
 	return (0);
 }
