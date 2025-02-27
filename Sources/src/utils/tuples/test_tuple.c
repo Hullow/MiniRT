@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_utils.c                                       :+:      :+:    :+:   */
+/*   test_tuple.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:35:34 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/25 16:45:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/27 14:11:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/miniRT.h"
+#include "../../../header/miniRT.h"
 
 typedef struct s_projectile {
 	t_tuple	*position; /* position */
@@ -51,7 +51,7 @@ t_environment	*init_environment(t_tuple *gravity, t_tuple *wind)
 		gravity = malloc (sizeof(t_tuple));
 		if (!gravity)
 			return (NULL);
-		gravity = vector(0, -5, 0);
+		gravity = vector(0, -0.1, 0);
 		printf("environment initial gravity set to default (0, -2, 0)\n");
 	}
 	if (!wind)
@@ -59,7 +59,7 @@ t_environment	*init_environment(t_tuple *gravity, t_tuple *wind)
 		wind = malloc (sizeof(t_tuple));
 		if (!wind)
 			return (NULL);
-		wind = vector(0.2, 0.1, -0.05);
+		wind = vector(-0.01, 0, 0);
 		printf("environment initial wind set to default (0.2, 0.1, -0.05)\n");
 	}
 	env = malloc (sizeof(t_environment));
@@ -83,16 +83,16 @@ t_projectile	*init_projectile(t_tuple *position, t_tuple *velocity)
 		position = malloc (sizeof(t_tuple));
 		if (!position)
 			return (NULL);
-		position = point(15, 15, 15);
-		printf("projectile initial position set to default (15, 15, 15)\n");
+		position = point(0, 1, 0);
+		printf("projectile initial position set to default (0, 1, 0)\n");
 	}
 	if (!velocity)
 	{
 		velocity = malloc (sizeof(t_tuple));
 		if (!velocity)
 			return (NULL);
-		velocity = vector(5, 0, 5);
-		printf("projectile initial velocity set to default (5, 0, 5)\n");
+		velocity = vector(3, 0.2, 0);
+		printf("projectile initial velocity set to default (2, 0, 0)\n");
 	}
 	proj = malloc (sizeof(t_projectile));
 	if (!proj)
@@ -113,37 +113,41 @@ t_projectile	*tick(t_environment *env, t_projectile *proj)
 	return (proj);
 }
 
-
+/* a function to simulate a projectile ballistic flight,
+used as a test implementation of our tuple handling functions */
 void	test_proj_sim()
 {
 	t_projectile *proj = init_projectile(NULL, NULL);
 	t_environment	*env = init_environment(NULL, NULL);
+	int	count = 0;
+
 	while (proj->position->y >= 0)
 	{
 		tick(env, proj);
+		count++;
 		sleep(1);	
 	}
-	printf("proj has hit the ground at position (%f, %f, %f) with velocity (%f, %f, %f), stopping simulation\n",
+	printf("proj has hit the ground at position (%f, %f, %f) with velocity (%f, %f, %f) after %d ticks\nstopping simulation\n",
 	proj->position->x, proj->position->y, proj->position->z,
-	proj->velocity->x, proj->velocity->y, proj->velocity->z);
+	proj->velocity->x, proj->velocity->y, proj->velocity->z, count);
 	free_projectile_and_environment(proj, env);
 }
 
 /* main to test the functions */
-int	main()
-{
-	test_proj_sim();
+// int	main()
+// {
+// 	test_proj_sim();
 
 	// t_tuple *neg_b = vector(-0.1000001, 0.4, -15.0);
 	// t_tuple *c = point(0.2000001, -0.8, 30.00001);
 
 	// printf("a has coordinates x: %f, y:%f, z:%f and is a ", a->x, a->y, a->z);
-	// if (a->type == POINT)
+	// if (a->w == POINT)
 	// 	printf("point\n");
 	// else
 	// 	printf("vector\n");
 	// printf("b has coordinates x: %f, y:%f, z:%f and is a ", b->x, b->y, b->z);
-	// if (b->type == POINT)
+	// if (b->w == POINT)
 	// 	printf("point\n");
 	// else
 	// 	printf("vector\n");
@@ -212,5 +216,5 @@ int	main()
 	// t_tuple	*cross2 = cross_product(vector(0, 0, -1), vector(0, -1, 0));
 	// printf("the cross product (0, 0, -1) x (0, -1, 0) is (%f, %f, %f)\n", cross2->x, cross2->y, cross2->z);
 	
-	return (0);
-}
+// 	return (0);
+// }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_utils_edit.c                                 :+:      :+:    :+:   */
+/*   tuple_basic_ops.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/21 15:37:53 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/27 15:02:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/miniRT.h"
+#include "../../../header/miniRT.h"
 
 /* adds two tuples by adding all elements and returning the resulting tuple:
 	- if two tuples are points, prints an error message and returns NULL
@@ -22,16 +22,16 @@ t_tuple	*add_tuple(t_tuple *a, t_tuple *b)
 	t_tuple	*c;
 
 	if (!a || !b)
-		return (NULL);
-	if (a->type == POINT && b->type == POINT)
-	{
-		printf("add_tuple: can't add point to point\n");
-		return (NULL);
-	}
+	// 	return (NULL);
+	// if (a->w == POINT && b->w == POINT)
+	// {
+	// 	printf("add_tuple: can't add point to point\n");
+	// 	return (NULL);
+	// }
 	c = malloc (sizeof(t_tuple));
 	if (!c)
 		return (NULL);
-	c->type = a->type + b->type;
+	c->w = a->w + b->w;
 	c->x = a->x + b->x;
 	c->y = a->y + b->y;
 	c->z = a->z + b->z;
@@ -54,20 +54,20 @@ t_tuple	*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend)
 
 	if (!minuend || !subtrahend)
 		return (NULL);
-	if (minuend->type == POINT && subtrahend->type == POINT)
-	{
-		printf("add_tuple: can't subtract point from point\n");
-		return (NULL);
-	}
-	else if (minuend->type == VECTOR && subtrahend->type == POINT)
-	{
-		printf("add_tuple: can't subtract point from vector\n");
-		return (NULL);
-	}
+	// if (minuend->w == POINT && subtrahend->w == POINT)
+	// {
+	// 	printf("add_tuple: can't subtract point from point\n");
+	// 	return (NULL);
+	// }
+	// else if (minuend->w == VECTOR && subtrahend->w == POINT)
+	// {
+	// 	printf("add_tuple: can't subtract point from vector\n");
+	// 	return (NULL);
+	// }
 	c = malloc (sizeof(t_tuple));
 	if (!c)
 		return (NULL);
-	c->type = minuend->type - subtrahend->type;
+	c->w = minuend->w - subtrahend->w;
 	c->x = minuend->x - subtrahend->x;
 	c->y = minuend->y - subtrahend->y;
 	c->z = minuend->z - subtrahend->z;
@@ -80,11 +80,11 @@ t_tuple	*negate_tuple(t_tuple *a)
 {
 	if (!a)
 		return (NULL);
-	if (a->type != VECTOR)
-	{
-		printf("negate_tuple: can't negate a point\n");
-		return (NULL);
-	}
+	// if (a->w != VECTOR)
+	// {
+	// 	printf("negate_tuple: can't negate a point\n");
+	// 	return (NULL);
+	// }
 	a = subtract_tuple(vector(0, 0, 0), a);
 	return (a);
 }
@@ -95,12 +95,10 @@ t_tuple	*multiply_tuple_by_scalar(t_tuple *a, float scalar)
 {
 	if (!a)
 		return (NULL);
-	printf("tuple->x before: %.3f\n", a->x);
 	a->x = a->x * scalar;
-	printf("tuple->x after: %.3f\n", a->x);
-	printf("tuple->y before: %2.f\n", a->y);
 	a->y = a->y * scalar;
 	a->z = a->z * scalar;
+	a->w = a->w * scalar;
 	return (a);
 }
 
@@ -118,5 +116,6 @@ t_tuple	*divide_tuple_by_scalar(t_tuple *a, float scalar)
 	a->x = a->x / scalar;
 	a->y = a->y / scalar;
 	a->z = a->z / scalar;
+	a->w = a->w / scalar;
 	return (a);
 }

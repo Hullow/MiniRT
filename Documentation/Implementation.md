@@ -20,6 +20,9 @@
 - Two floats : use `|a - b| < e`, where e is a very small number like 0.0001 (`1e-4` in C)
 - Comparing to infinity: use a very large number, like `1e10`
 
+## Matrix operation (e.g. rotation) implementation
+- Function pointers ? (`do_operation(func_pointer, target_matrix)` ?)
+
 ## Sphere ray intersection
 - See equation in [Ray Tracing - Wikipedia](https://en.wikipedia.org/wiki/Ray_tracing_(graphics)#Example). N.b.: don't calculate negative value, which is behind us. How to determine which is negative value in advance ?
 > If the quantity under the square root (the discriminant) is negative, then the ray does not intersect the sphere. 

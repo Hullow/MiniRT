@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/25 15:16:36 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/27 16:47:50 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,19 @@
 # include <stdio.h>
 # include <errno.h>
 
-# define VECTOR 0
-# define POINT 1
+# define VECTOR 0.0
+# define POINT 1.0
 # define COLOR 2
 
 # define EPSILON 0.00001
 
+typedef enum ERROR_TYPE {
+	NULL_INPUT,
+	MALLOC_FAIL
+}	t_error;
+
 /* A tuple:
-	- has a type (int): either a vector (0) or a point (1)
+	- has a type (w): either a vector (0.0) or a point (1.0)
 	- has three coordinates:
 		- x (float): lateral->to the right || RED
 		- y (float): vertical->up || GREEN
@@ -35,8 +40,9 @@ typedef struct s_tuple {
 	float	x;
 	float	y;
 	float	z;
-	int		type;
+	float	w;
 }	t_tuple;
+
 
 typedef struct s_ambient
 {
@@ -90,10 +96,25 @@ typedef struct s_scene
 	t_cylinder	*cy;
 }	t_scene;
 
+// Input handling
+
+// Returns 1 if the file extension is wrong. Otherwise 0
+int	rt_check_ext(char *file);
+// Returns 1 if the sccene.rt file contains wrong data. Otherwise 0
+int	rt_check_scene(char *file);
+// Extracts the values contained in .rt file and stores them in a struct
+// Returns 1 if the struct is successfully created. Otherwise 0
+int	rt_extract_scene(char *file);
+
+
 // Utils
+	// General
+
+void		*handle_error(t_error error_type);
+
 	// Math
 		// Basic bricks
-		
+
 int			is_equal_float(float a, float b);
 float		abs_float(float a);
 
@@ -111,12 +132,18 @@ float		magnitude(t_tuple *tuple);
 t_tuple		*normalize(t_tuple *tuple);
 float		dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
-// Returns 1 if the file extension is wrong. Otherwise 0
-int	rt_check_ext(char *file);
-// Returns 1 if the sccene.rt file contains wrong data. Otherwise 0
-int	rt_check_scene(char *file);
-// Extracts the values contained in .rt file and stores them in a struct
-// Returns 1 if the struct is successfully created. Otherwise 0
-int	rt_extract_scene(char *file);
 
+		// Matrices and matrix operations
+	
+typedef struct s_matrix {
+	int		rows;
+	int		columns;
+	float 	**m;
+}	t_matrix;
+
+t_matrix	*init_matrix(int rows, int columns);
+int			matrix_equality(t_matrix *a, t_matrix *b);
+
+t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
+int			print_matrix(t_matrix *mat);
 #endif
