@@ -34,3 +34,9 @@ commented out error handling for nonsensical things like adding/subtracting poin
 	in the multiplication. We'll see later on if tuples simplify life and we have to change this again
 - Identity matrix: wrote function
 - Tested mat_mul and identity function, work correctly (maybe some edge cases ? I don't see what exactly, except maybe very large numbers)
+
+# 28/2/25
+- Wrote `convert_tuple_to_matrix()` which can be used by `matrix_multiplication()`
+- Wrote matrix transpose, determinant (for 2x2 matrix), submatrix
+- Next up: minors
+

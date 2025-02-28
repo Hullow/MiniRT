@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/27 15:25:11 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/28 15:10:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	*handle_error(t_error error_type)
 	else if (error_type == MALLOC_FAIL)
 	{
 		printf("malloc fail\n");
+		return (NULL);
+	}
+	else if (error_type == INVALID_MATRIX_SIZE)
+	{
+		printf("invalid matrix size\n");
 		return (NULL);
 	}
 	return (0);

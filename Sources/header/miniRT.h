@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 16:47:50 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/28 15:56:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 
 typedef enum ERROR_TYPE {
 	NULL_INPUT,
-	MALLOC_FAIL
+	MALLOC_FAIL,
+	INVALID_MATRIX_SIZE
 }	t_error;
 
 /* A tuple:
@@ -133,7 +134,7 @@ t_tuple		*normalize(t_tuple *tuple);
 float		dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
 
-		// Matrices and matrix operations
+		// Matrices
 	
 typedef struct s_matrix {
 	int		rows;
@@ -141,9 +142,19 @@ typedef struct s_matrix {
 	float 	**m;
 }	t_matrix;
 
+			// General
+		
 t_matrix	*init_matrix(int rows, int columns);
+t_matrix	*identity_matrix(int rows, int columns);
 int			matrix_equality(t_matrix *a, t_matrix *b);
-
-t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
+t_matrix	*convert_tuple_to_matrix(t_tuple *tuple);
 int			print_matrix(t_matrix *mat);
+
+			// Basic operations
+		
+t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
+t_matrix	*matrix_transposition(t_matrix *mat);
+int			determinant(t_matrix *mat);
+t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub);
+
 #endif

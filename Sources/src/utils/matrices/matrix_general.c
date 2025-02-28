@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   matrix_general.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/27 16:51:44 by fallan           ###   ########.fr       */
+/*   Updated: 2025/02/28 14:13:36 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,31 @@ t_matrix	*init_matrix(int rows, int columns)
 	return (mat);
 }
 
+/* initializes and returns an identity matrix of size (rows, columns)*/
+t_matrix	*identity_matrix(int rows, int columns)
+{
+	t_matrix	*mat;
+	int			i;
+	int			j;
+
+	mat = init_matrix(rows, columns);
+	if (!mat)
+		return (NULL);
+	i = 0;
+	while (i < rows)
+	{
+		j = 0;
+		while (j < columns)
+		{
+			if (i == j)
+				mat->m[i][j] = 1;
+			j++;
+		}
+		i++;
+	}
+	return (mat);
+}
+
 /* checks if two matrices are equal:
 	- returns 0 (false) if:
 		- one of the matrix is NULL, 
@@ -70,65 +95,55 @@ int	matrix_equality(t_matrix *a, t_matrix *b)
 		j = -1;
 		while (++j < columns)
 		{
-			if (a->m[i][j] != b->m[i][j])
+			if (!is_equal_float(a->m[i][j], b->m[i][j]))
 				return (0);
 		}
 	}
+	printf("equal\n");
 	return (1);
 }
 
-/* initializes and returns tuple (no malloc) with given parameters x,y,z,w */
-t_tuple	*init_tuple(float x, float y, float z, float w)
+/* converts a tuple to a 1x4 matrix (4 rows, 1 column) */
+t_matrix	*convert_tuple_to_matrix(t_tuple *tuple)
 {
-	t_tuple	*tuple;
-	
-	tuple = malloc(sizeof(t_tuple));
+	t_matrix	*mat;
+
 	if (!tuple)
+		return (handle_error(NULL_INPUT));
+	mat = init_matrix(4, 1);
+	if (!mat)
 		return (NULL);
-	tuple->w = w;
-	tuple->x = x;
-	tuple->y = y;
-	tuple->z = z;
-	return (tuple);
+	mat->m[0][0] = tuple->x;
+	mat->m[1][0] = tuple->y;
+	mat->m[2][0] = tuple->z;
+	mat->m[3][0] = tuple->w;
+	return (mat);
 }
 
-/* multiplies matrices (a * b) and returns the result
-	returns -NULL for the following error cases:
-		- a or b is NULL
-		- matrices are not multipliable (a->columns != b->rows) */
-t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
+/* prints out all the values of a matrix */
+int	print_matrix(t_matrix *mat)
 {
-	int			i;
-	int			k;
-	t_matrix	*res;
+	int	i;
+	int	j;
 
-	if (!a || !b)
-		return (handle_error(MALLOC_FAIL));
-	if (a->columns != b->rows) /* matrices not multipliable */
-		return (0);
-	
-	res = init_matrix(4, 4);
-	if (!res)
-		return (handle_error(MALLOC_FAIL));
-	/* column k of the result matrix is the result of 
-	a dot product of each row of the left matrix with column k of the right matrix */
-	k = 0;
-	while (k < b->columns)
+	i = 0;
+	if (!mat)
+		return (-1);
+	printf("Printing out matrix at address {%p}\n", mat);
+	printf("---------------------------------------------\n");
+	while (i < mat->rows)
 	{
-		i = -1;
-		while (++i < a->rows)
-			res->m[i][k] =
-			(a->m[i][0] * b->m[0][k]) +
-			(a->m[i][1] * b->m[1][k]) +
-			(a->m[i][2] * b->m[2][k]) +
-			(a->m[i][3] * b->m[3][k]);
-		k++;
+		j = -1;
+		printf("|");
+		while (++j < mat->columns)
+		{
+			if (mat->m[i][j] >= 0.0)
+				printf(" ");
+			printf(" %.2f |", mat->m[i][j]);
+		}
+		printf("\n");
+		i++;
 	}
-	// printf("input matrix a:\n");
-	// print_matrix(a);
-	// printf("input matrix b:\n");
-	// print_matrix(b);
-	printf("-----------------------------\nmatrix multiplication result:\n-----------------------------\n");
-	print_matrix(res);
-	return (res);
+	printf("---------------------------------------------\n");
+	return (0);
 }
