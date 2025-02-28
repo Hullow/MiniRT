@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 17:24:50 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/28 20:20:53 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,35 @@ static void	rt_spacify(char *line)
     }
 }
 
+static void	rt_assign_values(t_scene *scene, char **values)
+{
+	char	**needle;
+
+	while (*values)
+	{
+		needle = values + 1;
+		if (**values == "L")
+			rt_assign_light(scene, needle);
+		else if (**values == 'A')
+			rt_assign_ambient(scene, needle);
+		else if (**values == 'C')
+			rt_assign_camera(scene, needle);
+		else if (**values == 's')
+			rt_assign_sphere(scene, needle);
+		else if (**values == 'p')
+			rt_assign_plane(scene, needle);
+		else if (**values == 'c')
+			rt_assign_cylinder(scene, needle);
+		values++;
+	}
+}
+
 int	rt_init_scene(const char *file, t_scene *scene)
 {
 	int		fd;
 	char	*line;
 	char	**splitted;
 
-	(void)scene;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
@@ -42,7 +64,7 @@ int	rt_init_scene(const char *file, t_scene *scene)
 			break ;
 		rt_spacify(line);
 		splitted = ft_split(line, ' ');
-
+		rt_assign_values(scene, splitted);
 		ft_free_tab(splitted);
 		free(line);
 	}

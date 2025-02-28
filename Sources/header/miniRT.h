@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 11:04:56 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/28 20:09:10 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,10 @@ int	rt_count_object(const char *line, t_scene *scene);
 int	rt_malloc_objects(t_scene *scene);
 // Reads file to assign values in scene
 int	rt_init_scene(const char *file, t_scene *scene);
+void	rt_assign_light_sphere(t_scene *scene, char **needle);
+void	rt_assign_ambient(t_scene *scene, char **needle);
+void	rt_assign_camera(t_scene *scene, char **needle);
+void	rt_assign_plane(t_scene *scene, char **needle);
+void	rt_assign_cylinder(t_scene *scene, char **needle);
 
 #endif
