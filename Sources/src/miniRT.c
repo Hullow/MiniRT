@@ -6,11 +6,21 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 11:19:46 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/28 11:00:21 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/miniRT.h"
+
+static void	rt_init_counters(t_scene *scene)
+{
+	scene->n_A = 0;
+	scene->n_C = 0;
+	scene->n_L = 0;
+	scene->n_sp = 0;
+	scene->n_pl = 0;
+	scene->n_cy = 0;
+}
 
 int	main(int argc, char *argv[])
 {
@@ -29,9 +39,12 @@ int	main(int argc, char *argv[])
 		ft_puterr_fd("error: failed to malloc scene\n");
 		return (3);
 	}
-	if (rt_extract_scene(argv[1], scene))
+	rt_init_counters(scene);
+	if (rt_read_id(argv[1], scene))
 		return (4);
-	if (rt_check_scene(argv[1]))
+	if (rt_malloc_objects(scene))
 		return (5);
+	if (rt_init_scene(argv[1], scene))
+		return (6);
 	return (0);
 }

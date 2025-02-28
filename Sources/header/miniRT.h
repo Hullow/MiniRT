@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 14:33:14 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/28 11:04:56 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,12 @@ typedef struct s_cylinder
 
 typedef struct s_scene
 {
+	int			n_A;
+	int			n_L;
+	int			n_C;
+	int			n_sp;
+	int			n_pl;
+	int			n_cy;
 	t_ambient	*amb;
 	t_camera	*cam;
 	t_light		*lux;
@@ -112,13 +118,18 @@ t_tuple		*normalize(t_tuple *tuple);
 float		*dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
 // Returns 1 if the file extension is wrong. Otherwise 0
-int	rt_check_ext(char *file);
-// Returns 1 if the sccene.rt file contains wrong data. Otherwise 0
-int	rt_check_scene(char *file);
-// Extracts the values contained in .rt file and stores them in a struct
-// Returns 1 if the struct is successfully created. Otherwise 0
-int	rt_extract_scene(char *file, t_scene *scene);
-// Checks the line for an unique object and assigns it in scene if found
-int	rt_unique_object(char *line, t_scene *scene;)
+int	rt_check_ext(const char *file);
+// Extracts the values contained in .rt file for counting objects
+// Returns 1 if file open failed. Otherwise 0
+int	rt_read_id(const char *file, t_scene *scene);
+// Checks the line for an object identifier and increments the counter
+int	rt_count_object(const char *line, t_scene *scene);
+// Mallocs the amount of object structs in the scene
+// Returns 1 if a unique object is missing or more than once in the scene
+// Returns 2 if a malloc failed
+// Otherwise 0
+int	rt_malloc_objects(t_scene *scene);
+// Reads file to assign values in scene
+int	rt_init_scene(const char *file, t_scene *scene);
 
 #endif

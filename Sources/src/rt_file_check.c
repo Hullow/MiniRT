@@ -6,13 +6,13 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/27 15:30:03 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/28 10:36:19 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/miniRT.h"
 
-int	rt_check_ext(char *file)
+int	rt_check_ext(const char *file)
 {
 	size_t	i;
 
@@ -25,12 +25,11 @@ int	rt_check_ext(char *file)
 	return (0);
 }
 
-int	rt_extract_scene(char *file, t_scene *scene)
+int	rt_read_id(const char *file, t_scene *scene)
 {
 	int		fd;
 	char	*line;
 
-	(void)scene;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
@@ -40,8 +39,7 @@ int	rt_extract_scene(char *file, t_scene *scene)
 	line = get_next_line(fd);
 	while(line != NULL && *line != 0)
 	{
-		rt_unique_object(line, scene);
-		rt_multiple_objects(line, scene);
+		rt_count_object(line, scene);
 		free(line);
 		line = get_next_line(fd);
 	}
