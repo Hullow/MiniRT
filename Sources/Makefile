@@ -27,7 +27,8 @@ HEADSRC		= $(HEADDIR)$(NAME).h
 # Source files
 MAIN		= miniRT \
 			rt_file_check \
-			rt_scene_structs 
+			rt_scene_structs \
+			rt_init_scene 
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN)))
 
