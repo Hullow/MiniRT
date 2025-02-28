@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 10:36:19 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/02/28 15:27:43 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	rt_check_ext(const char *file)
 int	rt_read_id(const char *file, t_scene *scene)
 {
 	int		fd;
+	int		n_err;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
@@ -36,10 +37,12 @@ int	rt_read_id(const char *file, t_scene *scene)
 		perror(file);
 		return (1);
 	}
+	n_err = 0;
 	line = get_next_line(fd);
-	while(line != NULL && *line != 0)
+	while(line != NULL && *line != 0 && n_err == 0)
 	{
-		rt_count_object(line, scene);
+		if (rt_count_object(line, scene))
+			n_err = 1;
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -49,6 +52,6 @@ int	rt_read_id(const char *file, t_scene *scene)
 		line = NULL;
 	}
 	close(fd);
-	return (0);
+	return (n_err);
 }
 
