@@ -40,3 +40,9 @@ commented out error handling for nonsensical things like adding/subtracting poin
 - Wrote matrix transpose, determinant (for 2x2 matrix), submatrix
 - Next up: minors
 
+# 4/3/25
+- Discussed parsing with pberset
+- Note on implementation: typecast structs (cf. cdorig's minishell)
+- Wrote matrix minors, cofactors
+- Determinant of larger matrices: works for 3x3, but need to add some steps
+to cover 4x4 (see book). Segfaults for now

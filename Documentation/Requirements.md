@@ -3,9 +3,6 @@
 - If applicable, all possible intersections and the **inside** of the object must be handled
 correctly.
 <br>=> "inside" ?
-- Your program must be able to resize the object’s unique properties: diameter for a
-sphere and the width and height for a cylinder.
-<br>=> resize == runtime ?
 - Your program must be able to apply translation and rotation transformation to
 objects, lights and cameras (except for spheres and lights that cannot be rotated).
 <br>=> "apply transformations" == runtime ?
@@ -26,6 +23,9 @@ never completely in the dark). You must implement Ambient and diffuse lighting.
 	**- FOV : Horizontal field of view in degrees in range [0,180]: 70**
 		<br>=> what about vertical field of view (see [Wikipedia](https://en.wikipedia.org/wiki/Field_of_view))
 ## OK
+- Your program must be able to resize the object’s unique properties: diameter for a
+sphere and the width and height for a cylinder.
+<br>=> resize == runtime ? => no.
 - You must use the miniLibX. Either the version that is available on the operating
 system, or from its sources. If you choose to work with the sources, you will
 need to apply the same rules for your libft as those written above in Common

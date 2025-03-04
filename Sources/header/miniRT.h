@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 15:56:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/04 19:55:20 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,8 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
 t_matrix	*matrix_transposition(t_matrix *mat);
 int			determinant(t_matrix *mat);
 t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub);
+float		matrix_minor(t_matrix *mat, int row, int column);
+float		matrix_cofactor(t_matrix *mat, int row, int column);
+float		determinant_general(t_matrix *mat);
 
 #endif

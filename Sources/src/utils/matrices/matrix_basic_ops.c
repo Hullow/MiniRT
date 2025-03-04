@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/28 16:01:54 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/04 19:58:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ returns the resulting matrix (input matrix isn't modified nor freed).
 
 n.b.:
 	- indexation of rows and columns starts at 0
-	- function must be called with the submatrix initialized at right size,
+	- function must be called with the submatrix initialized at right size
 	i.e. init_matrix(mat->rows - 1, mat->columns - 1) */
 t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
 {
@@ -145,12 +145,88 @@ t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
 		if (i != row)
 			k++; /* advance by one row in the new matrix after writing a whole row */
 	}
-	printf("submatrix: removing row %d and column %d from:\n*********************\n", row, column);
-	print_matrix(mat);
-	printf("result:\n*********************\n");
-	print_matrix(sub);
+	// printf("submatrix: removing row %d and column %d from:\n*********************\n", row, column);
+	// print_matrix(mat);
+	// printf("result:\n*********************\n");
+	// print_matrix(sub);
 	return (sub);
 }
+
+/* computes and returns the minor (float) at i, j of a 3x3 matrix,
+using the submatrix at i,j (row, column), and computing its determinant */
+float	matrix_minor(t_matrix *mat, int row, int column)
+{
+	return (determinant(submatrix(mat, row, column, init_matrix(2, 2))));
+}
+
+/* computes and returns the cofactor of a 3x3 matrix, using matrix_minor */
+float	matrix_cofactor(t_matrix *mat, int row, int column)
+{
+	float	sign;
+	
+	if ((row + column) % 2)
+		sign = -1;
+	else  // [0, 0], [2, 0], [1, 1], [2, 0], [2, 2] => % 2 == 0 => false
+		sign = 1;
+	return (matrix_minor(mat, row, column) * sign);
+}
+
+float	determinant_general(t_matrix *mat)
+{
+	float	det;
+	int		i;
+	int		j;
+
+	det = 0;
+	if (mat->rows >= mat->columns)
+	{
+		i = 0;
+		printf("going via rows\n");
+		while (i < mat->rows)
+		{
+			det += mat->m[i][0] * matrix_cofactor(mat, i, 0);
+			i++;
+		}
+	}
+	else
+	{
+		j = 0;
+		printf("going via columns\n");
+		while (j < mat->columns)
+		{
+			det += mat->m[0][j] * matrix_cofactor(mat, 0, j);
+			j++;
+		}
+	}
+	printf("matrix_det_3: %f\n", det);
+	return (det);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

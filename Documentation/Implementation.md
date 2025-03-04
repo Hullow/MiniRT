@@ -31,3 +31,41 @@
 See [Euclidian Norm](https://en.wikipedia.org/wiki/Euclidean_space#Euclidean_norm)
 and [Dot product - geometric interpretation (video) (14min)](https://www.youtube.com/watch?v=LyGKycYT2v0)
 (n.b.: normal doesn't seem to depend at all on angle of light ray; only the intersection point on the sphere)
+
+
+## New C syntax/tools
+- Tagged union ?
+- Typecast structs ? (like cdorig's minishell)
+```c
+struct s_cmd {
+	int type;
+}	t_cmd;
+
+struct s_pipe {
+	int type;
+	fdjdffd
+	fddff
+}	t_pipe;
+struct s_redir {
+	int type;
+	ddff
+}	t_redir;
+
+struct s_exec {
+	int type;
+	dffdjdfd
+	dffdfgf
+}	t_exec;
+
+
+// first, malloc as t_pipe, t_redir, t_exec;
+// then typecast as t_cmd to use them indifferently
+// then, re-typecast as t_pipe, t_redir, or t_exec as necessary, and data is still there as it hasn't been freed
+
+void	function(int type, t_cmd *command)
+{
+	if (type == PIPE)
+		make_pipe_node((t_pipe *) command)
+	// ...
+}
+```
