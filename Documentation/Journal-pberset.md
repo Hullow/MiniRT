@@ -32,4 +32,7 @@
 			- ERANGE: Used for out-of-range errors.
 				- <math.h>: isinf()
 			- EINVAL: Used for invalid arguments.
-
+	- contrôle d'erreur long et fastidieux en fin de processus
+		- loop sur le split de valeurs et convertir à la volée
+		- passage en argument pour les fonctions d'assignation
+		- Je passe trop de temps sur un parsing de merde
