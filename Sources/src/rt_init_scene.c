@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 20:20:53 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 16:18:21 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	while (*values)
 	{
 		needle = values + 1;
-		if (**values == "L")
+		if (**values == 'L')
 			rt_assign_light(scene, needle);
 		else if (**values == 'A')
 			rt_assign_ambient(scene, needle);

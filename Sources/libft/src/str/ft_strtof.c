@@ -6,11 +6,12 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:31:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 12:13:42 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 16:40:07 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/libft.h"
+#include <stdio.h>
 
 static int	valid_floatstr(const char *str)
 {

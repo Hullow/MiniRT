@@ -6,39 +6,124 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 20:40:47 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 16:31:25 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/miniRT.h"
 
+static int rt_valid_color(char **color)
+{
+	int	i;
+
+	i = 3;
+	while (i > 0 && *color)
+	{
+		if (ft_atoi(*color) > 255 || ft_atoi(*color) < 0)
+		{
+			errno = ERANGE;
+			perror("invalid color values");
+			return (0);
+		}
+		while (**color)
+		{
+			if (!ft_isdigit(**color))
+			{
+				errno = EINVAL;
+				perror("invalid color values");
+				return (0);
+			}
+			(*color)++;
+		}
+		i--;
+		color++;
+	}
+	if (i != 0 || *color != 0)
+	{
+		errno = EINVAL;
+		perror("wrong number of color arguments");
+		return (0);
+	}
+	return (1);
+}
+
+static int	rt_valid_coord(char **coord)
+{
+	int	i;
+
+	i = 3;
+	errno = 0;
+	while (i > 0 && *coord)
+	{
+		ft_strtof(*coord);
+		if (errno != 0)
+		{
+			perror(*coord);
+			return (0);
+		}
+		i--;
+		coord++;
+	}
+	if (i != 0 || *coord != 0)
+	{
+		errno = EINVAL;
+		perror("wrong number of coordinate arguments");
+		return (0);
+	}
+	return (1);
+}
+
 void	rt_assign_light(t_scene *scene, char **needle)
 {
 	char	**coord;
-	float	ratio;
 	char	**color;
 
 	coord = ft_split(*needle, ',');
-	ratio = ft_atof(*(needle + 1));
 	color = ft_split(*(needle + 2), ',');
-	scene->coord.x = ft_atof(*coord);
-	scene->coord.y = ft_atof(*(coord + 1));
-	scene->coord.z = ft_atof(*(coord + 2));
-	scene->ratio = ratio;
-	scene->color.x = ft_atof(*color);
-	scene->color.y = ft_atof(*(color + 1));
-	scene->color.z = ft_atof(*(color + 2));
+	if (!rt_valid_color(color) || !rt_valid_coord(coord))
+	{
+		ft_free_tab(coord);
+		ft_free_tab(color);
+		return ;
+	}
+	scene->lux->coord->x = ft_strtof(*coord);
+	scene->lux->coord->y = ft_strtof(*(coord + 1));
+	scene->lux->coord->z = ft_strtof(*(coord + 2));
+	scene->lux->ratio = ft_strtof(*(needle + 1));
+	scene->lux->color->x = ft_atoi(*color) / 255.0;
+	scene->lux->color->y = ft_atoi(*(color + 1)) / 255.0;
+	scene->lux->color->z = ft_atoi(*(color + 2)) / 255.0;
+	ft_free_tab(coord);
+	ft_free_tab(color);
 }
 
 void	rt_assign_ambient(t_scene *scene, char **needle)
-{}
+{
+	(void)scene;
+	(void)needle;
+}
 
 void	rt_assign_camera(t_scene *scene, char **needle)
-{}
+{
+	(void)scene;
+	(void)needle;
+}
+
+void	rt_assign_sphere(t_scene *scene, char **needle)
+{
+	(void)scene;
+	(void)needle;
+}
 
 void	rt_assign_plane(t_scene *scene, char **needle)
-{}
+{
+	(void)scene;
+	(void)needle;
+}
 
 void	rt_assign_cylinder(t_scene *scene, char **needle)
-{}
+{
+	(void)scene;
+	(void)needle;
+}
 

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 12:08:22 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 16:19:35 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,23 +116,24 @@ t_tuple		*normalize(t_tuple *tuple);
 float		*dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
 // Returns 1 if the file extension is wrong. Otherwise 0
-int	rt_check_ext(const char *file);
+int			rt_check_ext(const char *file);
 // Extracts the values contained in .rt file for counting objects
 // Returns 1 if file open failed. Otherwise 0
-int	rt_read_id(const char *file, t_scene *scene);
+int			rt_read_id(const char *file, t_scene *scene);
 // Checks the line for an object identifier and increments the counter
-int	rt_count_object(const char *line, t_scene *scene);
+int			rt_count_object(const char *line, t_scene *scene);
 // Mallocs the amount of object structs in the scene
 // Returns 1 if a unique object is missing or more than once in the scene
 // Returns 2 if a malloc failed
 // Otherwise 0
-int	rt_malloc_objects(t_scene *scene);
+int			rt_malloc_objects(t_scene *scene);
 // Reads file to assign values in scene
-int	rt_init_scene(const char *file, t_scene *scene);
-void	rt_assign_light_sphere(t_scene *scene, char **needle);
-void	rt_assign_ambient(t_scene *scene, char **needle);
-void	rt_assign_camera(t_scene *scene, char **needle);
-void	rt_assign_plane(t_scene *scene, char **needle);
-void	rt_assign_cylinder(t_scene *scene, char **needle);
+int			rt_init_scene(const char *file, t_scene *scene);
+void		rt_assign_light(t_scene *scene, char **needle);
+void		rt_assign_sphere(t_scene *scene, char **needle);
+void		rt_assign_ambient(t_scene *scene, char **needle);
+void		rt_assign_camera(t_scene *scene, char **needle);
+void		rt_assign_plane(t_scene *scene, char **needle);
+void		rt_assign_cylinder(t_scene *scene, char **needle);
 
 #endif
