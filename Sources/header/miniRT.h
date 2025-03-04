@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/28 20:09:10 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 12:08:22 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
-# include <math.h>
 # include <stdio.h>
-# include <errno.h>
 
 # define VECTOR 0
 # define POINT 1
