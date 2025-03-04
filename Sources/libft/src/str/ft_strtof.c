@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:31:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 16:40:07 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 17:20:08 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ float	ft_strtof(const char *str)
 	if (!valid_floatstr(str))
 		errno = EINVAL;
 	output = ft_atof(str);
-	if (isinf(output) || output > FLT_MAX || output < FLT_MIN)
+	if (isinf(output) || output > FLT_MAX || output < -FLT_MAX)
 		errno = ERANGE;
 	return (output);
 }

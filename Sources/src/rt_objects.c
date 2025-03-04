@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 16:31:25 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 17:57:34 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,31 @@
 static int rt_valid_color(char **color)
 {
 	int	i;
+	int	j;
 
-	i = 3;
-	while (i > 0 && *color)
+	i = 0;
+	while (i < 3 && color[i])
 	{
-		if (ft_atoi(*color) > 255 || ft_atoi(*color) < 0)
+		if (ft_atoi(color[i]) > 255 || ft_atoi(color[i]) < 0)
 		{
 			errno = ERANGE;
 			perror("invalid color values");
 			return (0);
 		}
-		while (**color)
+		j = 0;
+		while (color[i][j])
 		{
-			if (!ft_isdigit(**color))
+			if (!ft_isdigit(color[i][j]))
 			{
 				errno = EINVAL;
 				perror("invalid color values");
 				return (0);
 			}
-			(*color)++;
+			j++;
 		}
-		i--;
-		color++;
+		i++;
 	}
-	if (i != 0 || *color != 0)
+	if (i != 3 || color[i] != 0)
 	{
 		errno = EINVAL;
 		perror("wrong number of color arguments");
@@ -86,6 +87,8 @@ void	rt_assign_light(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
+	scene->lux->coord = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
+	scene->lux->color = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
 	scene->lux->coord->x = ft_strtof(*coord);
 	scene->lux->coord->y = ft_strtof(*(coord + 1));
 	scene->lux->coord->z = ft_strtof(*(coord + 2));

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 16:29:10 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/04 17:58:26 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	main(int argc, char *argv[])
 		return (5);
 	if (rt_init_scene(argv[1], scene))
 		return (6);
-	printf("assign light %f\n", scene->lux->coord->x);
-	printf("assign light %f\n", scene->lux->coord->y);
-	printf("assign light %f\n", scene->lux->coord->z);
+	printf("assign light %f\n", scene->lux->color->x);
+	printf("assign light %f\n", scene->lux->color->y);
+	printf("assign light %f\n", scene->lux->color->z);
 	return (0);
 }
