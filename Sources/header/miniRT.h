@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 17:00:37 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:47:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
-# include <math.h>
 # include <stdio.h>
-# include <errno.h>
 
 # define VECTOR 0.0
 # define POINT 1.0
-# define COLOR 2
+# define COLOR 2.0
 
 # define EPSILON 0.00005
 
@@ -45,6 +43,11 @@ typedef struct s_tuple {
 	float	w;
 }	t_tuple;
 
+typedef struct s_matrix {
+	int		rows;
+	int		columns;
+	float 	**m;
+}	t_matrix;
 
 typedef struct s_ambient
 {
@@ -56,6 +59,7 @@ typedef struct s_camera
 {
 	t_tuple	*coord;
 	t_tuple	*orient;
+	float	fov;
 }	t_camera;
 
 typedef struct s_light
@@ -90,6 +94,12 @@ typedef struct s_cylinder
 
 typedef struct s_scene
 {
+	int			n_A;
+	int			n_L;
+	int			n_C;
+	int			n_sp;
+	int			n_pl;
+	int			n_cy;
 	t_ambient	*amb;
 	t_camera	*cam;
 	t_light		*lux;
@@ -100,14 +110,17 @@ typedef struct s_scene
 
 // Input handling
 
-// Returns 1 if the file extension is wrong. Otherwise 0
-int	rt_check_ext(char *file);
-// Returns 1 if the sccene.rt file contains wrong data. Otherwise 0
-int	rt_check_scene(char *file);
-// Extracts the values contained in .rt file and stores them in a struct
-// Returns 1 if the struct is successfully created. Otherwise 0
-int	rt_extract_scene(char *file);
-
+int			rt_check_ext(const char *file);
+int			rt_read_id(const char *file, t_scene *scene);
+int			rt_count_object(const char *line, t_scene *scene);
+int			rt_malloc_objects(t_scene *scene);
+int			rt_init_scene(const char *file, t_scene *scene);
+void		rt_assign_light(t_scene *scene, char **needle);
+void		rt_assign_sphere(t_scene *scene, char **needle);
+void		rt_assign_ambient(t_scene *scene, char **needle);
+void		rt_assign_camera(t_scene *scene, char **needle);
+void		rt_assign_plane(t_scene *scene, char **needle);
+void		rt_assign_cylinder(t_scene *scene, char **needle);
 
 // Utils
 	// General
@@ -124,6 +137,7 @@ float		abs_float(float a);
 
 t_tuple		*point(float x, float y, float z);
 t_tuple		*vector(float x, float y, float z);
+t_tuple		*color(float x, float y, float z);
 int			is_equal_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*add_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend);
@@ -136,13 +150,6 @@ float		dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
 
 		// Matrices
-	
-typedef struct s_matrix {
-	int		rows;
-	int		columns;
-	float 	**m;
-}	t_matrix;
-
 			// General functions
 		
 t_matrix	*init_matrix(int rows, int columns);
@@ -165,5 +172,8 @@ t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub);
 float		matrix_minor(t_matrix *mat, int row, int column);
 float		matrix_cofactor(t_matrix *mat, int row, int column);
 float		determinant(t_matrix *mat);
+
+		// Color
+t_tuple		rt_hadamard(t_tuple color1, t_tuple color2);
 
 #endif

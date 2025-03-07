@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:14:45 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/27 15:04:28 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:46:50 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ t_tuple	*point(float x, float y, float z)
 	point->y = y;
 	point->z = z;
 	point->w = POINT;
+	return (point);
+}
+
+/* Initializes a color tuple: mallocs a tuple, 
+fills it with the input coordinates, sets its type to COLOR (2.0) */
+t_tuple	*color(float x, float y, float z)
+{
+	t_tuple	*point;
+
+	point = malloc(sizeof(t_tuple));
+	if (!point)
+		return (NULL);
+	point->x = x;
+	point->y = y;
+	point->z = z;
+	point->w =  COLOR;
 	return (point);
 }
 

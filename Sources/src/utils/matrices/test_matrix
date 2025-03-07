@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_matrix                                        :+:      :+:    :+:   */
+/*   test_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:18:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 17:11:17 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:07:53 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main()
 	test_minor();
 	test_submatrix();
 	test_tuple_to_mat_conversion_and_diff_size_mat_multiplication();
-	test_mat_multiplicatiaon();
+	test_mat_multiplication();
 	test_transposition();
 	test_identity();
 	return (0);

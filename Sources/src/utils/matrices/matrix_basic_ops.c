@@ -6,16 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 16:55:02 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:14:20 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/miniRT.h"
 
 /* multiplies 4x4 matrices (a * b) and returns the result
-	returns -NULL for the following error cases:
-		- a or b is NULL
-		- matrices are not multipliable (a->columns != b->rows)
+	returns
+		-NULL for the following error cases:
+			- a or b is NULL
+			- matrices are not multipliable (a->columns != b->rows)
 		
 	How it works:
 		- column k of the result matrix is the result of a dot product of each
