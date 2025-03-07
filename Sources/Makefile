@@ -29,7 +29,7 @@ MAIN		= miniRT \
 			rt_file_check \
 			rt_scene_structs \
 			rt_init_scene \
-			rt_objects 
+			rt_objects
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN)))
 

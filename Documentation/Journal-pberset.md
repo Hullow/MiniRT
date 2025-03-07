@@ -39,4 +39,17 @@
 
 ## Colors
 
-
+- Opérations
+	- Additionner deux couleurs
+	- Soustraire deux couleurs
+	- Multiplier une couleur par un scalaire
+	- Multiplier une couleur par une autre couleur
+	- Dans l'étape de calcul, pas besoin de clamp les valeurs à 0 et 1
+- Post processing
+	- tone mapping
+		- Linear scaling : diviser toutes les valeurs par la plus haute, pour tout normaliser proportionnellement -> perte de détails et précision -> cheum
+		- Reinhard Tone Mapping -> échelle logarithmique -> la plus commune en JV
+			- `Ld​ = L / (1 + L)​` where L is the luminance of the pixel
+		- Exposure and Gamma Correction -> simulation d'exposition de caméra réelle -> la plus belle sans tuer le CPU dans notre cas spécifique
+			- Formula: `Ld = 1 − exp⁡(−L * exposure)`, followed by `Ld' = Ld'^(1/y)​`
+		- Filmic Tone Mapping -> va tuer notre CPU

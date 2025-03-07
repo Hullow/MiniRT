@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 09:13:27 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/07 15:07:04 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,6 @@ void		rt_assign_ambient(t_scene *scene, char **needle);
 void		rt_assign_camera(t_scene *scene, char **needle);
 void		rt_assign_plane(t_scene *scene, char **needle);
 void		rt_assign_cylinder(t_scene *scene, char **needle);
+t_tuple		rt_hadamard(t_tuple color1, t_tuple color2);
 
 #endif
