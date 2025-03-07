@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/04 16:18:08 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:17:05 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	*handle_error(t_error error_type)
 	else if (error_type == INVALID_MATRIX_SIZE)
 	{
 		printf("invalid matrix size\n");
+		return (NULL);
+	}
+	else if (error_type == MATRIX_NOT_INVERTIBLE)
+	{
+		printf("matrix is not invertible\n");
 		return (NULL);
 	}
 	return (0);

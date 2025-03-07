@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 14:45:37 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 17:00:37 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 # define POINT 1.0
 # define COLOR 2
 
-# define EPSILON 0.00001
+# define EPSILON 0.00005
 
 typedef enum ERROR_TYPE {
 	NULL_INPUT,
 	MALLOC_FAIL,
-	INVALID_MATRIX_SIZE
+	INVALID_MATRIX_SIZE,
+	MATRIX_NOT_INVERTIBLE
 }	t_error;
 
 /* A tuple:
@@ -142,11 +143,11 @@ typedef struct s_matrix {
 	float 	**m;
 }	t_matrix;
 
-			// General
+			// General functions
 		
 t_matrix	*init_matrix(int rows, int columns);
+t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns);
 t_matrix	*identity_matrix(int rows, int columns);
-int			matrix_equality(t_matrix *a, t_matrix *b);
 t_matrix	*convert_tuple_to_matrix(t_tuple *tuple);
 int			print_matrix(t_matrix *mat);
 
@@ -154,7 +155,12 @@ int			print_matrix(t_matrix *mat);
 		
 t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
 t_matrix	*matrix_transposition(t_matrix *mat);
-int			determinant_2x2(t_matrix *mat);
+t_matrix	*matrix_inversion(t_matrix *mat);
+int			matrix_equality(t_matrix *a, t_matrix *b);
+
+			// Sub, determinant, cofactor
+
+int			submatrix_errors(t_matrix *mat, t_matrix *sub);
 t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub);
 float		matrix_minor(t_matrix *mat, int row, int column);
 float		matrix_cofactor(t_matrix *mat, int row, int column);

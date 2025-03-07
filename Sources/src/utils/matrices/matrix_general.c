@@ -6,28 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/28 14:13:36 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 17:08:54 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/miniRT.h"
 
-/* initializes and returns an empty matrix (filled with 0s)
-as a 2d array of floats, given number of rows and columns (matrix[rows][cols])*/
-t_matrix	*init_matrix(int rows, int columns)
+t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
 {
-	int			i;
-	int			j;
-	t_matrix	*mat;
+	int	i;
+	int	j;
 
-	mat = malloc (sizeof(t_matrix));
-	if (!mat)
-		return (handle_error(MALLOC_FAIL));
-	mat->rows = rows;
-	mat->columns = columns;
-	mat->m = malloc (rows * sizeof(float *));
-	if (!mat->m)
-		return (handle_error(MALLOC_FAIL));
 	i = 0;
 	while (i < rows)
 	{
@@ -42,6 +31,25 @@ t_matrix	*init_matrix(int rows, int columns)
 		}
 		i++;
 	}
+	return (mat);
+}
+
+/* initializes and returns an empty matrix (filled with 0s)
+as a 2d array of floats, given number of rows and columns (mat [rows][cols])*/
+t_matrix	*init_matrix(int rows, int columns)
+{
+	t_matrix	*mat;
+
+	mat = malloc (sizeof(t_matrix));
+	if (!mat)
+		return (handle_error(MALLOC_FAIL));
+	mat->rows = rows;
+	mat->columns = columns;
+	mat->m = malloc (rows * sizeof(float *));
+	if (!mat->m)
+		return (handle_error(MALLOC_FAIL));
+	if (!malloc_matrix_contents(mat, rows, columns))
+		return (NULL);
 	return (mat);
 }
 
@@ -68,39 +76,6 @@ t_matrix	*identity_matrix(int rows, int columns)
 		i++;
 	}
 	return (mat);
-}
-
-/* checks if two matrices are equal:
-	- returns 0 (false) if:
-		- one of the matrix is NULL, 
-		- the matrices don't have same number of rows and matrices
-		- any element of the matrices has a different value (a[i][j] != b[i][j])
-	- return 1 (true) otherwise (the two matrices are found to be equal) */
-int	matrix_equality(t_matrix *a, t_matrix *b)
-{
-	int	i;
-	int	j;
-	int	rows;
-	int	columns;
-
-	if (!a || !b)
-		return (0);
-	if (a->rows != b->rows || a->columns != b->columns)
-		return (0);
-	i = -1;
-	rows = a->rows;
-	columns = a->columns;
-	while (++i < rows)
-	{
-		j = -1;
-		while (++j < columns)
-		{
-			if (!is_equal_float(a->m[i][j], b->m[i][j]))
-				return (0);
-		}
-	}
-	printf("equal\n");
-	return (1);
 }
 
 /* converts a tuple to a 1x4 matrix (4 rows, 1 column) */
@@ -139,7 +114,7 @@ int	print_matrix(t_matrix *mat)
 		{
 			if (mat->m[i][j] >= 0.0)
 				printf(" ");
-			printf(" %.2f |", mat->m[i][j]);
+			printf(" %.6f |", mat->m[i][j]);
 		}
 		printf("\n");
 		i++;

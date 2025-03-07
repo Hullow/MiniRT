@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 15:00:33 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 16:55:02 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 /* multiplies 4x4 matrices (a * b) and returns the result
 	returns -NULL for the following error cases:
 		- a or b is NULL
-		- matrices are not multipliable (a->columns != b->rows) */
+		- matrices are not multipliable (a->columns != b->rows)
+		
+	How it works:
+		- column k of the result matrix is the result of a dot product of each
+		row of the left matrix with column k of the right matrix */
 t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
 {
 	int			i;
@@ -24,23 +28,21 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
 
 	if (!a || !b)
 		return (handle_error(NULL_INPUT));
-	if (a->columns != b->rows) /* matrices not multipliable */
+	if (a->columns != b->rows)
 		return (NULL);
 	res = init_matrix(a->rows, b->columns);
 	if (!res)
 		return (handle_error(MALLOC_FAIL));
-	/* column k of the result matrix is the result of 
-	a dot product of each row of the left matrix with column k of the right matrix */
 	k = 0;
 	while (k < b->columns)
 	{
 		i = -1;
 		while (++i < a->rows)
-			res->m[i][k] =
-			(a->m[i][0] * b->m[0][k]) +
-			(a->m[i][1] * b->m[1][k]) +
-			(a->m[i][2] * b->m[2][k]) +
-			(a->m[i][3] * b->m[3][k]);
+			res->m[i][k]
+				= (a->m[i][0] * b->m[0][k])
+				+ (a->m[i][1] * b->m[1][k])
+				+ (a->m[i][2] * b->m[2][k])
+				+ (a->m[i][3] * b->m[3][k]);
 		k++;
 	}
 	return (res);
@@ -72,148 +74,61 @@ t_matrix	*matrix_transposition(t_matrix *mat)
 	return (transpose);
 }
 
-
-/* handle error cases for submatrix, returning 1 if:
-	- NULL matrix as input
-	- row or column count too small (< 2)
-
-	returns 0 otherwise */
-int	submatrix_errors(t_matrix *mat, t_matrix *sub)
-{
-	if (!mat || !sub)
-		return (1);
-	if (mat->rows < 2 || mat->columns < 2)
-		return (1);
-	return (0);
-}
-
-/* removes one specified row and one specified column from a matrix, and
-returns the resulting matrix (input matrix isn't modified nor freed).
-
-n.b.:
-	- indexation of rows and columns starts at 0
-	- function must be called with the submatrix initialized at right size
-	i.e. init_matrix(mat->rows - 1, mat->columns - 1) */
-t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
-{
-	int			i;
-	int			j;
-	int			k;
-	int			l;
-
-	if (submatrix_errors(mat, sub))
-		return (NULL);
-	i = -1;
-	k = 0;
-	while (++i < mat->rows)
-	{
-		j = -1;
-		l = 0;
-		while (++j < mat->columns)
-		{
-			if (i != row && j != column)
-			{
-				sub->m[k][l] = mat->m[i][j];
-				l++; /* advance by one column in the new matrix after writing */
-			}
-		}
-		if (i != row)
-			k++; /* advance by one row in the new matrix after writing a whole row */
-	}
-	// if (mat->rows == 3 && mat->columns == 3)
-	// {
-	// 	print_matrix(mat);
-	// 	printf("the above 3x3 matrix has det: %f\n", determinant(sub));
-	// }
-	return (sub);
-}
-
-/* computes and returns the minor (float) at i, j of an arbitrarily matrix,
-using the submatrix at i,j (row, column), and computing its determinant */
-float	matrix_minor(t_matrix *mat, int row, int column)
-{
-	t_matrix	*empty_submatrix;
-	
-	if (!mat)
-	{
-		handle_error(NULL_INPUT);
-		return (-1);
-	}
-	empty_submatrix = init_matrix(mat->rows - 1, mat->columns - 1);
-	if (!empty_submatrix)
-		return (-1.0);
-	return (determinant(submatrix(mat, row, column, empty_submatrix)));
-}
-
-/* computes and returns the cofactor of a matrix, using matrix_minor */
-float	matrix_cofactor(t_matrix *mat, int row, int column)
-{
-	float	sign;
-	
-	if ((row + column) % 2)
-		sign = -1;
-	else
-		sign = 1;
-	return (matrix_minor(mat, row, column) * sign);
-}
-
-float	determinant(t_matrix *mat)
-{
-	int		j;
-	float	det;
-
-	if (!mat)
-	{
-		handle_error(NULL_INPUT);
-		return (-1);
-	}
-	j = 0;
-	det = 0.0;
-	if (mat->rows == 2 && mat->columns == 2)
-		return ((mat->m[0][0] * mat->m[1][1]) - (mat->m[0][1] * mat->m[1][0]));
-	else
-	{
-		while (j < mat->columns)
-		{
-			det += mat->m[0][j] * matrix_cofactor(mat, 0, j);
-			j++;
-		}
-	}
-	return (det);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
 t_matrix	*matrix_inversion(t_matrix *mat)
 {
-	t_matrix	*inverse;
+	t_matrix	*inv;
+	int			i;
+	int			j;
+	float		det;
 
-	inverse = init_matrix()
-	return (inverse);
-} */
+	det = determinant(mat);
+	if (is_equal_float(det, 0))
+		return (handle_error(MATRIX_NOT_INVERTIBLE));
+	inv = init_matrix(mat->rows, mat->columns);
+	if (!inv)
+		return (NULL);
+	i = 0;
+	while (i < mat->rows)
+	{
+		j = 0;
+		while (j < mat->columns)
+		{
+			inv->m[i][j] = matrix_cofactor(mat, j, i) / det;
+			j++;
+		}
+		i++;
+	}
+	return (inv);
+}
+
+/* checks if two matrices are equal:
+	- returns 0 (false) if:
+		- one of the matrix is NULL, 
+		- the matrices don't have same number of rows and matrices
+		- any element of the matrices has a different value (a[i][j] != b[i][j])
+	- return 1 (true) otherwise (the two matrices are found to be equal) */
+int	matrix_equality(t_matrix *a, t_matrix *b)
+{
+	int	i;
+	int	j;
+	int	rows;
+	int	columns;
+
+	if (!a || !b)
+		return (0);
+	if (a->rows != b->rows || a->columns != b->columns)
+		return (0);
+	i = -1;
+	rows = a->rows;
+	columns = a->columns;
+	while (++i < rows)
+	{
+		j = -1;
+		while (++j < columns)
+		{
+			if (!is_equal_float(a->m[i][j], b->m[i][j]))
+				return (0);
+		}
+	}
+	return (1);
+}
