@@ -35,4 +35,8 @@
 	- contrôle d'erreur long et fastidieux en fin de processus
 		- loop sur le split de valeurs et convertir à la volée
 		- passage en argument pour les fonctions d'assignation
-		- Je passe trop de temps sur un parsing de merde
+	- usage de `errno` generalisable -> fine tuning plus tard
+
+## Colors
+
+
