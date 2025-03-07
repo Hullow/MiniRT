@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 18:47:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 20:20:41 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ float		abs_float(float a);
 
 t_tuple		*point(float x, float y, float z);
 t_tuple		*vector(float x, float y, float z);
-t_tuple		*color(float x, float y, float z);
+t_tuple		*color(float r, float g, float b);
 int			is_equal_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*add_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend);
