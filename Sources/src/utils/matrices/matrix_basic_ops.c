@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/04 19:58:57 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:00:33 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
 			(a->m[i][3] * b->m[3][k]);
 		k++;
 	}
-	// printf("input matrix a:\n");
-	// print_matrix(a);
-	// printf("input matrix b:\n");
-	// print_matrix(b);
-	// printf("-----------------------------\nmatrix multiplication result:\n-----------------------------\n");
-	// print_matrix(res);
 	return (res);
 }
 
@@ -75,28 +69,9 @@ t_matrix	*matrix_transposition(t_matrix *mat)
 		}
 		i++;
 	}
-	// printf("*******************************original matrix:\n*******************************");
-	// print_matrix(mat);
-	// printf("*******************************transposed matrix:\n*******************************");
-	// print_matrix(transpose);
 	return (transpose);
 }
 
-/* computes and returns (as an int) the determinant of a 2x2 matrix */
-int	determinant(t_matrix *mat)
-{
-	if (!mat)
-	{
-		handle_error(NULL_INPUT);
-		return (-1);
-	}
-	if (mat->columns != 2 || mat->rows != 2)
-	{
-		handle_error(INVALID_MATRIX_SIZE);
-		return (-1);
-	}
-	return ((mat->m[0][0] * mat->m[1][1]) - (mat->m[0][1] * mat->m[1][0]));
-}
 
 /* handle error cases for submatrix, returning 1 if:
 	- NULL matrix as input
@@ -145,63 +120,67 @@ t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
 		if (i != row)
 			k++; /* advance by one row in the new matrix after writing a whole row */
 	}
-	// printf("submatrix: removing row %d and column %d from:\n*********************\n", row, column);
-	// print_matrix(mat);
-	// printf("result:\n*********************\n");
-	// print_matrix(sub);
+	// if (mat->rows == 3 && mat->columns == 3)
+	// {
+	// 	print_matrix(mat);
+	// 	printf("the above 3x3 matrix has det: %f\n", determinant(sub));
+	// }
 	return (sub);
 }
 
-/* computes and returns the minor (float) at i, j of a 3x3 matrix,
+/* computes and returns the minor (float) at i, j of an arbitrarily matrix,
 using the submatrix at i,j (row, column), and computing its determinant */
 float	matrix_minor(t_matrix *mat, int row, int column)
 {
-	return (determinant(submatrix(mat, row, column, init_matrix(2, 2))));
+	t_matrix	*empty_submatrix;
+	
+	if (!mat)
+	{
+		handle_error(NULL_INPUT);
+		return (-1);
+	}
+	empty_submatrix = init_matrix(mat->rows - 1, mat->columns - 1);
+	if (!empty_submatrix)
+		return (-1.0);
+	return (determinant(submatrix(mat, row, column, empty_submatrix)));
 }
 
-/* computes and returns the cofactor of a 3x3 matrix, using matrix_minor */
+/* computes and returns the cofactor of a matrix, using matrix_minor */
 float	matrix_cofactor(t_matrix *mat, int row, int column)
 {
 	float	sign;
 	
 	if ((row + column) % 2)
 		sign = -1;
-	else  // [0, 0], [2, 0], [1, 1], [2, 0], [2, 2] => % 2 == 0 => false
+	else
 		sign = 1;
 	return (matrix_minor(mat, row, column) * sign);
 }
 
-float	determinant_general(t_matrix *mat)
+float	determinant(t_matrix *mat)
 {
-	float	det;
-	int		i;
 	int		j;
+	float	det;
 
-	det = 0;
-	if (mat->rows >= mat->columns)
+	if (!mat)
 	{
-		i = 0;
-		printf("going via rows\n");
-		while (i < mat->rows)
-		{
-			det += mat->m[i][0] * matrix_cofactor(mat, i, 0);
-			i++;
-		}
+		handle_error(NULL_INPUT);
+		return (-1);
 	}
+	j = 0;
+	det = 0.0;
+	if (mat->rows == 2 && mat->columns == 2)
+		return ((mat->m[0][0] * mat->m[1][1]) - (mat->m[0][1] * mat->m[1][0]));
 	else
 	{
-		j = 0;
-		printf("going via columns\n");
 		while (j < mat->columns)
 		{
 			det += mat->m[0][j] * matrix_cofactor(mat, 0, j);
 			j++;
 		}
 	}
-	printf("matrix_det_3: %f\n", det);
 	return (det);
 }
-
 
 
 

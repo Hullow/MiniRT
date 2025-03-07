@@ -6,17 +6,18 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:18:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/04 20:09:04 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:04:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../header/miniRT.h"
 
-void	test_determinant_large_matrix();
 void	test_cofactor();
 void	test_minor();
 void	test_submatrix();
-void	test_determinant();
+void	test_determinant_2x2();
+void	test_determinant_3x3();
+void	test_determinant_4x4();
 void	test_tuple_to_mat_conversion_and_diff_size_mat_multiplication();
 void	test_mat_multiplication();
 void	test_transposition();
@@ -24,11 +25,12 @@ void	mat_val_init(t_matrix *mat, t_matrix *mat2, t_matrix *mat3);
 
 int	main()
 {
-	test_determinant_large_matrix();
 	// test_cofactor();
 	// test_minor();
 	// test_submatrix();
-	// test_determinant();
+	test_determinant_2x2();
+	test_determinant_4x4();
+	test_determinant_3x3();
 	// test_tuple_to_mat_conversion_and_diff_size_mat_multiplication();
 	// test_mat_multiplication();
 	// test_transposition();
@@ -36,26 +38,41 @@ int	main()
 	return (0);
 }
 
-void	test_determinant_large_matrix()
+void	test_determinant_4x4()
 {
 	t_matrix *mat = init_matrix(4, 4);
 	mat->m[0][0] = -2;
 	mat->m[0][1] = -8;
 	mat->m[0][2] = 3;
 	mat->m[0][3] = 5;
+	mat->m[1][0] = -3;
+	mat->m[1][1] = 1;
+	mat->m[1][2] = 7;
+	mat->m[1][3] = 3;
+	mat->m[2][0] = 1;
+	mat->m[2][1] = 2;
+	mat->m[2][2] = -9;
+	mat->m[2][3] = 6;
+	mat->m[3][0] = -6;
+	mat->m[3][1] = 7;
+	mat->m[3][2] = 7;
+	mat->m[3][3] = -9;
+	printf("is this the det of the 4x4 matrix ? %f\n", determinant(mat));
+}
+
+void	test_determinant_3x3()
+{
+	t_matrix *mat = init_matrix(3, 3);
+	mat->m[0][0] = 1;
+	mat->m[0][1] = 2;
+	mat->m[0][2] = 6;
 	mat->m[1][0] = -5;
 	mat->m[1][1] = 8;
 	mat->m[1][2] = -4;
-	mat->m[1][3] = 1;
 	mat->m[2][0] = 2;
 	mat->m[2][1] = 6;
 	mat->m[2][2] = 4;
-	mat->m[2][3] = 4;
-	mat->m[3][0] = 2;
-	mat->m[3][1] = 6;
-	mat->m[3][2] = 4;
-	mat->m[3][3] = 4;
-	printf("is this the det of the 3x3 matrix ? %f\n", determinant_general(mat));
+	printf("is this the det of the 3x3 matrix ? %f\n", determinant(mat));
 }
 
 void	test_cofactor()
@@ -89,14 +106,14 @@ void	test_minor()
 
 }
 
-void	test_determinant()
+void	test_determinant_2x2()
 {
 	t_matrix	*mat = init_matrix(2, 2);
 	mat->m[0][0] = 1;
 	mat->m[0][1] = 5;
 	mat->m[1][0] = -3;
 	mat->m[1][1] = 2;
-	printf("det is %d\n", determinant(mat));
+	printf("is this the determinant of the 2x2 matrix ? %f\n", determinant(mat));
 }
 
 void	test_submatrix()
