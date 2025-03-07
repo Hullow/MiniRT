@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/02/27 15:02:32 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 19:01:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ t_tuple	*add_tuple(t_tuple *a, t_tuple *b)
 	t_tuple	*c;
 
 	if (!a || !b)
-	// 	return (NULL);
-	// if (a->w == POINT && b->w == POINT)
-	// {
-	// 	printf("add_tuple: can't add point to point\n");
-	// 	return (NULL);
-	// }
+		return (NULL);
+	if (a->w == POINT && b->w == POINT)
+	{
+		printf("add_tuple: can't add point to point\n");
+		return (NULL);
+	}
 	c = malloc (sizeof(t_tuple));
 	if (!c)
 		return (NULL);
@@ -54,16 +54,16 @@ t_tuple	*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend)
 
 	if (!minuend || !subtrahend)
 		return (NULL);
-	// if (minuend->w == POINT && subtrahend->w == POINT)
-	// {
-	// 	printf("add_tuple: can't subtract point from point\n");
-	// 	return (NULL);
-	// }
-	// else if (minuend->w == VECTOR && subtrahend->w == POINT)
-	// {
-	// 	printf("add_tuple: can't subtract point from vector\n");
-	// 	return (NULL);
-	// }
+	if (minuend->w == POINT && subtrahend->w == POINT)
+	{
+		printf("add_tuple: can't subtract point from point\n");
+		return (NULL);
+	}
+	else if (minuend->w == VECTOR && subtrahend->w == POINT)
+	{
+		printf("add_tuple: can't subtract point from vector\n");
+		return (NULL);
+	}
 	c = malloc (sizeof(t_tuple));
 	if (!c)
 		return (NULL);
@@ -80,11 +80,11 @@ t_tuple	*negate_tuple(t_tuple *a)
 {
 	if (!a)
 		return (NULL);
-	// if (a->w != VECTOR)
-	// {
-	// 	printf("negate_tuple: can't negate a point\n");
-	// 	return (NULL);
-	// }
+	if (a->w != VECTOR)
+	{
+		printf("negate_tuple: can't negate a point or a color\n");
+		return (NULL);
+	}
 	a = subtract_tuple(vector(0, 0, 0), a);
 	return (a);
 }

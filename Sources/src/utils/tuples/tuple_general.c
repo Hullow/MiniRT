@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:14:45 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 18:46:50 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:58:28 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_tuple	*color(float x, float y, float z)
 	point->x = x;
 	point->y = y;
 	point->z = z;
-	point->w =  COLOR;
+	point->w = COLOR;
 	return (point);
 }
 
