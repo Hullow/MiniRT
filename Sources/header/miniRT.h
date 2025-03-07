@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 16:19:35 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/07 09:13:27 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_camera
 {
 	t_tuple	*coord;
 	t_tuple	*orient;
+	float	fov;
 }	t_camera;
 
 typedef struct s_light

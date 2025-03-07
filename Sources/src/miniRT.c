@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 17:58:26 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/07 12:11:06 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char *argv[])
 {
 	t_scene	*scene;
 
+	errno = 0;
 	if (argc != 2)
 	{
 		ft_puterr_fd("error: one <file>.rt expected\n");
@@ -46,8 +47,27 @@ int	main(int argc, char *argv[])
 		return (5);
 	if (rt_init_scene(argv[1], scene))
 		return (6);
-	printf("assign light %f\n", scene->lux->color->x);
-	printf("assign light %f\n", scene->lux->color->y);
-	printf("assign light %f\n", scene->lux->color->z);
+	if (!errno)
+	{
+		printf("light coords x: %f y: %f z: %f\n", scene->lux->coord->x, scene->lux->coord->y, scene->lux->coord->z);
+		printf("light ratio : %f\n", scene->lux->ratio);
+		printf("light color R: %f G: %f B: %f\n", scene->lux->color->x, scene->lux->color->y, scene->lux->color->z);
+		printf("ambient ratio : %f\n", scene->amb->ratio);
+		printf("ambient color R: %f G: %f B: %f\n", scene->amb->color->x, scene->amb->color->y, scene->amb->color->z);
+		printf("camera coords x: %f y: %f z: %f\n", scene->cam->coord->x, scene->cam->coord->y, scene->cam->coord->z);
+		printf("camera orient x: %f y: %f z: %f\n", scene->cam->orient->x, scene->cam->orient->y, scene->cam->orient->z);
+		printf("camera fov: %f\n", scene->cam->fov);
+		printf("sphere coords x: %f y: %f z: %f\n", scene->sp->coord->x, scene->sp->coord->y, scene->sp->coord->z);
+		printf("sphere diameter : %f\n", scene->sp->diameter);
+		printf("sphere color R: %f G: %f B: %f\n", scene->sp->color->x, scene->sp->color->y, scene->sp->color->z);
+		printf("plane coords x: %f y: %f z: %f\n", scene->pl->coord->x, scene->pl->coord->y, scene->pl->coord->z);
+		printf("plane normal x: %f y: %f z: %f\n", scene->pl->norm->x, scene->pl->norm->y, scene->pl->norm->z);
+		printf("plane color R: %f G: %f B: %f\n", scene->pl->color->x, scene->pl->color->y, scene->pl->color->z);
+		printf("cylinder coords x: %f y: %f z: %f\n", scene->cy->coord->x, scene->cy->coord->y, scene->cy->coord->z);
+		printf("cylinder normal x: %f y: %f z: %f\n", scene->cy->norm->x, scene->cy->norm->y, scene->cy->norm->z);
+		printf("cylinder diameter : %f\n", scene->cy->diameter);
+		printf("cylinder height : %f\n", scene->cy->height);
+		printf("cylinder color R: %f G: %f B: %f\n", scene->cy->color->x, scene->cy->color->y, scene->cy->color->z);
+	}
 	return (0);
 }
