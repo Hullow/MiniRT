@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:38:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 18:59:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 19:18:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ float	magnitude(t_tuple *tuple)
 while preserving its direction), and returns it */
 t_tuple	*normalize(t_tuple *tuple)
 {
+	t_tuple	*norm;
+
+	
 	if (!tuple)
 		return (NULL);
 	if (is_equal_float(magnitude(tuple), 0))
@@ -36,8 +39,11 @@ t_tuple	*normalize(t_tuple *tuple)
 		printf("normalize: vector is null vector, cannot normalize\n");
 		return (NULL);
 	}
-	divide_tuple_by_scalar(tuple, magnitude(tuple));
-	return (tuple);
+	norm = malloc (sizeof(t_tuple));
+	if (!norm)
+		return (NULL);
+	norm = divide_tuple_by_scalar(tuple, magnitude(tuple));
+	return (norm);
 }
 
 /* returns the dot product for two (3d) vectors

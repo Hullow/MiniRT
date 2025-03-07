@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 19:01:19 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/07 19:16:52 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,27 +85,31 @@ t_tuple	*negate_tuple(t_tuple *a)
 		printf("negate_tuple: can't negate a point or a color\n");
 		return (NULL);
 	}
-	a = subtract_tuple(vector(0, 0, 0), a);
-	return (a);
+	return (subtract_tuple(vector(0, 0, 0), a));
 }
 
 /* modifies the coordinates of the tuple by multiplying them with a scalar;
 returns the tuple after these modifications */
 t_tuple	*multiply_tuple_by_scalar(t_tuple *a, float scalar)
 {
-	if (!a)
+	t_tuple	*c;
+
+	c = malloc (sizeof(t_tuple));
+	if (!c)
 		return (NULL);
-	a->x = a->x * scalar;
-	a->y = a->y * scalar;
-	a->z = a->z * scalar;
-	a->w = a->w * scalar;
-	return (a);
+	c->x = a->x * scalar;
+	c->y = a->y * scalar;
+	c->z = a->z * scalar;
+	c->w = a->w * scalar;
+	return (c);
 }
 
 /* modifies the coordinates of the tuple by dividing them with a scalar;
 returns the tuple after these modifications */
 t_tuple	*divide_tuple_by_scalar(t_tuple *a, float scalar)
 {
+	t_tuple	*c;
+
 	if (!a)
 		return (NULL);
 	if (is_equal_float(scalar, 0.0))
@@ -113,9 +117,12 @@ t_tuple	*divide_tuple_by_scalar(t_tuple *a, float scalar)
 		printf("divide_by_scalar: cannot divide by 0\n");
 		return (NULL);
 	}
-	a->x = a->x / scalar;
-	a->y = a->y / scalar;
-	a->z = a->z / scalar;
-	a->w = a->w / scalar;
-	return (a);
+	c = malloc (sizeof(t_tuple));
+	if (!c)
+		return (NULL);
+	c->x = a->x / scalar;
+	c->y = a->y / scalar;
+	c->z = a->z / scalar;
+	c->w = a->w / scalar;
+	return (c);
 }
