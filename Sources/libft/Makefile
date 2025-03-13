@@ -5,7 +5,7 @@ NAME	= libft.a
 CC	= cc
 
 # Compiler flags
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g -lm
 
 # Folders
 SRCDIR	= src/
@@ -61,6 +61,7 @@ SRCSTR	= ft_strlen \
 	ft_atoi \
 	ft_atol \
 	ft_atof \
+	ft_strtof \
 	ft_atod \
 	ft_strrchr \
 	ft_split \
@@ -113,7 +114,6 @@ OBJ	= $(addprefix $(OBJDIR)$(FD_DIR), $(addsuffix .o, $(SRCFD_))) \
 
 # Default target
 all: $(OBJDIR) $(NAME)
-	@echo "Compilation of $(NAME) done!"
 
 # Build target
 $(NAME): $(OBJ)

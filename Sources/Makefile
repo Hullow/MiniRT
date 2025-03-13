@@ -14,6 +14,12 @@ SRCDIR		= src/
 OBJDIR		= obj/
 HEADDIR		= header/
 
+FILEDIR		= file_check/
+SCENEDIR	= scene/
+MATRIXDIR	= matrices/
+TUPLEDIR	= tuples/
+UTILSDIR	= utils/
+
 # Libs
 LIBFTDIR	= libft/
 LIBFT		= $(LIBFTDIR)libft.a
@@ -25,17 +31,42 @@ MLX			= $(MLXDIR)libmlx.a
 HEADSRC		= $(HEADDIR)$(NAME).h
 
 # Source files
-MAIN		= miniRT \
-			rt_file_check \
+MAIN		= miniRT
 
-SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN)))
+FILECHECK	= rt_file_check
+
+SCENE		= rt_init_scene \
+			rt_objects \
+			rt_scene_structs
+
+MATRIX		= rt_matrix_basic_ops \
+			rt_matrix_general \
+			rt_matrix_sub_det_cof
+
+TUPLE		= rt_tuple_basic_ops \
+			rt_tuple_general \
+			rt_tuple_advanced_ops \
+			rt_color_multiply
+
+UTILS		= rt_utils
+
+SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
+			$(addprefix $(SRCDIR)$(FILEDIR), $(addsuffix .c, $(FILECHECK))) \
+			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
+			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
+			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
+			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
 
 # Object files
-OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN)))
+OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
+			$(addprefix $(OBJDIR)$(FILEDIR), $(addsuffix .o, $(FILECHECK))) \
+			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
+			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
+			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
+			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME) 
-	@echo "Compilation of $(NAME) done!"
 
 # Build target
 $(NAME): $(OBJ)
@@ -43,7 +74,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(CFLAGS) $(MLXFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -57,6 +88,11 @@ $(MLX):
 $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
 	@mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)$(FILEDIR)
+	@mkdir -p $(OBJDIR)$(SCENEDIR)
+	@mkdir -p $(OBJDIR)$(MATRIXDIR)
+	@mkdir -p $(OBJDIR)$(TUPLEDIR)
+	@mkdir -p $(OBJDIR)$(UTILSDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files

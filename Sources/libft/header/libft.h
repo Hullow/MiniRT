@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:55:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 10:20:48 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/04 12:03:54 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <errno.h>
+# include <float.h>
+# include <math.h>
 
 // Converts an int into a string
 char	*ft_itoa(int n);
@@ -58,6 +61,11 @@ long	ft_atol(const char *str);
 // Ignores all space(3) from the beginning of *str 
 // and applies the first +/- sign found. 
 float	ft_atof(const char *str);
+// Returns the float converted value of char *str. 
+// Ignores all space(3) from the beginning of *str 
+// and applies the first +/- sign found.
+// Handles invalid inputs
+float	ft_strtof(const char *str);
 // Returns the double converted value of char *str. 
 // Ignores all space(3) from the beginning of *str 
 // and applies the first +/- sign found. 

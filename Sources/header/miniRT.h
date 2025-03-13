@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/02/21 17:03:20 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/13 12:03:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,23 @@
 
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
-# include <math.h>
 # include <stdio.h>
-# include <errno.h>
 
-# define VECTOR 0
-# define POINT 1
-# define COLOR 2
+# define VECTOR 0.0
+# define POINT 1.0
+# define COLOR 2.0
 
-# define EPSILON 0.00001
+# define EPSILON 0.00005
+
+typedef enum ERROR_TYPE {
+	NULL_INPUT,
+	MALLOC_FAIL,
+	INVALID_MATRIX_SIZE,
+	MATRIX_NOT_INVERTIBLE
+}	t_error;
 
 /* A tuple:
-	- has a type (int): either a vector (0) or a point (1)
+	- has a type (w): either a vector (0.0) or a point (1.0)
 	- has three coordinates:
 		- x (float): lateral->to the right || RED
 		- y (float): vertical->up || GREEN
@@ -35,8 +40,14 @@ typedef struct s_tuple {
 	float	x;
 	float	y;
 	float	z;
-	int		type;
+	float	w;
 }	t_tuple;
+
+typedef struct s_matrix {
+	int		rows;
+	int		columns;
+	float 	**m;
+}	t_matrix;
 
 typedef struct s_ambient
 {
@@ -48,6 +59,7 @@ typedef struct s_camera
 {
 	t_tuple	*coord;
 	t_tuple	*orient;
+	float	fov;
 }	t_camera;
 
 typedef struct s_light
@@ -82,6 +94,12 @@ typedef struct s_cylinder
 
 typedef struct s_scene
 {
+	int			n_A;
+	int			n_L;
+	int			n_C;
+	int			n_sp;
+	int			n_pl;
+	int			n_cy;
 	t_ambient	*amb;
 	t_camera	*cam;
 	t_light		*lux;
@@ -90,17 +108,36 @@ typedef struct s_scene
 	t_cylinder	*cy;
 }	t_scene;
 
+// Input handling
+
+int			rt_check_ext(const char *file);
+int			rt_read_id(const char *file, t_scene *scene);
+int			rt_count_object(const char *line, t_scene *scene);
+int			rt_malloc_objects(t_scene *scene);
+int			rt_init_scene(const char *file, t_scene *scene);
+void		rt_assign_light(t_scene *scene, char **needle);
+void		rt_assign_sphere(t_scene *scene, char **needle);
+void		rt_assign_ambient(t_scene *scene, char **needle);
+void		rt_assign_camera(t_scene *scene, char **needle);
+void		rt_assign_plane(t_scene *scene, char **needle);
+void		rt_assign_cylinder(t_scene *scene, char **needle);
+
 // Utils
+	// General
+
+void		*handle_error(t_error error_type);
+
 	// Math
 		// Basic bricks
-		
+
 int			is_equal_float(float a, float b);
 float		abs_float(float a);
 
 		// Tuples and tuple operations
 
-t_tuple		*point(float x, float y, float z);
-t_tuple		*vector(float x, float y, float z);
+t_tuple		*rt_point(float x, float y, float z);
+t_tuple		*rt_vector(float x, float y, float z);
+t_tuple		*rt_color(float r, float g, float b);
 int			is_equal_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*add_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend);
@@ -109,14 +146,35 @@ t_tuple		*multiply_tuple_by_scalar(t_tuple *a, float scalar);
 t_tuple		*divide_tuple_by_scalar(t_tuple *a, float scalar);
 float		magnitude(t_tuple *tuple);
 t_tuple		*normalize(t_tuple *tuple);
-float		*dot_product(t_tuple *a, t_tuple *b);
+float		dot_product(t_tuple *a, t_tuple *b);
 t_tuple		*cross_product(t_tuple *a, t_tuple *b);
-// Returns 1 if the file extension is wrong. Otherwise 0
-int	rt_check_ext(char *file);
-// Returns 1 if the sccene.rt file contains wrong data. Otherwise 0
-int	rt_check_scene(char *file);
-// Extracts the values contained in .rt file and stores them in a struct
-// Returns 1 if the struct is successfully created. Otherwise 0
-int	rt_extract_scene(char *file);
+
+		// Matrices
+			// General functions
+		
+t_matrix	*init_matrix(int rows, int columns);
+t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns);
+t_matrix	*identity_matrix(int rows, int columns);
+t_matrix	*convert_tuple_to_matrix(t_tuple *tuple);
+int			print_matrix(t_matrix *mat);
+
+			// Basic operations
+		
+t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
+t_matrix	*matrix_transposition(t_matrix *mat);
+t_matrix	*matrix_inversion(t_matrix *mat);
+int			matrix_equality(t_matrix *a, t_matrix *b);
+
+			// Sub, determinant, cofactor
+
+int			submatrix_errors(t_matrix *mat, t_matrix *sub);
+t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub);
+float		matrix_minor(t_matrix *mat, int row, int column);
+float		matrix_cofactor(t_matrix *mat, int row, int column);
+float		determinant(t_matrix *mat);
+
+		// Color
+
+t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
 
 #endif
