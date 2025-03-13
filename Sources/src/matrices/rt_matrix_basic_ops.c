@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_basic_ops.c                                 :+:      :+:    :+:   */
+/*   rt_matrix_basic_ops.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 18:14:20 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:51:02 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 /* multiplies 4x4 matrices (a * b) and returns the result
 	returns

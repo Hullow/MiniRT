@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_advanced_ops.c                               :+:      :+:    :+:   */
+/*   rt_tuple_advanced_ops.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:38:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 19:18:19 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:58:36 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 /* returns the magnitude (length) of a vector
 n.b.: should only be used with vector */
@@ -61,7 +61,7 @@ t_tuple	*cross_product(t_tuple *a, t_tuple *b)
 {
 	if (!a || !b)
 		return (NULL);
-	return (vector(
+	return (rt_vector(
 			(a->y * b->z) - (a->z * b->y),
 			(a->z * b->x) - (a->x * b->z),
 			(a->x * b->y) - (a->y * b->x)));

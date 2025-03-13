@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_objects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 20:16:27 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/13 11:57:02 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 static int rt_valid_color(char **color)
 {
@@ -123,8 +123,8 @@ void	rt_assign_light(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->lux->coord = point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->lux->color = color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->lux->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->lux->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
@@ -146,7 +146,7 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->amb->color = color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->amb->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(color);
 }
 
@@ -170,8 +170,8 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 		ft_free_tab(orient);
 		return ;
 	}
-	scene->cam->orient = vector(ft_strtof(*orient), ft_strtof(*(orient + 1)), ft_strtof(*(orient + 2)));
-	scene->cam->coord = point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->cam->orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)), ft_strtof(*(orient + 2)));
+	scene->cam->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(orient);
 }
@@ -190,8 +190,8 @@ void	rt_assign_sphere(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->sp->coord = point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->sp->color = color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->sp->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->sp->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
@@ -212,9 +212,9 @@ void	rt_assign_plane(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->pl->coord = point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->pl->norm = vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
-	scene->pl->color = color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->pl->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->pl->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
+	scene->pl->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
@@ -238,9 +238,9 @@ void	rt_assign_cylinder(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->cy->coord = point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->cy->norm = vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
-	scene->cy->color = color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->cy->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->cy->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
+	scene->cy->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);

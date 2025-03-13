@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_sub_det_cof.c                               :+:      :+:    :+:   */
+/*   rt_matrix_sub_det_cof.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:13:49 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 16:52:55 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:51:09 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 /* handle error cases for submatrix, returning 1 if:
 	- NULL matrix as input

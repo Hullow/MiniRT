@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_basic_ops.c                                  :+:      :+:    :+:   */
+/*   rt_tuple_basic_ops.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 19:16:52 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:58:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 /* adds two tuples by adding all elements and returning the resulting tuple:
 	- if two tuples are points, prints an error message and returns NULL
@@ -85,7 +85,7 @@ t_tuple	*negate_tuple(t_tuple *a)
 		printf("negate_tuple: can't negate a point or a color\n");
 		return (NULL);
 	}
-	return (subtract_tuple(vector(0, 0, 0), a));
+	return (subtract_tuple(rt_vector(0, 0, 0), a));
 }
 
 /* modifies the coordinates of the tuple by multiplying them with a scalar;

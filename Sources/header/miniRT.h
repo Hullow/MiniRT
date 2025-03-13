@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 20:20:41 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/13 12:03:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,9 @@ float		abs_float(float a);
 
 		// Tuples and tuple operations
 
-t_tuple		*point(float x, float y, float z);
-t_tuple		*vector(float x, float y, float z);
-t_tuple		*color(float r, float g, float b);
+t_tuple		*rt_point(float x, float y, float z);
+t_tuple		*rt_vector(float x, float y, float z);
+t_tuple		*rt_color(float r, float g, float b);
 int			is_equal_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*add_tuple(t_tuple *a, t_tuple *b);
 t_tuple		*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend);
@@ -174,6 +174,7 @@ float		matrix_cofactor(t_matrix *mat, int row, int column);
 float		determinant(t_matrix *mat);
 
 		// Color
-t_tuple		rt_hadamard(t_tuple color1, t_tuple color2);
+
+t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
 
 #endif

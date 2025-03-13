@@ -114,7 +114,6 @@ OBJ	= $(addprefix $(OBJDIR)$(FD_DIR), $(addsuffix .o, $(SRCFD_))) \
 
 # Default target
 all: $(OBJDIR) $(NAME)
-	@echo "Compilation of $(NAME) done!"
 
 # Build target
 $(NAME): $(OBJ)

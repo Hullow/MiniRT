@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_general.c                                   :+:      :+:    :+:   */
+/*   rt_matrix_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 17:08:54 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:51:06 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
 {

@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_general.c                                    :+:      :+:    :+:   */
+/*   rt_tuple_general.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:14:45 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/07 20:20:08 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/13 11:55:16 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../header/miniRT.h"
+#include "../../header/miniRT.h"
 
 /* Initializes a point: mallocs a tuple, fills it with the input coordinates,
 sets its type to POINT (0) */
-t_tuple	*point(float x, float y, float z)
+t_tuple	*rt_point(float x, float y, float z)
 {
 	t_tuple	*point;
 
@@ -30,7 +30,7 @@ t_tuple	*point(float x, float y, float z)
 
 /* Initializes a color tuple: mallocs a tuple, 
 fills it with the input colors RGB / 255, sets its type to COLOR (2.0) */
-t_tuple	*color(float r, float g, float b)
+t_tuple	*rt_color(float r, float g, float b)
 {
 	t_tuple	*color;
 
@@ -46,7 +46,7 @@ t_tuple	*color(float r, float g, float b)
 
 /* Initializes a vector: mallocs a tuple, fills it with the input coordinates,
 sets its type to VECTOR (0) */
-t_tuple	*vector(float x, float y, float z)
+t_tuple	*rt_vector(float x, float y, float z)
 {
 	t_tuple	*vector;
 
