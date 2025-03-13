@@ -19,6 +19,7 @@ SCENEDIR	= scene/
 MATRIXDIR	= matrices/
 TUPLEDIR	= tuples/
 UTILSDIR	= utils/
+RAYSDIR		= rays/
 
 # Libs
 LIBFTDIR	= libft/
@@ -47,6 +48,8 @@ TUPLE		= rt_tuple_basic_ops \
 			rt_tuple_general \
 			rt_tuple_advanced_ops \
 			rt_color_multiply
+
+RAYSDIR		= rt_raycast
 
 UTILS		= rt_utils
 

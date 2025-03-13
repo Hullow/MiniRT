@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/13 12:03:06 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:19:22 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum ERROR_TYPE {
 }	t_error;
 
 /* A tuple:
-	- has a type (w): either a vector (0.0) or a point (1.0)
+	- has a type (w): either a vector (0.0), a point (1.0) or a color (2.0)
 	- has three coordinates:
 		- x (float): lateral->to the right || RED
 		- y (float): vertical->up || GREEN
@@ -48,6 +48,11 @@ typedef struct s_matrix {
 	int		columns;
 	float 	**m;
 }	t_matrix;
+
+typedef struct s_ray {
+	t_tuple	*origin;
+	t_tuple	*direction;
+}	t_ray;
 
 typedef struct s_ambient
 {
@@ -176,5 +181,9 @@ float		determinant(t_matrix *mat);
 		// Color
 
 t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
+
+		// Raycasting
+
+t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
 
 #endif

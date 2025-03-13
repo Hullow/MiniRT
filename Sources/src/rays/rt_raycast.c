@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_color_multiply.c                                :+:      :+:    :+:   */
+/*   rt_raycast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 15:02:22 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/13 16:20:36 by pberset          ###   ########.fr       */
+/*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
+/*   Updated: 2025/03/13 16:22:26 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/miniRT.h"
 
-// Multiply two colors
-t_tuple	*rt_hadamard(t_tuple color1, t_tuple color2)
+t_ray		*rt_ray(t_tuple *origin, t_tuple *direction)
 {
-	t_tuple	*output;
+	t_ray	*ray;
 
-	output = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
-	if (!output)
+	ray = (t_ray *)ft_calloc(1, sizeof(t_ray));
+	if (!ray)
 		return (NULL);
-	output->x = color1.x * color2.x;
-	output->y = color1.y * color2.y;
-	output->z = color1.z * color2.z;
-	return (output);
+	ray->origin = origin;
+	ray->direction = direction;
+	return (ray);
 }
