@@ -54,6 +54,49 @@
 			- Formula: `Ld = 1 − exp⁡(−L * exposure)`, followed by `Ld' = Ld'^(1/y)​`
 		- Filmic Tone Mapping -> va tuer notre CPU
 
+## Matrix transformation
+
+### Translation
+
+- t_point transform()
+	- transform = translation(x, y, z) // t_matrix
+	- inv = inverse(transform) // pour la fonction de translation inverse
+	- t_point point(x, y, z) // origine de l'objet / du vecteur
+	- return multiply_matrix(transform * tuple_to_matrix(point))
+	- return multiply_matrix(inv * tuple_to_matrix(point))
+- t_point translate()
+	- La fonction translation n'affecte pas les vecteurs
+		- elle affecte l'origine du vecteur (point) si c'est ce qu'on a passé
+		- Elle n'affecte pas la direction, ni la longueur
+			- multiply_matrix(transform, tuple_to_matrix(v)) = tuple_to_matrix(v)
+		- Le vecteur a 0 en valeur w
+			- la matrice 4x4 est donc annulée
+- t_matrix translation
+	- matrice identité
+		- Dernière colonne contient [x, y, z, 1]
+
+### Scaling
+
+- t_point transform()
+	- transform = scale(x, y, z) // t_matrix
+	- soit inv = inverse(transform)
+	- soit point
+	- soit vector
+		- return multiply_matrix(transform, tuple_to_matrix(point))
+		- return multiply_matrix(transform, tuple_to_matrix(vector))
+		- return multiply_matrix(inv, tuple_to_matrix(point))
+		- return multiply_matrix(inv, tuple_to_matrix(vector))
+- t_matrix scaling
+	- Matrice identité
+		- Diagonale contient [x, y, z, 1]
+		- un scaling négatif est un mirroir
+
+## Rotation
+
+- t_point transform()
+	- transform = rotation(x, y, z) // t_matrix
+p.47
+
 ## Ray casting
 
 - Create a struct ray
@@ -66,7 +109,7 @@
 	- retourne un point : le point à la distance t du point de départ du ray dans la direction du vecteur du ray
 	- return ray.origin + ray.direction * t
 
-## Sphere intersect
+### Sphere intersect
 
 - Need of a sphere creation function
 	- créer une sphère
@@ -138,7 +181,7 @@
 		- pas d'intersection : oublions ce rayon
 		- Je devrais utiliser errno pour distinguer 0 ou des valeurs négatives valides d'une absence d'intersection
 
-## Multiple objects
+### Multiple objects
 
 - Il nous faut une structure t_intersect
 	- void *object;
@@ -147,7 +190,7 @@
 	- Nous ferons un tableau de ces intersections pour connaître toutes les intersections de notre scène et les dessiner plus tard
 	- Nous allons utiliser la fonction intersect pour cette struct
 
-## The "hit"
+### The "hit"
 
 - Un "hit" est une intersection visible depuis l'origine du rayon
 	- N'est pas derrière l'origine du rayon
@@ -156,7 +199,7 @@
 - Nous gardons les autres valeurs t
 	- sera utile pour les réflexion et les réfractions !
 
-## Transformations
+### Transformations
 
 - Déplacer la sphère; déplacer le rayon
 	- Quelle importance ?
