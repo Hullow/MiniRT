@@ -121,9 +121,85 @@
 		- Positif : au moins une intersection
 		- Négatif : aucune intersection
 	- soient une sphère et un rayon
-	- sphere_to_ray = ray.origin - sphere.origin
-	- a = dot_product(ray.direction, ray.direction)
-	- b = 2 * dot_product(ray.direction, sphere_to_ray)
-	- c = dot_product(sphere_to_ray, sphere_to_ray) - 1
-	- discriminant = powf(b, 2) - 4 * a * c
-p.62
+		- sphere_to_ray = ray.origin - sphere.origin
+		- a = dot_product(ray.direction, ray.direction)
+		- b = 2 * dot_product(ray.direction, sphere_to_ray)
+		- c = dot_product(sphere_to_ray, sphere_to_ray) - 1
+		- discriminant = powf(b, 2) - 4 * a * c
+		- if discriminant < 0
+			return ()
+- Après calcul du déterminant, retour sur la fonction intersect()
+	- t0 = (-b - sqrt(discriminant)) / (2 * a)
+	- t1 = (-b + sqrt(discriminant)) / (2 * a)
+	- return (t0, t1)
+- Itersect retourne donc deux scalaires float[2]
+	- ils représentent les deux distances des intersections à partir du point de départ du rayon
+	- si le déterminant est négatif, on ne retourne rien
+		- pas d'intersection : oublions ce rayon
+		- Je devrais utiliser errno pour distinguer 0 ou des valeurs négatives valides d'une absence d'intersection
+
+## Multiple objects
+
+- Il nous faut une structure t_intersect
+	- void *object;
+		- t_sphere, t_cylinder, t_plane
+	- float[t0, t1]
+	- Nous ferons un tableau de ces intersections pour connaître toutes les intersections de notre scène et les dessiner plus tard
+	- Nous allons utiliser la fonction intersect pour cette struct
+
+## The "hit"
+
+- Un "hit" est une intersection visible depuis l'origine du rayon
+	- N'est pas derrière l'origine du rayon
+	- N'est pas caché derrière un autre hit
+		- un hit est l'intersection avec la plus petite valeur positive pour t
+- Nous gardons les autres valeurs t
+	- sera utile pour les réflexion et les réfractions !
+
+## Transformations
+
+- Déplacer la sphère; déplacer le rayon
+	- Quelle importance ?
+	- La distance entre les deux a été modifiée
+- Agrandir la sphère; réduire le rayon
+	- La distance entre la sphère et le rayon est réduite
+	- On redimensionne le rayon par l'inverse de la quantité d'agrandissement de la sphère
+- Rotation d'un plan / cylindre; rotation du rayon autour de l'objet
+- quelle que soit la transfrmation recherchée
+	- Appliquer l'inverse de la transformation de l'objet sur le rayon à la place
+	- une matrice de transformation est comme une co version des points entre le système global et le système local
+		- World coordinates
+		- Object coordinates
+	- prendre un point en local et le multipiler avec une matrice le convertit en point du système global
+	- multiplier ce point global par l'inverse de cette matrice le rapporte au système local
+- Convertir un rayon du système global par l'inverse de l'opération recherchée sur l'objet
+	- le rayon se trouve dans l'espace local de l'objet
+
+### Sur le rayon
+
+- soit un rayon
+- soit une matrice de rotation
+	- translation
+		- transform(rayon, matrice)
+			- origin  = point avec les nouvelles coordonnées
+			- direction = vector avec les nouvelles données
+	- scaling
+		- transform(rayon, matrice)
+			- origin  = point avec les nouvelles coordonnées
+			- direction = vector avec les nouvelles données 
+	- Ne surtout pas normaliser les valeurs
+		- On veut savoir si on a inversé la direction du rayon, par exemple
+	
+### Sur les objets
+
+- Soit un objet
+	- sa transform = matrice identité
+- soit une matrice translation
+	- set_transform(objet, matrice)
+	- objet.transform = nouvelle matrice
+- soit le rayon qui intersect l'objet
+	- set_transform(objet, transformation_function)
+	- intersection(objet, rayon)
+		- intersect = int // si 0, plus d'intersection, 2 si oui
+		- t0 = float
+		- t1 = floa
