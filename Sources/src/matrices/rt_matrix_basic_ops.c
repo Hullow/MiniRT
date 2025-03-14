@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_basic_ops.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/13 11:51:02 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:30:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/miniRT.h"
+#include "miniRT.h"
 
 /* multiplies 4x4 matrices (a * b) and returns the result
 	returns

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 12:11:06 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/14 14:32:54 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/miniRT.h"
+#include "miniRT.h"
 
 static void	rt_init_counters(t_scene *scene)
 {

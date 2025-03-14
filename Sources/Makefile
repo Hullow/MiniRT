@@ -5,14 +5,18 @@ NAME		= miniRT
 CC			= cc
 
 # Compiler flags
-CFLAGS		= -Wall -Wextra -Werror -lm
+CFLAGS		= -Wall -Wextra -Werror
 DFLAGS		= -g3
-MLXFLAGS	= -L$(MLXDIR) -lmlx -I$(MLXDIR) -lXext -lX11
+LIBFLAGS	= -L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lXext -lX11 -lm
+INCLUDES	= -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 
 # Folders
 SRCDIR		= src/
 OBJDIR		= obj/
-HEADDIR		= header/
+INCLUDEDIR	= include/
+
+LIBFTDIR	= $(INCLUDEDIR)libft/
+MLXDIR		= $(INCLUDEDIR)mlx/
 
 FILEDIR		= file_check/
 SCENEDIR	= scene/
@@ -21,14 +25,12 @@ TUPLEDIR	= tuples/
 UTILSDIR	= utils/
 
 # Libs
-LIBFTDIR	= libft/
 LIBFT		= $(LIBFTDIR)libft.a
-
-MLXDIR		= mlx/
 MLX			= $(MLXDIR)libmlx.a
 
-# Header files
-HEADSRC		= $(HEADDIR)$(NAME).h
+# Header
+HEADERS		= $(INCLUDEDIR)$(NAME).h $(LFTHEADER)*.h $(MLXDIR)mlx.h
+LFTHEADER	= $(INCLUDEDIR)libft/header/
 
 # Source files
 MAIN		= miniRT
@@ -66,7 +68,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
 
 # Default target
-all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME) 
+all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
 
 # Build target
 $(NAME): $(OBJ)
@@ -74,7 +76,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(CFLAGS) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(NAME).a $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -96,8 +98,8 @@ $(OBJDIR):
 	@echo "Compiling $(NAME)..."
 
 # Build object files
-$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADSRC)
-	@$(CC) $(CFLAGS) $(DFLAGS) -c $^ -o $@
+$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
+	@$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
 
 # Clean compiled files
 clean:
@@ -115,7 +117,7 @@ fclean: clean
 
 # Rebuild from scratch
 re: fclean
-	@echo "Reseting $(NAME)..."
+	@echo "Resetting $(NAME)..."
 	@echo ""
 	@$(MAKE) --no-print-directory all
 

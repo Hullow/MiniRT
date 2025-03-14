@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_init_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/13 11:51:17 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:30:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/miniRT.h"
+#include "miniRT.h"
 
 static void	rt_spacify(char *line)
 {

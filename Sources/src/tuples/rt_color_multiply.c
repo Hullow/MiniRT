@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_color_multiply.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:02:22 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/13 11:51:33 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:30:09 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/miniRT.h"
+#include "miniRT.h"
 
 // Multiply two colors
 t_tuple	*rt_hadamard(t_tuple color1, t_tuple color2)

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/13 12:03:06 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:12:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "../libft/header/libft.h"
-# include "../mlx/mlx.h"
+# include "mlx.h"
+# include "libft.h"
 # include <stdio.h>
 
 # define VECTOR 0.0

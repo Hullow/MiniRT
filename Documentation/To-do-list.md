@@ -10,6 +10,8 @@
 - Implement color operations (chapter 2 RT Challenge) => pberset (needed only hadamard in addition to tuple operations)
 - Implement matrices and matrix operations (chapter 3 RT Challenge) => fallan
 - Matrix transformations (chapter 4 RT Challenge) => fallan
+	- Translation and scaling => pberset
+	- Rotation and shearing => fallan
 - Ray-Sphere intersections (chapter 5 RT Challenge) => pberset
 - Light and shading (chapter 6 RT Challenge) => pberset
 - Making a scene: implement world, view transformation (matrix transformation), camera (chapter 7 RT Challenge)
