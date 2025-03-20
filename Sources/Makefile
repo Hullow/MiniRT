@@ -19,6 +19,7 @@ SCENEDIR	= scene/
 MATRIXDIR	= matrices/
 TUPLEDIR	= tuples/
 UTILSDIR	= utils/
+TRANSFDIR	= transforms/
 RAYSDIR		= rays/
 
 # Libs
@@ -49,6 +50,8 @@ TUPLE		= rt_tuple_basic_ops \
 			rt_tuple_advanced_ops \
 			rt_color_multiply
 
+TRANSF		= rt_transform
+
 RAYSDIR		= rt_raycast
 
 UTILS		= rt_utils
@@ -58,6 +61,7 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
+			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
 
 # Object files
@@ -66,6 +70,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
+			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
 
 # Default target
@@ -96,6 +101,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(MATRIXDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(UTILSDIR)
+	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files
@@ -106,6 +112,12 @@ $(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADSRC)
 clean:
 	@echo "Cleaning $(NAME) obj/ directory..."
 	rm -rf $(OBJDIR)
+	rm -rf $(OBJDIR)$(FILEDIR)
+	rm -rf $(OBJDIR)$(SCENEDIR)
+	rm -rf $(OBJDIR)$(MATRIXDIR)
+	rm -rf $(OBJDIR)$(TUPLEDIR)
+	rm -rf $(OBJDIR)$(UTILSDIR)
+	rm -rf $(OBJDIR)$(TRANSFDIR)
 	@echo "Cleaning $(NAME).a..."
 	rm -rf $(NAME).a
 
