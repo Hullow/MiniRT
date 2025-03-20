@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/13 16:19:22 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:47:57 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,14 @@ float		determinant(t_matrix *mat);
 		// Color
 
 t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
+
+		// Transform
+
+t_matrix	rt_translation(t_tuple t);
+t_matrix	rt_scaling(t_tuple t);
+t_matrix	rt_rotation_x(float angle);
+t_matrix	rt_rotation_y(float angle);
+t_matrix	rt_rotation_z(float angle);
 
 		// Raycasting
 

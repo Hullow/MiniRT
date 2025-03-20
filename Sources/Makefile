@@ -77,7 +77,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	@$(CC) $(OBJ) $(NAME).a $(LIBFT) $(CFLAGS) $(MLXFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(NAME).a $(LIBFT) $(CFLAGS) $(MLXFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -90,29 +90,29 @@ $(MLX):
 # Create object files directory
 $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(OBJDIR)$(FILEDIR)
-	@mkdir -p $(OBJDIR)$(SCENEDIR)
-	@mkdir -p $(OBJDIR)$(MATRIXDIR)
-	@mkdir -p $(OBJDIR)$(TUPLEDIR)
-	@mkdir -p $(OBJDIR)$(UTILSDIR)
+	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)$(FILEDIR)
+	mkdir -p $(OBJDIR)$(SCENEDIR)
+	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(TUPLEDIR)
+	mkdir -p $(OBJDIR)$(UTILSDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADSRC)
-	@$(CC) $(CFLAGS) $(DFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) $(DFLAGS) -c $^ -o $@
 
 # Clean compiled files
 clean:
 	@echo "Cleaning $(NAME) obj/ directory..."
-	@rm -rf $(OBJDIR)
+	rm -rf $(OBJDIR)
 	@echo "Cleaning $(NAME).a..."
-	@rm -rf $(NAME).a
+	rm -rf $(NAME).a
 
 # Full clean
 fclean: clean
 	@echo "Removing $(NAME)..."
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
 	@make -C $(LIBFTDIR) fclean
 	@make -C $(MLXDIR) clean
 
