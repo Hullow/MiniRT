@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 10:41:07 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/20 17:37:19 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/21 10:27:02 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,12 @@ t_matrix	*rt_scaling(t_tuple t)
 {
 	t_matrix	*scaling;
 
-	sclaing
-	scaling.rows = 4;
-	scaling.columns = 4;
-	scaling.m = (float [4][4]){ \
-		{t.x, 0, 0, 0}, \
-		{0, t.y, 0, 0}, \
-		{0, 0, t.z, 0}, \
-		{0, 0, 0, 1} \
-		};
+	scaling = identity_matrix(4, 4);
+	if (!scaling)
+		return (NULL);
+	scaling[0][0] = t.x;
+	scaling[1][1] = t.y;
+	scaling[2][2] = t.z;
 	return (scaling);
 }
 
@@ -47,14 +44,13 @@ t_matrix	*rt_rotation_x(float angle)
 	float		r;
 
 	r = (angle * M_PI) / 180;
-	rotation.rows = 4;
-	rotation.columns = 4;
-	rotation.m = {
-		{1, 0, 0, 0},
-		{0, cosf(r), -sinf(r), 0},
-		{0, sinf(r), cosf(r), 0},
-		{0, 0, 0, 1}
-	};
+	rotation = identity_matrix(4, 4);
+	if (!rotation)
+		return (NULL);
+	rotation[1][1] = cosf(r);
+	rotation[1][2] = -sinf(r);
+	rotation[2][1] = sinf(r);
+	rotation[2][2] = cosf(r);
 	return (rotation);
 }
 
@@ -64,14 +60,16 @@ t_matrix	*rt_rotation_y(float angle)
 	float		r;
 
 	r = (angle * M_PI) / 180;
-	rotation.rows = 4;
-	rotation.columns = 4;
-	rotation.m = {
-		{cosf(r), 0, sinf(r), 0},
-		{0, 1, 0, 0},
-		{-sinf(r), 0, cosf(r), 0},
-		{0, 0, 0, 1}
-	};
+	rotation = identity_matrix(4, 4);
+	if (!rotation)
+		return (NULL);
+	rotation[0][0] = cosf(r);
+	rotation[2][0] = -sinf(r);
+	rotation[0][2] = sinf(r);
+	rotation[2][2] = cosf(r);
+	float		r;
+
+	r = (angle * M_PI) / 180;
 	return (rotation);
 }
 
@@ -81,14 +79,13 @@ t_matrix	*rt_rotation_z(float angle)
 	float		r;
 
 	r = (angle * M_PI) / 180;
-	rotation.rows = 4;
-	rotation.columns = 4;
-	rotation.m = {
-		{cosf(r), -sinf(r), 0, 0},
-		{sinf(r), cosf(r), 0, 0},
-		{0, 0, 1, 0},
-		{0, 0, 0, 1}
-	};
+	rotation = identity_matrix(4, 4);
+	if (!rotation)
+		return (NULL);
+	rotation[0][0] = cosf(r);
+	rotation[0][1] = -sinf(r);
+	rotation[1][0] = sinf(r);
+	rotation[1][1] = cosf(r);
 	return (rotation);
 }
 
