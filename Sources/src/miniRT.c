@@ -6,12 +6,14 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 15:13:53 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/21 18:28:54 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/miniRT.h"
-/* 
+#include "miniRT.h"
+
+void	miniRT_input_tests(t_scene *scene);
+
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_A = 0;
@@ -20,9 +22,8 @@ static void	rt_init_counters(t_scene *scene)
 	scene->n_sp = 0;
 	scene->n_pl = 0;
 	scene->n_cy = 0;
-} */
+}
 
-/* 
 int	main(int argc, char *argv[])
 {
 	t_scene	*scene;
@@ -48,6 +49,12 @@ int	main(int argc, char *argv[])
 		return (5);
 	if (rt_init_scene(argv[1], scene))
 		return (6);
+	miniRT_input_tests(scene);
+	return (0);
+}
+
+void	miniRT_input_tests(t_scene *scene)
+{
 	if (!errno)
 	{
 		printf("light coords x: %f y: %f z: %f\n", scene->lux->coord->x, scene->lux->coord->y, scene->lux->coord->z);
@@ -70,6 +77,4 @@ int	main(int argc, char *argv[])
 		printf("cylinder height : %f\n", scene->cy->height);
 		printf("cylinder color R: %f G: %f B: %f\n", scene->cy->color->x, scene->cy->color->y, scene->cy->color->z);
 	}
-	return (0);
 }
- */

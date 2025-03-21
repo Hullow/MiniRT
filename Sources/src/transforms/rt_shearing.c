@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_shear.c                                         :+:      :+:    :+:   */
+/*   rt_shearing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:17:23 by francis           #+#    #+#             */
-/*   Updated: 2025/03/21 16:37:41 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/21 18:26:34 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/miniRT.h"
+#include "miniRT.h"
 
 /* Takes in an array of 6 floats shear_factors, which contains, in order:
 	x_to_y, x_to_z, y_to_x,	y_to_z, z_to_x, z_to_y

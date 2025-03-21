@@ -5,32 +5,33 @@ NAME		= miniRT
 CC			= cc
 
 # Compiler flags
-CFLAGS		= -Wall -Wextra -Werror -lm
+CFLAGS		= -Wall -Wextra -Werror
 DFLAGS		= -g3
-MLXFLAGS	= -L$(MLXDIR) -lmlx -I$(MLXDIR) -lXext -lX11
+LIBFLAGS	= -L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lXext -lX11 -lm
+INCLUDES	= -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 
 # Folders
 SRCDIR		= src/
 OBJDIR		= obj/
-HEADDIR		= header/
+INCLUDEDIR	= include/
+
+LIBFTDIR	= $(INCLUDEDIR)libft/
+MLXDIR		= $(INCLUDEDIR)mlx/
 
 FILEDIR		= file_check/
 SCENEDIR	= scene/
 MATRIXDIR	= matrices/
 TUPLEDIR	= tuples/
-UTILSDIR	= utils/
 TRANSFDIR	= transforms/
-RAYSDIR		= rays/
+UTILSDIR	= utils/
 
 # Libs
-LIBFTDIR	= libft/
 LIBFT		= $(LIBFTDIR)libft.a
-
-MLXDIR		= mlx/
 MLX			= $(MLXDIR)libmlx.a
 
-# Header files
-HEADSRC		= $(HEADDIR)$(NAME).h
+# Header
+HEADERS		= $(INCLUDEDIR)$(NAME).h $(LFTHEADER)*.h $(MLXDIR)mlx.h
+LFTHEADER	= $(INCLUDEDIR)libft/header/
 
 # Source files
 MAIN		= miniRT
@@ -50,9 +51,11 @@ TUPLE		= rt_tuple_basic_ops \
 			rt_tuple_advanced_ops \
 			rt_color_multiply
 
-TRANSF		= rt_transform
+TRANSF		= rt_transform \
+			rt_shearing
 
 RAYSDIR		= rt_raycast
+
 
 UTILS		= rt_utils
 
@@ -73,8 +76,9 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
 
+
 # Default target
-all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME) 
+all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
 
 # Build target
 $(NAME): $(OBJ)
@@ -82,7 +86,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	$(CC) $(OBJ) $(NAME).a $(LIBFT) $(CFLAGS) $(MLXFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(NAME).a $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -105,32 +109,26 @@ $(OBJDIR):
 	@echo "Compiling $(NAME)..."
 
 # Build object files
-$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADSRC)
-	$(CC) $(CFLAGS) $(DFLAGS) -c $^ -o $@
+$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
 
 # Clean compiled files
 clean:
 	@echo "Cleaning $(NAME) obj/ directory..."
-	rm -rf $(OBJDIR)
-	rm -rf $(OBJDIR)$(FILEDIR)
-	rm -rf $(OBJDIR)$(SCENEDIR)
-	rm -rf $(OBJDIR)$(MATRIXDIR)
-	rm -rf $(OBJDIR)$(TUPLEDIR)
-	rm -rf $(OBJDIR)$(UTILSDIR)
-	rm -rf $(OBJDIR)$(TRANSFDIR)
+	@rm -rf $(OBJDIR)
 	@echo "Cleaning $(NAME).a..."
-	rm -rf $(NAME).a
+	@rm -rf $(NAME).a
 
 # Full clean
 fclean: clean
 	@echo "Removing $(NAME)..."
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 	@make -C $(LIBFTDIR) fclean
 	@make -C $(MLXDIR) clean
 
 # Rebuild from scratch
 re: fclean
-	@echo "Reseting $(NAME)..."
+	@echo "Resetting $(NAME)..."
 	@echo ""
 	@$(MAKE) --no-print-directory all
 
