@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_shear.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:17:23 by francis           #+#    #+#             */
-/*   Updated: 2025/03/21 14:42:23 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:19:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 t_matrix	*rt_shear(float x_to_y, float x_to_z, float y_to_x, float y_to_z, float z_to_x, float z_to_y)
 {

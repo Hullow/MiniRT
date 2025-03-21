@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:19:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 /* prints the message corresponding to the error type (see enum in header), 
 and returns -1 */

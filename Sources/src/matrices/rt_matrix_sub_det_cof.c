@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_sub_det_cof.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:13:49 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:19:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 /* handle error cases for submatrix, returning 1 if:
 	- NULL matrix as input

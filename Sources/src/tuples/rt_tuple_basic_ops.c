@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_tuple_basic_ops.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:19:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 /* adds two tuples by adding all elements and returning the resulting tuple:
 	- if two tuples are points, prints an error message and returns NULL

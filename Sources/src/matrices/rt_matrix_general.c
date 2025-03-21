@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:19:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/miniRT.h"
+#include "miniRT.h"
 
 t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
 {
