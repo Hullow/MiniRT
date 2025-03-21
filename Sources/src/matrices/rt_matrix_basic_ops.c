@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 18:19:17 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:26:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,34 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
 				+ (a->m[i][3] * b->m[3][k]);
 		k++;
 	}
+	return (res);
+}
+
+t_tuple		*matrix_tuple_multiplication(t_matrix *m, t_tuple *t)
+{
+	t_tuple *res;
+
+	if (!m || !t)
+		return (handle_error(NULL_INPUT));
+	if (m->columns != 4 || m->rows != 4)
+		return (NULL);
+	// if (t->w == POINT)
+	// 	res->w = POINT;
+	// else if (t->w == VECTOR)
+	// 	res->w = VECTOR;
+	res = rt_point(0, 0, 0);
+	res->x = (m->m[0][0] * t->x) + (m->m[0][1] * t->y) 
+	+ (m->m[0][2] * t->z) + (m->m[0][3] * t->w);
+	res->y = (m->m[1][0] * t->x) + (m->m[1][1] * t->y) 
+	+ (m->m[1][2] * t->z) + (m->m[1][3] * t->w);
+	res->z = (m->m[2][0] * t->x) + (m->m[2][1] * t->y) 
+	+ (m->m[2][2] * t->z) + (m->m[2][3] * t->w);
+	res->w = (m->m[3][0] * t->x) + (m->m[3][1] * t->y) 
+	+ (m->m[3][2] * t->z) + (m->m[3][3] * t->w);
+// 	printf("matrix_tuple_multiplication:\n");
+// 	print_matrix(m);
+// 	printf("multiplying:\ninput tuple {x: %3.f, y: %3.f, z: %3.f, w: %3.f}\n", t->x, t->y, t->z, t->w);
+// 	printf("gives us output tuple {x: %3.f, y: %3.f, z: %3.f, w: %3.f}\n", res->x, res->y, res->z, res->w);
 	return (res);
 }
 

@@ -22,6 +22,7 @@ FILEDIR		= file_check/
 SCENEDIR	= scene/
 MATRIXDIR	= matrices/
 TUPLEDIR	= tuples/
+TRANSFDIR	= transforms/
 UTILSDIR	= utils/
 
 # Libs
@@ -50,6 +51,12 @@ TUPLE		= rt_tuple_basic_ops \
 			rt_tuple_advanced_ops \
 			rt_color_multiply
 
+TRANSF		= rt_transform \
+			rt_shearing
+
+RAYSDIR		= rt_raycast
+
+
 UTILS		= rt_utils
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
@@ -57,6 +64,7 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
+			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
 
 # Object files
@@ -65,7 +73,9 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
+			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
+
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -76,7 +86,7 @@ $(NAME): $(OBJ)
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
 	@ar -rcs $@.a $(OBJ)
-	@$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(NAME).a $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(NAME).a $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -89,17 +99,18 @@ $(MLX):
 # Create object files directory
 $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(OBJDIR)$(FILEDIR)
-	@mkdir -p $(OBJDIR)$(SCENEDIR)
-	@mkdir -p $(OBJDIR)$(MATRIXDIR)
-	@mkdir -p $(OBJDIR)$(TUPLEDIR)
-	@mkdir -p $(OBJDIR)$(UTILSDIR)
+	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)$(FILEDIR)
+	mkdir -p $(OBJDIR)$(SCENEDIR)
+	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(TUPLEDIR)
+	mkdir -p $(OBJDIR)$(UTILSDIR)
+	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
-	@$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
 
 # Clean compiled files
 clean:

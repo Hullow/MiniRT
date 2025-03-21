@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,15 +6,15 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/14 15:12:10 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/21 20:27:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "mlx/mlx.h"
-# include "libft/header/libft.h"
+# include "../libft/header/libft.h"
+# include "../mlx/mlx.h"
 # include <stdio.h>
 
 # define VECTOR 0.0
