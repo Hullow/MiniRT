@@ -49,3 +49,20 @@ to cover 4x4 (see book). Segfaults for now
 
 # 7/3/25
 - 
+
+# 21/3/25
+- Wrote shearing function + tests for transformations
+- Testing transformations : wrote all tests, edited rotation functions a bit
+
+```bash
+~/42/MiniRT/Sources/src/transforms
+ % g *.c ../matrices/*.c ../tuples/*tuple*.c ../utils/*.c -lm
+```
+
+- Transformation matrices: I wonder if not better to pass parameter directly,
+as such `rt_scaling(5, 5, 5)` rather than the current `rt_scaling(rt_point(5, 5, 5))`
+=> lighter
+=> we'll see, depending on how we use the transformation matrices
+
+- Added a function `matrix_tuple_multiplication` to directly modify a tuple without
+having to convert it to a matrix

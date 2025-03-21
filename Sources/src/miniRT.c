@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/07 12:11:06 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/03/21 15:13:53 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/miniRT.h"
-
+/* 
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_A = 0;
@@ -20,8 +20,9 @@ static void	rt_init_counters(t_scene *scene)
 	scene->n_sp = 0;
 	scene->n_pl = 0;
 	scene->n_cy = 0;
-}
+} */
 
+/* 
 int	main(int argc, char *argv[])
 {
 	t_scene	*scene;
@@ -71,3 +72,4 @@ int	main(int argc, char *argv[])
 	}
 	return (0);
 }
+ */

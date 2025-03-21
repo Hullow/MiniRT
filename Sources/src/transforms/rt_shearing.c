@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_shear.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:17:23 by francis           #+#    #+#             */
-/*   Updated: 2025/03/21 14:59:01 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 16:37:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Takes in an array of 6 floats shear_factors, which contains, in order:
 	x_to_y, x_to_z, y_to_x,	y_to_z, z_to_x, z_to_y
 */
-t_matrix	*rt_shear(float *shear_factors)
+t_matrix	*rt_shearing(float *shear_factors)
 {
 	t_matrix	*shear;
 

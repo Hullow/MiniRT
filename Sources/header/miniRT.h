@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 14:59:07 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:20:18 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
 t_matrix	*matrix_transposition(t_matrix *mat);
 t_matrix	*matrix_inversion(t_matrix *mat);
 int			matrix_equality(t_matrix *a, t_matrix *b);
+t_tuple		*matrix_tuple_multiplication(t_matrix *m, t_tuple *t);
 
 			// Sub, determinant, cofactor
 
@@ -184,9 +185,9 @@ t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
 
 		// Transform
 
-t_matrix	*rt_translation(t_tuple t);
-t_matrix	*rt_scaling(t_tuple t);
-t_matrix	*rt_shear(float *shear_factors);
+t_matrix	*rt_translation(t_tuple *t);
+t_matrix	*rt_scaling(t_tuple *t);
+t_matrix	*rt_shearing(float *shear_factors);
 t_matrix	*rt_rotation_x(float angle);
 t_matrix	*rt_rotation_y(float angle);
 t_matrix	*rt_rotation_z(float angle);
