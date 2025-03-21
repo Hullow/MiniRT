@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_file_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/14 14:30:09 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../include/miniRT.h"
 
 // Returns 1 if the file extension is wrong. Otherwise 0
 int	rt_check_ext(const char *file)

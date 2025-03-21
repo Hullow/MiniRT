@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_color_multiply.c                                :+:      :+:    :+:   */
+/*   rt_shear.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 15:02:22 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
+/*   Created: 2025/03/21 14:17:23 by francis           #+#    #+#             */
+/*   Updated: 2025/03/21 14:42:23 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-// Multiply two colors
-t_tuple	*rt_hadamard(t_tuple color1, t_tuple color2)
+t_matrix	*rt_shear(float x_to_y, float x_to_z, float y_to_x, float y_to_z, float z_to_x, float z_to_y)
 {
-	t_tuple	*output;
-
-	output = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
-	if (!output)
+	t_matrix	*shear;
+	
+	shear = identity_matrix(4, 4);
+	if (!shear)
 		return (NULL);
-	output->x = color1.x * color2.x;
-	output->y = color1.y * color2.y;
-	output->z = color1.z * color2.z;
-	return (output);
+	shear->m[0][1] = x_to_y;
+	shear->m[0][2] = x_to_z;
+	shear->m[1][0] = y_to_x;
+	shear->m[1][2] = y_to_z;
+	shear->m[2][0] = z_to_x;
+	shear->m[2][1] = z_to_y;
+	return (shear);
 }

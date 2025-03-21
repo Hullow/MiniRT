@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_color_multiply.c                                :+:      :+:    :+:   */
+/*   test_transforms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 15:02:22 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
+/*   Created: 2025/03/21 14:36:33 by francis           #+#    #+#             */
+/*   Updated: 2025/03/21 14:42:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-// Multiply two colors
-t_tuple	*rt_hadamard(t_tuple color1, t_tuple color2)
+void	test_shear()
 {
-	t_tuple	*output;
+	print_matrix(
+		matrix_multiplication(
+			rt_shear(1, 0, 0, 0, 0, 0), 
+			convert_tuple_to_matrix(point(2, 3, 4))));
+}
 
-	output = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
-	if (!output)
-		return (NULL);
-	output->x = color1.x * color2.x;
-	output->y = color1.y * color2.y;
-	output->z = color1.z * color2.z;
-	return (output);
+int main()
+{
+	test_shear();
+	return (0);
 }

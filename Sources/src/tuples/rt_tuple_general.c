@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_tuple_general.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:14:45 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/14 14:30:09 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/21 14:41:00 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../include/miniRT.h"
 
 /* Initializes a point: mallocs a tuple, fills it with the input coordinates,
 sets its type to POINT (0) */

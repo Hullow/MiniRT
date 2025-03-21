@@ -10,3 +10,4 @@
 - Use function pointers in C
 - Use tagged unions in C
 - Do computations in parallel
+- [Make a good readme](https://www.makeareadme.com/)

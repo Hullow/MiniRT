@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -13,8 +14,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "mlx.h"
-# include "libft.h"
+# include "mlx/mlx.h"
+# include "libft/header/libft.h"
 # include <stdio.h>
 
 # define VECTOR 0.0
