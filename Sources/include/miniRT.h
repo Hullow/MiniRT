@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:22:02 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 17:32:12 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@
 
 //  	EDOM 	Math argument out of domain of func
 //  	ERANGE 	Math result not representable
+
+typedef enum {
+	ROT_X,
+	ROT_Y,
+	ROT_Z,
+	SCALE,
+	SHEAR,
+	TRANSLATION
+}	t_transform;
+
 
 /* A tuple:
 	- has a type (w): either a vector (0.0) or a point (1.0)
@@ -175,6 +185,7 @@ t_matrix	*init_matrix(int rows, int columns);
 t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns);
 t_matrix	*identity_matrix(int rows, int columns);
 t_matrix	*convert_tuple_to_matrix(t_tuple *tuple);
+t_tuple		*matrix_tuple_multiplication(t_matrix *m, t_tuple *t);
 int			print_matrix(t_matrix *mat);
 
 			// Basic operations
@@ -195,5 +206,13 @@ float		determinant(t_matrix *mat);
 		// Color
 
 t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
+
+		// Transformations
+t_matrix	*rt_translation(t_tuple *t);
+t_matrix	*rt_scaling(t_tuple *t);
+t_matrix	*rt_shear(float *shear_factors);
+t_matrix	*rt_rotation_x(float angle);
+t_matrix	*rt_rotation_y(float angle);
+t_matrix	*rt_rotation_z(float angle);
 
 #endif

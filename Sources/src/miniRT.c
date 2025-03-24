@@ -6,13 +6,13 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 08:55:48 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 20:27:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 16:06:44 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	miniRT_input_tests(t_scene *scene);
+/* void	miniRT_input_tests(t_scene *scene);
 
 static void	rt_init_counters(t_scene *scene)
 {
@@ -77,4 +77,4 @@ void	miniRT_input_tests(t_scene *scene)
 		printf("cylinder height : %f\n", scene->cy->height);
 		printf("cylinder color R: %f G: %f B: %f\n", scene->cy->color->x, scene->cy->color->y, scene->cy->color->z);
 	}
-}
+} */
