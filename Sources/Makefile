@@ -85,8 +85,7 @@ $(NAME): $(OBJ)
 	@echo "Building $(NAME)..."
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
-	@ar -rcs $@.a $(OBJ)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(NAME).a $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -116,8 +115,6 @@ $(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
 clean:
 	@echo "Cleaning $(NAME) obj/ directory..."
 	@rm -rf $(OBJDIR)
-	@echo "Cleaning $(NAME).a..."
-	@rm -rf $(NAME).a
 
 # Full clean
 fclean: clean
