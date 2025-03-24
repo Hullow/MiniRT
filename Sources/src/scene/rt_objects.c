@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:32:36 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:41:34 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ static int	rt_valid_coord(char **coord)
 	{
 		ft_strtof(*coord);
 		if (errno)
-		{
-			// perror(*coord);
-			// return (0);
-			return (1 && (handle_error(RT_VALID_COORD, EINVAL, "bad coordinates in input"))); // message ok ?
- 		}
+			return (1 && (handle_error(RT_VALID_COORD, EINVAL, "bad coordinates in input")));
 		i--;
 		coord++;
 	}

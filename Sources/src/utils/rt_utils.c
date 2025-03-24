@@ -6,17 +6,11 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 15:35:20 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:36:12 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-/*
-Error
-rt_valid_coord
-message
-*/
 
 /* handles the error print by printing to STDERR:
 - "Error" followed by

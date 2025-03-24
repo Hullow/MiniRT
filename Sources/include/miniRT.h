@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:22:02 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:35:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@
 # define RT_RAY			" – rt_ray\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
-
-//  	EDOM 	Math argument out of domain of func
-//  	ERANGE 	Math result not representable
 
 /* A tuple:
 	- has a type (w): either a vector (0.0) or a point (1.0)
