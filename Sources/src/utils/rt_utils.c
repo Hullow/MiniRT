@@ -3,55 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 12:00:44 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:58:21 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/* handles the error print by calling print_ret_null with
-the appropriate error message
+/* handles the error print by printing to STDERR:
+- "Error" followed by
+- an optional function name, followed by
+- a call to perrno if errno was set, or
+- if errno was not set, print an error message
 
 Arguments:
-- FUNCTION (enum): the function where the error was found
-- error_type (t_error, a typedef'd enum)
+- function (int, a #define): function where the error was found
+- errno_value (int): the value we want to set errno to
+- message (char *): the error message to print
 
 Return value: NULL in all cases */
-void	*handle_error(enum FUNCTION, t_error error_type)
+void	*handle_error(char *function, int errno_value, char *message)
 {
-	if (error_type == WRONG_INPUT)
-		return (print_ret_null(FUNCTION, "wrong input"));
-	else if (error_type == NULL_INPUT)
-		return (print_ret_null(FUNCTION, "wrong input (NULL)"));
-	else if (error_type == MALLOC_FAIL)
-		return (print_ret_null(FUNCTION, "malloc fail"));
-	else if (error_type == INVALID_MATRIX_SIZE)
-		return (print_ret_null(FUNCTION, "invalid matrix size"));
-	else if (error_type == MATRIX_NOT_INVERTIBLE)
-		return (print_ret_null(FUNCTION, "matrix is not invertible"));
-	return (NULL);
-}
+	errno = errno_value;
 
-/* Prints an error message and returns NULL
+	ft_putstr_fd("Error", STDERR_FILENO);
 
-Arguments:
-	- FUNCTION (enum): the function where the error was found
-	- message (char *): the error message to print */
-void	*print_ret_null(enum FUNCTION, char *message)
-{
-	printf("Error ");
-	if (FUNCTION)
-	{
-		if (FUNCTION == RT_RAY)
-			printf(" – rt_ray: ");
-			// ....
-	}
+	if (function)
+		ft_putstr_fd(function, STDERR_FILENO); // Print {Function name}
 	else
-		printf(": ");
-	printf("%s\n", message);
+		ft_putstr_fd(":\n", STDERR_FILENO);
+
+
+	if (errno) // perror call
+			perror(message);
+	else
+	{
+		if (message)
+			ft_putstr_fd(message, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+
+
 	return (NULL);
 }
 

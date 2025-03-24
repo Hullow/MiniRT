@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_sub_det_cof.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:13:49 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 11:57:28 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:56:53 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ float	matrix_minor(t_matrix *mat, int row, int column)
 
 	if (!mat)
 	{
-		handle_error(MAT_MINOR, NULL_INPUT);
+		handle_error(MAT_MINOR, EINVAL, "null input");
 		return (-1);
 	}
 	empty_submatrix = init_matrix(mat->rows - 1, mat->columns - 1);
@@ -100,7 +100,7 @@ float	determinant(t_matrix *mat)
 
 	if (!mat)
 	{
-		handle_error(DET, NULL_INPUT);
+		handle_error(DET, EINVAL, "null input");
 		return (-1);
 	}
 	j = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_raycast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 12:00:08 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:57:05 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_ray		*rt_ray(t_tuple *origin, t_tuple *direction)
 	if (!ray)
 		return (NULL);
 	if (origin->w != POINT)
-		return (handle_error(RT_RAY, BAD_INPUT));
+		return (handle_error(RT_RAY, EINVAL, "null input"));
 	ray->origin = origin;
 	ray->direction = direction;
 	return (ray);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 11:56:31 by francis          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:56:35 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ t_matrix	*init_matrix(int rows, int columns)
 
 	mat = malloc (sizeof(t_matrix));
 	if (!mat)
-		return (handle_error(INIT_MATRIX, MALLOC_FAIL));
+		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
 	mat->rows = rows;
 	mat->columns = columns;
 	mat->m = malloc (rows * sizeof(float *));
 	if (!mat->m)
-		return (handle_error(INIT_MATRIX, MALLOC_FAIL));
+		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
 	if (!malloc_matrix_columns(mat, rows, columns))
 		return (NULL);
 	return (mat);
@@ -53,7 +53,7 @@ t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns)
 	{
 		mat->m[i] = malloc (columns * sizeof(float));
 		if (!mat->m[i])
-			return (handle_error(MAT_MALLOC, MALLOC_FAIL));
+			return (handle_error(MAT_MALLOC, ENOMEM, "malloc fail")); // remove "malloc fail" ?
 		j = 0;
 		while (j < columns)
 		{
@@ -96,7 +96,7 @@ t_matrix	*convert_tuple_to_matrix(t_tuple *tuple)
 	t_matrix	*mat;
 
 	if (!tuple)
-		return (handle_error(CONV_TUP_MAT, NULL_INPUT));
+		return (handle_error(CONV_TUP_MAT, EINVAL, "null input"));
 	mat = init_matrix(4, 1);
 	if (!mat)
 		return (NULL);

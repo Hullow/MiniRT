@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 20:26:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 14:57:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ static int	rt_valid_coord(char **coord)
 		ft_strtof(*coord);
 		if (errno != 0)
 		{
-			perror(*coord);
-			return (0);
-		}
+			// perror(*coord);
+			// return (0);
+			return (1 && (handle_error(RT_VALID_COORD, EINVAL, "bad coordinates in input"))); // message ok ?
+ 		}
 		i--;
 		coord++;
 	}
