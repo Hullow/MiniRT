@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 14:56:35 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:18:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_matrix	*init_matrix(int rows, int columns)
 	if (!mat->m)
 		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
 	if (!malloc_matrix_columns(mat, rows, columns))
-		return (NULL);
+		return (handle_error(INIT_MATRIX, ENOMEM, NULL));
 	return (mat);
 }
 
@@ -74,7 +74,7 @@ t_matrix	*identity_matrix(int rows, int columns)
 
 	mat = init_matrix(rows, columns);
 	if (!mat)
-		return (NULL);
+		return (handle_error(ID_MATRIX, ENOMEM, NULL));
 	i = 0;
 	while (i < rows)
 	{
@@ -99,7 +99,7 @@ t_matrix	*convert_tuple_to_matrix(t_tuple *tuple)
 		return (handle_error(CONV_TUP_MAT, EINVAL, "null input"));
 	mat = init_matrix(4, 1);
 	if (!mat)
-		return (NULL);
+		return (handle_error(CONV_TUP_MAT, ENOMEM, NULL));
 	mat->m[0][0] = tuple->x;
 	mat->m[1][0] = tuple->y;
 	mat->m[2][0] = tuple->z;

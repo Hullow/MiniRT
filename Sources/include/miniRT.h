@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 14:58:30 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:22:02 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,21 @@
 # define MAT_MALLOC 	" – malloc_matrix_columns\n"
 # define INIT_MATRIX 	" – init_matrix\n"
 # define CONV_TUP_MAT 	" – convert_tuple_to_matrix\n"
+# define ID_MATRIX 		" – identity_matrix\n"
 # define MAT_MINOR		" – matrix_minor\n"
 # define MAT_MUL		" – matrix_multiplication\n"
 # define MAT_TUP_MUL	" – matrix_tuple_multiplication\n"
 # define MAT_TRANSP		" – matrix_transposition\n"
 # define MAT_INV		" – matrix_inversion\n"
 # define DET			" – determinant\n"
-# define RT_VALID_COORD	" – rt_valid_coord: \n"
+# define SUBMATRIX 		" – submatrix\n"
+# define RT_VALID_COORD	" – rt_valid_coord\n"
 # define RT_RAY			" – rt_ray\n"
 
-typedef enum ERROR_TYPE {
-	WRONG_INPUT, // EINVAL invalid argument
-	NULL_INPUT, // EINVAL invalid argument
-	MALLOC_FAIL, // ENOMEM
-	INVALID_MATRIX_SIZE, // EINVAL invalid argument
-	MATRIX_NOT_INVERTIBLE, // EINVAL invalid argument
-	COORD_ERROR // ?
-}	t_error;
+# define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
 //  	EDOM 	Math argument out of domain of func
-// 34 	ERANGE 	Math result not representable
+//  	ERANGE 	Math result not representable
 
 /* A tuple:
 	- has a type (w): either a vector (0.0) or a point (1.0)
@@ -67,6 +62,11 @@ typedef struct s_matrix {
 	int		columns;
 	float 	**m;
 }	t_matrix;
+
+typedef struct s_ray {
+	t_tuple	*origin;
+	t_tuple	*direction;
+}	t_ray;
 
 typedef struct s_ambient
 {

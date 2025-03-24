@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 14:58:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:18:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_matrix	*matrix_inversion(t_matrix *mat)
 			(determinant == 0)"));
 	inv = init_matrix(mat->rows, mat->columns);
 	if (!inv)
-		return (NULL);
+		return (handle_error(MAT_INV, ENOMEM, NULL));
 	i = 0;
 	while (i < mat->rows)
 	{

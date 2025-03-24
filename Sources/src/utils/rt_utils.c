@@ -6,11 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 14:58:21 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:17:42 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+/*
+Error
+rt_valid_coord
+message
+*/
 
 /* handles the error print by printing to STDERR:
 - "Error" followed by
@@ -21,30 +27,24 @@
 Arguments:
 - function (int, a #define): function where the error was found
 - errno_value (int): the value we want to set errno to
-- message (char *): the error message to print
+- message (char *): the error message to print (can be a #define in some cases)
 
 Return value: NULL in all cases */
 void	*handle_error(char *function, int errno_value, char *message)
 {
 	errno = errno_value;
 
-	ft_putstr_fd("Error", STDERR_FILENO);
-
-	if (function)
-		ft_putstr_fd(function, STDERR_FILENO); // Print {Function name}
-	else
-		ft_putstr_fd(":\n", STDERR_FILENO);
-
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(function, STDERR_FILENO); // Print {Function name}
 
 	if (errno) // perror call
-			perror(message);
+		perror(message);
 	else
 	{
 		if (message)
 			ft_putstr_fd(message, STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 	}
-
 
 	return (NULL);
 }
