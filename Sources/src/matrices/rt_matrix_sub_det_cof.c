@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:13:49 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 18:26:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:17:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
 	int			l;
 
 	if (submatrix_errors(mat, sub))
-		return (NULL);
+		return (handle_error(SUBMATRIX, EINVAL, SUB_ERROR)); // check if "Invalid input" isn't redundant
 	i = -1;
 	k = 0;
 	while (++i < mat->rows)
@@ -72,7 +72,7 @@ float	matrix_minor(t_matrix *mat, int row, int column)
 
 	if (!mat)
 	{
-		handle_error(NULL_INPUT);
+		handle_error(MAT_MINOR, EINVAL, "null input");
 		return (-1);
 	}
 	empty_submatrix = init_matrix(mat->rows - 1, mat->columns - 1);
@@ -100,7 +100,7 @@ float	determinant(t_matrix *mat)
 
 	if (!mat)
 	{
-		handle_error(NULL_INPUT);
+		handle_error(DET, EINVAL, "null input");
 		return (-1);
 	}
 	j = 0;

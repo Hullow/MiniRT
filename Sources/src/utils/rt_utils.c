@@ -6,37 +6,47 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 14:43:50 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:35:20 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/* prints the message corresponding to the error type (see enum in header), 
-and returns -1 */
-void	*handle_error(t_error error_type)
+/*
+Error
+rt_valid_coord
+message
+*/
+
+/* handles the error print by printing to STDERR:
+- "Error" followed by
+- an optional function name, followed by
+- a call to perrno if errno was set, or
+- if errno was not set, print an error message
+
+Arguments:
+- function (int, a #define): function where the error was found
+- errno_value (int): the value we want to set errno to
+- message (char *): the error message to print (can be a #define in some cases)
+
+Return value: NULL in all cases */
+void	*handle_error(char *function, int errno_value, char *message)
 {
-	if (error_type == NULL_INPUT)
+	errno = errno_value;
+
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(function, STDERR_FILENO); // Print {Function name}
+
+	if (errno) // perror call
+		perror(message);
+	else
 	{
-		printf("input is NULL - couldn't perform operation\n");
-		return (NULL);
+		if (message)
+			ft_putstr_fd(message, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 	}
-	else if (error_type == MALLOC_FAIL)
-	{
-		printf("malloc fail\n");
-		return (NULL);
-	}
-	else if (error_type == INVALID_MATRIX_SIZE)
-	{
-		printf("invalid matrix size\n");
-		return (NULL);
-	}
-	else if (error_type == MATRIX_NOT_INVERTIBLE)
-	{
-		printf("matrix is not invertible\n");
-		return (NULL);
-	}
-	return (0);
+
+	return (NULL);
 }
 
 /* Checks if two floats a and b are equal:

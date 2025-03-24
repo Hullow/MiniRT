@@ -6,13 +6,44 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 14:37:12 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:30:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
+/* initializes and returns an empty matrix (filled with 0s)
+as a 2d array of floats, given number of rows and columns (mat [rows][cols])
+
+How it works:
+- Mallocs the matrix struct (t_matrix)
+- Sets the number of rows and columns (from the arguments rows, columns)
+- Mallocs the matrix rows as an array of arrays of floats ((float *) mat->m)
+- Calls malloc_matrix_columns to malloc the columns as arrays of floats,
+and initialize the value of each matrix element to 0
+
+Returns: a pointer to the initialized matrix (t_matrix *)
+*/
+t_matrix	*init_matrix(int rows, int columns)
+{
+	t_matrix	*mat;
+
+	mat = malloc (sizeof(t_matrix));
+	if (!mat)
+		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
+	mat->rows = rows;
+	mat->columns = columns;
+	mat->m = malloc (rows * sizeof(float *));
+	if (!mat->m)
+		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
+	if (!malloc_matrix_columns(mat, rows, columns))
+		return (handle_error(INIT_MATRIX, ENOMEM, NULL));
+	return (mat);
+}
+
+/* mallocs matrix columns (called from init_matrix),
+and initialize all values to 0 */
+t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns)
 {
 	int	i;
 	int	j;
@@ -22,7 +53,7 @@ t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
 	{
 		mat->m[i] = ft_calloc (columns, sizeof(float));
 		if (!mat->m[i])
-			return (handle_error(MALLOC_FAIL));
+			return (handle_error(MAT_MALLOC, ENOMEM, "malloc fail")); // remove "malloc fail" ?
 		j = 0;
 		while (j < columns)
 		{
@@ -31,25 +62,6 @@ t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
 		}
 		i++;
 	}
-	return (mat);
-}
-
-/* initializes and returns an empty matrix (filled with 0s)
-as a 2d array of floats, given number of rows and columns (mat [rows][cols])*/
-t_matrix	*init_matrix(int rows, int columns)
-{
-	t_matrix	*mat;
-
-	mat = ft_calloc(1, sizeof(t_matrix));
-	if (!mat)
-		return (handle_error(MALLOC_FAIL));
-	mat->rows = rows;
-	mat->columns = columns;
-	mat->m = ft_calloc(rows, sizeof(float *));
-	if (!mat->m)
-		return (handle_error(MALLOC_FAIL));
-	if (!malloc_matrix_contents(mat, rows, columns))
-		return (NULL);
 	return (mat);
 }
 
@@ -62,7 +74,7 @@ t_matrix	*identity_matrix(int rows, int columns)
 
 	mat = init_matrix(rows, columns);
 	if (!mat)
-		return (NULL);
+		return (handle_error(ID_MATRIX, ENOMEM, NULL));
 	i = 0;
 	while (i < rows)
 	{
@@ -84,10 +96,10 @@ t_matrix	*convert_tuple_to_matrix(t_tuple *tuple)
 	t_matrix	*mat;
 
 	if (!tuple)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(CONV_TUP_MAT, EINVAL, "null input"));
 	mat = init_matrix(4, 1);
 	if (!mat)
-		return (NULL);
+		return (handle_error(CONV_TUP_MAT, ENOMEM, NULL));
 	mat->m[0][0] = tuple->x;
 	mat->m[1][0] = tuple->y;
 	mat->m[2][0] = tuple->z;

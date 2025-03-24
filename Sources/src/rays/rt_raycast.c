@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 14:45:15 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:31:52 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_ray		*rt_ray(t_tuple *origin, t_tuple *direction)
 	{
 		perror("Error\nray allocation");
 		return (NULL);
-	}
+	if (origin->w != POINT)
+		return (handle_error(RT_RAY, EINVAL, "null input"));
 	ray->origin = origin;
 	ray->direction = direction;
 	return (ray);

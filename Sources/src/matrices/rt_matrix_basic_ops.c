@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 18:26:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:18:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
 	t_matrix	*res;
 
 	if (!a || !b)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(MAT_MUL, EINVAL, "NULL matrix"));
 	if (a->columns != b->rows)
-		return (NULL);
+		return (handle_error(MAT_MUL, EINVAL, "matrices not multipliable"));
 	res = init_matrix(a->rows, b->columns);
 	if (!res)
-		return (handle_error(MALLOC_FAIL));
+		return (handle_error(MAT_MUL, ENOMEM, NULL));
+		
 	k = 0;
 	while (k < b->columns)
 	{
@@ -54,9 +55,9 @@ t_tuple		*matrix_tuple_multiplication(t_matrix *m, t_tuple *t)
 	t_tuple *res;
 
 	if (!m || !t)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(MAT_TUP_MUL, EINVAL, "null input"));
 	if (m->columns != 4 || m->rows != 4)
-		return (NULL);
+		return (handle_error(MAT_TUP_MUL, EINVAL, "matrix is not 4x4"));
 	// if (t->w == POINT)
 	// 	res->w = POINT;
 	// else if (t->w == VECTOR)
@@ -85,10 +86,10 @@ t_matrix	*matrix_transposition(t_matrix *mat)
 	int			j;
 
 	if (!mat)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(MAT_TRANSP, EINVAL, "null input"));
 	transpose = init_matrix(mat->columns, mat->rows);
 	if (!transpose)
-		return (NULL);
+		return (handle_error(MAT_TRANSP, ENOMEM, NULL));
 	i = 0;
 	while (i < mat->rows)
 	{
@@ -112,10 +113,11 @@ t_matrix	*matrix_inversion(t_matrix *mat)
 
 	det = determinant(mat);
 	if (is_equal_float(det, 0))
-		return (handle_error(MATRIX_NOT_INVERTIBLE));
+		return (handle_error(MAT_INV, EINVAL, "matrix not invertible\
+			(determinant == 0)"));
 	inv = init_matrix(mat->rows, mat->columns);
 	if (!inv)
-		return (NULL);
+		return (handle_error(MAT_INV, ENOMEM, NULL));
 	i = 0;
 	while (i < mat->rows)
 	{
