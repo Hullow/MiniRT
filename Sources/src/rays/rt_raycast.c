@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_raycast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 18:26:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 12:00:08 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_ray		*rt_ray(t_tuple *origin, t_tuple *direction)
 	ray = (t_ray *)ft_calloc(1, sizeof(t_ray));
 	if (!ray)
 		return (NULL);
+	if (origin->w != POINT)
+		return (handle_error(RT_RAY, BAD_INPUT));
 	ray->origin = origin;
 	ray->direction = direction;
 	return (ray);

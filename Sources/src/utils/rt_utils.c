@@ -3,40 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 20:25:56 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 12:00:44 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/* prints the message corresponding to the error type (see enum in header), 
-and returns -1 */
-void	*handle_error(t_error error_type)
+/* handles the error print by calling print_ret_null with
+the appropriate error message
+
+Arguments:
+- FUNCTION (enum): the function where the error was found
+- error_type (t_error, a typedef'd enum)
+
+Return value: NULL in all cases */
+void	*handle_error(enum FUNCTION, t_error error_type)
 {
-	if (error_type == NULL_INPUT)
-	{
-		printf("input is NULL - couldn't perform operation\n");
-		return (NULL);
-	}
+	if (error_type == WRONG_INPUT)
+		return (print_ret_null(FUNCTION, "wrong input"));
+	else if (error_type == NULL_INPUT)
+		return (print_ret_null(FUNCTION, "wrong input (NULL)"));
 	else if (error_type == MALLOC_FAIL)
-	{
-		printf("malloc fail\n");
-		return (NULL);
-	}
+		return (print_ret_null(FUNCTION, "malloc fail"));
 	else if (error_type == INVALID_MATRIX_SIZE)
-	{
-		printf("invalid matrix size\n");
-		return (NULL);
-	}
+		return (print_ret_null(FUNCTION, "invalid matrix size"));
 	else if (error_type == MATRIX_NOT_INVERTIBLE)
+		return (print_ret_null(FUNCTION, "matrix is not invertible"));
+	return (NULL);
+}
+
+/* Prints an error message and returns NULL
+
+Arguments:
+	- FUNCTION (enum): the function where the error was found
+	- message (char *): the error message to print */
+void	*print_ret_null(enum FUNCTION, char *message)
+{
+	printf("Error ");
+	if (FUNCTION)
 	{
-		printf("matrix is not invertible\n");
-		return (NULL);
+		if (FUNCTION == RT_RAY)
+			printf(" – rt_ray: ");
+			// ....
 	}
-	return (0);
+	else
+		printf(": ");
+	printf("%s\n", message);
+	return (NULL);
 }
 
 /* Checks if two floats a and b are equal:

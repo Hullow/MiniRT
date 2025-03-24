@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 20:27:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 11:57:37 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,22 @@
 
 # define EPSILON 0.00005
 
+enum FUNCTION {
+	ZERO, unspecified function
+	RT_RAY, rt_ray
+	MAT_MALLOC, malloc_matrix_contents
+	INIT_MATRIX, init_matrix
+	CONV_TUP_MAT, convert_tuple_to_matrix
+	MAT_MINOR, matrix_minor
+	DET, determinant
+}
+
 typedef enum ERROR_TYPE {
+	WRONG_INPUT,
 	NULL_INPUT,
 	MALLOC_FAIL,
 	INVALID_MATRIX_SIZE,
-	MATRIX_NOT_INVERTIBLE
+	MATRIX_NOT_INVERTIBLE,
 }	t_error;
 
 /* A tuple:
@@ -125,7 +136,8 @@ void		rt_assign_cylinder(t_scene *scene, char **needle);
 // Utils
 	// General
 
-void		*handle_error(t_error error_type);
+void		*handle_error(enum FUNCTION, t_error error_type);
+void		*print_ret_null(enum FUNCTION, char *message);
 
 	// Math
 		// Basic bricks

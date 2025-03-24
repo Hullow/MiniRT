@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_basic_ops.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 20:26:48 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 11:49:07 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b)
 	t_matrix	*res;
 
 	if (!a || !b)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(MAT_MUL, NULL_INPUT));
 	if (a->columns != b->rows)
 		return (NULL);
 	res = init_matrix(a->rows, b->columns);
 	if (!res)
-		return (handle_error(MALLOC_FAIL));
+		return (handle_error(MAT_MUL, MALLOC_FAIL));
 	k = 0;
 	while (k < b->columns)
 	{
@@ -54,9 +54,9 @@ t_tuple		*matrix_tuple_multiplication(t_matrix *m, t_tuple *t)
 	t_tuple *res;
 
 	if (!m || !t)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(MAT_TUP_MUL, NULL_INPUT));
 	if (m->columns != 4 || m->rows != 4)
-		return (NULL);
+		return (handle_error(MAT_TUP_MUL, BAD_INPUT));
 	// if (t->w == POINT)
 	// 	res->w = POINT;
 	// else if (t->w == VECTOR)
@@ -85,10 +85,10 @@ t_matrix	*matrix_transposition(t_matrix *mat)
 	int			j;
 
 	if (!mat)
-		return (handle_error(NULL_INPUT));
+		return (handle_error(MAT_TRANSP, NULL_INPUT));
 	transpose = init_matrix(mat->columns, mat->rows);
 	if (!transpose)
-		return (NULL);
+		return (handle_error(MAT_TRANSP, MALLOC_FAIL));
 	i = 0;
 	while (i < mat->rows)
 	{
@@ -112,7 +112,7 @@ t_matrix	*matrix_inversion(t_matrix *mat)
 
 	det = determinant(mat);
 	if (is_equal_float(det, 0))
-		return (handle_error(MATRIX_NOT_INVERTIBLE));
+		return (handle_error(MAT_INV, MATRIX_NOT_INVERTIBLE));
 	inv = init_matrix(mat->rows, mat->columns);
 	if (!inv)
 		return (NULL);
