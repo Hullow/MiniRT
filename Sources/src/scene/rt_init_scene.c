@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_init_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 18:26:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 14:46:51 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	rt_init_scene(const char *file, t_scene *scene)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
+		ft_putstr_fd("Error\n", STDERR_FILENO);
 		perror(file);
 		return (1);
 	}

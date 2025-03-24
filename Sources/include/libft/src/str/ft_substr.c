@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:52:38 by pberset           #+#    #+#             */
-/*   Updated: 2024/03/18 14:30:28 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:24:50 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = s_max - start;
 	if (start >= s_max)
 		len = 0;
-	sub = (char *)malloc(sizeof(char) * (len + 1));
-	if (!sub)
+	sub = (char *)ft_calloc((len + 1), sizeof(char));
+	if (errno)
+	{
+		perror("substr");
 		return (NULL);
+	}
 	i = 0;
 	while (i < len && s[start + i] && start + i < s_max)
 	{

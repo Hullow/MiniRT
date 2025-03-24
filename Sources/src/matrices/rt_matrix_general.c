@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 18:26:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 14:37:12 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_matrix	*malloc_matrix_contents(t_matrix *mat, int rows, int columns)
 	i = 0;
 	while (i < rows)
 	{
-		mat->m[i] = malloc (columns * sizeof(float));
+		mat->m[i] = ft_calloc (columns, sizeof(float));
 		if (!mat->m[i])
 			return (handle_error(MALLOC_FAIL));
 		j = 0;
@@ -40,12 +40,12 @@ t_matrix	*init_matrix(int rows, int columns)
 {
 	t_matrix	*mat;
 
-	mat = malloc (sizeof(t_matrix));
+	mat = ft_calloc(1, sizeof(t_matrix));
 	if (!mat)
 		return (handle_error(MALLOC_FAIL));
 	mat->rows = rows;
 	mat->columns = columns;
-	mat->m = malloc (rows * sizeof(float *));
+	mat->m = ft_calloc(rows, sizeof(float *));
 	if (!mat->m)
 		return (handle_error(MALLOC_FAIL));
 	if (!malloc_matrix_contents(mat, rows, columns))

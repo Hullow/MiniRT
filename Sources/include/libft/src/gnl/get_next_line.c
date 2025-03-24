@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:04:46 by pberset           #+#    #+#             */
-/*   Updated: 2024/03/18 15:14:10 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:21:56 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static char	*read_file(int fd, char *line_c)
 	char	*line_r;
 	int		bytes_r;
 
-	line_r = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!line_r)
+	line_r = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (errno)
 		return (NULL);
 	bytes_r = 1;
 	while (bytes_r > 0 && !ft_strchr(line_c, '\n'))
@@ -65,8 +65,8 @@ static char	*get_line(char *line_c)
 	i = 0;
 	while ((unsigned char)line_c[i] != '\0' && (unsigned char)line_c[i] != '\n')
 		i++;
-	output = (char *)malloc((i + 2) * sizeof(char));
-	if (!output)
+	output = (char *)ft_calloc((i + 2), sizeof(char));
+	if (errno)
 		return (NULL);
 	i = 0;
 	while ((unsigned char)line_c[i] != '\0' && (unsigned char)line_c[i] != '\n')
@@ -89,11 +89,12 @@ static char	*update_line_c(char	*line_c)
 	int		i;
 	int		j;
 
-	update = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!update)
+	update = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (errno)
 	{
 		if (line_c)
 			free(line_c);
+		perror("update line");
 		return (NULL);
 	}
 	i = 0;
@@ -118,7 +119,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line_c[fd] = read_file(fd, line_c[fd]);
 	if (!line_c[fd])
+	{
+		perror("read_file");
 		return (NULL);
+	}
 	output = get_line(line_c[fd]);
 	if (!output)
 	{
