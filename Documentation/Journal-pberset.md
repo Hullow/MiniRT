@@ -91,11 +91,16 @@
 		- Diagonale contient [x, y, z, 1]
 		- un scaling négatif est un mirroir
 
-## Rotation
+### Rotation
 
 - t_point transform()
 	- transform = rotation(x, y, z) // t_matrix
 p.47
+
+### Transform
+
+- Il faut une fonction générale transform((t_matrix *)(*rot)(float), (t_matrix *)(*mov)(t_tuple *), (t_matrix *)(*shear)(float *))
+	- à tester...
 
 ## Ray casting
 
@@ -245,4 +250,4 @@ p.47
 	- intersection(objet, rayon)
 		- intersect = int // si 0, plus d'intersection, 2 si oui
 		- t0 = float
-		- t1 = floa
+		- t1 = float

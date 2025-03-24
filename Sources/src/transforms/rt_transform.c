@@ -12,6 +12,7 @@
 
 #include "miniRT.h"
 
+// Init a translation matrix in the direction given by the vector t
 t_matrix	*rt_translation(t_tuple *t)
 {
 	t_matrix	*transform;
@@ -28,6 +29,7 @@ t_matrix	*rt_translation(t_tuple *t)
 	return (transform);
 }
 
+// Init a scaling matrix by the amount given by the vector t
 t_matrix	*rt_scaling(t_tuple *t)
 {
 	t_matrix	*scaling;
@@ -44,6 +46,7 @@ t_matrix	*rt_scaling(t_tuple *t)
 	return (scaling);
 }
 
+// Init a rotation matrix of angle around x
 t_matrix	*rt_rotation_x(float angle)
 {
 	t_matrix	*rotation;
@@ -63,6 +66,7 @@ t_matrix	*rt_rotation_x(float angle)
 	return (rotation);
 }
 
+// Init a rotation matrix of angle around y
 t_matrix	*rt_rotation_y(float angle)
 {
 	t_matrix	*rotation;
@@ -82,6 +86,7 @@ t_matrix	*rt_rotation_y(float angle)
 	return (rotation);
 }
 
+// Init a rotation matrix of angle around z
 t_matrix	*rt_rotation_z(float angle)
 {
 	t_matrix	*rotation;
