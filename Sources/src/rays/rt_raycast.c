@@ -13,7 +13,7 @@
 #include "miniRT.h"
 
 // Allocates memory for a ray with an origin and a direction
-t_ray		*rt_ray(t_tuple *origin, t_tuple *direction)
+t_ray	*rt_ray(t_tuple *origin, t_tuple *direction)
 {
 	t_ray	*ray;
 
@@ -27,4 +27,16 @@ t_ray		*rt_ray(t_tuple *origin, t_tuple *direction)
 	ray->origin = origin;
 	ray->direction = direction;
 	return (ray);
+}
+
+// Compute a point from a distance d traveled along the ray
+t_tuple	*rt_position(t_ray *ray, float d)
+{
+	t_tuple	*point;
+
+	point = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
+	if(errno)
+		return(handle_error(RT_POSITION, ENOMEM, "ft_calloc fail"));
+	point = add_tuple(ray->origin, multiply_tuple_by_scalar(ray->direction, d));
+	return (point);
 }

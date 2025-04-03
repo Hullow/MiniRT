@@ -121,50 +121,50 @@ p.47
 		- coord, diameter, color
 - Calcul des intersections
 	- soient une sphère et un rayon
-		- Cas 1
-			- le Rayon pointe dans la direction du centre de la sphère
-			- il existe deux et seulement deux points d'intersections entre la sphere et le rayon
-				- L'un au plus proche de l'origine du rayon et à diameter/2 distance du centre de la sphère
-				- L'autre au plus loin de l'origine du rayon et également à diameter/2 du centre de la sphère
-			- Intersect(t_ray ray, t_sphere sphere)
-				- count = 2
-				- return t0 ; return t1 ?
-				- return point 0; return point 1 ?
-		- Cas 2
-			- l'origine du rayon se situe à y + diameter/2 par rapport à l'origine de la sphère
-			- le rayon est tangeant à la sphère
-			- il existe un et un seul point d'intersection avec la sphère
-			- Intersect(t_ray ray, t_sphere sphere)
-				- count = 2 -> notre fonction de calcul retourne deux fois la même valeur
-				- return i[0] = t0 ; return i[1] = t0 ?
-				- return point 0; return point 0 ?
-		- Cas 3
-			- les paramètres du rayons sont tels qu'il n'existe aucun point de contact avec la sphère
-			- Intersect(t_ray ray, t_sphere sphere)
-				- count = 0
-				- t ou point ne sont pas retournés
-		- Edge case 1
-			- L'origine du rayon se trouve à l'intérieur de la sphère
-			- il existe deux et seulement deux points d'intersections entre la sphere et le rayon
-				- L'un dans la direction du rayon
-				- L'autre dans la direction inverse du rayon
-			- Intersect(t_ray ray, t_sphere sphere)
-				- count = 2
-				- return i[0] = -t0 ; return i[1] = t1 ? 
-					- t0 est une distance négative car inverse à la direction du rayon
-				- return point 0; return point 1 ?
-		- Edge case 2
-			- La direction du rayon est opposé à la direction de la sphère
-			- il existe deux et seulement deux points d'intersections entre la sphere et le rayon
-				- les deux points dans la direction opposée du rayon
-			- Intersect(t_ray ray, t_sphere sphere)
-				- count = 2
-				- return i[0] = -t0 ; return i[1] = -t1 ? 
-					- t0 et t1 sont des distances négatives car inverse à la direction du rayon
-					- t0 et t1 sont espacés de diameter
-					- t0 est la distance entre l'origine du rayon et la surface de la sphère
-				- return point 0; return point 1 ?
-- Discriminant
+#### Cas 1
+	- le Rayon pointe dans la direction du centre de la sphère
+	- il existe deux et seulement deux points d'intersections entre la sphere et le rayon
+		-  L'un au plus proche de l'origine du rayon et à diameter/2 distance du centre de la sphère
+		- L'autre au plus loin de l'origine du rayon et également à diameter/2 du centre de la sphère
+	- Intersect(t_ray ray, t_sphere sphere)
+		- count = 2
+		- return t0 ; return t1 ?
+		- return point 0; return point 1 ?
+#### Cas 2
+	- l'origine du rayon se situe à y + diameter/2 par rapport à l'origine de la sphère
+	- le rayon est tangeant à la sphère
+		- il existe un et un seul point d'intersection avec la sphère
+	- Intersect(t_ray ray, t_sphere sphere)
+	- count = 2 -> notre fonction de calcul retourne deux fois la même valeur
+		- return i[0] = t0 ; return i[1] = t0 ?
+		- return point 0; return point 0 ?
+#### Cas 3
+	- les paramètres du rayons sont tels qu'il n'existe aucun point de contact avec la sphère
+	- Intersect(t_ray ray, t_sphere sphere)
+		- count = 0
+		- t ou point ne sont pas retournés
+#### Edge case 1
+	- L'origine du rayon se trouve à l'intérieur de la sphère
+	- il existe deux et seulement deux points d'intersections entre la sphere et le rayon
+		- L'un dans la direction du rayon
+		- L'autre dans la direction inverse du rayon
+	- Intersect(t_ray ray, t_sphere sphere)
+		- count = 2
+		- return i[0] = -t0 ; return i[1] = t1 ? 
+			- t0 est une distance négative car inverse à la direction du rayon
+		- return point 0; return point 1 ?
+#### Edge case 2
+	- La direction du rayon est opposé à la direction de la sphère
+	- il existe deux et seulement deux points d'intersections entre la sphere et le rayon
+		- les deux points dans la direction opposée du rayon
+	- Intersect(t_ray ray, t_sphere sphere)
+		- count = 2
+		- return i[0] = -t0 ; return i[1] = -t1 ? 
+			- t0 et t1 sont des distances négatives car inverse à la direction du rayon
+			- t0 et t1 sont espacés de diameter
+			- t0 est la distance entre l'origine du rayon et la surface de la sphère
+		- return point 0; return point 1 ?
+### Discriminant
 	- Indique si le rayon a des intersections avec la sphère
 		- Positif : au moins une intersection
 		- Négatif : aucune intersection
@@ -176,18 +176,16 @@ p.47
 		- discriminant = powf(b, 2) - 4 * a * c
 		- if discriminant < 0
 			return ()
-- Après calcul du déterminant, retour sur la fonction intersect()
-	- t0 = (-b - sqrt(discriminant)) / (2 * a)
-	- t1 = (-b + sqrt(discriminant)) / (2 * a)
-	- return (t0, t1)
-- Itersect retourne donc deux scalaires float[2]
-	- ils représentent les deux distances des intersections à partir du point de départ du rayon
-	- si le déterminant est négatif, on ne retourne rien
-		- pas d'intersection : oublions ce rayon
-		- Je devrais utiliser errno pour distinguer 0 ou des valeurs négatives valides d'une absence d'intersection
-
+	- Après calcul du déterminant, retour sur la fonction intersect()
+		- t0 = (-b - sqrt(discriminant)) / (2 * a)
+		- t1 = (-b + sqrt(discriminant)) / (2 * a)
+		- return (t0, t1)
+	- Itersect retourne donc deux scalaires float[2]
+		- ils représentent les deux distances des intersections à partir du point de départ du rayon
+		- si le déterminant est négatif, on ne retourne rien
+			- pas d'intersection : oublions ce rayon
+			- Je devrais utiliser errno pour distinguer 0 ou des valeurs négatives valides d'une absence d'intersection
 ### Multiple objects
-
 - Il nous faut une structure t_intersect
 	- void *object;
 		- t_sphere, t_cylinder, t_plane

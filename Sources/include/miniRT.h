@@ -38,6 +38,7 @@
 # define SUBMATRIX 		" – submatrix\n"
 # define RT_VALID_COORD	" – rt_valid_coord\n"
 # define RT_RAY			" – rt_ray\n"
+# define RT_POSITION	" – rt_position\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -208,11 +209,17 @@ float		determinant(t_matrix *mat);
 t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
 
 		// Transformations
+
 t_matrix	*rt_translation(t_tuple *t);
 t_matrix	*rt_scaling(t_tuple *t);
 t_matrix	*rt_shear(float *shear_factors);
 t_matrix	*rt_rotation_x(float angle);
 t_matrix	*rt_rotation_y(float angle);
 t_matrix	*rt_rotation_z(float angle);
+
+		// Ray - Sphere intersections
+
+t_ray	*rt_ray(t_tuple *origin, t_tuple *direction);
+t_tuple	*rt_position(t_ray *ray, float d);
 
 #endif
