@@ -66,3 +66,15 @@ as such `rt_scaling(5, 5, 5)` rather than the current `rt_scaling(rt_point(5, 5,
 
 - Added a function `matrix_tuple_multiplication` to directly modify a tuple without
 having to convert it to a matrix
+
+
+# 24/3/25
+- Weird makefile and header issue: stuff disappeared at some point, need to readd manually.
+Faulty merges ?
+- Rewrote `handle_error` with pberset, and corresponding header enums/defines.
+Edited the function call from many functions, but still need to add it in many places
+where I simply return NULL (like tuples mallocs)
+- Pberset started replacing mallocs with ft_calloc
+- Analog clock (end of chapter 4 - "Chaining it together"): started to write code
+with pberset. Decided against function pointers due to differing prototypes of the
+transformation functions 
