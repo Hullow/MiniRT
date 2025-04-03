@@ -78,3 +78,18 @@ where I simply return NULL (like tuples mallocs)
 - Analog clock (end of chapter 4 - "Chaining it together"): started to write code
 with pberset. Decided against function pointers due to differing prototypes of the
 transformation functions 
+
+# 3/4/25
+- Reading ch. 5 "Ray-sphere intersections": for intersect(), which takes an object
+and a ray, two ways to implement. Either encapsulate each object in a new type t_obj,
+or add an enum variable to specify the object used as argument, and (void *) cast
+the actual pointer given as argument (then recast it as the appropriate type
+inside the intersect() function).
+- Hit is the intersection with the lowest nonnegative t value
+
+
+- To check with pberset: p. 68. Inverting matrices => need determinant 
+> whatever transformation you want to apply to the sphere, apply the inverse of
+that transformation to the ray, instead.<br>
+> first, make sure your ray is transformable<br>
+> Make sure it returns a new ray, rather than modifying the ray in place !
