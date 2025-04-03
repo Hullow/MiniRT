@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-/* void	miniRT_input_tests(t_scene *scene);
+void	miniRT_input_tests(t_scene *scene);
 
 static void	rt_init_counters(t_scene *scene)
 {
@@ -77,4 +77,4 @@ void	miniRT_input_tests(t_scene *scene)
 		printf("cylinder height : %f\n", scene->cy->height);
 		printf("cylinder color R: %f G: %f B: %f\n", scene->cy->color->x, scene->cy->color->y, scene->cy->color->z);
 	}
-} */
+}
