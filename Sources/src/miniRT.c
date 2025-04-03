@@ -47,12 +47,14 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (5);
 	if (rt_init_scene(argv[1], scene))
 		return (6);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_scene	*scene;
 
+	scene = NULL;
 	if (build_scene(argc, argv, scene))
 		return (1);
 	miniRT_input_tests(scene);

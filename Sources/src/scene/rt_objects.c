@@ -35,7 +35,7 @@ static int rt_valid_color(char **color)
 			{
 				errno = EINVAL;
 				ft_putstr_fd("Error\n", STDERR_FILENO);
-				perror(color[i][j]);
+				perror(color[i]);
 				return (0);
 			}
 			j++;
