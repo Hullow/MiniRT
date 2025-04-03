@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 17:32:12 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/03 15:26:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
 # include <stdio.h>
+
+# ifndef WINDOW_WIDTH
+#  define WINDOW_WIDTH 800
+# endif
+
+# ifndef WINDOW_HEIGHT
+#  define WINDOW_HEIGHT 600
+# endif
 
 # define VECTOR 0.0
 # define POINT 1.0
@@ -106,28 +114,28 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
+	t_object	type;
 	t_tuple		*coord;
 	float		diameter;
 	t_tuple		*color;
-	t_object	type;
 }	t_sphere;
 
 typedef struct s_plane
 {
+	t_object	type;
 	t_tuple		*coord;
 	t_tuple		*norm;
 	t_tuple		*color;
-	t_object	type;
 }	t_plane;
 
 typedef struct s_cylinder
 {
+	t_object	type;
 	t_tuple		*coord;
 	t_tuple		*norm;
 	float		diameter;
 	float		height;
 	t_tuple		*color;
-	t_object	type;
 }	t_cylinder;
 
 typedef struct s_intersect

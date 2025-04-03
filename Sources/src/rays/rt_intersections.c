@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersections.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:35:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/03 10:35:09 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/04/03 15:27:42 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	rt_compute_intersect(t_scene *scene)
 {
 	int	i;
 	int j;
-	int	n_rays = 42; // how many rays. how to decide ???
+	int	n_rays = WINDOW_WIDTH * WINDOW_HEIGHT; // how many rays => number of pixels
 
 	i = 0;
 	j = 0;

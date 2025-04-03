@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_raycast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:40:46 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/03 15:17:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_tuple	*rt_position(t_ray *ray, float d)
 	t_tuple	*point;
 
 	point = (t_tuple *)ft_calloc(1, sizeof(t_tuple));
-	if(errno)
+	if (errno)
 		return(handle_error(RT_POSITION, ENOMEM, "ft_calloc fail"));
 	point = add_tuple(ray->origin, multiply_tuple_by_scalar(ray->direction, d));
 	return (point);
