@@ -34,19 +34,13 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	}
 	if (rt_check_ext(argv[1]))
 		return (2);
-	scene = (t_scene *)ft_calloc(1, sizeof(t_scene));
-	if (errno)
-	{
-		perror("Error\nscene allocation");
-		return (3);
-	}
 	rt_init_counters(scene);
 	if (rt_read_id(argv[1], scene))
-		return (4);
+		return (3);
 	if (rt_malloc_objects(scene))
-		return (5);
+		return (4);
 	if (rt_init_scene(argv[1], scene))
-		return (6);
+		return (5);
 	return (0);
 }
 
@@ -54,9 +48,14 @@ int	main(int argc, char *argv[])
 {
 	t_scene	*scene;
 
-	scene = NULL;
-	if (build_scene(argc, argv, scene))
+	scene = (t_scene *)ft_calloc(1, sizeof(t_scene));
+	if (errno)
+	{
+		perror("Error\nscene allocation");
 		return (1);
+	}
+	if (build_scene(argc, argv, scene))
+		return (2);
 	miniRT_input_tests(scene);
 	return (0);
 }
