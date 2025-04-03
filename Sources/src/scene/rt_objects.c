@@ -192,6 +192,7 @@ void	rt_assign_sphere(t_scene *scene, char **needle)
 	}
 	scene->sp->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	scene->sp->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->sp->type = SPHERE;
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
@@ -215,6 +216,7 @@ void	rt_assign_plane(t_scene *scene, char **needle)
 	scene->pl->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	scene->pl->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
 	scene->pl->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->pl->type = PLANE;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
@@ -241,6 +243,7 @@ void	rt_assign_cylinder(t_scene *scene, char **needle)
 	scene->cy->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	scene->cy->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
 	scene->cy->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->cy->type = CYLINDER;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);

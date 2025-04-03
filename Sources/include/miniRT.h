@@ -54,6 +54,11 @@ typedef enum {
 	TRANSLATION
 }	t_transform;
 
+typedef enum {
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_object;
 
 /* A tuple:
 	- has a type (w): either a vector (0.0) or a point (1.0)
@@ -101,26 +106,37 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	t_tuple	*coord;
-	float	diameter;
-	t_tuple	*color;
+	t_tuple		*coord;
+	float		diameter;
+	t_tuple		*color;
+	t_object	type;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_tuple	*coord;
-	t_tuple	*norm;
-	t_tuple	*color;
+	t_tuple		*coord;
+	t_tuple		*norm;
+	t_tuple		*color;
+	t_object	type;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_tuple	*coord;
-	t_tuple	*norm;
-	float	diameter;
-	float	height;
-	t_tuple	*color;
+	t_tuple		*coord;
+	t_tuple		*norm;
+	float		diameter;
+	float		height;
+	t_tuple		*color;
+	t_object	type;
 }	t_cylinder;
+
+typedef struct s_intersect
+{
+	void	*object;
+	t_ray	*ray;
+	float	x_distances[2];
+	int		x_count;
+}	t_intersect;
 
 typedef struct s_scene
 {
@@ -136,6 +152,8 @@ typedef struct s_scene
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cylinder	*cy;
+	t_list		*intersects;
+	t_ray		*rays;
 }	t_scene;
 
 // Input handling
@@ -219,7 +237,9 @@ t_matrix	*rt_rotation_z(float angle);
 
 		// Ray - Sphere intersections
 
-t_ray	*rt_ray(t_tuple *origin, t_tuple *direction);
-t_tuple	*rt_position(t_ray *ray, float d);
+t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
+t_tuple		*rt_position(t_ray *ray, float d);
+t_intersect	*rt_ray_object_intersect(t_ray ray, void *object);
+void		rt_compute_intersect(t_scene *scene);
 
 #endif
