@@ -55,7 +55,8 @@ TRANSF		= rt_transform \
 			rt_shearing
 
 RAYSDIR		= rt_raycast \
-			rt_intersections
+			rt_intersections \
+			rt_objects_intersections
 
 UTILS		= rt_utils
 

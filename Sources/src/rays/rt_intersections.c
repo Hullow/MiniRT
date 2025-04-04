@@ -12,30 +12,87 @@
 
 #include "miniRT.h"
 
-// Computes the intersections of a ray on a sphere.
-// Returns a float[2] with the two distances values from the origin of the ray
-// to the surfaces of the sphere 
-t_intersect	*rt_ray_object_intersect(t_ray ray, void *object)
+// Helper to loop through all planes
+static void	plane_loop(t_scene *scene, int j)
 {
+	int	i;
 
+	i = 0;
+	while (i < scene->n_pl)
+	{
+		if (!scene->intersects)
+		{
+			scene->intersects = ft_lstnew( \
+				rt_ray_object_intersect(scene->rays[j], &scene->pl[i]));
+		}
+		else
+		{
+			ft_lstadd_back(&scene->intersects, ft_lstnew( \
+				rt_ray_object_intersect(scene->rays[j], &scene->pl[i])));
+		}
+		i++;
+	}
+}
+
+// Helper to loop through all cylinders
+static void	cylinder_loop(t_scene *scene, int j)
+{
+	int	i;
+
+	i = 0;
+	while (i < scene->n_cy)
+	{
+		if (!scene->intersects)
+		{
+			scene->intersects = ft_lstnew( \
+				rt_ray_object_intersect(scene->rays[j], &scene->cy[i]));
+		}
+		else
+		{
+			ft_lstadd_back(&scene->intersects, ft_lstnew( \
+				rt_ray_object_intersect(scene->rays[j], &scene->cy[i])));
+		}
+		i++;
+	}
+}
+
+// Helper to loop through all spheres
+static void	sphere_loop(t_scene *scene, int j)
+{
+	int	i;
+
+	i = 0;
+	while (i < scene->n_sp)
+	{
+		if (!scene->intersects)
+		{
+			scene->intersects = ft_lstnew( \
+				rt_ray_object_intersect(scene->rays[j], &scene->sp[i]));
+		}
+		else
+		{
+			ft_lstadd_back(&scene->intersects, ft_lstnew( \
+				rt_ray_object_intersect(scene->rays[j], &scene->sp[i])));
+		}
+		i++;
+	}
 }
 
 // Create the intersection struct and assigns values foreach object in the scene
+// The number of rays is decided by the size of the window
+// One ray per pixel
 void	rt_compute_intersect(t_scene *scene)
 {
-	int	i;
 	int j;
-	int	n_rays = WINDOW_WIDTH * WINDOW_HEIGHT; // how many rays => number of pixels
+	int	n_rays;
 
-	i = 0;
+	n_rays = WINDOW_WIDTH * WINDOW_HEIGHT;
 	j = 0;
 	while (j < n_rays)
 	{
-		while (i < scene->n_sp)
-		{
-			scene->intersects = ft_lstnew(rt_ray_object_intersect(scene->rays[j], &scene->sp[i]));
-			i++;
-		}
+		sphere_loop(scene, j);
+		cylinder_loop(scene, j);
+		plane_loop(scene, j);
 		j++;
 	}
 }

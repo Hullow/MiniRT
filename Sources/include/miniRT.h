@@ -47,6 +47,7 @@
 # define RT_VALID_COORD	" – rt_valid_coord\n"
 # define RT_RAY			" – rt_ray\n"
 # define RT_POSITION	" – rt_position\n"
+# define RT_RAY_OBJ_X	" – rt_ray_object_intersect\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -243,11 +244,14 @@ t_matrix	*rt_rotation_x(float angle);
 t_matrix	*rt_rotation_y(float angle);
 t_matrix	*rt_rotation_z(float angle);
 
-		// Ray - Sphere intersections
+		// Ray - Objects intersections
 
 t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
 t_tuple		*rt_position(t_ray *ray, float d);
-t_intersect	*rt_ray_object_intersect(t_ray ray, void *object);
+t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x);
+t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x);
+t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere, t_intersect *x);
+t_intersect	*rt_ray_object_x(t_ray ray, void *object);
 void		rt_compute_intersect(t_scene *scene);
 
 #endif
