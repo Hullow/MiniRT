@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 17:32:42 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 16:19:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/04 17:16:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
-# include "./lib/libft/libft.h"
-# include "./lib/ft_printf/ft_printf.h"
-# include "./lib/get_next_line/get_next_line.h"
-# include "./lib/minilibx/mlx.h"
+# include "./libft/header/libft.h"
+# include "./libft/header/ft_printf.h"
+# include "./libft/header/get_next_line.h"
+# include "./mlx/mlx.h"
 
 typedef struct s_env {
 	void	*mlx;

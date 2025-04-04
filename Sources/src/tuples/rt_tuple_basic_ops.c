@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 20:26:04 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/04 17:36:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,6 @@ t_tuple	*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend)
 
 	if (!minuend || !subtrahend)
 		return (NULL);
-	if (minuend->w == POINT && subtrahend->w == POINT)
-	{
-		printf("add_tuple: can't subtract point from point\n");
-		return (NULL);
-	}
-	else if (minuend->w == VECTOR && subtrahend->w == POINT)
-	{
-		printf("add_tuple: can't subtract point from vector\n");
-		return (NULL);
-	}
 	c = malloc (sizeof(t_tuple));
 	if (!c)
 		return (NULL);

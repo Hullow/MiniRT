@@ -6,16 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:05:55 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 17:42:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/04 17:17:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "fdf.h"
+/*
 
 t_tuple	*fit_coordinates(t_tuple *cart_coord)
 {
-	/* zoom to fit window by multiplying coordinates */
+	// zoom to fit window by multiplying coordinates 
 }
 
 
@@ -30,8 +31,8 @@ t_tuple	*center_coordinates(t_tuple *cart_coord)
 }
 
 
-/* transforms a tuple by multiplying it with a given transform 
-(rotation, scale, shear, translation) */
+// transforms a tuple by multiplying it with a given transform 
+//(rotation, scale, shear, translation) 
 void	transform_tuple(t_tuple *tuple, void *data, t_transform transform)
 {
 	t_tuple	*temp;
@@ -141,3 +142,5 @@ void	ft_clear_pixels(t_env *env)
 		y = 0;
 	}
 }
+
+*/

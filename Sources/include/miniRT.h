@@ -6,15 +6,15 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/03 15:26:41 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/04 17:31:27 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "../libft/header/libft.h"
-# include "../mlx/mlx.h"
+# include "./libft/header/libft.h"
+# include "./mlx/mlx.h"
 # include <stdio.h>
 
 # ifndef WINDOW_WIDTH
@@ -47,6 +47,7 @@
 # define RT_VALID_COORD	" – rt_valid_coord\n"
 # define RT_RAY			" – rt_ray\n"
 # define RT_POSITION	" – rt_position\n"
+# define INIT_SP		" – init_sphere\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
