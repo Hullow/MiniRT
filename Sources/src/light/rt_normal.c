@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:15:22 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/04 17:34:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/04 18:08:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ t_sphere	*init_sphere(t_tuple coord, float diam, t_tuple color)
 }
 
 
-void	sp_normal_test(int test_id, t_tuple desired, t_sphere *sp, t_tuple *normal)
+void	sp_normal_test(int test_id, char axis, t_tuple desired, t_sphere *sp, t_tuple *normal)
 {
 	char	*tuple_type[3] = {"VECTOR", "POINT", "COLOR"};
 
 	(void)sp;
-	printf("Test %d (desired result VECTOR(%3.f, %3.f, %3.f):\nThe normal on a sphere at a point on the x axis is %s(%3.f, %3.f, %3.f)\n",
-	test_id, desired.x, desired.y, desired.z, tuple_type[(int) normal->w], normal->x, normal->y, normal->z);
+	printf("Test %d (desired result VECTOR(%f, %3.f, %3.f):\nThe normal on a sphere at a point on the %c axis is %s(%3.f, %3.f, %3.f)\n",
+	test_id, desired.x, desired.y, desired.z, axis, tuple_type[(int) normal->w], normal->x, normal->y, normal->z);
 
 	free(normal);
 }
@@ -98,16 +98,18 @@ void	test_normal(void)
 					5.0, 
 					(t_tuple){.x = 0.1, .y = 0.1, .z = 0.1});
 
-	sp_normal_test(1, (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0, .w = POINT}));
-	sp_normal_test(1, (t_tuple) {.x = 0, .y = 1.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 0.0, .y = 1.0, .z = 0.0, .w = POINT}));
-	sp_normal_test(1, (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 0.0, .y = 0.0, .z = 1.0, .w = POINT}));
-	sp_normal_test(1, (t_tuple) {.x = sqrtf(3) / 3, .y = sqrtf(3) / 3, .z = sqrtf(3) / 3}, sp, normal_at(sp, (t_tuple) {.x = sqrtf(3) / 3, .y = sqrtf(3) / 3, .z = sqrtf(3) / 3, .w = POINT}));
+	sp_normal_test(1, 'x', (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0, .w = POINT}));
+	sp_normal_test(1, 'y', (t_tuple) {.x = 0, .y = 1.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 0.0, .y = 1.0, .z = 0.0, .w = POINT}));
+	sp_normal_test(1, 'z', (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 0.0, .y = 0.0, .z = 1.0, .w = POINT}));
+	sp_normal_test(1, 'n', (t_tuple) {.x = sqrtf(3) / 3, .y = sqrtf(3) / 3, .z = sqrtf(3) / 3}, sp, normal_at(sp, (t_tuple) {.x = sqrtf(3) / 3, .y = sqrtf(3) / 3, .z = sqrtf(3) / 3, .w = POINT}));
 
 	n = normal_at(sp, (t_tuple) {.x = sqrtf(3) / 3, .y = sqrtf(3) / 3, .z = sqrtf(3) / 3});
 	if (is_equal_tuple(n, normalize(n)))
 		printf("the normal is a normalized vector\n");
 	else
 		printf("error: the normal isn't a normalized vector. Please fix\n");
+	
+
 	
 }
 
