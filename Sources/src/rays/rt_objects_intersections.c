@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_objects_intersections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:56:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/04 17:57:00 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/04/04 18:14:27 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
