@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_structs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:27:15 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/21 20:26:12 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:37:19 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int	rt_count_object(const char *line, t_scene *scene)
 	}
 	else if (*line)
 	{
-		ft_puterr_fd("error: unknown object identifier\n");
-		ft_printf(line);
+		errno = EINVAL;
+		ft_putstr_fd("Error\n", STDERR_FILENO);
+		perror(line);
 		return (1);
 	}
 	return (0);
@@ -59,7 +60,8 @@ int	rt_malloc_objects(t_scene *scene)
 {
 	if (scene->n_A != 1 || scene->n_C != 1 || scene->n_L != 1)
 	{
-		ft_puterr_fd("error: need exactly 1 A && 1 C && 1 L\n");
+		errno = ERANGE;
+		perror("Error\nneed exactly 1 A && 1 C && 1 L");
 		return (1);
 	}
 	scene->amb = (t_ambient *)ft_calloc(1, sizeof(t_ambient));
@@ -68,10 +70,9 @@ int	rt_malloc_objects(t_scene *scene)
 	scene->sp = (t_sphere *)ft_calloc(scene->n_sp, sizeof(t_sphere));
 	scene->pl = (t_plane *)ft_calloc(scene->n_pl, sizeof(t_plane));
 	scene->cy = (t_cylinder *)ft_calloc(scene->n_cy, sizeof(t_cylinder));
-	if (!scene->amb || !scene->cam || !scene->lux || !scene->sp || !scene->pl \
-																|| !scene->cy)
+	if (errno)
 	{
-		ft_puterr_fd("error: failed to malloc objects\n");
+		perror("Error\nfailed to malloc objects");
 		return (2);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 15:18:57 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:30:39 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns)
 	i = 0;
 	while (i < rows)
 	{
-		mat->m[i] = malloc (columns * sizeof(float));
+		mat->m[i] = ft_calloc (columns, sizeof(float));
 		if (!mat->m[i])
 			return (handle_error(MAT_MALLOC, ENOMEM, "malloc fail")); // remove "malloc fail" ?
 		j = 0;

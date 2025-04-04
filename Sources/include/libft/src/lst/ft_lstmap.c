@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:28:07 by pberset           #+#    #+#             */
-/*   Updated: 2024/03/18 14:30:28 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:17:30 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	l_new = NULL;
 	while (lst)
 	{
-		new_elem = malloc(sizeof(t_list));
+		new_elem = ft_calloc(1, sizeof(t_list));
 		if (!new_elem)
 		{
 			ft_lstclear(&l_new, del);
+			perror("ft_lstmap");
 			return (NULL);
 		}
 		new_elem->content = f(lst->content);

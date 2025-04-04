@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 17:32:12 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/03 15:26:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include "../libft/header/libft.h"
 # include "../mlx/mlx.h"
 # include <stdio.h>
+
+# ifndef WINDOW_WIDTH
+#  define WINDOW_WIDTH 800
+# endif
+
+# ifndef WINDOW_HEIGHT
+#  define WINDOW_HEIGHT 600
+# endif
 
 # define VECTOR 0.0
 # define POINT 1.0
@@ -38,6 +46,7 @@
 # define SUBMATRIX 		" – submatrix\n"
 # define RT_VALID_COORD	" – rt_valid_coord\n"
 # define RT_RAY			" – rt_ray\n"
+# define RT_POSITION	" – rt_position\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -53,6 +62,11 @@ typedef enum {
 	TRANSLATION
 }	t_transform;
 
+typedef enum {
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_object;
 
 /* A tuple:
 	- has a type (w): either a vector (0.0) or a point (1.0)
@@ -100,26 +114,37 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	t_tuple	*coord;
-	float	diameter;
-	t_tuple	*color;
+	t_object	type;
+	t_tuple		*coord;
+	float		diameter;
+	t_tuple		*color;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_tuple	*coord;
-	t_tuple	*norm;
-	t_tuple	*color;
+	t_object	type;
+	t_tuple		*coord;
+	t_tuple		*norm;
+	t_tuple		*color;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_tuple	*coord;
-	t_tuple	*norm;
-	float	diameter;
-	float	height;
-	t_tuple	*color;
+	t_object	type;
+	t_tuple		*coord;
+	t_tuple		*norm;
+	float		diameter;
+	float		height;
+	t_tuple		*color;
 }	t_cylinder;
+
+typedef struct s_intersect
+{
+	void	*object;
+	t_ray	*ray;
+	float	x_distances[2];
+	int		x_count;
+}	t_intersect;
 
 typedef struct s_scene
 {
@@ -135,6 +160,8 @@ typedef struct s_scene
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cylinder	*cy;
+	t_list		*intersects;
+	t_ray		*rays;
 }	t_scene;
 
 // Input handling
@@ -208,11 +235,19 @@ float		determinant(t_matrix *mat);
 t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
 
 		// Transformations
+
 t_matrix	*rt_translation(t_tuple *t);
 t_matrix	*rt_scaling(t_tuple *t);
 t_matrix	*rt_shear(float *shear_factors);
 t_matrix	*rt_rotation_x(float angle);
 t_matrix	*rt_rotation_y(float angle);
 t_matrix	*rt_rotation_z(float angle);
+
+		// Ray - Sphere intersections
+
+t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
+t_tuple		*rt_position(t_ray *ray, float d);
+t_intersect	*rt_ray_object_intersect(t_ray ray, void *object);
+void		rt_compute_intersect(t_scene *scene);
 
 #endif

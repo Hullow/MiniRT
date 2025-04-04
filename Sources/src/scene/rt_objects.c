@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_objects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 14:57:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:41:34 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ static int rt_valid_color(char **color)
 	int	j;
 
 	i = 0;
+	errno = 0;
 	while (i < 3 && color[i])
 	{
 		if (ft_atoi(color[i]) > 255 || ft_atoi(color[i]) < 0)
 		{
 			errno = ERANGE;
-			perror("invalid color values");
+			ft_putstr_fd("Error\n", STDERR_FILENO);
+			perror(color[i]);
 			return (0);
 		}
 		j = 0;
@@ -32,7 +34,8 @@ static int rt_valid_color(char **color)
 			if (!ft_isdigit(color[i][j]))
 			{
 				errno = EINVAL;
-				perror("invalid color values");
+				ft_putstr_fd("Error\n", STDERR_FILENO);
+				perror(color[i]);
 				return (0);
 			}
 			j++;
@@ -42,7 +45,7 @@ static int rt_valid_color(char **color)
 	if (i != 3 || color[i] != 0)
 	{
 		errno = EINVAL;
-		perror("wrong number of color arguments");
+		perror("Error\nwrong number of color arguments");
 		return (0);
 	}
 	return (1);
@@ -57,19 +60,15 @@ static int	rt_valid_coord(char **coord)
 	while (i > 0 && *coord)
 	{
 		ft_strtof(*coord);
-		if (errno != 0)
-		{
-			// perror(*coord);
-			// return (0);
-			return (1 && (handle_error(RT_VALID_COORD, EINVAL, "bad coordinates in input"))); // message ok ?
- 		}
+		if (errno)
+			return (1 && (handle_error(RT_VALID_COORD, EINVAL, "bad coordinates in input")));
 		i--;
 		coord++;
 	}
 	if (i != 0 || *coord != 0)
 	{
 		errno = EINVAL;
-		perror("wrong number of coordinate arguments");
+		perror("Error\nwrong number of coordinate arguments");
 		return (0);
 	}
 	return (1);
@@ -87,7 +86,7 @@ static int	rt_valid_orient(char **orient)
 		ver = ft_strtof(*orient);
 		if (ver < -1.0 || ver > 1.0)
 			errno = ERANGE;
-		if (errno != 0)
+		if (errno)
 		{
 			perror(*orient);
 			return (0);
@@ -140,7 +139,7 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 	if (scene->amb->ratio > 1.0 || scene->amb->ratio < 0.0)
 	{
 		errno = ERANGE;
-		perror("wrong ratio value");
+		perror("Error\nwrong ratio value");
 	}
 	if (!rt_valid_color(color) || errno != 0)
 	{
@@ -193,6 +192,7 @@ void	rt_assign_sphere(t_scene *scene, char **needle)
 	}
 	scene->sp->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	scene->sp->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->sp->type = SPHERE;
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
@@ -216,6 +216,7 @@ void	rt_assign_plane(t_scene *scene, char **needle)
 	scene->pl->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	scene->pl->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
 	scene->pl->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->pl->type = PLANE;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
@@ -242,6 +243,7 @@ void	rt_assign_cylinder(t_scene *scene, char **needle)
 	scene->cy->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	scene->cy->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
 	scene->cy->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->cy->type = CYLINDER;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);

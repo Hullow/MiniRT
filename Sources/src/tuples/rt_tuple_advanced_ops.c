@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_tuple_advanced_ops.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:38:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 20:26:06 by fallan           ###   ########.fr       */
+/*   Updated: 2025/03/24 15:33:33 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ t_tuple	*normalize(t_tuple *tuple)
 		printf("normalize: vector is null vector, cannot normalize\n");
 		return (NULL);
 	}
-	norm = malloc (sizeof(t_tuple));
-	if (!norm)
+	norm = ft_calloc (1,sizeof(t_tuple));
+	if (errno)
+	{
+		perror("Errnor\nnormalize");
 		return (NULL);
+	}
 	norm = divide_tuple_by_scalar(tuple, magnitude(tuple));
 	return (norm);
 }

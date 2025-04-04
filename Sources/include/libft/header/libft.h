@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <float.h>
 # include <math.h>
+# include <stdio.h>
 
 // Converts an int into a string
 char	*ft_itoa(int n);

@@ -54,8 +54,8 @@ TUPLE		= rt_tuple_basic_ops \
 TRANSF		= rt_transform \
 			rt_shearing
 
-RAYSDIR		= rt_raycast
-
+RAYSDIR		= rt_raycast \
+			rt_intersections
 
 UTILS		= rt_utils
 

@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:07:58 by pberset           #+#    #+#             */
-/*   Updated: 2024/06/18 22:09:32 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:23:44 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ char	**ft_split(char const *s, char c)
 	int		c_splits;
 
 	c_splits = ft_count_splits(s, (unsigned char)c);
-	str_array = (char **)malloc(sizeof(char *) * (c_splits + 1));
-	if (!str_array)
+	str_array = (char **)ft_calloc((c_splits + 1), sizeof(char *));
+	if (errno)
 		return (NULL);
 	i = 0;
 	while (i < c_splits && *s)

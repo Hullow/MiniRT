@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 00:08:05 by pberset           #+#    #+#             */
-/*   Updated: 2024/03/18 14:30:28 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:21:16 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static int	ft_digits_count(int nb)
 	return (digits);
 }
 
+static void	*err_msg()
+{
+	perror("ft_itoa");
+	return (NULL);
+}
+
 char	*ft_itoa(int n)
 {
 	char		*output;
@@ -33,9 +39,9 @@ char	*ft_itoa(int n)
 	digits_count = ft_digits_count(n);
 	if (n < 0)
 		digits_count++;
-	output = (char *)malloc(sizeof(char) * (digits_count + 1));
-	if (!output)
-		return (NULL);
+	output = (char *)ft_calloc((digits_count + 1), sizeof(char));
+	if (errno)
+		return (err_msg());
 	if (n < 0)
 		output[0] = '-';
 	output[digits_count] = '\0';

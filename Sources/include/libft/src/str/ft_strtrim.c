@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:57:32 by pberset           #+#    #+#             */
-/*   Updated: 2024/03/18 14:30:28 by pberset          ###   ########.fr       */
+/*   Updated: 2025/03/24 14:27:38 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static int	ft_setcmp(char c, char const *c_set)
 	return (0);
 }
 
+static void	*err_msg()
+{
+	perror("ft_strjoin");
+	return (NULL);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*output;
@@ -40,9 +46,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (end > start && ft_setcmp(s1[end - 1], set))
 		end--;
 	i = 0;
-	output = (char *)malloc(sizeof(char) * (end - start + 1));
-	if (!output)
-		return (NULL);
+	output = (char *)ft_calloc((end - start + 1), sizeof(char));
+	if (errno)
+		return (err_msg());
 	while (start < end)
 	{
 		output[i] = s1[start];
