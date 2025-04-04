@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:35:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/04 18:38:18 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/04 18:52:13 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	object_loop(t_scene *scene, int j, t_object object)
 	int		i;
 	int		nr_objects;
 	int		max_type;
-	void	**obj_ptr = NULL;
+	void	**obj_ptr = NULL; // other possibility: initialize at &scene->sp
 
 	max_type = 3;
 	while (object < max_type)
@@ -69,6 +69,7 @@ static void	object_loop(t_scene *scene, int j, t_object object)
 			}
 			i++;
 		}
+		object++;
 	}
 }
 
