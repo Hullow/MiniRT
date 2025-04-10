@@ -101,7 +101,8 @@ that transformation to the ray, instead.<br>
 and said I might write the tests for the chapter
 
 # 10/4/25
-- Normal vector
+- Worked on missing chapter 5 items: rt_transform_ray and set_sphere_transform (transform and set_transform in the book)
+=> to finish
 - Ideas for avoiding too many frees:
 	- everything on stack at initialization
 	- transformations:
