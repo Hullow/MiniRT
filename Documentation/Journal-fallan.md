@@ -96,4 +96,6 @@ that transformation to the ray, instead.<br>
 
 
 # 4/4/25
-- Working on ch.6 "Light and Shading": normal vector, 
+- Working on ch.6 "Light and Shading": normal vector
+- Discussed pberset's work on ch. 5 (intersections), recoded the object loop (but not tested yet),
+and said I might write the tests for the chapter
