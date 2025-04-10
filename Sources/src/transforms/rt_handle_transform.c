@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt_handle_transform.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/10 13:49:52 by fallan            #+#    #+#             */
+/*   Updated: 2025/04/10 15:16:15 by fallan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "miniRT.h"
+
+t_ray	*rt_transform_ray(t_ray *initial_ray, t_matrix *trans)
+{
+	t_tuple	*new_origin;
+	t_tuple	*new_direction;
+
+	if (!initial_ray || !trans)
+		return (handle_error(RT_TRANS_RAY, EINVAL, "null input"));
+	new_origin = matrix_tuple_multiplication(trans, initial_ray->origin);
+	new_direction = matrix_tuple_multiplication(trans, initial_ray->direction);
+	return (rt_ray(new_origin, new_direction));
+}
+
+void	*set_sphere_transform(t_sphere *sp, t_matrix *trans)
+{
+	if (!sp || !trans)
+		return (handle_error(SET_SP_TRANS, EINVAL, "null input"));
+	free (sp->transform);
+	sp->transform = trans;
+	return (NULL);
+}

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_transform.c                                     :+:      :+:    :+:   */
+/*   rt_transform_ray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student->42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "miniRT.h"
 
 // Init a translation matrix in the direction given by the vector t
-t_matrix	*rt_translation(t_tuple *t)
+t_matrix	*rt_translation(float x, float y, float z)
 {
 	t_matrix	*transform;
 
@@ -23,14 +23,14 @@ t_matrix	*rt_translation(t_tuple *t)
 		perror("Error\ntranslation matrix init");
 		return (NULL);
 	}
-	transform->m[0][3] = t->x;
-	transform->m[1][3] = t->y;
-	transform->m[2][3] = t->z;
+	transform->m[0][3] = x;
+	transform->m[1][3] = y;
+	transform->m[2][3] = z;
 	return (transform);
 }
 
-// Init a scaling matrix by the amount given by the vector t
-t_matrix	*rt_scaling(t_tuple *t)
+// Init a scaling matrix with x, y, z scaling values
+t_matrix	*rt_scaling(float x, float y, float z)
 {
 	t_matrix	*scaling;
 
@@ -40,9 +40,9 @@ t_matrix	*rt_scaling(t_tuple *t)
 		perror("Error\nscaling matrix init");
 		return (NULL);
 	}
-	scaling->m[0][0] = t->x;
-	scaling->m[1][1] = t->y;
-	scaling->m[2][2] = t->z;
+	scaling->m[0][0] = x;
+	scaling->m[1][1] = y;
+	scaling->m[2][2] = z;
 	return (scaling);
 }
 
@@ -105,4 +105,3 @@ t_matrix	*rt_rotation_z(float angle)
 	rotation->m[1][1] = cosf(r);
 	return (rotation);
 }
-

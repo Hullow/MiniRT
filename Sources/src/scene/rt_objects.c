@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_objects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:41:34 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/10 15:11:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,3 +249,27 @@ void	rt_assign_cylinder(t_scene *scene, char **needle)
 	ft_free_tab(color);
 }
 
+/* initializes a sphere based on a tuple for coordinates, a float for diameter, 
+and a tuple for color. Both input tuples to be initialized on the stack, thus:
+(t_tuple){.x = , .y = , .z = } */
+t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color)
+{
+	t_sphere	*sp = NULL;
+	
+	sp = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
+	if (errno)
+		return (handle_error(INIT_SP, ENOMEM, NULL));
+	sp->coord = rt_point(coord.x, coord.y, coord.z);
+	sp->color = rt_color(color.x, color.y, color.z);
+	sp->transform = identity_matrix(4, 4);
+	if (errno)
+	{
+		free (sp);
+		free (sp->coord);
+		free (sp->color);
+		free (sp->transform);
+		return (handle_error(INIT_SP, ENOMEM, NULL));
+	}
+	sp->diameter = diam;
+	return (sp);
+}

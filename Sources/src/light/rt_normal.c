@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:15:22 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/10 13:30:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:10:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,6 @@ typedef struct s_sphere
 
 t_tuple	*normal_at(t_sphere *sp, t_tuple point);
 
-/* initializes a sphere based on a tuple for coordinates, a float for diameter, 
-and a tuple for color. Both input tuples to be initialized on the stack, thus:
-(t_tuple){.x = , .y = , .z = } */
-t_sphere	*init_sphere(t_tuple coord, float diam, t_tuple color)
-{
-	t_sphere	*sp = NULL;
-	
-	sp = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
-	if (errno)
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	sp->coord = rt_point(coord.x, coord.y, coord.z);
-	if (errno)
-	{
-		free (sp);
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	}
-	sp->color = rt_color(color.x, color.y, color.z);
-	if (errno)
-	{
-		free (sp);
-		free (sp->coord);
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	}
-	sp->diameter = diam;
-	return (sp);
-}
-
-
 void	sp_normal_test(int test_id, char axis, t_tuple desired, t_sphere *sp, t_tuple *normal)
 {
 	char	*tuple_type[3] = {"VECTOR", "POINT", "COLOR"};
@@ -88,13 +60,12 @@ void	sp_normal_test(int test_id, char axis, t_tuple desired, t_sphere *sp, t_tup
 	free(normal);
 }
 
-
 void	test_normal(void)
 {
 	t_sphere *sp;
 	t_tuple *n;
 	
-	sp = init_sphere((t_tuple){.x = 0.0, .y = 0.0, .z = 0.0},
+	sp = rt_init_sphere((t_tuple){.x = 0.0, .y = 0.0, .z = 0.0},
 					5.0, 
 					(t_tuple){.x = 0.1, .y = 0.1, .z = 0.1});
 

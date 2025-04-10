@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/04 17:31:27 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/10 15:16:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 # define RT_RAY			" – rt_ray\n"
 # define RT_POSITION	" – rt_position\n"
 # define INIT_SP		" – init_sphere\n"
+# define RT_RAY_OBJ_X	" – rt_ray_object_intersect\n"
+# define RT_TRANS_RAY	" – rt_transform_ray\n"
+# define SET_SP_TRANS	" – set_sphere_transform\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -119,6 +122,7 @@ typedef struct s_sphere
 	t_tuple		*coord;
 	float		diameter;
 	t_tuple		*color;
+	t_matrix	*transform;
 }	t_sphere;
 
 typedef struct s_plane
@@ -178,6 +182,7 @@ void		rt_assign_ambient(t_scene *scene, char **needle);
 void		rt_assign_camera(t_scene *scene, char **needle);
 void		rt_assign_plane(t_scene *scene, char **needle);
 void		rt_assign_cylinder(t_scene *scene, char **needle);
+t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color);
 
 // Utils
 	// General
@@ -237,18 +242,24 @@ t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
 
 		// Transformations
 
-t_matrix	*rt_translation(t_tuple *t);
-t_matrix	*rt_scaling(t_tuple *t);
-t_matrix	*rt_shear(float *shear_factors);
+t_matrix	*rt_translation(float x, float y, float z);
+t_matrix	*rt_scaling(float x, float y, float z);
+t_matrix	*rt_shearing(float *shear_factors);
 t_matrix	*rt_rotation_x(float angle);
 t_matrix	*rt_rotation_y(float angle);
 t_matrix	*rt_rotation_z(float angle);
+t_ray		*rt_transform_ray(t_ray *initial_ray, t_matrix *trans);
+void		*set_sphere_transform(t_sphere *sp, t_matrix *trans);
 
 		// Ray - Sphere intersections
+
 
 t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
 t_tuple		*rt_position(t_ray *ray, float d);
 t_intersect	*rt_ray_object_intersect(t_ray ray, void *object);
 void		rt_compute_intersect(t_scene *scene);
 
+		// Light and shade
+
+		
 #endif
