@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:15:22 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/04 18:08:07 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/10 13:30:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	test_normal(void)
 					5.0, 
 					(t_tuple){.x = 0.1, .y = 0.1, .z = 0.1});
 
+	// Basic test
 	sp_normal_test(1, 'x', (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0, .w = POINT}));
 	sp_normal_test(1, 'y', (t_tuple) {.x = 0, .y = 1.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 0.0, .y = 1.0, .z = 0.0, .w = POINT}));
 	sp_normal_test(1, 'z', (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 0.0, .y = 0.0, .z = 1.0, .w = POINT}));
@@ -108,9 +109,9 @@ void	test_normal(void)
 		printf("the normal is a normalized vector\n");
 	else
 		printf("error: the normal isn't a normalized vector. Please fix\n");
-	
 
-	
+	// Translated sphere test
+	// rt_translation();
 }
 
 t_tuple	*normal_at(t_sphere *sp, t_tuple point)

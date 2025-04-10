@@ -99,3 +99,11 @@ that transformation to the ray, instead.<br>
 - Working on ch.6 "Light and Shading": normal vector
 - Discussed pberset's work on ch. 5 (intersections), recoded the object loop (but not tested yet),
 and said I might write the tests for the chapter
+
+# 10/4/25
+- Normal vector
+- Ideas for avoiding too many frees:
+	- everything on stack at initialization
+	- transformations:
+		- init them in a struct and point towards them
+		- encapsulate transformations in a function that mallocs a transformation matrix, performs the transformation, then frees everything
