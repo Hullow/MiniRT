@@ -67,7 +67,7 @@ typedef enum {
 	SPHERE,
 	PLANE,
 	CYLINDER
-}	t_object;
+}	t_objtype;
 
 /* A tuple:
 	- has a type (w): either a vector (0.0) or a point (1.0)
@@ -89,62 +89,46 @@ typedef struct s_matrix {
 }	t_matrix;
 
 typedef struct s_ray {
-	t_tuple	*origin;
-	t_tuple	*direction;
+	t_tuple	origin;
+	t_tuple	direction;
 }	t_ray;
 
 typedef struct s_ambient
 {
 	float	ratio;
-	t_tuple	*color;
+	t_tuple	color;
 }	t_ambient;
 
 typedef struct s_camera
 {
-	t_tuple	*coord;
-	t_tuple	*orient;
+	t_tuple	coord;
+	t_tuple	orient;
 	float	fov;
 }	t_camera;
 
 typedef struct s_light
 {
-	t_tuple	*coord;
+	t_tuple	coord;
 	float	ratio;
-	t_tuple	*color;
+	t_tuple	color;
 }	t_light;
 
-typedef struct s_sphere
-{
-	t_object	type;
-	t_tuple		*coord;
-	float		diameter;
-	t_tuple		*color;
-}	t_sphere;
-
-typedef struct s_plane
-{
-	t_object	type;
-	t_tuple		*coord;
-	t_tuple		*norm;
-	t_tuple		*color;
-}	t_plane;
-
-typedef struct s_cylinder
-{
-	t_object	type;
-	t_tuple		*coord;
-	t_tuple		*norm;
-	float		diameter;
-	float		height;
-	t_tuple		*color;
-}	t_cylinder;
+typedef struct s_object {
+    t_objtype	type;
+    t_matrix	transform;
+    t_tuple		color;
+    t_tuple		coord;
+    t_tuple		norm;
+    float		diameter;
+    float		height;
+}	t_object;
 
 typedef struct s_intersect
 {
-	void	*object;
-	t_ray	*ray;
-	float	x_distances[2];
-	int		x_count;
+	t_object	object;
+	t_ray		ray;
+	float		x_distances[2];
+	int			x_count;
 }	t_intersect;
 
 typedef struct s_scene
@@ -155,12 +139,10 @@ typedef struct s_scene
 	int			n_sp;
 	int			n_pl;
 	int			n_cy;
-	t_ambient	*amb;
-	t_camera	*cam;
-	t_light		*lux;
-	t_sphere	*sp;
-	t_plane		*pl;
-	t_cylinder	*cy;
+	t_ambient	amb;
+	t_camera	cam;
+	t_light		lux;
+	t_object	*objects;
 	t_list		*intersects;
 	t_ray		*rays;
 }	t_scene;
@@ -173,11 +155,12 @@ int			rt_count_object(const char *line, t_scene *scene);
 int			rt_malloc_objects(t_scene *scene);
 int			rt_init_scene(const char *file, t_scene *scene);
 void		rt_assign_light(t_scene *scene, char **needle);
-void		rt_assign_sphere(t_scene *scene, char **needle);
 void		rt_assign_ambient(t_scene *scene, char **needle);
 void		rt_assign_camera(t_scene *scene, char **needle);
-void		rt_assign_plane(t_scene *scene, char **needle);
-void		rt_assign_cylinder(t_scene *scene, char **needle);
+void		rt_assign_object(t_object *object, char **needle, char type);
+void		rt_assign_sphere(t_object *sphere, char **needle);
+void		rt_assign_plane(t_object *plane, char **needle);
+void		rt_assign_cylinder(t_object *cylinder, char **needle);
 
 // Utils
 	// General
@@ -192,66 +175,66 @@ float		abs_float(float a);
 
 		// Tuples and tuple operations
 
-t_tuple		*rt_point(float x, float y, float z);
-t_tuple		*rt_vector(float x, float y, float z);
-t_tuple		*rt_color(float r, float g, float b);
-int			is_equal_tuple(t_tuple *a, t_tuple *b);
-t_tuple		*add_tuple(t_tuple *a, t_tuple *b);
-t_tuple		*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend);
-t_tuple		*negate_tuple(t_tuple *a);
-t_tuple		*multiply_tuple_by_scalar(t_tuple *a, float scalar);
-t_tuple		*divide_tuple_by_scalar(t_tuple *a, float scalar);
-float		magnitude(t_tuple *tuple);
-t_tuple		*normalize(t_tuple *tuple);
-float		dot_product(t_tuple *a, t_tuple *b);
-t_tuple		*cross_product(t_tuple *a, t_tuple *b);
+t_tuple		rt_point(float x, float y, float z);
+t_tuple		rt_vector(float x, float y, float z);
+t_tuple		rt_color(float r, float g, float b);
+int			is_equal_tuple(t_tuple a, t_tuple b);
+t_tuple		add_tuple(t_tuple a, t_tuple b);
+t_tuple		subtract_tuple(t_tuple minuend, t_tuple subtrahend);
+t_tuple		negate_tuple(t_tuple a);
+t_tuple		multiply_tuple_by_scalar(t_tuple a, float scalar);
+t_tuple		divide_tuple_by_scalar(t_tuple a, float scalar);
+float		magnitude(t_tuple tuple);
+t_tuple		normalize(t_tuple tuple);
+float		dot_product(t_tuple a, t_tuple b);
+t_tuple		cross_product(t_tuple a, t_tuple b);
 
 		// Matrices
 			// General functions
 		
-t_matrix	*init_matrix(int rows, int columns);
-t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns);
-t_matrix	*identity_matrix(int rows, int columns);
-t_matrix	*convert_tuple_to_matrix(t_tuple *tuple);
-t_tuple		*matrix_tuple_multiplication(t_matrix *m, t_tuple *t);
-int			print_matrix(t_matrix *mat);
+t_matrix	init_matrix(int rows, int columns);
+t_matrix	malloc_matrix_columns(t_matrix mat, int rows, int columns);
+t_matrix	identity_matrix(int rows, int columns);
+t_matrix	convert_tuple_to_matrix(t_tuple tuple);
+t_tuple		matrix_tuple_multiplication(t_matrix m, t_tuple t);
+int			print_matrix(t_matrix mat);
 
 			// Basic operations
 		
-t_matrix	*matrix_multiplication(t_matrix *a, t_matrix *b);
-t_matrix	*matrix_transposition(t_matrix *mat);
-t_matrix	*matrix_inversion(t_matrix *mat);
-int			matrix_equality(t_matrix *a, t_matrix *b);
+t_matrix	matrix_multiplication(t_matrix a, t_matrix b);
+t_matrix	matrix_transposition(t_matrix mat);
+t_matrix	matrix_inversion(t_matrix mat);
+int			matrix_equality(t_matrix a, t_matrix b);
 
 			// Sub, determinant, cofactor
 
-int			submatrix_errors(t_matrix *mat, t_matrix *sub);
-t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub);
-float		matrix_minor(t_matrix *mat, int row, int column);
-float		matrix_cofactor(t_matrix *mat, int row, int column);
-float		determinant(t_matrix *mat);
+int			submatrix_errors(t_matrix mat);
+t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub);
+float		matrix_minor(t_matrix mat, int row, int column);
+float		matrix_cofactor(t_matrix mat, int row, int column);
+float		determinant(t_matrix mat);
 
 		// Color
 
-t_tuple		*rt_hadamard(t_tuple color1, t_tuple color2);
+t_tuple		rt_hadamard(t_tuple color1, t_tuple color2);
 
 		// Transformations
 
-t_matrix	*rt_translation(t_tuple *t);
-t_matrix	*rt_scaling(t_tuple *t);
-t_matrix	*rt_shear(float *shear_factors);
-t_matrix	*rt_rotation_x(float angle);
-t_matrix	*rt_rotation_y(float angle);
-t_matrix	*rt_rotation_z(float angle);
+t_matrix	rt_translation(t_tuple t);
+t_matrix	rt_scaling(t_tuple t);
+t_matrix	rt_shear(float *shear_factors);
+t_matrix	rt_rotation_x(float angle);
+t_matrix	rt_rotation_y(float angle);
+t_matrix	rt_rotation_z(float angle);
 
 		// Ray - Objects intersections
 
-t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
-t_tuple		*rt_position(t_ray *ray, float d);
-t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x);
-t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x);
-t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere, t_intersect *x);
-t_intersect	*rt_ray_object_x(t_ray ray, void *object);
-void		rt_compute_intersect(t_scene *scene);
+t_ray		rt_ray(t_tuple origin, t_tuple direction);
+t_tuple		rt_position(t_ray ray, float d);
+t_intersect	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x);
+t_intersect	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x);
+t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x);
+t_intersect	rt_ray_object_x(t_ray ray, t_object object);
+void		rt_compute_intersect(t_scene scene);
 
 #endif

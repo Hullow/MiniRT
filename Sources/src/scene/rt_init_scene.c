@@ -25,7 +25,9 @@ static void	rt_spacify(char *line)
 static void	rt_assign_values(t_scene *scene, char **values)
 {
 	char	**needle;
+	int		i;
 
+	i = 0;
 	while (*values)
 	{
 		needle = values + 1;
@@ -35,13 +37,10 @@ static void	rt_assign_values(t_scene *scene, char **values)
 			rt_assign_ambient(scene, needle);
 		else if (**values == 'C')
 			rt_assign_camera(scene, needle);
-		else if (**values == 's')
-			rt_assign_sphere(scene, needle);
-		else if (**values == 'p')
-			rt_assign_plane(scene, needle);
-		else if (**values == 'c')
-			rt_assign_cylinder(scene, needle);
+		else
+			rt_assign_object(&(scene->objects[i]), needle, **values);
 		values++;
+		i++;
 	}
 }
 
@@ -55,8 +54,7 @@ int	rt_init_scene(const char *file, t_scene *scene)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error\n", STDERR_FILENO);
-		perror(file);
+		handle_error("rt_init_scene", errno, (char *)file);
 		return (1);
 	}
 	while (1)

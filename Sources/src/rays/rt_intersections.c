@@ -27,17 +27,17 @@ static int	assign_obj_data(t_scene *scene, t_object object, void **obj_ptr)
 	if (object == SPHERE)
 	{
 		nr_objects = scene->n_sp;
-		obj_ptr = &scene->sp;
+		obj_ptr = &scene->objects;
 	}
 	else if (object == PLANE)
 	{
 		nr_objects = scene->n_pl;
-		obj_ptr = &scene->pl;
+		obj_ptr = &scene->objects;
 	}
 	else if (object == CYLINDER)
 	{
 		nr_objects = scene->n_cy;
-		obj_ptr = &scene->cy;
+		obj_ptr = &scene->objects;
 	}
 	return (nr_objects);
 }
@@ -48,7 +48,7 @@ static void	object_loop(t_scene *scene, int j, t_object object)
 	int		i;
 	int		nr_objects;
 	int		max_type;
-	void	**obj_ptr = NULL; // other possibility: initialize at &scene->sp
+	void	**obj_ptr = NULL; // other possibility: initialize at &scene->objects
 
 	max_type = 3;
 	while (object < max_type)
@@ -84,12 +84,12 @@ static void	plane_loop(t_scene *scene, int j)
 		if (!scene->intersects)
 		{
 			scene->intersects = ft_lstnew( \
-				rt_ray_object_intersect(scene->rays[j], &scene->pl[i]));
+				rt_ray_object_intersect(scene->rays[j], &scene->objects[i]));
 		}
 		else
 		{
 			ft_lstadd_back(&scene->intersects, ft_lstnew( \
-				rt_ray_object_intersect(scene->rays[j], &scene->pl[i])));
+				rt_ray_object_intersect(scene->rays[j], &scene->objects[i])));
 		}
 		i++;
 	}
@@ -106,12 +106,12 @@ static void	cylinder_loop(t_scene *scene, int j)
 		if (!scene->intersects)
 		{
 			scene->intersects = ft_lstnew( \
-				rt_ray_object_intersect(scene->rays[j], &scene->cy[i]));
+				rt_ray_object_intersect(scene->rays[j], &scene->objects[i]));
 		}
 		else
 		{
 			ft_lstadd_back(&scene->intersects, ft_lstnew( \
-				rt_ray_object_intersect(scene->rays[j], &scene->cy[i])));
+				rt_ray_object_intersect(scene->rays[j], &scene->objects[i])));
 		}
 		i++;
 	}
@@ -128,12 +128,12 @@ static void	sphere_loop(t_scene *scene, int j)
 		if (!scene->intersects)
 		{
 			scene->intersects = ft_lstnew( \
-				rt_ray_object_intersect(scene->rays[j], &scene->sp[i]));
+				rt_ray_object_intersect(scene->rays[j], &scene->objects[i]));
 		}
 		else
 		{
 			ft_lstadd_back(&scene->intersects, ft_lstnew( \
-				rt_ray_object_intersect(scene->rays[j], &scene->sp[i])));
+				rt_ray_object_intersect(scene->rays[j], &scene->objects[i])));
 		}
 		i++;
 	}

@@ -14,7 +14,7 @@
 
 // Computes the collision distance between the ray and the plane
 // chapter 9
-t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x)
+t_intersect	*rt_ray_plane_x(t_ray *ray, t_object *plane, t_intersect *x)
 {
 	(void)ray;
 	(void)plane;
@@ -23,7 +23,7 @@ t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x)
 
 // Computes the two collision distances between the ray and the cylinder
 // chapter 13
-t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x)
+t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_object *cylinder, t_intersect *x)
 {
 	(void)ray;
 	(void)cylinder;
@@ -32,7 +32,7 @@ t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x)
 
 // Computes the two collision distances between the ray and the sphere
 // Uses a quadratic equation discriminant = b²-4ac
-t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere, t_intersect *x)
+t_intersect	*rt_ray_sphere_x(t_ray *ray, t_object *sphere, t_intersect *x)
 {
 	t_tuple	*sphere_to_ray;
 	float	a;
@@ -60,7 +60,7 @@ t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere, t_intersect *x)
 // Computes the intersections of a ray on a sphere.
 // Returns a float[2] with the two distances values from the origin of the ray
 // to the surfaces of the sphere 
-t_intersect	*rt_ray_object_x(t_ray ray, void *object)
+t_intersect	*rt_ray_object_x(t_ray ray, t_object *object)
 {
 	t_intersect	*x;
 	t_object	type;
@@ -68,15 +68,15 @@ t_intersect	*rt_ray_object_x(t_ray ray, void *object)
 	x = (t_intersect *)ft_calloc(1, sizeof(t_intersect));
 	if (errno)
 		handle_error(RT_RAY_OBJ_X, ENOMEM, "ft_calloc failed");
-	x->object = object;
-	x->ray = &ray;
+	x->object = *object;
+	x->ray = ray;
 	x->x_count = 0;
 	type = *((t_object *)object);
-	if (type == SPHERE)
-		return (rt_ray_sphere_x(&ray, (t_sphere *)object, x));
-	if (type == CYLINDER)
-		return (rt_ray_cylinder_x(&ray, (t_cylinder *)object, x));
-	if (type == PLANE)
-		return (rt_ray_sphere_x(&ray, (t_plane *)object, x));
+	if (object->type == SPHERE)
+		return (rt_ray_sphere_x(&ray, object, x));
+	if (object->type == CYLINDER)
+		return (rt_ray_cylinder_x(&ray, object, x));
+	if (object->type == PLANE)
+		return (rt_ray_sphere_x(&ray, object, x));
 	return (x);
 }

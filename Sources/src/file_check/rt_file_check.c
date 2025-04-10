@@ -31,7 +31,6 @@ int	rt_check_ext(const char *file)
 int	rt_read_id(const char *file, t_scene *scene)
 {
 	int		fd;
-	int		n_err;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
@@ -40,12 +39,11 @@ int	rt_read_id(const char *file, t_scene *scene)
 		perror(file);
 		return (1);
 	}
-	n_err = 0;
+	errno = 0;
 	line = get_next_line(fd);
-	while(line != NULL && *line != 0 && n_err == 0)
+	while(line != NULL && *line != 0 && errno == 0)
 	{
-		if (rt_count_object(line, scene))
-			n_err = 1;
+		rt_count_object(line, scene);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -55,6 +53,6 @@ int	rt_read_id(const char *file, t_scene *scene)
 		line = NULL;
 	}
 	close(fd);
-	return (n_err);
+	return (errno);
 }
 

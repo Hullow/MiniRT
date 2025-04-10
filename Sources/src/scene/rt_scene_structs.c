@@ -58,18 +58,16 @@ int	rt_count_object(const char *line, t_scene *scene)
 // Otherwise 0
 int	rt_malloc_objects(t_scene *scene)
 {
+	int	n_obj;
+
+	n_obj = scene->n_sp + scene->n_cy + scene-> n_pl;
 	if (scene->n_A != 1 || scene->n_C != 1 || scene->n_L != 1)
 	{
 		errno = ERANGE;
 		perror("Error\nneed exactly 1 A && 1 C && 1 L");
 		return (1);
 	}
-	scene->amb = (t_ambient *)ft_calloc(1, sizeof(t_ambient));
-	scene->cam = (t_camera *)ft_calloc(1, sizeof(t_camera));
-	scene->lux = (t_light *)ft_calloc(1, sizeof(t_light));
-	scene->sp = (t_sphere *)ft_calloc(scene->n_sp, sizeof(t_sphere));
-	scene->pl = (t_plane *)ft_calloc(scene->n_pl, sizeof(t_plane));
-	scene->cy = (t_cylinder *)ft_calloc(scene->n_cy, sizeof(t_cylinder));
+	scene->objects = (t_object *)ft_calloc(n_obj, sizeof(t_object));
 	if (errno)
 	{
 		perror("Error\nfailed to malloc objects");
