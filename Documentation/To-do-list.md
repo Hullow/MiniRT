@@ -13,8 +13,8 @@
 	- Translation and scaling => pberset
 	- Rotation and shearing => fallan
 - Ray-Sphere intersections (chapter 5 RT Challenge) => pberset
-- Light and shading (chapter 6 RT Challenge) => pberset
+- Light and shading (chapter 6 RT Challenge) => fallan
 - Making a scene: implement world, view transformation (matrix transformation), camera (chapter 7 RT Challenge)
-- Shadows (chapter 8 RT Challenge)
-- Planes (chapter 9 RT Challenge)
-- Cylinders (chapter 13 RT Challenge)
+- Shadows (chapter 8 RT Challenge) => fallan
+- Planes (chapter 9 RT Challenge) => pberset
+- Cylinders (chapter 13 RT Challenge) => pberset

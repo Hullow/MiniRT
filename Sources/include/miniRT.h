@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/10 15:16:08 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/10 16:55:13 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,12 +251,15 @@ t_matrix	*rt_rotation_z(float angle);
 t_ray		*rt_transform_ray(t_ray *initial_ray, t_matrix *trans);
 void		*set_sphere_transform(t_sphere *sp, t_matrix *trans);
 
-		// Ray - Sphere intersections
+		// Ray - Objects intersections
 
 
 t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
 t_tuple		*rt_position(t_ray *ray, float d);
-t_intersect	*rt_ray_object_intersect(t_ray ray, void *object);
+t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x);
+t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x);
+t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere, t_intersect *x);
+t_intersect	*rt_ray_object_x(t_ray ray, void *object);
 void		rt_compute_intersect(t_scene *scene);
 
 		// Light and shade
