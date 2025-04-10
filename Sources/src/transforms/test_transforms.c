@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:36:33 by francis           #+#    #+#             */
-/*   Updated: 2025/04/10 15:20:48 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/10 17:17:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,24 @@ void	test_transform_handling()
 	printf("- origin: (%f, %f, %f)\n- direction: (%f, %f, %f)\n", 
 		ray_2->origin->x, ray_2->origin->y, ray_2->origin->z,
 		ray_2->direction->x, ray_2->direction->y, ray_2->direction->z);
-
-	t_sphere	*sp = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 1, (t_tuple) {0.5, 0.5, 0.5, COLOR});
-	set_sphere_transform(sp, rt_translation(2, 3, 4));
-	print_matrix(sp->transform);
-	print_matrix(rt_translation(2, 3, 4));
+		
+		t_sphere	*sp = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 1, (t_tuple) {0.5, 0.5, 0.5, COLOR});
+		set_sphere_transform(sp, rt_translation(2, 3, 4));
+		print_matrix(sp->transform);
+		print_matrix(rt_translation(2, 3, 4));
+		
+	t_ray	*ray_4 = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	set_sphere_transform(sp, rt_scaling(2, 2, 2));
+	t_intersect	*x = rt_ray_sphere_x(ray_4, NULL, sp, x);
+	printf("Intersecting a scaled sphere with a ray:\n");
+	printf("x->x_count: %d, x->x_distances[0]: %f, x->x_distances[1]: %f", x->x_count, x->x_distances[0], x->x_distances[1]);
+	
+	set_sphere_transform(sp, rt_translation(5, 0, 0));
+	x = rt_ray_sphere_x(ray_4, NULL, sp, x);
+	printf("Intersecting a scaled sphere with a ray:\n");
+	printf("x->x_count: %d, x->x_distances[0]: %f, x->x_distances[1]: %f", x->x_count, x->x_distances[0], x->x_distances[1]);
+	
+	
 }
 
 

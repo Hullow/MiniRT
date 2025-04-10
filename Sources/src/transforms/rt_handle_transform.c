@@ -6,12 +6,18 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:49:52 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/10 15:16:15 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/10 16:59:36 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+// Applies a transformation to a ray, returning a new malloc-ed ray
+// Input:
+// 	- a pointer to the ray to transform (t_ray *)
+//	- a pointer to the transformation matrix to apply
+// Returns:
+//	- a pointer to the transformed ray (t_ray *)
 t_ray	*rt_transform_ray(t_ray *initial_ray, t_matrix *trans)
 {
 	t_tuple	*new_origin;
