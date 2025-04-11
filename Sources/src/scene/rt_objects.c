@@ -178,6 +178,7 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 
 void	rt_assign_object(t_object *object, char **needle, char type)
 {
+	object->transform = identity_matrix(4, 4);
 	if (type == 's')
 		rt_assign_sphere(object, needle);
 	if (type == 'c')
