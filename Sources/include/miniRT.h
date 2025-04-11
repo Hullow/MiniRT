@@ -139,6 +139,7 @@ typedef struct s_scene
 	int			n_sp;
 	int			n_pl;
 	int			n_cy;
+	int			n_obj;
 	t_ambient	amb;
 	t_camera	cam;
 	t_light		lux;
