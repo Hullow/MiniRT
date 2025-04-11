@@ -236,6 +236,6 @@ t_intersect	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x);
 t_intersect	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x);
 t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x);
 t_intersect	rt_ray_object_x(t_ray ray, t_object object);
-void		rt_compute_intersect(t_scene scene);
+void		rt_compute_intersect(t_scene *scene);
 
 #endif
