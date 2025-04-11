@@ -12,37 +12,9 @@
 
 #include "miniRT.h"
 
-// Pour calculs multiples: int main*()
-// {
-// 	char *str ;;;
-	
-// 	function(&str);
-// }
-
-static int	assign_obj_data(t_scene *scene, t_object object, t_object obj_ptr)
-{
-	int	nr_objects;
-
-	nr_objects = 0;
-	if (object.type == SPHERE)
-	{
-		nr_objects = scene->n_sp;
-		obj_ptr = &scene->objects;
-	}
-	else if (object.type == PLANE)
-	{
-		nr_objects = scene->n_pl;
-		obj_ptr = &scene->objects;
-	}
-	else if (object.type == CYLINDER)
-	{
-		nr_objects = scene->n_cy;
-		obj_ptr = &scene->objects;
-	}
-	return (nr_objects);
-}
-
 // Helper to loop through all objects
+// Stores intersections in a linked list
+// Intersections are stored in scene->intersects
 static void	object_loop(t_scene *scene, int j, t_object *object)
 {
 	int			i;
@@ -76,6 +48,36 @@ void	rt_compute_intersect(t_scene *scene)
 		j++;
 	}
 }
+
+// Pour calculs multiples: int main*()
+// {
+// 	char *str ;;;
+	
+// 	function(&str);
+// }
+
+// static int	assign_obj_data(t_scene *scene, t_object object, t_object obj_ptr)
+// {
+// 	int	nr_objects;
+
+// 	nr_objects = 0;
+// 	if (object.type == SPHERE)
+// 	{
+// 		nr_objects = scene->n_sp;
+// 		obj_ptr = &scene->objects;
+// 	}
+// 	else if (object.type == PLANE)
+// 	{
+// 		nr_objects = scene->n_pl;
+// 		obj_ptr = &scene->objects;
+// 	}
+// 	else if (object.type == CYLINDER)
+// 	{
+// 		nr_objects = scene->n_cy;
+// 		obj_ptr = &scene->objects;
+// 	}
+// 	return (nr_objects);
+// }
 
 // // Helper to loop through all planes
 // static void	plane_loop(t_scene *scene, int j)
