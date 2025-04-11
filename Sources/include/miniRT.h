@@ -145,7 +145,6 @@ typedef struct s_scene
 	t_light		lux;
 	t_object	*objects;
 	t_list		*intersects;
-	t_ray		*rays;
 }	t_scene;
 
 // Input handling

@@ -15,14 +15,15 @@
 // Helper to loop through all objects
 // Stores intersections in a linked list
 // Intersections are stored in scene->intersects
-static void	object_loop(t_scene *scene, int j, t_object *object)
+static void	object_loop(t_scene *scene, int j, t_object *object, t_ray ray)
 {
 	int			i;
 	t_intersect	x;
 
 	while (i < scene->n_obj)
 	{
-		x = rt_ray_object_x(scene->rays[j], *object);
+
+		x = rt_ray_object_x(ray, *object);
 		if (!scene->intersects)
 			scene->intersects = ft_lstnew(&x);
 		else
@@ -37,14 +38,22 @@ static void	object_loop(t_scene *scene, int j, t_object *object)
 // One ray per pixel
 void	rt_compute_intersect(t_scene *scene)
 {
-	int j;
-	int	n_rays;
+	int 	j;
+	int		n_rays;
+	t_ray	ray;
 
 	n_rays = WINDOW_WIDTH * WINDOW_HEIGHT;
 	j = 0;
 	while (j < n_rays)
 	{
-		object_loop(scene, j, scene->objects);
+		// TODO donner une direction à un rayon depuis en haut à gauche, jusque en bas à droite
+		// TODO origine du rayon = origine de la camera
+		// TODO plus facile de loop width puis height peut être, pour calculer la direction
+		// TODO C'est sans doute là que le FOV intervient
+		// origine = scene->cam->coord;
+		// direction = vecteur depuis l'origine de la caméra vers le pixel 
+		// ray = rt_ray(origine, direction);
+		object_loop(scene, j, scene->objects, ray);
 		j++;
 	}
 }

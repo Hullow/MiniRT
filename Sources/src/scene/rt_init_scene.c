@@ -28,7 +28,7 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	int		i;
 
 	i = 0;
-	while (*values)
+	while (values[i])
 	{
 		needle = values + 1;
 		if (**values == 'L')
@@ -39,7 +39,6 @@ static void	rt_assign_values(t_scene *scene, char **values)
 			rt_assign_camera(scene, needle);
 		else
 			rt_assign_object(&(scene->objects[i]), needle, **values);
-		values++;
 		i++;
 	}
 }
