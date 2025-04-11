@@ -20,7 +20,7 @@ int	rt_check_ext(const char *file)
 	i = ft_strlen(file);
 	if (ft_strncmp(&file[i - 3], ".rt", 3))
 	{
-		ft_puterr_fd("error: not a .rt file\n");
+		ft_putstr_fd("Error\nnot a .rt file\n", STDERR_FILENO);
 		return (1);
 	}
 	return (0);

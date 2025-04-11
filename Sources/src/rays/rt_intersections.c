@@ -23,6 +23,7 @@ static int	assign_obj_data(t_scene *scene, t_object object, void **obj_ptr)
 {
 	int	nr_objects;
 
+	scene.
 	nr_objects = 0;
 	if (object == SPHERE)
 	{
