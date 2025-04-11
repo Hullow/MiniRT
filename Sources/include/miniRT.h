@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/10 17:06:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 15:40:04 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@
 # define RT_VALID_COORD	" – rt_valid_coord\n"
 # define RT_RAY			" – rt_ray\n"
 # define RT_POSITION	" – rt_position\n"
-# define INIT_SP		" – init_sphere\n"
+# define INIT_SP		" – rt_init_sphere\n"
 # define RT_RAY_OBJ_X	" – rt_ray_object_intersect\n"
 # define RT_TRANS_RAY	" – rt_transform_ray\n"
-# define SET_SP_TRANS	" – set_sphere_transform\n"
+# define SET_SP_TRANS	" – rt_set_sphere_transform\n"
+# define INTERSECTION	" – rt_intersection\n"
+# define INTERSECT_LIST	" – rt_add_intersect_list\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -142,6 +144,12 @@ typedef struct s_cylinder
 	float		height;
 	t_tuple		*color;
 }	t_cylinder;
+
+typedef struct s_itsct
+{
+	float	t;
+	void	*object;
+}	t_itsct;
 
 typedef struct s_intersect
 {
@@ -249,7 +257,7 @@ t_matrix	*rt_rotation_x(float angle);
 t_matrix	*rt_rotation_y(float angle);
 t_matrix	*rt_rotation_z(float angle);
 t_ray		*rt_transform_ray(t_ray *initial_ray, t_matrix *trans);
-void		*set_sphere_transform(t_sphere *sp, t_matrix *trans);
+void		*rt_set_sphere_transform(t_sphere *sp, t_matrix *trans);
 
 		// Ray - Objects intersections
 
@@ -258,10 +266,11 @@ t_ray		*rt_ray(t_tuple *origin, t_tuple *direction);
 t_tuple		*rt_position(t_ray *ray, float d);
 t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x);
 t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x);
-t_intersect	*rt_ray_sphere_x(t_ray *ray, t_ray *new_ray,
-	t_sphere *sphere, t_intersect *x);
+t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere,
+	void *temp,  t_intersect *x);
 t_intersect	*rt_ray_object_x(t_ray ray, void *object);
 void		rt_compute_intersect(t_scene *scene);
+
 
 		// Light and shade
 

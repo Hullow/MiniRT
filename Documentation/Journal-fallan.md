@@ -108,3 +108,27 @@ and said I might write the tests for the chapter
 	- transformations:
 		- init them in a struct and point towards them
 		- encapsulate transformations in a function that mallocs a transformation matrix, performs the transformation, then frees everything
+
+# 11/4/25
+- Intersections (+rays, positions): wrote tests and fixed rt_ray_sphere_x's formula +
+added ray modification using matrix_inversion(sphere->transform)
+- Note on intersection(), intersections(), intersect(), hit() (pp. 63-66):
+	- we implemented only intersect, not intersection(s) per se, nor hit()
+
+From book p. 66:
+> Scenario: The hit is always the lowest nonnegative intersection<br>
+&emsp; Given s ← sphere()<br>
+&emsp; And i1 ← intersection(5, s)<br>
+&emsp; And i2 ← intersection(7, s)<br>
+&emsp; And i3 ← intersection(-3, s)<br>
+&emsp; And i4 ← intersection(2, s)<br>
+&emsp; And xs ← intersections(i1, i2, i3, i4)<br>
+When i ← hit(xs)<br>
+Then i = i4<br><br>
+Don’t let that last test trip you up! The intersections are intentionally given
+in random order; it’s up to your intersections() function to maintain a sorted list
+or, at the very least, sort the list on demand. This will be important down the
+road when you have more complicated scenes with multiple objects. It won’t
+be feasible for each shape to manually preserve the sort order of that intersection list.
+
+=> so there are more than two intersections, so we need this functionality. Let's build it.

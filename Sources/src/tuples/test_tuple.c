@@ -1,14 +1,14 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    test_tuple                                         :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/21 15:35:34 by fallan            #+#    #+#              #
-#    Updated: 2025/03/14 14:30:09 by fallan           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_tuple.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 15:35:34 by fallan            #+#    #+#             */
+/*   Updated: 2025/04/11 11:50:15 by fallan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../miniRT.h"
 
@@ -51,7 +51,7 @@ t_environment	*init_environment(t_tuple *gravity, t_tuple *wind)
 		gravity = malloc (sizeof(t_tuple));
 		if (!gravity)
 			return (NULL);
-		gravity = vector(0, -0.1, 0);
+		gravity = rt_vector(0, -0.1, 0);
 		printf("environment initial gravity set to default (0, -2, 0)\n");
 	}
 	if (!wind)
@@ -59,7 +59,7 @@ t_environment	*init_environment(t_tuple *gravity, t_tuple *wind)
 		wind = malloc (sizeof(t_tuple));
 		if (!wind)
 			return (NULL);
-		wind = vector(-0.01, 0, 0);
+		wind = rt_vector(-0.01, 0, 0);
 		printf("environment initial wind set to default (0.2, 0.1, -0.05)\n");
 	}
 	env = malloc (sizeof(t_environment));
@@ -83,7 +83,7 @@ t_projectile	*init_projectile(t_tuple *position, t_tuple *velocity)
 		position = malloc (sizeof(t_tuple));
 		if (!position)
 			return (NULL);
-		position = point(0, 1, 0);
+		position = rt_point(0, 1, 0);
 		printf("projectile initial position set to default (0, 1, 0)\n");
 	}
 	if (!velocity)
@@ -91,7 +91,7 @@ t_projectile	*init_projectile(t_tuple *position, t_tuple *velocity)
 		velocity = malloc (sizeof(t_tuple));
 		if (!velocity)
 			return (NULL);
-		velocity = vector(3, 0.2, 0);
+		velocity = rt_vector(3, 0.2, 0);
 		printf("projectile initial velocity set to default (2, 0, 0)\n");
 	}
 	proj = malloc (sizeof(t_projectile));
@@ -138,8 +138,8 @@ void	test_proj_sim()
 // {
 // 	test_proj_sim();
 
-	// t_tuple *neg_b = vector(-0.1000001, 0.4, -15.0);
-	// t_tuple *c = point(0.2000001, -0.8, 30.00001);
+	// t_tuple *neg_b = rt_vector(-0.1000001, 0.4, -15.0);
+	// t_tuple *c = rt_point(0.2000001, -0.8, 30.00001);
 
 	// printf("a has coordinates x: %f, y:%f, z:%f and is a ", a->x, a->y, a->z);
 	// if (a->w == POINT)
@@ -177,26 +177,26 @@ void	test_proj_sim()
 	// 	printf("divide b by 1 == b\n");
 	// else
 	// 	printf("divide b by 1 != b\n");
-	// if (is_equal_tuple(divide_tuple_by_scalar(b, 0), vector(0,0,0)))
+	// if (is_equal_tuple(divide_tuple_by_scalar(b, 0), rt_vector(0,0,0)))
 	// 	printf("divide b by 0 == 0\n");
 	// else
 	// 	printf("divide b by 0 != 0\n");
 
-	// t_tuple *a = point(0.1, -0.4, 15.0);
+	// t_tuple *a = rt_point(0.1, -0.4, 15.0);
 	// if (is_equal_tuple(divide_tuple_by_scalar(double_b, 2), b))
 	// 	printf("divide double_b by 2 == b\n");
 	// else
 	// 	printf("divide double_b by 2 != b\n");
 
 
-	// t_tuple *b = vector(0.10, -0.4, 15.0);
-	// t_tuple *double_b = vector(0.20, -0.8, 30.0);
+	// t_tuple *b = rt_vector(0.10, -0.4, 15.0);
+	// t_tuple *double_b = rt_vector(0.20, -0.8, 30.0);
 	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 2), double_b))
 	// 	printf("multiply b by 2 == double_b\n");
 	// else
 	// 	printf("multiply b by 2 != double_b\n");
 
-	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 0), vector(0,0,0)))
+	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 0), rt_vector(0,0,0)))
 	// 	printf("multiply b by 0 == 0\n");
 	// else
 	// 	printf("multiply b by 0 != 0\n");
@@ -206,14 +206,14 @@ void	test_proj_sim()
 	/*****************************************/
 	// printf("sample vector has magnitude: %f; squared: %f\n", magnitude(sample_vector), powf(magnitude(sample_vector), 2));
 
-	// t_tuple	*sample_vector = vector(4, 0, 0);
+	// t_tuple	*sample_vector = rt_vector(4, 0, 0);
 	// t_tuple	*normd = normalize(sample_vector);
 	// printf("sample vector normalised is (%f, %f, %f) and has magnitude %f\n", normd->x, normd->y, normd->z, magnitude(normd));
 	
-	// printf("dot product of sample vector and another vector is %f\n", dot_product(sample_vector, vector(-4, 3, 3)));
-	// t_tuple	*cross = cross_product(vector(0, -1, 0), vector(0, 0, -1));
+	// printf("dot product of sample vector and another vector is %f\n", dot_product(sample_vector, rt_vector(-4, 3, 3)));
+	// t_tuple	*cross = cross_product(rt_vector(0, -1, 0), rt_vector(0, 0, -1));
 	// printf("the cross product (0, -1, 0) x (0, 0, -1) is (%f, %f, %f)\n", cross->x, cross->y, cross->z);
-	// t_tuple	*cross2 = cross_product(vector(0, 0, -1), vector(0, -1, 0));
+	// t_tuple	*cross2 = cross_product(rt_vector(0, 0, -1), rt_vector(0, -1, 0));
 	// printf("the cross product (0, 0, -1) x (0, -1, 0) is (%f, %f, %f)\n", cross2->x, cross2->y, cross2->z);
 	
 // 	return (0);

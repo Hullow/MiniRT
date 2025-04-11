@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/04 17:36:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 14:45:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_tuple	*add_tuple(t_tuple *a, t_tuple *b)
 	return (c);
 }
 
-/* substracts two tuples by substracting all elements of subtrahend
-from the minuend (minuend - subtrahend), and returning the resulting tuple:
+/* substracts two tuples (minuend - subtrahend), by substracting all elements of subtrahend
+from the minuend, and returning the resulting tuple:
 	- error cases:
 		- minuend and subtrahend are points
 		- minuend is vector and subtrahend is point (0 - 1 == -1)

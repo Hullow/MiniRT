@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 15:18:07 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 12:13:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_matrix	*matrix_inversion(t_matrix *mat)
 	int			j;
 	float		det;
 
+	// printf("matrix inversion: mat address before: %p --- ", mat);
 	det = determinant(mat);
 	if (is_equal_float(det, 0))
 		return (handle_error(MAT_INV, EINVAL, "matrix not invertible\
@@ -129,6 +130,7 @@ t_matrix	*matrix_inversion(t_matrix *mat)
 		}
 		i++;
 	}
+	// printf("mat address after: %p --- and inv address: %p\n", mat, inv);
 	return (inv);
 }
 

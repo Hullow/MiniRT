@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:49:52 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/10 16:59:36 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 15:28:33 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 // Input:
 // 	- a pointer to the ray to transform (t_ray *)
 //	- a pointer to the transformation matrix to apply
+//
 // Returns:
 //	- a pointer to the transformed ray (t_ray *)
 t_ray	*rt_transform_ray(t_ray *initial_ray, t_matrix *trans)
 {
-	t_tuple	*new_origin;
-	t_tuple	*new_direction;
+	t_tuple		*new_origin;
+	t_tuple		*new_direction;
 
 	if (!initial_ray || !trans)
 		return (handle_error(RT_TRANS_RAY, EINVAL, "null input"));
@@ -30,7 +31,10 @@ t_ray	*rt_transform_ray(t_ray *initial_ray, t_matrix *trans)
 	return (rt_ray(new_origin, new_direction));
 }
 
-void	*set_sphere_transform(t_sphere *sp, t_matrix *trans)
+// Resets a sphere's transformation to the one given as argument (t_matrix *).
+// frees the previously assigned transformation (default: identity)
+// Returns: NULL in all cases
+void	*rt_set_sphere_transform(t_sphere *sp, t_matrix *trans)
 {
 	if (!sp || !trans)
 		return (handle_error(SET_SP_TRANS, EINVAL, "null input"));

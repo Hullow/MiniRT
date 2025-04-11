@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/04 18:50:21 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 15:04:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,4 @@ t_tuple	*rt_position(t_ray *ray, float d)
 	point = add_tuple(ray->origin, multiply_tuple_by_scalar(ray->direction, d));
 	return (point);
 }
+

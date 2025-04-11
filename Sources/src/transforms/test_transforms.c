@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:36:33 by francis           #+#    #+#             */
-/*   Updated: 2025/04/10 17:17:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 16:42:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	test_translation();
 void	test_scaling();
 void	test_rotation();
 void	test_transforms();
-void	analog_clock();
 void	test_transform_handling();
+void	analog_clock();
+void	test_rays_positions();
+void	test_intersections();
 
 int main()
 {
@@ -32,7 +34,9 @@ int main()
 	// test_rotation();
 	// test_transforms();
 	// analog_clock();
-	test_transform_handling();
+	// test_rays_positions();
+	test_intersections();
+	// test_transform_handling();
 	return (0);
 }
 
@@ -41,12 +45,90 @@ void	analog_clock()
 	
 }
 
+void	test_intersections()
+{
+	printf("test_intersections():\n");
+
+	// Test 1: A ray intersects a sphere at two points
+	printf("Test 1: A ray intersects a sphere at two points\n");
+	t_ray *ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	t_sphere *s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0f, (t_tuple){0.5, 0.2, 0.1, COLOR});
+	t_intersect *x = ft_calloc(1, sizeof(t_intersect));
+	if (!x)
+		printf("malloc fail in test_intersections()\n");
+	x = rt_ray_sphere_x(ray, s, s->transform, x);
+	printf("x->x_count: %d, x->x_distance[0]: %f, x->x_distance[1]: %f\n", x->x_count, x->x_distances[0], x->x_distances[1]);
+	
+	// Test 2: A ray intersects a sphere at a tangent
+	printf("\nTest 2: A ray intersects a sphere at a tangent\n");
+	ray = rt_ray(rt_point(0, 1, -5), rt_vector(0, 0, 1));
+	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
+	t_intersect *y = ft_calloc(1, sizeof(t_intersect));
+	if (!y)
+		printf("malloc fail in test_intersections()\n");
+	y = rt_ray_sphere_x(ray, s, s->transform, y);
+	printf("y->x_count: %d, y->x_distance[0]: %f, y->x_distance[1]: %f\n", y->x_count, y->x_distances[0], y->x_distances[1]);
+
+	// Test 3: A ray misses a sphere
+	printf("\nTest 3: A ray misses a sphere\n");
+	ray = rt_ray(rt_point(0, 2, -5), rt_vector(0, 0, 1));
+	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
+	t_intersect *z = ft_calloc(1, sizeof(t_intersect));
+	if (!z)
+		printf("malloc fail in test_intersections()\n");
+	z = rt_ray_sphere_x(ray, s, s->transform, z);
+	printf("z->x_count: %d, z->x_distance[0]: %f, z->x_distance[1]: %f\n", z->x_count, z->x_distances[0], z->x_distances[1]);
+
+	// Test 4: A ray originates inside a sphere
+	printf("\nTest 4: A ray originates inside a sphere\n");
+	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
+	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
+	t_intersect *w = ft_calloc(1, sizeof(t_intersect));
+	if (!w)
+		printf("malloc fail in test_intersections()\n");
+	w = rt_ray_sphere_x(ray, s, s->transform, w);
+	printf("w->x_count: %d, w->x_distance[0]: %f, w->x_distance[1]: %f\n", w->x_count, w->x_distances[0], w->x_distances[1]);
+
+	// Test 5: A sphere is behind a ray
+	printf("\nTest 5: A sphere is behind a ray\n");
+	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
+	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
+	t_intersect *v = ft_calloc(1, sizeof(t_intersect));
+	if (!v)
+		printf("malloc fail in test_intersections()\n");
+	v = rt_ray_sphere_x(ray, s, s->transform, v);
+	printf("v->x_count: %d, v->x_distance[0]: %f, v->x_distance[1]: %f\n", v->x_count, v->x_distances[0], v->x_distances[1]);
+
+	
+}
+
+void	test_rays_positions()
+{
+	t_tuple *origin = rt_point(2, 3, 4);
+	t_tuple *direction = rt_vector(1, 0, 0);
+	t_ray *ray = rt_ray(origin, direction);
+	printf("ray: origin is (%f, %f, %f)\n", ray->origin->x, ray->origin->y, ray->origin->z);
+	printf("ray: direction is (%f, %f, %f)\n", ray->direction->x, ray->direction->y, ray->direction->z);
+	
+	t_tuple *pos = rt_position(ray, 0);
+	printf("position at t = 0 from the ray is (%f, %f, %f)\n", pos->x, pos->y, pos->z);
+	
+	pos = rt_position(ray, 1);
+	printf("position at t = 1 from the ray is (%f, %f, %f)\n", pos->x, pos->y, pos->z);
+	
+	pos = rt_position(ray, -1);
+	printf("position at t = -1 from the ray is (%f, %f, %f)\n", pos->x, pos->y, pos->z);
+	
+	pos = rt_position(ray, 2.5);
+	printf("position at t = 2.5 from the ray is (%f, %f, %f)\n", pos->x, pos->y, pos->z);
+}
+
 void	test_transform_handling()
 {
 	printf("testing rt_transform_ray:\n");
 	t_tuple		*pt = rt_point(1, 2, 3);
 	t_tuple		*vec = rt_vector(0, 1, 0);
-
+	
 	t_ray	*ray_3 = rt_transform_ray(rt_ray(pt, vec), rt_translation(3, 4, 5));
 	printf("the translated ray:\n");
 	printf("- origin: (%f, %f, %f)\n- direction: (%f, %f, %f)\n", 
@@ -56,24 +138,32 @@ void	test_transform_handling()
 	t_ray	*ray_2 = rt_transform_ray(rt_ray(pt, vec), rt_scaling(2, 3, 4));
 	printf("the scaled ray:\n");
 	printf("- origin: (%f, %f, %f)\n- direction: (%f, %f, %f)\n", 
-		ray_2->origin->x, ray_2->origin->y, ray_2->origin->z,
-		ray_2->direction->x, ray_2->direction->y, ray_2->direction->z);
+	ray_2->origin->x, ray_2->origin->y, ray_2->origin->z,
+	ray_2->direction->x, ray_2->direction->y, ray_2->direction->z);
 		
-		t_sphere	*sp = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 1, (t_tuple) {0.5, 0.5, 0.5, COLOR});
-		set_sphere_transform(sp, rt_translation(2, 3, 4));
-		print_matrix(sp->transform);
-		print_matrix(rt_translation(2, 3, 4));
+	t_sphere	*sp = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 1, (t_tuple) {0.5, 0.5, 0.5, COLOR});
+	// rt_set_sphere_transform(sp, rt_translation(2, 3, 4));
+	// print_matrix(sp->transform);
+	// print_matrix(rt_translation(2, 3, 4));
 		
-	t_ray	*ray_4 = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	set_sphere_transform(sp, rt_scaling(2, 2, 2));
-	t_intersect	*x = rt_ray_sphere_x(ray_4, NULL, sp, x);
-	printf("Intersecting a scaled sphere with a ray:\n");
-	printf("x->x_count: %d, x->x_distances[0]: %f, x->x_distances[1]: %f", x->x_count, x->x_distances[0], x->x_distances[1]);
+	// First intersection with a transformed sphere
+	t_ray	*ray_4 = rt_ray(rt_point(0.0, 0.0, -5), rt_vector(0, 0, 1));
+	rt_set_sphere_transform(sp, rt_scaling(2, 2, 2));
+	t_intersect	*x = ft_calloc(1, sizeof(t_intersect));
+	if (!x)
+	printf("error malloc\n");
+	x = rt_ray_sphere_x(ray_4, sp, sp->transform, x);
+	printf("\nIntersecting a scaled sphere with a ray:\n");
+	printf("x->x_count: %d, x->x_distances[0]: %f, x->x_distances[1]: %f\n", x->x_count, x->x_distances[0], x->x_distances[1]);
 	
-	set_sphere_transform(sp, rt_translation(5, 0, 0));
-	x = rt_ray_sphere_x(ray_4, NULL, sp, x);
-	printf("Intersecting a scaled sphere with a ray:\n");
-	printf("x->x_count: %d, x->x_distances[0]: %f, x->x_distances[1]: %f", x->x_count, x->x_distances[0], x->x_distances[1]);
+	// Second intersection with a transformed sphere
+	rt_set_sphere_transform(sp, rt_translation(5, 0, 0));
+	t_intersect	*y = ft_calloc(1, sizeof(t_intersect));
+	if (!y)
+		printf("error malloc\n");
+	y = rt_ray_sphere_x(ray_4, sp, sp->transform, y);
+	printf("\nIntersecting a translated sphere with a ray:\n");
+	printf("x->x_count: %d, x->x_distances[0]: %f, x->x_distances[1]: %f", y->x_count, y->x_distances[0], y->x_distances[1]);
 	
 	
 }
