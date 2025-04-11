@@ -45,24 +45,19 @@ static int	assign_obj_data(t_scene *scene, t_object object, t_object obj_ptr)
 // Helper to loop through all objects
 static void	object_loop(t_scene *scene, int j, t_object *object)
 {
-	int		i;
-	void	**obj_ptr = NULL; // other possibility: initialize at &scene->objects
+	int			i;
+	t_intersect	x;
 
-		while (i < scene->n_obj)
-		{
-			if (!scene->intersects)
-			{
-				scene->intersects = ft_lstnew( \
-				rt_ray_object_x(scene->rays[j], *object));
-			}
-			else
-			{
-				ft_lstadd_back(&scene->intersects, ft_lstnew( \
-				rt_ray_object_x(scene->rays[j], *object)));
-			}
-			i++;
-			object++;
-		}
+	while (i < scene->n_obj)
+	{
+		x = rt_ray_object_x(scene->rays[j], *object);
+		if (!scene->intersects)
+			scene->intersects = ft_lstnew(&x);
+		else
+			ft_lstadd_back(&scene->intersects, ft_lstnew(&x));
+		i++;
+		object++;
+	}
 }
 
 // Create the intersection struct and assigns values foreach object in the scene
