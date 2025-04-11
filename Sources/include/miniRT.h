@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 15:40:04 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 17:54:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define RT_TRANS_RAY	" – rt_transform_ray\n"
 # define SET_SP_TRANS	" – rt_set_sphere_transform\n"
 # define INTERSECTION	" – rt_intersection\n"
-# define INTERSECT_LIST	" – rt_add_intersect_list\n"
+# define RAY_INTERSECTS	" – rt_compute_ray_intersects\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -96,6 +96,7 @@ typedef struct s_matrix {
 typedef struct s_ray {
 	t_tuple	*origin;
 	t_tuple	*direction;
+	t_list	*intersects;
 }	t_ray;
 
 typedef struct s_ambient
@@ -145,12 +146,6 @@ typedef struct s_cylinder
 	t_tuple		*color;
 }	t_cylinder;
 
-typedef struct s_itsct
-{
-	float	t;
-	void	*object;
-}	t_itsct;
-
 typedef struct s_intersect
 {
 	void	*object;
@@ -167,14 +162,14 @@ typedef struct s_scene
 	int			n_sp;
 	int			n_pl;
 	int			n_cy;
+	int			n_obj;
 	t_ambient	*amb;
 	t_camera	*cam;
 	t_light		*lux;
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cylinder	*cy;
-	t_list		*intersects;
-	t_ray		*rays;
+	t_object	*objects;
 }	t_scene;
 
 // Input handling

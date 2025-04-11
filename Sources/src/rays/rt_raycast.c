@@ -6,13 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 15:04:07 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/11 17:39:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 // Allocates memory for a ray with an origin and a direction
+// Intersects set to NULL
+// 
+// Returns:
+// a pointer to the ray
 t_ray	*rt_ray(t_tuple *origin, t_tuple *direction)
 {
 	t_ray	*ray;
@@ -26,6 +30,7 @@ t_ray	*rt_ray(t_tuple *origin, t_tuple *direction)
 		return (handle_error(RT_RAY, EINVAL, "direction is not a vector"));
 	ray->origin = origin;
 	ray->direction = direction;
+	ray->intersects = NULL;
 	return (ray);
 }
 
@@ -40,4 +45,3 @@ t_tuple	*rt_position(t_ray *ray, float d)
 	point = add_tuple(ray->origin, multiply_tuple_by_scalar(ray->direction, d));
 	return (point);
 }
-
