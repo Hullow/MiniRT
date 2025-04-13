@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_objects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:41:34 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:15:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,22 +176,11 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	ft_free_tab(orient);
 }
 
-void	rt_assign_object(t_object *object, char **needle, char type)
-{
-	object->transform = identity_matrix(4, 4);
-	if (type == 's')
-		rt_assign_sphere(object, needle);
-	if (type == 'c')
-		rt_assign_cylinder(object, needle);
-	if (type == 'p')
-		rt_assign_plane(object, needle);
-}
-
 void	rt_assign_sphere(t_object *sphere, char **needle)
 {
 	char	**coord;
 	char	**color;
-
+	
 	sphere->type = SPHERE;
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle + 2), ',');
@@ -214,7 +203,7 @@ void	rt_assign_plane(t_object *plane, char **needle)
 	char	**coord;
 	char	**norm;
 	char	**color;
-
+	
 	plane->type = PLANE;
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle + 1), ',');
@@ -240,7 +229,7 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	char	**coord;
 	char	**norm;
 	char	**color;
-
+	
 	cylinder->type = CYLINDER;
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle + 1), ',');
@@ -263,3 +252,13 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	ft_free_tab(color);
 }
 
+void	rt_assign_object(t_object *object, char **needle, char type)
+{
+	object->transform = identity_matrix(4, 4);
+	if (type == 's')
+		rt_assign_sphere(object, needle);
+	if (type == 'c')
+		rt_assign_cylinder(object, needle);
+	if (type == 'p')
+		rt_assign_plane(object, needle);
+}

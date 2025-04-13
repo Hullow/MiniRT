@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_init_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:32:11 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/13 21:26:18 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ static void	rt_spacify(char *line)
 
 static void	rt_assign_values(t_scene *scene, char **values)
 {
-	char	**needle;
-	int		i;
+	char		**needle;
+	static int	i;
 
-	i = 0;
-	while (values[i])
+	if (i > scene->n_obj || i < 0)
+		i = 0;
+	needle = values + 1;
+	if (**values == 'L')
+		rt_assign_light(scene, needle);
+	else if (**values == 'A')
+		rt_assign_ambient(scene, needle);
+	else if (**values == 'C')
+		rt_assign_camera(scene, needle);
+	else
 	{
-		needle = values + 1;
-		if (**values == 'L')
-			rt_assign_light(scene, needle);
-		else if (**values == 'A')
-			rt_assign_ambient(scene, needle);
-		else if (**values == 'C')
-			rt_assign_camera(scene, needle);
-		else
-			rt_assign_object(&(scene->objects[i]), needle, **values);
+		rt_assign_object(&(scene->objects[i]), needle, **values);
 		i++;
 	}
 }
@@ -66,6 +66,7 @@ int	rt_init_scene(const char *file, t_scene *scene)
 		rt_assign_values(scene, splitted);
 		ft_free_tab(splitted);
 		free(line);
+		line = NULL;
 		if (errno)
 		{
 			close(fd);
