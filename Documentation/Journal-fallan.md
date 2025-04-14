@@ -132,3 +132,10 @@ road when you have more complicated scenes with multiple objects. It won’t
 be feasible for each shape to manually preserve the sort order of that intersection list.
 
 => so there are more than two intersections, so we need this functionality. Let's build it.
+
+# 14/4/25
+- Tested ray sphere intersections, but not functions combining them
+=> Moving on to "putting it together"
+- wrote function `rgb_to_int()` to convert a value from tuple (1, 0, 0) to int (16711680)
+via hex (FF0000)
+- Managed to draw a fully red window

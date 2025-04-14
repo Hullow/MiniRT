@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 17:54:48 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:52:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 
 # ifndef WINDOW_HEIGHT
 #  define WINDOW_HEIGHT 600
+# endif
+
+# ifndef WINDOW_NAME
+#  define WINDOW_NAME "MiniRT"
 # endif
 
 # define VECTOR 0.0
@@ -75,11 +79,11 @@ typedef enum {
 }	t_object;
 
 /* A tuple:
-	- has a type (w): either a vector (0.0) or a point (1.0)
-	- has three coordinates:
-		- x (float): lateral->to the right || RED
-		- y (float): vertical->up || GREEN
-		- z (float): depth->away from us || BLUE*/
+- has three coordinates:
+	- x (float): lateral->to the right || RED
+	- y (float): vertical->up || GREEN
+	- z (float): depth->away from us || BLUE
+- has a type (w): either a vector (0.0) or a point (1.0) */
 typedef struct s_tuple {
 	float	x;
 	float	y;
@@ -186,6 +190,24 @@ void		rt_assign_camera(t_scene *scene, char **needle);
 void		rt_assign_plane(t_scene *scene, char **needle);
 void		rt_assign_cylinder(t_scene *scene, char **needle);
 t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color);
+
+// Window and image handling
+
+typedef struct s_env {
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	char	*color;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	t_list	*point_list;
+}				t_env;
+
+void		rt_open_window_and_draw();
+void		rt_draw(t_env *env, t_tuple col_tuple);
+int			rgb_to_int(t_tuple col_tuple);
 
 // Utils
 	// General

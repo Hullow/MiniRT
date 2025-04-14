@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:15:22 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/10 15:10:45 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 14:09:52 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ t_tuple	*normal_at(t_sphere *sp, t_tuple point)
 	free (origin);
 	return (normal);
 }
-
+/* 
 int main()
 {
 	test_normal();
 	return 0;
 }
-
+ */
 // compiled with g -g ../*/*.c -I../../include -I../../include/libft/header -I../../mlx -lm -L../../include/libft -lft

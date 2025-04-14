@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:56:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 16:43:42 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 13:43:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x)
 
 // Computes the two collision distances between the ray and the sphere
 // Uses a quadratic equation discriminant = b²-4ac
+// to transform the sphere beform the collision calculus, 
+// the invert of the transformation is applied to the ray
 t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere,
 	void *temp, t_intersect *x)
 {
@@ -43,7 +45,6 @@ t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere,
 
 	temp = (t_matrix *) matrix_inversion(sphere->transform);
 	ray = rt_transform_ray(ray, (t_matrix *) temp);
-
 	
 	sphere_to_ray = subtract_tuple(ray->origin, sphere->coord);
 	a = dot_product(ray->direction, ray->direction);
@@ -88,12 +89,3 @@ t_intersect	*rt_ray_object_x(t_ray ray, void *object)
 		return (rt_ray_plane_x(&ray, (t_plane *)object, x));
 	return (x);
 }
-
-/* typedef struct s_itsct
-{
-	float	t;
-	void	*object;
-}	t_itsct;
- */
-
-// t_itsct 

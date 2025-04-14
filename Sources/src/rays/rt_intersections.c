@@ -6,15 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:35:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 17:56:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 14:14:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/* 
 // Computes all the intersects between a ray and the objects in the scene
-// Stores intersections in a linked list in the ray struct itself
-static void	rt_compute_ray_intersects(t_scene *scene, t_ray *ray, int j, t_object *object)
+// Stores intersections in a linked list in the ray struct
+static void	rt_compute_ray_intersects(
+	t_scene *scene, t_ray *ray, t_object *object)
 {
 	int			i;
 	t_list		*new_list_item;
@@ -23,10 +25,14 @@ static void	rt_compute_ray_intersects(t_scene *scene, t_ray *ray, int j, t_objec
 	scene->n_obj = scene->n_sp + scene->n_pl + scene->n_cy; // need to compute this before in the code => input handling?
 	while (i < scene->n_obj)
 	{
-		x = rt_ray_object_x(*ray, *object);
+		x = rt_ray_object_x(*ray, object);
 		new_list_item = ft_lstnew(x);
 		if (errno)
-			return (handle_error(RAY_INTERSECTS, ENOMEM, NULL));
+		{
+			handle_error(RAY_INTERSECTS, ENOMEM, NULL);
+			// free list
+			return ;	
+		}
 		if (!ray->intersects)
 			ray->intersects = new_list_item;
 		else
@@ -35,11 +41,13 @@ static void	rt_compute_ray_intersects(t_scene *scene, t_ray *ray, int j, t_objec
 		object++;
 	}
 }
+*/
 
-// Computes and returns the ray's hit: the intersection of the ray and the 
-// object with the lowest "t-value" of any intersection of that ray
-// no malloc
-// must be called with NULL value for "void	*hit_object"
+
+// - Evaluates a ray's intersections with objects and returns the ray's hit
+// (the intersection with the lowest "t-value")
+// - no malloc
+// - must be called with a NULL value for "void *hit_object"
 // 
 // Returns:
 // where the ray hits (t_intersect), with values:
@@ -76,7 +84,7 @@ t_intersect	rt_compute_ray_hit(t_ray *ray, void	*hit_object)
 	return ((t_intersect){hit_object, NULL, {t_min, 0.0}, 1});
 }
 
-// Computes the hits for all rays (to be precised)
+/* // Computes the hits for all rays (to be precised)
 //
 // How it works:
 // - Loops over all rays (one ray per pixel, # based on the size of the window)
@@ -97,7 +105,7 @@ void	rt_compute_hits(t_scene *scene)
 	j = 0;
 	while (j < n_rays)
 	{
-		rt_compute_ray_intersects(scene, &ray, j, scene->objects);
+		rt_compute_ray_intersects(scene, &ray, scene->objects);
 		hit = rt_compute_ray_hit(&ray, NULL);
 		if (hit.object) // if an object was hit, here are the relevant values:
 		{
@@ -107,3 +115,4 @@ void	rt_compute_hits(t_scene *scene)
 		j++;
 	}
 }
+ */
