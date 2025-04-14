@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/10 15:11:19 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:00:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,12 +255,14 @@ and a tuple for color. Both input tuples to be initialized on the stack, thus:
 t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color)
 {
 	t_sphere	*sp = NULL;
-	
+
 	sp = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
 	if (errno)
 		return (handle_error(INIT_SP, ENOMEM, NULL));
 	sp->coord = rt_point(coord.x, coord.y, coord.z);
 	sp->color = rt_color(color.x, color.y, color.z);
+	printf("rt_init_sphere\n- input (%f, %f, %f)\n", color.x, color.y, color.z);
+	printf("- output (%f, %f, %f)\n", sp->color->x, sp->color->y, sp->color->z);
 	sp->transform = identity_matrix(4, 4);
 	if (errno)
 	{

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/14 15:52:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 16:56:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,9 +205,9 @@ typedef struct s_env {
 	t_list	*point_list;
 }				t_env;
 
-void		rt_open_window_and_draw();
-void		rt_draw(t_env *env, t_tuple col_tuple);
-int			rgb_to_int(t_tuple col_tuple);
+void		rt_open_window_and_draw(t_sphere *sp);
+void		rt_draw(t_env *env, t_sphere *sp);
+int			rgb_to_int(t_tuple *col_tuple);
 
 // Utils
 	// General

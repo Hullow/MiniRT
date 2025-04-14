@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:14:38 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/14 16:16:44 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:02:24 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 /* void	rt_open_window_and_draw();
 void	rt_draw(t_env *env, t_tuple col_tuple);
 int		rgb_to_int(t_tuple col_tuple); */
+int	key_handler(int keycode, t_env *env);
+int	window_closed(t_env *env);
+
 
 void	my_mlx_pixel_put(t_env *env, int x, int y, int color);
 
@@ -25,13 +28,13 @@ int main()
 	sp = rt_init_sphere(
 		(t_tuple) {0, 0, 0, POINT},
 		1.0,
-		(t_tuple) {1.0, 0, 0, COLOR});
-	(void)sp;
-	rt_open_window_and_draw((t_tuple) {1.0, 0, 0, COLOR});
+		(t_tuple) {255, 0, 0, COLOR});
+		
+	rt_open_window_and_draw(sp);
 	return 0;
 }
 
-int	rgb_to_int(t_tuple col_tuple)
+int	rgb_to_int(t_tuple *col_tuple)
 {
 	int	color;
 	int	hex_r;
@@ -39,33 +42,51 @@ int	rgb_to_int(t_tuple col_tuple)
 	int	hex_b;
 
 	color = 0;
-	hex_r = (int) (col_tuple.x * 255);
-	hex_g = (int) (col_tuple.y * 255);
-	hex_b = (int) (col_tuple.z * 255);
+	hex_r = (int) (col_tuple->x * 255);
+	hex_g = (int) (col_tuple->y * 255);
+	hex_b = (int) (col_tuple->z * 255);
 	color += (hex_r / 16) * pow(16, 5) + (hex_r % 16) * pow(16, 4);
 	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
 	color += (hex_b / 16) * 16 + (hex_b % 16);
 	return (color);
 }
 
-void	rt_draw(t_env *env, t_tuple col_tuple)
+void	rt_draw(t_env *env, t_sphere *sp)
 {
 	int	h;
 	int	v;
 	
 	h = 0;
-	(void)col_tuple;
-	printf("rt_draw: rgb_to_int((%.2f, %.2f, %.2f)) == %d\n", col_tuple.x, col_tuple.y, col_tuple.z, rgb_to_int(col_tuple));
 	while (h < WINDOW_HEIGHT)
 	{
 		v = 0;
 		while (v < WINDOW_WIDTH)
 		{
-			my_mlx_pixel_put(env, v, WINDOW_HEIGHT - h, rgb_to_int(col_tuple));
+			// if ray hits sphere, then put red pixel (otherwise nothing)
+			
+			my_mlx_pixel_put(env, v, WINDOW_HEIGHT - h, rgb_to_int(sp->color));
 			v++;
 		}
 		h++;
 	}
+}
+
+
+void	rt_open_window_and_draw(t_sphere *sp)
+{
+	t_env	env;
+
+	env.mlx = mlx_init();
+	env.win = mlx_new_window(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
+	env.img = mlx_new_image(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	env.addr = mlx_get_data_addr(env.img, &env.bits_per_pixel, \
+		&env.line_length, &env.endian);
+
+	rt_draw(&env, sp);
+	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
+	mlx_hook(env.win, 2, 1L << 0, key_handler, &env);
+	mlx_hook(env.win, 17, 0, window_closed, &env);
+	mlx_loop(env.mlx);
 }
 
 // draws a pixel
@@ -80,7 +101,6 @@ void	my_mlx_pixel_put(t_env *env, int x, int y, int color)
 	dst = env->addr + (y * env->line_length + x * (env->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
-
 
 // key hook handler for key pressing events:
 // 1. ESC closes the window and stops the program
@@ -113,21 +133,6 @@ int	window_closed(t_env *env)
 	return (0);
 }
 
-void	rt_open_window_and_draw(t_tuple col_tuple)
-{
-	t_env	env;
-
-	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
-	env.img = mlx_new_image(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	env.addr = mlx_get_data_addr(env.img, &env.bits_per_pixel, \
-		&env.line_length, &env.endian);
-	rt_draw(&env, col_tuple);
-	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
-	mlx_hook(env.win, 2, 1L << 0, key_handler, &env);
-	mlx_hook(env.win, 17, 0, window_closed, &env);
-	mlx_loop(env.mlx);
-}
 /* 
 
 // creates a new mlx window with
