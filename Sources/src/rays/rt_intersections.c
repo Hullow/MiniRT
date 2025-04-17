@@ -6,151 +6,113 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:35:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 16:47:29 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 14:14:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-// Helper to loop through all objects
-// Stores intersections in a linked list
-// Intersections are stored in scene->intersects
-static void	object_loop(t_scene *scene, int j, t_object *object, t_ray ray)
+/* 
+// Computes all the intersects between a ray and the objects in the scene
+// Stores intersections in a linked list in the ray struct
+static void	rt_compute_ray_intersects(
+	t_scene *scene, t_ray *ray, t_object *object)
 {
 	int			i;
-	t_intersect	x;
+	t_list		*new_list_item;
+	t_intersect	*x;
 
+	scene->n_obj = scene->n_sp + scene->n_pl + scene->n_cy; // need to compute this before in the code => input handling?
 	while (i < scene->n_obj)
 	{
-
-		x = rt_ray_object_x(ray, *object);
-		if (!scene->intersects)
-			scene->intersects = ft_lstnew(&x);
+		x = rt_ray_object_x(*ray, object);
+		new_list_item = ft_lstnew(x);
+		if (errno)
+		{
+			handle_error(RAY_INTERSECTS, ENOMEM, NULL);
+			// free list
+			return ;	
+		}
+		if (!ray->intersects)
+			ray->intersects = new_list_item;
 		else
-			ft_lstadd_back(&scene->intersects, ft_lstnew(&x));
+			ft_lstadd_back(&ray->intersects, new_list_item);
 		i++;
 		object++;
 	}
 }
+*/
 
-// Create the intersection struct and assigns values foreach object in the scene
-// The number of rays is decided by the size of the window
-// One ray per pixel
-void	rt_compute_intersect(t_scene *scene)
+
+// - Evaluates a ray's intersections with objects and returns the ray's hit
+// (the intersection with the lowest "t-value")
+// - no malloc
+// - must be called with a NULL value for "void *hit_object"
+// 
+// Returns:
+// where the ray hits (t_intersect), with values:
+// - object: a pointer to the object hit (or NULL if none)
+// - ray: set to NULL (because we know which ray it is)
+// - x_distances[2]: t_min in [0], 0 in [1]
+// - x_count: 1
+t_intersect	rt_compute_ray_hit(t_ray *ray, void	*hit_object)
 {
-	int 	j;
-	int		n_rays;
-	t_ray	ray;
+	float	t_min;
+	float	t_iter_0;
+	float	t_iter_1;
+
+	if (ray->intersects)
+		t_min = ((t_intersect *) ray->intersects->content)->x_distances[0];
+	else
+		return ((t_intersect){NULL, NULL, {0.0, 0.0}, 0});
+	while (ray->intersects)
+	{
+		t_iter_0 = ((t_intersect *) ray->intersects->content)->x_distances[0];
+		t_iter_1 = ((t_intersect *) ray->intersects->content)->x_distances[1];
+		if (t_iter_0 > 0 && t_iter_0 < t_min)
+		{
+			t_min = t_iter_0;
+			hit_object = ((t_intersect *) ray->intersects->content)->object;
+		}
+		if (t_iter_1 > 0 && t_iter_1 < t_min)
+		{
+			t_min = t_iter_1;
+			hit_object = ((t_intersect *) ray->intersects->content)->object;
+		}
+		ray->intersects = ray->intersects->next;
+	}
+	return ((t_intersect){hit_object, NULL, {t_min, 0.0}, 1});
+}
+
+/* // Computes the hits for all rays (to be precised)
+//
+// How it works:
+// - Loops over all rays (one ray per pixel, # based on the size of the window)
+// 
+// - First calls rt_compute_ray_intersects to compute all intersects of a ray
+// and the objects in the scene
+// - Then calls rt_compute_ray_hit to compute the hit from these intersects
+void	rt_compute_hits(t_scene *scene)
+{
+	int 		j;
+	int			n_rays;
+	t_intersect	hit;
+	t_ray		ray;
+	int			t_value;
+	void		*hit_object;
 
 	n_rays = WINDOW_WIDTH * WINDOW_HEIGHT;
 	j = 0;
-	t_list	*ray_intersects;
 	while (j < n_rays)
 	{
-		// TODO donner une direction à un rayon depuis en haut à gauche, jusque en bas à droite
-		// TODO origine du rayon = origine de la camera
-		// TODO plus facile de loop width puis height peut être, pour calculer la direction
-		// TODO C'est sans doute là que le FOV intervient
-		// origine = scene->cam->coord;
-		// direction = vecteur depuis l'origine de la caméra vers le pixel 
-		// ray = rt_ray(origine, direction);
-		object_loop(scene, j, scene->objects, ray);
+		rt_compute_ray_intersects(scene, &ray, scene->objects);
+		hit = rt_compute_ray_hit(&ray, NULL);
+		if (hit.object) // if an object was hit, here are the relevant values:
+		{
+			t_value = hit.x_distances[0];
+			hit_object = hit.object;	
+		}
 		j++;
 	}
 }
-
-// Pour calculs multiples: int main*()
-// {
-// 	char *str ;;;
-	
-// 	function(&str);
-// }
-
-// static int	assign_obj_data(t_scene *scene, t_object object, t_object obj_ptr)
-// {
-// 	int	nr_objects;
-
-// 	nr_objects = 0;
-// 	if (object.type == SPHERE)
-// 	{
-// 		nr_objects = scene->n_sp;
-// 		obj_ptr = &scene->objects;
-// 	}
-// 	else if (object.type == PLANE)
-// 	{
-// 		nr_objects = scene->n_pl;
-// 		obj_ptr = &scene->objects;
-// 	}
-// 	else if (object.type == CYLINDER)
-// 	{
-// 		nr_objects = scene->n_cy;
-// 		obj_ptr = &scene->objects;
-// 	}
-// 	return (nr_objects);
-// }
-
-// // Helper to loop through all planes
-// static void	plane_loop(t_scene *scene, int j)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < scene->n_pl)
-// 	{
-// 		if (!scene->intersects)
-// 		{
-// 			scene->intersects = ft_lstnew( \
-// 				rt_ray_object_intersect(scene->rays[j], &scene->objects[i]));
-// 		}
-// 		else
-// 		{
-// 			ft_lstadd_back(&scene->intersects, ft_lstnew( \
-// 				rt_ray_object_intersect(scene->rays[j], &scene->objects[i])));
-// 		}
-// 		i++;
-// 	}
-// }
-
-// // Helper to loop through all cylinders
-// static void	cylinder_loop(t_scene *scene, int j)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < scene->n_cy)
-// 	{
-// 		if (!scene->intersects)
-// 		{
-// 			scene->intersects = ft_lstnew( \
-// 				rt_ray_object_intersect(scene->rays[j], &scene->objects[i]));
-// 		}
-// 		else
-// 		{
-// 			ft_lstadd_back(&scene->intersects, ft_lstnew( \
-// 				rt_ray_object_intersect(scene->rays[j], &scene->objects[i])));
-// 		}
-// 		i++;
-// 	}
-// }
-
-// // Helper to loop through all spheres
-// static void	sphere_loop(t_scene *scene, int j)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < scene->n_sp)
-// 	{
-// 		if (!scene->intersects)
-// 		{
-// 			scene->intersects = ft_lstnew( \
-// 				rt_ray_object_intersect(scene->rays[j], &scene->objects[i]));
-// 		}
-// 		else
-// 		{
-// 			ft_lstadd_back(&scene->intersects, ft_lstnew( \
-// 				rt_ray_object_intersect(scene->rays[j], &scene->objects[i])));
-// 		}
-// 		i++;
-// 	}
-// }
+ */

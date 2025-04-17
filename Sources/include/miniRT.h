@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 15:40:04 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/14 16:56:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 
 # ifndef WINDOW_HEIGHT
 #  define WINDOW_HEIGHT 600
+# endif
+
+# ifndef WINDOW_NAME
+#  define WINDOW_NAME "MiniRT"
 # endif
 
 # define VECTOR 0.0
@@ -52,7 +56,7 @@
 # define RT_TRANS_RAY	" – rt_transform_ray\n"
 # define SET_SP_TRANS	" – rt_set_sphere_transform\n"
 # define INTERSECTION	" – rt_intersection\n"
-# define INTERSECT_LIST	" – rt_add_intersect_list\n"
+# define RAY_INTERSECTS	" – rt_compute_ray_intersects\n"
 
 # define SUB_ERROR		"Invalid input: null matrix, or row or column count too small (< 2)"
 
@@ -75,11 +79,11 @@ typedef enum {
 }	t_objtype;
 
 /* A tuple:
-	- has a type (w): either a vector (0.0) or a point (1.0)
-	- has three coordinates:
-		- x (float): lateral->to the right || RED
-		- y (float): vertical->up || GREEN
-		- z (float): depth->away from us || BLUE*/
+- has three coordinates:
+	- x (float): lateral->to the right || RED
+	- y (float): vertical->up || GREEN
+	- z (float): depth->away from us || BLUE
+- has a type (w): either a vector (0.0) or a point (1.0) */
 typedef struct s_tuple {
 	float	x;
 	float	y;
@@ -96,6 +100,7 @@ typedef struct s_matrix {
 typedef struct s_ray {
 	t_tuple	origin;
 	t_tuple	direction;
+	t_list	*intersects;
 }	t_ray;
 
 typedef struct s_ambient
@@ -166,6 +171,24 @@ void		rt_assign_object(t_object *object, char **needle, char type);
 void		rt_assign_sphere(t_object *sphere, char **needle);
 void		rt_assign_plane(t_object *plane, char **needle);
 void		rt_assign_cylinder(t_object *cylinder, char **needle);
+
+// Window and image handling
+
+typedef struct s_env {
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	char	*color;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	t_list	*point_list;
+}				t_env;
+
+void		rt_open_window_and_draw(t_sphere *sp);
+void		rt_draw(t_env *env, t_sphere *sp);
+int			rgb_to_int(t_tuple *col_tuple);
 
 // Utils
 	// General
