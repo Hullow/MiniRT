@@ -6,18 +6,17 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:14:38 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/14 17:02:24 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:50:22 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /* void	rt_open_window_and_draw();
-void	rt_draw(t_env *env, t_tuple col_tuple);
 int		rgb_to_int(t_tuple col_tuple); */
 int	key_handler(int keycode, t_env *env);
 int	window_closed(t_env *env);
-
+void	rt_draw(t_env *env, t_sphere *sp);
 
 void	my_mlx_pixel_put(t_env *env, int x, int y, int color);
 
@@ -34,6 +33,7 @@ int main()
 	return 0;
 }
 
+/* converts 0-1 RGB values from a tuple (x, y, z) to the corresponding int value */
 int	rgb_to_int(t_tuple *col_tuple)
 {
 	int	color;
@@ -53,24 +53,72 @@ int	rgb_to_int(t_tuple *col_tuple)
 
 void	rt_draw(t_env *env, t_sphere *sp)
 {
-	int	h;
-	int	v;
-	
-	h = 0;
-	while (h < WINDOW_HEIGHT)
+	int	x_mlx;
+	int	y_mlx;
+	int	x_mrt;
+	int	y_mrt;
+	t_tuple		*camera_origin;
+	t_tuple 	*camera_direction;
+	t_ray		*camera_ray;
+	t_intersect	x;
+
+	camera_origin = rt_point(0, 0, -1);
+	x_mlx = 0;
+	while (x_mlx < WINDOW_HEIGHT)
 	{
-		v = 0;
-		while (v < WINDOW_WIDTH)
+		y_mlx = 0;
+		while (y_mlx < WINDOW_WIDTH)
 		{
 			// if ray hits sphere, then put red pixel (otherwise nothing)
+			// sphere is at (0, 0, 0), diameter == 1.0.
+			// camera is at (0, 0, -1), direction: depends on wall pixel to paint
+			// wall is at (x, y, 1), where :
+			//	x: - WINDOW_WIDTH  / 100  <  x  <  WINDOW_WIDTH  / 100
+			//	y: - WINDOW_HEIGHT / 100  <  y  <  WINDOW_HEIGHT / 100
+			//
+			//  x_mlx to x_mrt: x_mrt = x_mlx/100 - WINDOW_WIDTH/200
+			//  y_mrt to y_mlx: y_mrt = y_mlx/100 - WINDOW_HEIGHT/200
+			//
+			//  x_mrt to x_mlx: x_mlx = x_mrt*100 + x_mrt*WINDOW_WIDTH/2
+			//  y_mrt to y_mlx: y_mlx = WINDOW_HEIGHT - (y_mrt*100 + y_mrt*WINDOW_HEIGHT/2)
+			//
+			//
+			// camera direction: subtract_tuple((t_tuple){x_mrt, y_mrt, 1, POINT}, camera_origin);
+			x_mrt = x_mlx/100 - WINDOW_WIDTH/200;
+			y_mrt = (-y_mlx + WINDOW_HEIGHT)/100 - WINDOW_HEIGHT/200; // need to invert orientation
 			
-			my_mlx_pixel_put(env, v, WINDOW_HEIGHT - h, rgb_to_int(sp->color));
-			v++;
+			camera_direction = subtract_tuple(rt_point(x_mrt, y_mrt, 1), camera_origin);
+			camera_ray = rt_ray(camera_origin, camera_direction); // create a ray
+			rt_ray_object_x(camera_ray, sp); // compute the ray's intersections with the sphere
+			x = rt_compute_ray_hit(camera_ray, sp); // find hits from the intersections
+			if (x.object)
+				my_mlx_pixel_put(env, x_mlx, WINDOW_HEIGHT - y_mlx, 16711680);
+			else
+				my_mlx_pixel_put(env, x_mlx, WINDOW_HEIGHT - y_mlx, 0);
+			free(camera_direction);
+			free(camera_ray);
+			y_mlx++;
 		}
-		h++;
+		x_mlx++;
 	}
 }
 
+void	draw_red(t_env *env)
+{
+	int x;
+	int y;
+	x = 0;
+	while (x < WINDOW_WIDTH)
+	{
+		y = 0;
+		while (y < WINDOW_HEIGHT)
+		{
+			my_mlx_pixel_put(env, x, y, 16711680);
+			y++;
+		}
+		x++;
+	}
+}
 
 void	rt_open_window_and_draw(t_sphere *sp)
 {
@@ -81,7 +129,7 @@ void	rt_open_window_and_draw(t_sphere *sp)
 	env.img = mlx_new_image(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	env.addr = mlx_get_data_addr(env.img, &env.bits_per_pixel, \
 		&env.line_length, &env.endian);
-
+	// draw_red(&env);	(void)sp;
 	rt_draw(&env, sp);
 	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	mlx_hook(env.win, 2, 1L << 0, key_handler, &env);

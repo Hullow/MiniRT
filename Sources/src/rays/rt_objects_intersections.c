@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:56:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/14 13:43:55 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:44:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere,
 // Computes the intersections of a ray on a sphere.
 // Returns a float[2] with the two distances values from the origin of the ray
 // to the surfaces of the sphere 
-t_intersect	*rt_ray_object_x(t_ray ray, void *object)
+t_intersect	*rt_ray_object_x(t_ray *ray, void *object)
 {
 	t_intersect	*x;
 	t_object	type;
@@ -77,15 +77,15 @@ t_intersect	*rt_ray_object_x(t_ray ray, void *object)
 	if (errno)
 		handle_error(RT_RAY_OBJ_X, ENOMEM, "ft_calloc failed");
 	x->object = object;
-	x->ray = &ray;
+	x->ray = ray;
 	x->x_count = 0;
 	type = *((t_object *)object);
 	if (type == SPHERE)
-		return (rt_ray_sphere_x(&ray, (t_sphere *)object,
+		return (rt_ray_sphere_x(ray, (t_sphere *)object,
 		((t_sphere *)object)->transform, x));
 	if (type == CYLINDER)
-		return (rt_ray_cylinder_x(&ray, (t_cylinder *)object, x));
+		return (rt_ray_cylinder_x(ray, (t_cylinder *)object, x));
 	if (type == PLANE)
-		return (rt_ray_plane_x(&ray, (t_plane *)object, x));
+		return (rt_ray_plane_x(ray, (t_plane *)object, x));
 	return (x);
 }

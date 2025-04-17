@@ -139,3 +139,11 @@ be feasible for each shape to manually preserve the sort order of that intersect
 - wrote function `rgb_to_int()` to convert a value from tuple (1, 0, 0) to int (16711680)
 via hex (FF0000)
 - Managed to draw a fully red window
+
+# 17/4/25
+- Working on ray-sphere intersection: finished writing formula, updated Makefile
+while discussing it with pberset
+- No success running it so far, and surprise: segfault, likely from numerous matrix calculation mallocs.
+Will look at pberset's malloc-less version instead of fixing it at this current stage.
+
+to do: add t_matrix *inverse_transform in t_sphere 

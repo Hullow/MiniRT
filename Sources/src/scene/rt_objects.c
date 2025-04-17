@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/14 17:00:01 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:30:39 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,8 +261,8 @@ t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color)
 		return (handle_error(INIT_SP, ENOMEM, NULL));
 	sp->coord = rt_point(coord.x, coord.y, coord.z);
 	sp->color = rt_color(color.x, color.y, color.z);
-	printf("rt_init_sphere\n- input (%f, %f, %f)\n", color.x, color.y, color.z);
-	printf("- output (%f, %f, %f)\n", sp->color->x, sp->color->y, sp->color->z);
+	printf("rt_init_sphere\n- color input (%f, %f, %f)\n", color.x, color.y, color.z);
+	printf("- color output (%f, %f, %f)\n", sp->color->x, sp->color->y, sp->color->z);
 	sp->transform = identity_matrix(4, 4);
 	if (errno)
 	{

@@ -19,8 +19,9 @@ LIBFTDIR	= $(INCLUDEDIR)libft/
 MLXDIR		= $(INCLUDEDIR)mlx/
 
 FILEDIR		= file_check/
-SCENEDIR	= scene/
 MATRIXDIR	= matrices/
+RAYSDIR		= rays/
+SCENEDIR	= scene/
 TUPLEDIR	= tuples/
 TRANSFDIR	= transforms/
 UTILSDIR	= utils/
@@ -52,9 +53,10 @@ TUPLE		= rt_tuple_basic_ops \
 			rt_color_multiply
 
 TRANSF		= rt_transform \
-			rt_shearing
+			rt_shearing \
+			rt_handle_transform
 
-RAYSDIR		= rt_raycast \
+RAYS		= rt_raycast \
 			rt_intersections \
 			rt_objects_intersections
 
@@ -62,8 +64,9 @@ UTILS		= rt_utils
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(FILEDIR), $(addsuffix .c, $(FILECHECK))) \
-			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
+			$(addprefix $(SRCDIR)$(RAYSDIR), $(addsuffix .c, $(RAYS))) \
+			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
@@ -71,8 +74,9 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(FILEDIR), $(addsuffix .o, $(FILECHECK))) \
-			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
+			$(addprefix $(OBJDIR)$(RAYSDIR), $(addsuffix .o, $(RAYS))) \
+			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
@@ -101,11 +105,12 @@ $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
 	mkdir -p $(OBJDIR)
 	mkdir -p $(OBJDIR)$(FILEDIR)
-	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(RAYSDIR)
+	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
-	mkdir -p $(OBJDIR)$(UTILSDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
+	mkdir -p $(OBJDIR)$(UTILSDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files

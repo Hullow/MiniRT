@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/14 16:56:47 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/17 17:41:27 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_sphere
 	float		diameter;
 	t_tuple		*color;
 	t_matrix	*transform;
+	//t_matrix	*inverse_transform;
 }	t_sphere;
 
 typedef struct s_plane
@@ -285,8 +286,8 @@ t_intersect	*rt_ray_plane_x(t_ray *ray, t_plane *plane, t_intersect *x);
 t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_cylinder *cylinder, t_intersect *x);
 t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere,
 	void *temp,  t_intersect *x);
-t_intersect	*rt_ray_object_x(t_ray ray, void *object);
-void		rt_compute_intersect(t_scene *scene);
+t_intersect	*rt_ray_object_x(t_ray *ray, void *object);
+t_intersect	rt_compute_ray_hit(t_ray *ray, void	*hit_object);
 
 
 		// Light and shade
