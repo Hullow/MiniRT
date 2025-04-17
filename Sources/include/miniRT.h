@@ -186,9 +186,9 @@ typedef struct s_env {
 	t_list	*point_list;
 }				t_env;
 
-void		rt_open_window_and_draw(t_sphere *sp);
-void		rt_draw(t_env *env, t_sphere *sp);
-int			rgb_to_int(t_tuple *col_tuple);
+void		rt_open_window_and_draw(t_object sp);
+void		rt_draw(t_env *env, t_object sp);
+int			rgb_to_int(t_tuple col_tuple);
 
 // Utils
 	// General
@@ -264,6 +264,7 @@ t_intersect	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x);
 t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x);
 t_intersect	rt_ray_object_x(t_ray ray, t_object object);
 void		rt_compute_intersect(t_scene *scene);
+t_ray		rt_transform_ray(t_ray initial_ray, t_matrix trans);
 
 
 		// Light and shade

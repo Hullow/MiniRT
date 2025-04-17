@@ -23,56 +23,17 @@ void	my_mlx_pixel_put(t_env *env, int x, int y, int color);
 
 int main()
 {
-	t_sphere	*sp;
+	t_object	sp;
 
-	sp = rt_init_sphere(
-		(t_tuple) {0, 0, 0, POINT},
-		1.0,
-		(t_tuple) {255, 0, 0, COLOR});
-		
+	sp.coord = (t_tuple) {0, 0, 0, POINT};
+	sp.diameter = 2.0;
+	sp.color = (t_tuple) {255, 0, 0, COLOR};
+
 	rt_open_window_and_draw(sp);
 	return 0;
 }
 
-int	rgb_to_int(t_tuple *col_tuple)
-void	miniRT_input_tests(t_scene scene)
-{
-	if (!errno)
-	{
-		printf("light coords x: %f y: %f z: %f\n", scene.lux.coord.x, scene.lux.coord.y, scene.lux.coord.z);
-		printf("light ratio : %f\n", scene.lux.ratio);
-		printf("light color R: %f G: %f B: %f\n", scene.lux.color.x, scene.lux.color.y, scene.lux.color.z);
-		printf("ambient ratio : %f\n", scene.amb.ratio);
-		printf("ambient color R: %f G: %f B: %f\n", scene.amb.color.x, scene.amb.color.y, scene.amb.color.z);
-		printf("camera coords x: %f y: %f z: %f\n", scene.cam.coord.x, scene.cam.coord.y, scene.cam.coord.z);
-		printf("camera orient x: %f y: %f z: %f\n", scene.cam.orient.x, scene.cam.orient.y, scene.cam.orient.z);
-		printf("camera fov: %f\n", scene.cam.fov);
-		int i = 0;
-		while (i < scene.n_obj)
-		{
-			switch(scene.objects[i].type)
-			{
-				case SPHERE:
-					printf("Type: SPHERE\n");
-					break ;
-				case PLANE:
-					printf("Type: PLANE\n");
-					break ;
-				case CYLINDER:
-					printf("Type: CYLINDER\n");
-					break ;
-				default:
-					printf("not an object\n");
-			}
-			printf("coord: %f\n", scene.objects[i].coord.x);
-			printf("coord: %f\n", scene.objects[i].coord.y);
-			printf("coord: %f\n", scene.objects[i].coord.z);
-			i++;
-		}
-	}
-}
-
-static void	rt_init_counters(t_scene *scene)
+int	rgb_to_int(t_tuple col_tuple)
 {
 	int	color;
 	int	hex_r;
@@ -80,16 +41,16 @@ static void	rt_init_counters(t_scene *scene)
 	int	hex_b;
 
 	color = 0;
-	hex_r = (int) (col_tuple->x * 255);
-	hex_g = (int) (col_tuple->y * 255);
-	hex_b = (int) (col_tuple->z * 255);
+	hex_r = (int) (col_tuple.x * 255);
+	hex_g = (int) (col_tuple.y * 255);
+	hex_b = (int) (col_tuple.z * 255);
 	color += (hex_r / 16) * pow(16, 5) + (hex_r % 16) * pow(16, 4);
 	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
 	color += (hex_b / 16) * 16 + (hex_b % 16);
 	return (color);
 }
 
-void	rt_draw(t_env *env, t_sphere *sp)
+void	rt_draw(t_env *env, t_object sp)
 {
 	int	h;
 	int	v;
@@ -102,7 +63,7 @@ void	rt_draw(t_env *env, t_sphere *sp)
 		{
 			// if ray hits sphere, then put red pixel (otherwise nothing)
 			
-			my_mlx_pixel_put(env, v, WINDOW_HEIGHT - h, rgb_to_int(sp->color));
+			my_mlx_pixel_put(env, v, WINDOW_HEIGHT - h, rgb_to_int(sp.color));
 			v++;
 		}
 		h++;
@@ -110,7 +71,7 @@ void	rt_draw(t_env *env, t_sphere *sp)
 }
 
 
-void	rt_open_window_and_draw(t_sphere *sp)
+void	rt_open_window_and_draw(t_object sp)
 {
 	t_env	env;
 
@@ -225,3 +186,86 @@ int	main(int argc, char *argv[])
 	return (0);
 }
  */
+
+void	miniRT_input_tests(t_scene scene)
+{
+	if (!errno)
+	{
+		printf("light coords x: %f y: %f z: %f\n", scene.lux.coord.x, scene.lux.coord.y, scene.lux.coord.z);
+		printf("light ratio : %f\n", scene.lux.ratio);
+		printf("light color R: %f G: %f B: %f\n", scene.lux.color.x, scene.lux.color.y, scene.lux.color.z);
+		printf("ambient ratio : %f\n", scene.amb.ratio);
+		printf("ambient color R: %f G: %f B: %f\n", scene.amb.color.x, scene.amb.color.y, scene.amb.color.z);
+		printf("camera coords x: %f y: %f z: %f\n", scene.cam.coord.x, scene.cam.coord.y, scene.cam.coord.z);
+		printf("camera orient x: %f y: %f z: %f\n", scene.cam.orient.x, scene.cam.orient.y, scene.cam.orient.z);
+		printf("camera fov: %f\n", scene.cam.fov);
+		int i = 0;
+		while (i < scene.n_obj)
+		{
+			switch(scene.objects[i].type)
+			{
+				case SPHERE:
+					printf("Type: SPHERE\n");
+					break ;
+				case PLANE:
+					printf("Type: PLANE\n");
+					break ;
+				case CYLINDER:
+					printf("Type: CYLINDER\n");
+					break ;
+				default:
+					printf("not an object\n");
+			}
+			printf("coord: %f\n", scene.objects[i].coord.x);
+			printf("coord: %f\n", scene.objects[i].coord.y);
+			printf("coord: %f\n", scene.objects[i].coord.z);
+			i++;
+		}
+	}
+}
+
+//
+//			Final main with scene init from file !!!!!!
+//
+
+/*static void	rt_init_counters(t_scene *scene)
+{
+	scene->n_A = 0;
+	scene->n_C = 0;
+	scene->n_L = 0;
+	scene->n_sp = 0;
+	scene->n_pl = 0;
+	scene->n_cy = 0;
+}
+
+static int	build_scene(int argc, char *argv[], t_scene *scene)
+{
+	errno = 0;
+	if (argc != 2)
+	{
+		errno = EBADF;
+		perror("Error\nmissing \".rt\" file");
+		return (1);
+	}
+	if (rt_check_ext(argv[1]))
+		return (2);
+	rt_init_counters(scene);
+	if (rt_read_id(argv[1], scene))
+		return (3);
+	if (rt_malloc_objects(scene))
+		return (4);
+	if (rt_init_scene(argv[1], scene))
+		return (5);
+	return (0);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_scene	scene;
+
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	miniRT_input_tests(scene);
+	return (0);
+}
+*/

@@ -19,26 +19,21 @@
 //
 // Returns:
 //	- a pointer to the transformed ray (t_ray *)
-t_ray	*rt_transform_ray(t_ray *initial_ray, t_matrix *trans)
+t_ray	rt_transform_ray(t_ray initial_ray, t_matrix trans)
 {
-	t_tuple		*new_origin;
-	t_tuple		*new_direction;
+	t_tuple		new_origin;
+	t_tuple		new_direction;
 
-	if (!initial_ray || !trans)
-		return (handle_error(RT_TRANS_RAY, EINVAL, "null input"));
-	new_origin = matrix_tuple_multiplication(trans, initial_ray->origin);
-	new_direction = matrix_tuple_multiplication(trans, initial_ray->direction);
+	new_origin = matrix_tuple_multiplication(trans, initial_ray.origin);
+	new_direction = matrix_tuple_multiplication(trans, initial_ray.direction);
 	return (rt_ray(new_origin, new_direction));
 }
 
 // Resets a sphere's transformation to the one given as argument (t_matrix *).
 // frees the previously assigned transformation (default: identity)
 // Returns: NULL in all cases
-void	*rt_set_sphere_transform(t_sphere *sp, t_matrix *trans)
+t_object	rt_set_sphere_transform(t_object sp, t_matrix trans)
 {
-	if (!sp || !trans)
-		return (handle_error(SET_SP_TRANS, EINVAL, "null input"));
-	free (sp->transform);
-	sp->transform = trans;
-	return (NULL);
+	sp.transform = trans;
+	return (sp);
 }

@@ -17,20 +17,17 @@
 // 
 // Returns:
 // a pointer to the ray
-t_ray	*rt_ray(t_tuple *origin, t_tuple *direction)
+t_ray	rt_ray(t_tuple origin, t_tuple direction)
 {
 	t_ray	ray;
 
-	ray = (t_ray *)ft_calloc(1, sizeof(t_ray));
-	if (errno)
-		return (handle_error(RT_RAY, ENOMEM, "ft_calloc fail"));
-	if (origin->w != POINT)
-		return (handle_error(RT_RAY, EINVAL, "origin is not a point"));
-	if (direction->w != VECTOR)
-		return (handle_error(RT_RAY, EINVAL, "direction is not a vector"));
-	ray->origin = origin;
-	ray->direction = direction;
-	ray->intersects = NULL;
+	if (origin.w != POINT)
+		handle_error(RT_RAY, EINVAL, "origin is not a point");
+	if (direction.w != VECTOR)
+		handle_error(RT_RAY, EINVAL, "direction is not a vector");
+	ray.origin = origin;
+	ray.direction = direction;
+	ray.intersects = NULL;
 	return (ray);
 }
 

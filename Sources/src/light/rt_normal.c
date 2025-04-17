@@ -12,13 +12,13 @@
 
 #include "miniRT.h"
 
-/* scene->sp = (t_sphere *)ft_calloc(scene->n_sp, sizeof(t_sphere));
+/* scene->sp = (t_object *)ft_calloc(scene->n_sp, sizeof(t_object));
 
 void	rt_assign_sphere(t_scene *scene, char **needle)
 {
 	char		**coord;
 	char		**color;
-	t_sphere	*sp;
+	t_object	*sp;
 
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle + 2), ',');
@@ -44,30 +44,28 @@ typedef struct s_sphere
 	t_tuple		*coord;
 	float		diameter;
 	t_tuple		*color;
-}	t_sphere;
+}	t_object;
 */
 
-t_tuple	*normal_at(t_sphere *sp, t_tuple point);
+t_tuple	normal_at(t_object sp, t_tuple point);
 
-void	sp_normal_test(int test_id, char axis, t_tuple desired, t_sphere *sp, t_tuple *normal)
+void	sp_normal_test(int test_id, char axis, t_tuple desired, t_object sp, t_tuple normal)
 {
 	char	*tuple_type[3] = {"VECTOR", "POINT", "COLOR"};
 
 	(void)sp;
 	printf("Test %d (desired result VECTOR(%f, %3.f, %3.f):\nThe normal on a sphere at a point on the %c axis is %s(%3.f, %3.f, %3.f)\n",
-	test_id, desired.x, desired.y, desired.z, axis, tuple_type[(int) normal->w], normal->x, normal->y, normal->z);
-
-	free(normal);
+	test_id, desired.x, desired.y, desired.z, axis, tuple_type[(int) normal.w], normal.x, normal.y, normal.z);
 }
 
 void	test_normal(void)
 {
-	t_sphere *sp;
-	t_tuple *n;
+	t_object sp;
+	t_tuple n;
 	
-	sp = rt_init_sphere((t_tuple){.x = 0.0, .y = 0.0, .z = 0.0},
-					5.0, 
-					(t_tuple){.x = 0.1, .y = 0.1, .z = 0.1});
+	sp.coord = (t_tuple){.x = 0.0, .y = 0.0, .z = 0.0, .w = POINT};
+	sp.diameter = 2.0;
+	sp.color = (t_tuple){.x = 0.1, .y = 0.1, .z = 0.1, .w = COLOR};
 
 	// Basic test
 	sp_normal_test(1, 'x', (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0}, sp, normal_at(sp, (t_tuple) {.x = 1.0, .y = 0.0, .z = 0.0, .w = POINT}));
@@ -85,15 +83,14 @@ void	test_normal(void)
 	// rt_translation();
 }
 
-t_tuple	*normal_at(t_sphere *sp, t_tuple point)
+t_tuple	normal_at(t_object sp, t_tuple point)
 {
-	t_tuple	*origin;
-	t_tuple	*normal;
+	t_tuple	origin;
+	t_tuple	normal;
 
 	(void)sp;
 	origin = rt_point(0, 0, 0);
-	normal = subtract_tuple(&point, origin);
-	free (origin);
+	normal = subtract_tuple(point, origin);
 	return (normal);
 }
 /* 

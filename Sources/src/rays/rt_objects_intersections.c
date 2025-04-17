@@ -34,21 +34,21 @@ t_intersect	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect x)
 // Uses a quadratic equation discriminant = b²-4ac
 // to transform the sphere beform the collision calculus, 
 // the invert of the transformation is applied to the ray
-t_intersect	*rt_ray_sphere_x(t_ray *ray, t_sphere *sphere,
-	void *temp, t_intersect *x)
+t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
 {
 	t_tuple	sphere_to_ray;
 	float	a;
 	float	b;
 	float	c;
 	float	discriminant;
+	t_matrix	temp;
 
-	temp = (t_matrix *) matrix_inversion(sphere->transform);
-	ray = rt_transform_ray(ray, (t_matrix *) temp);
+	temp = matrix_inversion(sphere.transform);
+	ray = rt_transform_ray(ray, temp);
 	
-	sphere_to_ray = subtract_tuple(ray->origin, sphere->coord);
-	a = dot_product(ray->direction, ray->direction);
-	b = 2.0f * dot_product(ray->direction, sphere_to_ray);
+	sphere_to_ray = subtract_tuple(ray.origin, sphere.coord);
+	a = dot_product(ray.direction, ray.direction);
+	b = 2.0f * dot_product(ray.direction, sphere_to_ray);
 	c = dot_product(sphere_to_ray, sphere_to_ray) - \
 					powf((sphere.diameter / 2.0f), 2);
 	discriminant = powf(b, 2) - 4.0f * a * c;

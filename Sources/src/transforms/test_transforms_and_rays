@@ -52,7 +52,7 @@ void	test_intersections()
 	// Test 1: A ray intersects a sphere at two points
 	printf("Test 1: A ray intersects a sphere at two points\n");
 	t_ray *ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	t_sphere *s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0f, (t_tuple){0.5, 0.2, 0.1, COLOR});
+	t_object *s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0f, (t_tuple){0.5, 0.2, 0.1, COLOR});
 	t_intersect *x = ft_calloc(1, sizeof(t_intersect));
 	if (!x)
 		printf("malloc fail in test_intersections()\n");
@@ -140,7 +140,7 @@ void	test_transform_handling()
 	ray_2->origin->x, ray_2->origin->y, ray_2->origin->z,
 	ray_2->direction->x, ray_2->direction->y, ray_2->direction->z);
 		
-	t_sphere	*sp = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 1, (t_tuple) {0.5, 0.5, 0.5, COLOR});
+	t_object	*sp = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 1, (t_tuple) {0.5, 0.5, 0.5, COLOR});
 	// rt_set_sphere_transform(sp, rt_translation(2, 3, 4));
 	// print_matrix(sp->transform);
 	// print_matrix(rt_translation(2, 3, 4));

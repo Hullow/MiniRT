@@ -255,26 +255,26 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 /* initializes a sphere based on a tuple for coordinates, a float for diameter, 
 and a tuple for color. Both input tuples to be initialized on the stack, thus:
 (t_tuple){.x = , .y = , .z = } */
-t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color)
+t_object	rt_init_sphere(t_tuple coord, float diam, t_tuple color)
 {
-	t_sphere	*sp = NULL;
+	t_object	sp;
 
-	sp = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
-	if (errno)
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	sp->coord = rt_point(coord.x, coord.y, coord.z);
-	sp->color = rt_color(color.x, color.y, color.z);
+	sp.coord = rt_point(coord.x, coord.y, coord.z);
+	sp.color = rt_color(color.x, color.y, color.z);
 	printf("rt_init_sphere\n- input (%f, %f, %f)\n", color.x, color.y, color.z);
-	printf("- output (%f, %f, %f)\n", sp->color->x, sp->color->y, sp->color->z);
-	sp->transform = identity_matrix(4, 4);
-	if (errno)
-	{
-		free (sp);
-		free (sp->coord);
-		free (sp->color);
-		free (sp->transform);
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	}
-	sp->diameter = diam;
+	printf("- output (%f, %f, %f)\n", sp.color.x, sp.color.y, sp.color.z);
+	sp.transform = identity_matrix(4, 4);
+	sp.diameter = diam;
 	return (sp);
+}
+
+void	rt_assign_object(t_object *object, char **needle, char type)
+{
+	object->transform = identity_matrix(4, 4);
+	if (type == 's')
+		rt_assign_sphere(object, needle);
+	if (type == 'c')
+		rt_assign_cylinder(object, needle);
+	if (type == 'p')
+		rt_assign_plane(object, needle);
 }

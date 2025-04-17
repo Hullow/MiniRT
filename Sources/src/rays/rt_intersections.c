@@ -55,33 +55,34 @@ static void	rt_compute_ray_intersects(
 // - ray: set to NULL (because we know which ray it is)
 // - x_distances[2]: t_min in [0], 0 in [1]
 // - x_count: 1
-t_intersect	rt_compute_ray_hit(t_ray *ray, void	*hit_object)
+t_intersect	rt_compute_ray_hit(t_ray ray)
 {
-	float	t_min;
-	float	t_iter_0;
-	float	t_iter_1;
+	float		t_min;
+	float		t_iter_0;
+	float		t_iter_1;
+	t_object	hit_object;
 
-	if (ray->intersects)
-		t_min = ((t_intersect *) ray->intersects->content)->x_distances[0];
+	if (ray.intersects)
+		t_min = ((t_intersect *) ray.intersects->content)->x_distances[0];
 	else
 		return ((t_intersect){NULL, NULL, {0.0, 0.0}, 0});
-	while (ray->intersects)
+	while (ray.intersects)
 	{
-		t_iter_0 = ((t_intersect *) ray->intersects->content)->x_distances[0];
-		t_iter_1 = ((t_intersect *) ray->intersects->content)->x_distances[1];
+		t_iter_0 = ((t_intersect *) ray.intersects->content)->x_distances[0];
+		t_iter_1 = ((t_intersect *) ray.intersects->content)->x_distances[1];
 		if (t_iter_0 > 0 && t_iter_0 < t_min)
 		{
 			t_min = t_iter_0;
-			hit_object = ((t_intersect *) ray->intersects->content)->object;
+			hit_object = ((t_intersect *) ray.intersects->content)->object;
 		}
 		if (t_iter_1 > 0 && t_iter_1 < t_min)
 		{
 			t_min = t_iter_1;
-			hit_object = ((t_intersect *) ray->intersects->content)->object;
+			hit_object = ((t_intersect *) ray.intersects->content)->object;
 		}
-		ray->intersects = ray->intersects->next;
+		ray.intersects = ray.intersects->next;
 	}
-	return ((t_intersect){hit_object, NULL, {t_min, 0.0}, 1});
+	return ((t_intersect){hit_object, 0.0, {t_min, 0.0}, 1});
 }
 
 /* // Computes the hits for all rays (to be precised)
