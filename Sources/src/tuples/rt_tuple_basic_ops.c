@@ -17,24 +17,20 @@
 	- else, add the tuple coordinates and determine the type by adding types:
 		- if two are vectors, return a vector (0 + 0 == 0)
 		- if one is point and the other a vector, return a point (1 + 0 == 1)*/
-t_tuple	*add_tuple(t_tuple *a, t_tuple *b)
+t_tuple	add_tuple(t_tuple a, t_tuple b)
 {
-	t_tuple	*c;
+	t_tuple	c;
 
-	if (!a || !b)
-		return (NULL);
-	if (a->w == POINT && b->w == POINT)
+	c.x = 0;
+	if (a.w == POINT && b.w == POINT)
 	{
 		printf("add_tuple: can't add point to point\n");
-		return (NULL);
+		return (c);
 	}
-	c = malloc (sizeof(t_tuple));
-	if (!c)
-		return (NULL);
-	c->w = a->w + b->w;
-	c->x = a->x + b->x;
-	c->y = a->y + b->y;
-	c->z = a->z + b->z;
+	c.w = a.w + b.w;
+	c.x = a.x + b.x;
+	c.y = a.y + b.y;
+	c.z = a.z + b.z;
 	return (c);
 }
 
@@ -48,71 +44,69 @@ from the minuend, and returning the resulting tuple:
 	and determine the type by subtracting types:
 		- if two are vectors, return a vector (0 - 0 == 0)
 		- if minuend is point; subtrahend a vector, ret. a point (1 - 0 == 1) */
-t_tuple	*subtract_tuple(t_tuple *minuend, t_tuple *subtrahend)
+t_tuple	subtract_tuple(t_tuple minuend, t_tuple subtrahend)
 {
-	t_tuple	*c;
+	t_tuple	c;
 
-	if (!minuend || !subtrahend)
-		return (NULL);
-	c = malloc (sizeof(t_tuple));
-	if (!c)
-		return (NULL);
-	c->w = minuend->w - subtrahend->w;
-	c->x = minuend->x - subtrahend->x;
-	c->y = minuend->y - subtrahend->y;
-	c->z = minuend->z - subtrahend->z;
+	c.x = 0;
+	if (minuend.w == POINT && subtrahend.w == POINT)
+	{
+		printf("Error\nadd_tuple: can't subtract point from point\n");
+		return (c);
+	}
+	else if (minuend.w == VECTOR && subtrahend.w == POINT)
+	{
+		printf("Error\nadd_tuple: can't subtract point from vector\n");
+		return (c);
+	}
+	c.w = minuend.w - subtrahend.w;
+	c.x = minuend.x - subtrahend.x;
+	c.y = minuend.y - subtrahend.y;
+	c.z = minuend.z - subtrahend.z;
 	return (c);
 }
 
 /* Gives us the opposite of a vector,
 by subtracting it from the zero vector (0,0,0) */
-t_tuple	*negate_tuple(t_tuple *a)
+t_tuple	negate_tuple(t_tuple a)
 {
-	if (!a)
-		return (NULL);
-	if (a->w != VECTOR)
+	if (a.w != VECTOR)
 	{
-		printf("negate_tuple: can't negate a point or a color\n");
-		return (NULL);
+		printf("Error\nnegate_tuple: can't negate a point or a color\n");
+		return (a);
 	}
 	return (subtract_tuple(rt_vector(0, 0, 0), a));
 }
 
 /* modifies the coordinates of the tuple by multiplying them with a scalar;
 returns the tuple after these modifications */
-t_tuple	*multiply_tuple_by_scalar(t_tuple *a, float scalar)
+t_tuple	multiply_tuple_by_scalar(t_tuple a, float scalar)
 {
-	t_tuple	*c;
+	t_tuple	c;
 
-	c = malloc (sizeof(t_tuple));
-	if (!c)
-		return (NULL);
-	c->x = a->x * scalar;
-	c->y = a->y * scalar;
-	c->z = a->z * scalar;
-	c->w = a->w * scalar;
+	c.x = 0;
+	c.x = a.x * scalar;
+	c.y = a.y * scalar;
+	c.z = a.z * scalar;
+	c.w = a.w * scalar;
 	return (c);
 }
 
 /* modifies the coordinates of the tuple by dividing them with a scalar;
 returns the tuple after these modifications */
-t_tuple	*divide_tuple_by_scalar(t_tuple *a, float scalar)
+t_tuple	divide_tuple_by_scalar(t_tuple a, float scalar)
 {
-	t_tuple	*c;
+	t_tuple	c;
 
-	if (!a)
-		return (NULL);
+	c.x = 0;
 	if (is_equal_float(scalar, 0.0))
 	{
-		printf("divide_by_scalar: cannot divide by 0\n");
-		return (NULL);
+		printf("Error\ndivide_by_scalar: cannot divide by 0\n");
+		return (c);
 	}
-	c = malloc (sizeof(t_tuple));
-	if (!c)
-		return (NULL);
-	c->x = a->x / scalar;
-	c->y = a->y / scalar;
-	c->z = a->z / scalar;
-	c->w = a->w / scalar;
+	c.x = a.x / scalar;
+	c.y = a.y / scalar;
+	c.z = a.z / scalar;
+	c.w = a.w / scalar;
 	return (c);
 }

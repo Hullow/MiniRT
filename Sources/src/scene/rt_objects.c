@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_objects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/10 15:11:19 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:15:31 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	rt_assign_light(t_scene *scene, char **needle)
 	errno = 0;
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle + 2), ',');
-	scene->lux->ratio = ft_strtof(*(needle + 1));
-	if (scene->lux->ratio > 1.0 || scene->lux->ratio < 0.0)
+	scene->lux.ratio = ft_strtof(*(needle + 1));
+	if (scene->lux.ratio > 1.0 || scene->lux.ratio < 0.0)
 	{
 		errno = ERANGE;
 		perror("Error\nwrong ratio value");
@@ -123,8 +123,8 @@ void	rt_assign_light(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->lux->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->lux->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->lux.coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->lux.color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
@@ -135,8 +135,8 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 
 	errno = 0;
 	color = ft_split(*(needle + 1), ',');
-	scene->amb->ratio = ft_strtof(*(needle));
-	if (scene->amb->ratio > 1.0 || scene->amb->ratio < 0.0)
+	scene->amb.ratio = ft_strtof(*(needle));
+	if (scene->amb.ratio > 1.0 || scene->amb.ratio < 0.0)
 	{
 		errno = ERANGE;
 		perror("Error\nwrong ratio value");
@@ -146,7 +146,7 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->amb->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	scene->amb.color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
 	ft_free_tab(color);
 }
 
@@ -158,8 +158,8 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	errno = 0;
 	coord = ft_split(*needle, ',');
 	orient = ft_split(*(needle + 1), ',');
-	scene->cam->fov = ft_strtof(*(needle + 2));
-	if (scene->cam->fov > 180.0 || scene->cam->fov < 0.0)
+	scene->cam.fov = ft_strtof(*(needle + 2));
+	if (scene->cam.fov > 180.0 || scene->cam.fov < 0.0)
 	{
 		errno = ERANGE;
 		perror("Error\nwrong fov value");
@@ -170,39 +170,41 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 		ft_free_tab(orient);
 		return ;
 	}
-	scene->cam->orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)), ft_strtof(*(orient + 2)));
-	scene->cam->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	scene->cam.orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)), ft_strtof(*(orient + 2)));
+	scene->cam.coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
 	ft_free_tab(coord);
 	ft_free_tab(orient);
 }
 
-void	rt_assign_sphere(t_scene *scene, char **needle)
+void	rt_assign_sphere(t_object *sphere, char **needle)
 {
 	char	**coord;
 	char	**color;
-
+	
+	sphere->type = SPHERE;
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle + 2), ',');
-	scene->sp->diameter = ft_strtof(*(needle + 1));
+	sphere->diameter = ft_strtof(*(needle + 1));
 	if (!rt_valid_color(color) || !rt_valid_coord(coord) || errno != 0)
 	{
 		ft_free_tab(coord);
 		ft_free_tab(color);
 		return ;
 	}
-	scene->sp->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->sp->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
-	scene->sp->type = SPHERE;
+	sphere->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	sphere->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	sphere->type = SPHERE;
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
 
-void	rt_assign_plane(t_scene *scene, char **needle)
+void	rt_assign_plane(t_object *plane, char **needle)
 {
 	char	**coord;
 	char	**norm;
 	char	**color;
-
+	
+	plane->type = PLANE;
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle + 1), ',');
 	color = ft_split(*(needle + 2), ',');
@@ -213,26 +215,27 @@ void	rt_assign_plane(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->pl->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->pl->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
-	scene->pl->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
-	scene->pl->type = PLANE;
+	plane->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	plane->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
+	plane->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	plane->type = PLANE;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
 }
 
-void	rt_assign_cylinder(t_scene *scene, char **needle)
+void	rt_assign_cylinder(t_object *cylinder, char **needle)
 {
 	char	**coord;
 	char	**norm;
 	char	**color;
-
+	
+	cylinder->type = CYLINDER;
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle + 1), ',');
 	color = ft_split(*(needle + 4), ',');
-	scene->cy->diameter = ft_strtof(*(needle + 2));
-	scene->cy->height = ft_strtof(*(needle + 3));
+	cylinder->diameter = ft_strtof(*(needle + 2));
+	cylinder->height = ft_strtof(*(needle + 3));
 	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) || !rt_valid_color(color))
 	{
 		ft_free_tab(coord);
@@ -240,36 +243,22 @@ void	rt_assign_cylinder(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->cy->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
-	scene->cy->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
-	scene->cy->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
-	scene->cy->type = CYLINDER;
+	cylinder->coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2)));
+	cylinder->norm = rt_vector(ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2)));
+	cylinder->color = rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), ft_strtof(*(color + 2)));
+	cylinder->type = CYLINDER;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
 }
 
-/* initializes a sphere based on a tuple for coordinates, a float for diameter, 
-and a tuple for color. Both input tuples to be initialized on the stack, thus:
-(t_tuple){.x = , .y = , .z = } */
-t_sphere	*rt_init_sphere(t_tuple coord, float diam, t_tuple color)
+void	rt_assign_object(t_object *object, char **needle, char type)
 {
-	t_sphere	*sp = NULL;
-	
-	sp = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
-	if (errno)
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	sp->coord = rt_point(coord.x, coord.y, coord.z);
-	sp->color = rt_color(color.x, color.y, color.z);
-	sp->transform = identity_matrix(4, 4);
-	if (errno)
-	{
-		free (sp);
-		free (sp->coord);
-		free (sp->color);
-		free (sp->transform);
-		return (handle_error(INIT_SP, ENOMEM, NULL));
-	}
-	sp->diameter = diam;
-	return (sp);
+	object->transform = identity_matrix(4, 4);
+	if (type == 's')
+		rt_assign_sphere(object, needle);
+	if (type == 'c')
+		rt_assign_cylinder(object, needle);
+	if (type == 'p')
+		rt_assign_plane(object, needle);
 }

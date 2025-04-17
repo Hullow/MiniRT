@@ -119,10 +119,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line_c[fd] = read_file(fd, line_c[fd]);
 	if (!line_c[fd])
-	{
-		perror("read_file");
 		return (NULL);
-	}
 	output = get_line(line_c[fd]);
 	if (!output)
 	{

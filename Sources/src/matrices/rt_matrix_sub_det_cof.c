@@ -17,11 +17,9 @@
 	- row or column count too small (< 2)
 
 	returns 0 otherwise */
-int	submatrix_errors(t_matrix *mat, t_matrix *sub)
+int	submatrix_errors(t_matrix mat)
 {
-	if (!mat || !sub)
-		return (1);
-	if (mat->rows < 2 || mat->columns < 2)
+	if (mat.rows < 2 || mat.columns < 2)
 		return (1);
 	return (0);
 }
@@ -35,26 +33,29 @@ n.b.:
 	i.e. init_matrix(mat->rows - 1, mat->columns - 1)
 	- l++: advance by one column in the new matrix after writing
 	- k++: advance by one row in the new matrix after writing a whole row */
-t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
+t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub)
 {
 	int			i;
 	int			j;
 	int			k;
 	int			l;
 
-	if (submatrix_errors(mat, sub))
-		return (handle_error(SUBMATRIX, EINVAL, SUB_ERROR)); // check if "Invalid input" isn't redundant
+	if (submatrix_errors(mat))
+	{
+		handle_error(SUBMATRIX, EINVAL, SUB_ERROR);
+		return (mat);
+	}
 	i = -1;
 	k = 0;
-	while (++i < mat->rows)
+	while (++i < mat.rows)
 	{
 		j = -1;
 		l = 0;
-		while (++j < mat->columns)
+		while (++j < mat.columns)
 		{
 			if (i != row && j != column)
 			{
-				sub->m[k][l] = mat->m[i][j];
+				sub.m[k][l] = mat.m[i][j];
 				l++;
 			}
 		}
@@ -66,23 +67,16 @@ t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
 
 /* computes and returns the minor (float) at i, j of an arbitrarily matrix,
 using the submatrix at i,j (row, column), and computing its determinant */
-float	matrix_minor(t_matrix *mat, int row, int column)
+float	matrix_minor(t_matrix mat, int row, int column)
 {
-	t_matrix	*empty_submatrix;
+	t_matrix	empty_submatrix;
 
-	if (!mat)
-	{
-		handle_error(MAT_MINOR, EINVAL, "null input");
-		return (-1);
-	}
-	empty_submatrix = init_matrix(mat->rows - 1, mat->columns - 1);
-	if (!empty_submatrix)
-		return (-1.0);
+	empty_submatrix = init_matrix(mat.rows - 1, mat.columns - 1);
 	return (determinant(submatrix(mat, row, column, empty_submatrix)));
 }
 
 /* computes and returns the cofactor of a matrix, using matrix_minor */
-float	matrix_cofactor(t_matrix *mat, int row, int column)
+float	matrix_cofactor(t_matrix mat, int row, int column)
 {
 	float	sign;
 
@@ -93,25 +87,20 @@ float	matrix_cofactor(t_matrix *mat, int row, int column)
 	return (matrix_minor(mat, row, column) * sign);
 }
 
-float	determinant(t_matrix *mat)
+float	determinant(t_matrix mat)
 {
 	int		j;
 	float	det;
 
-	if (!mat)
-	{
-		handle_error(DET, EINVAL, "null input");
-		return (-1);
-	}
 	j = 0;
 	det = 0.0;
-	if (mat->rows == 2 && mat->columns == 2)
-		return ((mat->m[0][0] * mat->m[1][1]) - (mat->m[0][1] * mat->m[1][0]));
+	if (mat.rows == 2 && mat.columns == 2)
+		return ((mat.m[0][0] * mat.m[1][1]) - (mat.m[0][1] * mat.m[1][0]));
 	else
 	{
-		while (j < mat->columns)
+		while (j < mat.columns)
 		{
-			det += mat->m[0][j] * matrix_cofactor(mat, 0, j);
+			det += mat.m[0][j] * matrix_cofactor(mat, 0, j);
 			j++;
 		}
 	}
