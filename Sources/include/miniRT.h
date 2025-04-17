@@ -13,7 +13,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "./libft/header/libft.h"
+# include "libft.h"
 # include "./mlx/mlx.h"
 # include <stdio.h>
 
