@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:14:38 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/17 17:50:22 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:16:30 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ void	rt_draw(t_env *env, t_sphere *sp)
 			camera_ray = rt_ray(camera_origin, camera_direction); // create a ray
 			rt_ray_object_x(camera_ray, sp); // compute the ray's intersections with the sphere
 			x = rt_compute_ray_hit(camera_ray, sp); // find hits from the intersections
-			if (x.object)
+			if (x.object == sp)
 				my_mlx_pixel_put(env, x_mlx, WINDOW_HEIGHT - y_mlx, 16711680);
-			else
-				my_mlx_pixel_put(env, x_mlx, WINDOW_HEIGHT - y_mlx, 0);
 			free(camera_direction);
 			free(camera_ray);
 			y_mlx++;

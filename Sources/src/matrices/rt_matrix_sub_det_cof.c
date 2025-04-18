@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:13:49 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 15:17:11 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:20:07 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_matrix	*submatrix(t_matrix *mat, int row, int column, t_matrix *sub)
 using the submatrix at i,j (row, column), and computing its determinant */
 float	matrix_minor(t_matrix *mat, int row, int column)
 {
+	float	det;
 	t_matrix	*empty_submatrix;
 
 	if (!mat)
@@ -78,7 +79,9 @@ float	matrix_minor(t_matrix *mat, int row, int column)
 	empty_submatrix = init_matrix(mat->rows - 1, mat->columns - 1);
 	if (!empty_submatrix)
 		return (-1.0);
-	return (determinant(submatrix(mat, row, column, empty_submatrix)));
+	det = determinant(submatrix(mat, row, column, empty_submatrix));
+	free(empty_submatrix);
+	return (det);
 }
 
 /* computes and returns the cofactor of a matrix, using matrix_minor */
