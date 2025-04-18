@@ -24,6 +24,7 @@ MATRIXDIR	= matrices/
 TUPLEDIR	= tuples/
 TRANSFDIR	= transforms/
 UTILSDIR	= utils/
+TESTDIR		= tests/
 
 # Libs
 LIBFT		= $(LIBFTDIR)libft.a
@@ -56,14 +57,18 @@ TRANSF		= rt_transform \
 
 RAYSDIR		= rt_raycast \
 			rt_intersections \
-			rt_objects_intersections
 
 UTILS		= rt_utils
+
+TESTS		= rt_test_tuple \
+		#	rt_test_matrix \
+		#	rt_test_transforms_and_rays
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(FILEDIR), $(addsuffix .c, $(FILECHECK))) \
 			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
+			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
@@ -73,6 +78,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(FILEDIR), $(addsuffix .o, $(FILECHECK))) \
 			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
+			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
@@ -101,11 +107,12 @@ $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
 	mkdir -p $(OBJDIR)
 	mkdir -p $(OBJDIR)$(FILEDIR)
-	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(SCENEDIR)
+	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
-	mkdir -p $(OBJDIR)$(UTILSDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
+	mkdir -p $(OBJDIR)$(UTILSDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files

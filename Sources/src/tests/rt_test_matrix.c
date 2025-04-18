@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_matrix                                        :+:      :+:    :+:   */
+/*   rt_test_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:18:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/21 20:26:37 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:35:58 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	test_transposition();
 void	test_identity();
 void	mat_val_init(t_matrix *mat, t_matrix *mat2, t_matrix *mat3);
 
-int	main()
+/* int	main()
 {
 	// test_matrix_inversion();
 	// test_determinant_2x2();
@@ -44,7 +44,7 @@ int	main()
 	// test_transposition();
 	// test_identity();
 	return (0);
-}
+} */
 
 void	test_mat_tuple_multiplication()
 {

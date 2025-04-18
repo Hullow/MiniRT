@@ -139,3 +139,9 @@ be feasible for each shape to manually preserve the sort order of that intersect
 - wrote function `rgb_to_int()` to convert a value from tuple (1, 0, 0) to int (16711680)
 via hex (FF0000)
 - Managed to draw a fully red window
+
+# 15/4/25
+- Forked pberset's branch to new branch "no-malloc", reorganized tests in that 
+branch, rewrote test_tuple to remove mallocs and validated these tests from miniRT's main using make rather than ad-hoc compilation
+- To rewrite: rt_ray_sphere_x => need to add intersections to intersection linked list
+- Next: finish other tests (test_matrix, test_transforms_and_rays)

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:59:13 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/14 15:13:16 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:33:05 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	rgb_to_int(t_tuple col_tuple)
 	color += (hex_b / 16) * 16 + (hex_b % 16);
 	return (color);
 }
-
+/* 
 int main()
 {
 	t_tuple	rgb_tuple;
@@ -48,4 +48,4 @@ int main()
 	printf("rgb_to_int of (%.2f, %.2f, %.2f) returns %d\n", 
 		rgb_tuple.x, rgb_tuple.y, rgb_tuple.z, rgb_to_int(rgb_tuple));
 	return 0;
-}
+} */
