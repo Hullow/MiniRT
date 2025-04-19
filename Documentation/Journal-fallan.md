@@ -147,7 +147,9 @@ branch, rewrote test_tuple to remove mallocs and validated these tests from mini
 - Next: finish other tests (test_matrix, test_transforms_and_rays)
 
 # 19/4/25
-- Tests (continued): 
+- Tests (continued): rewrote test_matrix but waiting on pberset to finish his updates on matrices
+- Ordered functions, files and folders.
+- Norm: done everywhere where code writing is finished (excluding tests)
 - Note - possible optimization down the line (if necessary): remove some mallocs
 from some matrix operations functions, like cofactor/minor:
 ```c
@@ -162,4 +164,5 @@ mat_contents[1][1] = ...
 return result;
 ```
 
-
+- To do: fix `test_transforms_and_rays()`, run `test_matrix()` when pberset finishes, then
+make `test_ray_sphere()` finally work
