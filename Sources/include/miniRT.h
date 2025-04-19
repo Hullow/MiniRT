@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 17:30:59 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 18:10:21 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,11 @@ t_matrix		rt_rotation_x(float angle);
 t_matrix		rt_rotation_y(float angle);
 t_matrix		rt_rotation_z(float angle);
 
+		// Objects
+
+t_object		rt_init_sphere(t_tuple coord, float diam, t_tuple color);
+
+
 		// Ray - Objects intersections
 
 t_ray			rt_ray(t_tuple origin, t_tuple direction);
@@ -280,7 +285,10 @@ t_ray			rt_transform_ray(t_ray initial_ray, t_matrix trans);
 
 		// Light and shade
 
-		// Tests
+
+		/////////////////////////////////////////////////
+		/////////////////// Tests ///////////////////////
+		/////////////////////////////////////////////////
 			// Input
 
 void			miniRT_input_tests(t_scene scene);
@@ -305,7 +313,7 @@ void			test_proj_sim(void);
 
 			// Matrix tests
 
-void			test_matrices(void);
+void			test_matrices();
 void			test_cofactor(void);
 void			test_minor(void);
 void			test_submatrix(void);

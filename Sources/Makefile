@@ -37,6 +37,13 @@ LFTHEADER	= $(INCLUDEDIR)libft/header/
 # Source files
 MAIN		= miniRT
 
+MATRIX		= rt_matrix_basic_ops \
+			rt_matrix_general \
+			rt_matrix_sub_det_cof
+
+RAYS		= rt_raycast \
+			# rt_intersections \
+
 SCENE		= rt_file_check \
 			rt_init_scene \
 			rt_scene_structs \
@@ -44,29 +51,22 @@ SCENE		= rt_file_check \
 			rt_assign_objects \
 			rt_assign_view_elements \
 
-MATRIX		= rt_matrix_basic_ops \
-			rt_matrix_general \
-			rt_matrix_sub_det_cof
-
-TUPLE		= rt_tuple_basic_ops \
-			rt_tuple_general \
-			rt_tuple_advanced_ops \
-
-TRANSF		= rt_transform \
-			rt_shearing
-
-RAYS		= rt_raycast \
-			# rt_intersections \
-
-UTILS		= rt_utils \
-			rt_mlx
-
 TESTS		= rt_test_tuple \
 			rt_test_matrix \
 			rt_test_ray_sphere \
 		#	rt_test_transforms_and_rays \
 		#	rt_test_input.c \
 		#	rt_test_analog_clock.c
+
+TRANSF		= rt_transform \
+			rt_shearing
+
+TUPLE		= rt_tuple_basic_ops \
+			rt_tuple_general \
+			rt_tuple_advanced_ops \
+
+UTILS		= rt_utils \
+			rt_mlx
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
