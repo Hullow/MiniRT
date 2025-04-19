@@ -6,44 +6,28 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:36:33 by francis           #+#    #+#             */
-/*   Updated: 2025/04/19 17:54:36 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 19:13:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-// to run the tests, add .c to this file's name and run: 
-// gcc -o test_transforms -Wall -Wextra -Werror *.c ../tuples/*tuple*.c ../matrices/*.c ../rays/*.c ../scene/*.c ../utils/*.c -lm -I../../include -I../../include/libft -L../../include/libft -lft
-// remember to make the libft before
-
-void	test_shear();
-void	test_translation();
-void	test_scaling();
-void	test_rotation();
-void	test_transforms();
-void	test_transform_handling();
-void	analog_clock();
-void	test_rays_positions();
-void	test_intersections();
-
-int main()
+void	test_transforms_and_rays()
 {
-	// test_shear();
+	// transformations:
 	// test_translation();
 	// test_scaling();
 	// test_rotation();
+	// test_shear();
 	// test_transforms();
 	// analog_clock();
-	// test_rays_positions();
-	test_intersections();
+
+	// rays, intersections, combinations
+	test_rays_positions();
+	// test_intersections();
 	// test_transform_handling();
-	return (0);
 }
 
-void	analog_clock()
-{
-	
-}
 
 void	test_intersections()
 {
@@ -53,7 +37,7 @@ void	test_intersections()
 	printf("Test 1: A ray intersects a sphere at two points\n");
 	t_ray ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	t_object s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0f, (t_tuple){0.5, 0.2, 0.1, COLOR});
-	t_intersect x = ft_calloc(1, sizeof(t_intersect));
+	t_intersect *x = ft_calloc(1, sizeof(t_intersect));
 	if (!x)
 		printf("malloc fail in test_intersections()\n");
 	x = rt_ray_sphere_x(ray, s, s.transform, x);
@@ -63,7 +47,7 @@ void	test_intersections()
 	printf("\nTest 2: A ray intersects a sphere at a tangent\n");
 	ray = rt_ray(rt_point(0, 1, -5), rt_vector(0, 0, 1));
 	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
-	t_intersect y = ft_calloc(1, sizeof(t_intersect));
+	t_intersect *y = ft_calloc(1, sizeof(t_intersect));
 	if (!y)
 		printf("malloc fail in test_intersections()\n");
 	y = rt_ray_sphere_x(ray, s, s.transform, y);
@@ -73,7 +57,7 @@ void	test_intersections()
 	printf("\nTest 3: A ray misses a sphere\n");
 	ray = rt_ray(rt_point(0, 2, -5), rt_vector(0, 0, 1));
 	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
-	t_intersect z = ft_calloc(1, sizeof(t_intersect));
+	t_intersect *z = ft_calloc(1, sizeof(t_intersect));
 	if (!z)
 		printf("malloc fail in test_intersections()\n");
 	z = rt_ray_sphere_x(ray, s, s.transform, z);
@@ -83,7 +67,7 @@ void	test_intersections()
 	printf("\nTest 4: A ray originates inside a sphere\n");
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
 	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
-	t_intersect w = ft_calloc(1, sizeof(t_intersect));
+	t_intersect *w = ft_calloc(1, sizeof(t_intersect));
 	if (!w)
 		printf("malloc fail in test_intersections()\n");
 	w = rt_ray_sphere_x(ray, s, s.transform, w);
@@ -93,7 +77,7 @@ void	test_intersections()
 	printf("\nTest 5: A sphere is behind a ray\n");
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
 	s = rt_init_sphere((t_tuple){0, 0, 0, POINT}, 2.0, (t_tuple){0.5, 0.2, 0.1, COLOR});
-	t_intersect v = ft_calloc(1, sizeof(t_intersect));
+	t_intersect *v = ft_calloc(1, sizeof(t_intersect));
 	if (!v)
 		printf("malloc fail in test_intersections()\n");
 	v = rt_ray_sphere_x(ray, s, s.transform, v);
@@ -159,10 +143,7 @@ void	test_transform_handling()
 	y = rt_ray_sphere_x(ray_4, sp, sp.transform, y);
 	printf("\nIntersecting a translated sphere with a ray:\n");
 	printf("x.x_count: %d, x.x_distances[0]: %f, x.x_distances[1]: %f", y.x_count, y.x_distances[0], y.x_distances[1]);
-	
-	
 }
-
 
 void	test_transforms()
 {
@@ -173,9 +154,9 @@ void	test_transforms()
 	And B ← scaling(5, 5, 5)
 	And C ← translation(10, 5, 7) */
 	t_tuple		p = rt_point(1, 0, 1);
-	t_matrix	A = rt_rotation_x(90);
-	t_matrix	B = rt_scaling(5, 5, 5);
-	t_matrix	C = rt_translation(10, 5, 7);
+	t_matrix	A = rt_rotation_x(M_PI/2);
+	t_matrix	B = rt_scaling((t_tuple){5, 5, 5, VECTOR});
+	t_matrix	C = rt_translation((t_tuple) {10, 5, 7, VECTOR});
 	
 	/* apply rotation first
 	When p2 ← A * p
@@ -201,146 +182,146 @@ void	test_transforms()
 	printf("p0: {%3.f, %3.f, %3.f, %3.f}\n", p0.x, p0.y, p0.z, p0.w);
 }
 
+// void	test_rotation()
+// {
+// 	printf("\n*********************************\nTesting rotation transformations:\n*********************************\n");
+// 	/* test 1: Rotating a point around the x axis
+// 	Given p ← point(0, 1, 0)
+// 	And half_quarter ← rotation_x(π / 4)
+// 	And full_quarter ← rotation_x(π / 2)
+// 	Then half_quarter * p = point(0, √2/2, √2/2)
+// 	And full_quarter * p = point(0, 0, 1) */
+// 	print_matrix(
+// 				matrix_multiplication(
+// 					rt_rotation_x((M_PI / 4) / (M_PI / 180)), 
+// 					convert_tuple_to_matrix(rt_point(0, 1, 0)))
+// 	);
+// 	print_matrix(
+// 				matrix_multiplication(
+// 					rt_rotation_x((M_PI / 2) / (M_PI / 180)), 
+// 					convert_tuple_to_matrix(rt_point(0, 1, 0)))
+// 	);
 
-void	test_rotation()
-{
-	printf("\n*********************************\nTesting rotation transformations:\n*********************************\n");
-	/* test 1: Rotating a point around the x axis
-	Given p ← point(0, 1, 0)
-	And half_quarter ← rotation_x(π / 4)
-	And full_quarter ← rotation_x(π / 2)
-	Then half_quarter * p = point(0, √2/2, √2/2)
-	And full_quarter * p = point(0, 0, 1) */
-	print_matrix(
-				matrix_multiplication(
-					rt_rotation_x((M_PI / 4) / (M_PI / 180)), 
-					convert_tuple_to_matrix(rt_point(0, 1, 0)))
-	);
-	print_matrix(
-				matrix_multiplication(
-					rt_rotation_x((M_PI / 2) / (M_PI / 180)), 
-					convert_tuple_to_matrix(rt_point(0, 1, 0)))
-	);
+// 	/* test 2: The inverse of an x-rotation rotates in the opposite direction
+// 	Given p ← point(0, 1, 0)
+// 	And half_quarter ← rotation_x(π / 4)
+// 	And inv ← inverse(half_quarter)
+// 	Then inv * p = point(0, √2/2, -√2/2)  */
+// 	print_matrix(
+// 			matrix_multiplication(
+// 				matrix_inversion(rt_rotation_x((M_PI / 4) / (M_PI / 180))), 
+// 				convert_tuple_to_matrix(rt_point(0, 1, 0)))
+// 	);
 
-	/* test 2: The inverse of an x-rotation rotates in the opposite direction
-	Given p ← point(0, 1, 0)
-	And half_quarter ← rotation_x(π / 4)
-	And inv ← inverse(half_quarter)
-	Then inv * p = point(0, √2/2, -√2/2)  */
-	print_matrix(
-			matrix_multiplication(
-				matrix_inversion(rt_rotation_x((M_PI / 4) / (M_PI / 180))), 
-				convert_tuple_to_matrix(rt_point(0, 1, 0)))
-	);
+// 	/* test 3: Rotating a point around the y axis
+// 	Given p ← point(0, 0, 1)
+// 	And half_quarter ← rotation_y(π / 4)
+// 	And full_quarter ← rotation_y(π / 2)
+// 	Then half_quarter * p = point(√2/2, 0, √2/2)
+// 	And full_quarter * p = point(1, 0, 0) */
+// 	print_matrix(
+// 				matrix_multiplication(
+// 					rt_rotation_y((M_PI / 4) / (M_PI / 180)), 
+// 					convert_tuple_to_matrix(rt_point(0, 0, 1)))
+// 	);
+// 	print_matrix(
+// 				matrix_multiplication(
+// 					rt_rotation_y((M_PI / 2) / (M_PI / 180)), 
+// 					convert_tuple_to_matrix(rt_point(0, 0, 1)))
+// 	);
+// 	/* test 4: Rotating a point around the z axis
+// 	Given p ← point(0, 1, 0)
+// 	And half_quarter ← rotation_z(π / 4)
+// 	And full_quarter ← rotation_z(π / 2)
+// 	Then half_quarter * p = point(-√2/2, √2/2, 0)
+// 	And full_quarter * p = point(-1, 0, 0) */
+// 	print_matrix(
+// 				matrix_multiplication(
+// 					rt_rotation_z((M_PI / 4) / (M_PI / 180)), 
+// 					convert_tuple_to_matrix(rt_point(-1, 0, 0)))
+// 	);
+// 	print_matrix(
+// 				matrix_multiplication(
+// 					rt_rotation_z((M_PI / 2) / (M_PI / 180)), 
+// 					convert_tuple_to_matrix(rt_point(0, 1, 0)))
+// 	);	
+// }
 
-	/* test 3: Rotating a point around the y axis
-	Given p ← point(0, 0, 1)
-	And half_quarter ← rotation_y(π / 4)
-	And full_quarter ← rotation_y(π / 2)
-	Then half_quarter * p = point(√2/2, 0, √2/2)
-	And full_quarter * p = point(1, 0, 0) */
-	print_matrix(
-				matrix_multiplication(
-					rt_rotation_y((M_PI / 4) / (M_PI / 180)), 
-					convert_tuple_to_matrix(rt_point(0, 0, 1)))
-	);
-	print_matrix(
-				matrix_multiplication(
-					rt_rotation_y((M_PI / 2) / (M_PI / 180)), 
-					convert_tuple_to_matrix(rt_point(0, 0, 1)))
-	);
-	/* test 4: Rotating a point around the z axis
-	Given p ← point(0, 1, 0)
-	And half_quarter ← rotation_z(π / 4)
-	And full_quarter ← rotation_z(π / 2)
-	Then half_quarter * p = point(-√2/2, √2/2, 0)
-	And full_quarter * p = point(-1, 0, 0) */
-	print_matrix(
-				matrix_multiplication(
-					rt_rotation_z((M_PI / 4) / (M_PI / 180)), 
-					convert_tuple_to_matrix(rt_point(-1, 0, 0)))
-	);
-	print_matrix(
-				matrix_multiplication(
-					rt_rotation_z((M_PI / 2) / (M_PI / 180)), 
-					convert_tuple_to_matrix(rt_point(0, 1, 0)))
-	);	
-}
 
-void	test_scaling()
-{
-	printf("\n*********************************\nTesting scaling transformations:\n*********************************\n");
-	/* test 1: A scaling matrix applied to a point
-	Given transform ← scaling(2, 3, 4)
-	And p ← point(-4, 6, 8)
-	Then transform * p = point(-8, 18, 32) */
-	print_matrix(
-		matrix_multiplication(
-			rt_scaling(2, 3, 4), 
-			convert_tuple_to_matrix(rt_point(-4, 6, 8))));
+// void	test_scaling()
+// {
+// 	printf("\n*********************************\nTesting scaling transformations:\n*********************************\n");
+// 	/* test 1: A scaling matrix applied to a point
+// 	Given transform ← scaling(2, 3, 4)
+// 	And p ← point(-4, 6, 8)
+// 	Then transform * p = point(-8, 18, 32) */
+// 	print_matrix(
+// 		matrix_multiplication(
+// 			rt_scaling(2, 3, 4), 
+// 			convert_tuple_to_matrix(rt_point(-4, 6, 8))));
 			
-	/* test 2: A scaling matrix applied to a vector
-	Given transform ← scaling(2, 3, 4)
-	And v ← vector(-4, 6, 8)
-	Then transform * v = vector(-8, 18, 32) */
-	print_matrix(
-		matrix_multiplication(
-			rt_scaling(2, 3, 4), 
-			convert_tuple_to_matrix(rt_vector(-4, 6, 8))));
+// 	/* test 2: A scaling matrix applied to a vector
+// 	Given transform ← scaling(2, 3, 4)
+// 	And v ← vector(-4, 6, 8)
+// 	Then transform * v = vector(-8, 18, 32) */
+// 	print_matrix(
+// 		matrix_multiplication(
+// 			rt_scaling(2, 3, 4), 
+// 			convert_tuple_to_matrix(rt_vector(-4, 6, 8))));
 
-	/* test 3: Multiplying by the inverse of a scaling matrix
-	Given transform ← scaling(2, 3, 4)
-	And inv ← inverse(transform)
-	And v ← vector(-4, 6, 8)
-	Then inv * v = vector(-2, 2, 2) */
-	print_matrix(
-		matrix_multiplication(
-			matrix_inversion(rt_scaling(2, 3, 4)), 
-			convert_tuple_to_matrix(rt_point(-4, 6, 8))));
+// 	/* test 3: Multiplying by the inverse of a scaling matrix
+// 	Given transform ← scaling(2, 3, 4)
+// 	And inv ← inverse(transform)
+// 	And v ← vector(-4, 6, 8)
+// 	Then inv * v = vector(-2, 2, 2) */
+// 	print_matrix(
+// 		matrix_multiplication(
+// 			matrix_inversion(rt_scaling(2, 3, 4)), 
+// 			convert_tuple_to_matrix(rt_point(-4, 6, 8))));
 
-	/* test 4: Reflection is scaling by a negative value
-	Given transform ← scaling(-1, 1, 1)
-	And p ← point(2, 3, 4)
-	Then transform * p = point(-2, 3, 4) */
-	print_matrix(
-		matrix_multiplication(
-			rt_scaling(-1, 1, 1), 
-			convert_tuple_to_matrix(rt_point(2, 3, 4))));
-}
+// 	/* test 4: Reflection is scaling by a negative value
+// 	Given transform ← scaling(-1, 1, 1)
+// 	And p ← point(2, 3, 4)
+// 	Then transform * p = point(-2, 3, 4) */
+// 	print_matrix(
+// 		matrix_multiplication(
+// 			rt_scaling(-1, 1, 1), 
+// 			convert_tuple_to_matrix(rt_point(2, 3, 4))));
+// }
 
-void	test_translation()
-{
-	printf("\n*********************************\nTesting translation transformations:\n*********************************\n");
+// void	test_translation()
+// {
+// 	printf("\n*********************************\nTesting translation transformations:\n*********************************\n");
 	
-	/* test 1: Multiplying by a translation matrix
-	Given transform ← translation(5, -3, 2)
-	And p ← point(-3, 4, 5)
-	Then transform * p = point(2, 1, 7) */
-	print_matrix(
-		matrix_multiplication(
-			rt_translation(5, -3, 2), 
-			convert_tuple_to_matrix(rt_point(-3, 4, 5))));
+// 	/* test 1: Multiplying by a translation matrix
+// 	Given transform ← translation(5, -3, 2)
+// 	And p ← point(-3, 4, 5)
+// 	Then transform * p = point(2, 1, 7) */
+// 	print_matrix(
+// 		matrix_multiplication(
+// 			rt_translation(5, -3, 2), 
+// 			convert_tuple_to_matrix(rt_point(-3, 4, 5))));
 
-	/*  test 2: Multiplying by the inverse of a translation matrix
-	Given transform ← translation(5, -3, 2)
-	And inv ← inverse(transform)
-	And p ← point(-3, 4, 5)
-	Then inv * p = point(-8, 7, 3 */
-	print_matrix(
-	matrix_multiplication(
-		matrix_inversion(rt_translation(5, -3, 2)), 
-		convert_tuple_to_matrix(rt_point(-3, 4, 5))));
+// 	/*  test 2: Multiplying by the inverse of a translation matrix
+// 	Given transform ← translation(5, -3, 2)
+// 	And inv ← inverse(transform)
+// 	And p ← point(-3, 4, 5)
+// 	Then inv * p = point(-8, 7, 3 */
+// 	print_matrix(
+// 	matrix_multiplication(
+// 		matrix_inversion(rt_translation(5, -3, 2)), 
+// 		convert_tuple_to_matrix(rt_point(-3, 4, 5))));
 
-	/* test 3: Translation does not affect vectors
-	Given transform ← translation(5, -3, 2)
-	And v ← vector(-3, 4, 5)
-	Then transform * v = v */
-	print_matrix(
-	matrix_multiplication(
-		rt_translation(5, -3, 2), 
-		convert_tuple_to_matrix(rt_vector(-3, 4, 5))));
+// 	/* test 3: Translation does not affect vectors
+// 	Given transform ← translation(5, -3, 2)
+// 	And v ← vector(-3, 4, 5)
+// 	Then transform * v = v */
+// 	print_matrix(
+// 	matrix_multiplication(
+// 		rt_translation(5, -3, 2), 
+// 		convert_tuple_to_matrix(rt_vector(-3, 4, 5))));
 
-}
+// }
 
 void	test_shear()
 {
