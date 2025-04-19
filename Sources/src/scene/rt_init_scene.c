@@ -12,14 +12,38 @@
 
 #include "miniRT.h"
 
-static void	rt_spacify(char *line)
+static t_matrix	transform(t_object object)
 {
-	while (*line)
+	t_matrix	transform;
+
+	transform = rt_translation( \
+		rt_vector(object.coord.x, object.coord.y, object.coord.z));
+	if (object.type == SPHERE)
 	{
-		if (ft_isspace(*line))
-			*line = ' ';
-		line++;
+		transform = matrix_multiplication(transform, rt_scaling( \
+			rt_vector(object.diameter, object.diameter, object.diameter)));
 	}
+	if (object.type == CYLINDER)
+	{
+		transform = matrix_multiplication(transform, rt_scaling( \
+			rt_vector(object.diameter, object.height, object.diameter)));
+	}
+	if (object.type == PLANE || object.type == CYLINDER)
+		transform = matrix_multiplication(transform, rt_rotation(object.norm));
+	return (transform);
+}
+
+//Detects the type of object and calls the corresponding constructor
+static void	rt_assign_object(t_object *object, char **needle, char type)
+{
+	if (type == 's')
+		rt_assign_sphere(object, needle);
+	if (type == 'c')
+		rt_assign_cylinder(object, needle);
+	if (type == 'p')
+		rt_assign_plane(object, needle);
+	object->transform = transform(*object);
+	object->inverse = matrix_inversion(object->transform);
 }
 
 static void	rt_assign_values(t_scene *scene, char **values)
@@ -40,6 +64,16 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	{
 		rt_assign_object(&(scene->objects[i]), needle, **values);
 		i++;
+	}
+}
+
+static void	rt_spacify(char *line)
+{
+	while (*line)
+	{
+		if (ft_isspace(*line))
+			*line = ' ';
+		line++;
 	}
 }
 

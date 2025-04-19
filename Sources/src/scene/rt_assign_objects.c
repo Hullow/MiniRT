@@ -12,17 +12,6 @@
 
 #include "miniRT.h"
 
-void	rt_assign_object(t_object *object, char **needle, char type)
-{
-	object->transform = identity_matrix(4, 4);
-	if (type == 's')
-		rt_assign_sphere(object, needle);
-	if (type == 'c')
-		rt_assign_cylinder(object, needle);
-	if (type == 'p')
-		rt_assign_plane(object, needle);
-}
-
 /* initializes a sphere based on a tuple for coordinates, a float for diameter, 
 and a tuple for color. Both input tuples to be initialized on the stack, thus:
 (t_tuple){.x = , .y = , .z = } */

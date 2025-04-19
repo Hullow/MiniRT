@@ -175,7 +175,6 @@ int				rt_valid_coord(char **coord);
 int				rt_valid_color(char **color);
 
 	// Assignation
-void			rt_assign_object(t_object *object, char **needle, char type);
 void			rt_assign_sphere(t_object *sphere, char **needle);
 void			rt_assign_plane(t_object *plane, char **needle);
 void			rt_assign_cylinder(t_object *cylinder, char **needle);
