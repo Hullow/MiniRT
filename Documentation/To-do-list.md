@@ -3,8 +3,8 @@
 ## Proposed project task decomposition
 - Setup Minilibx => pberset
 - Input handling + parsing => pberset
-	- clear main leaks (i.e. free(scene)) => 07.03 noch nicht
-	- Do not malloc missing objects => 07.03 noch nicht
+	- clear main leaks (i.e. free(scene)) => 19.04 ok in main
+	- Do not malloc missing objects => 19.04 ok, missing objects not counted
 	- Error on object without stats => 07.03 noch nicht
 - Implement Tuples, points, vectors (chapter 1 RT Challenge) => fallan
 - Implement color operations (chapter 2 RT Challenge) => pberset (needed only hadamard in addition to tuple operations)
