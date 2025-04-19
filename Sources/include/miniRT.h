@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/18 17:07:42 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:25:28 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,7 @@ void			test_proj_sim();
 
 			// Matrix tests
 
+void		test_matrices();
 void		test_cofactor();
 void		test_minor();
 void		test_submatrix();
@@ -305,18 +306,19 @@ void		test_mat_multiplication();
 void		test_mat_tuple_multiplication();
 void		test_transposition();
 void		test_identity();
-void		mat_val_init(t_matrix *mat, t_matrix *mat2, t_matrix *mat3);
+void		mat_val_init(t_matrix mat, t_matrix mat2, t_matrix mat3);
 		
 			// Transforms and ray tests
 
+void		test_ray_sphere();
+void		test_rays_positions();
+void		test_intersections();
+void		test_transforms();
 void		test_shear();
 void		test_translation();
 void		test_scaling();
 void		test_rotation();
-void		test_transforms();
 void		test_transform_handling();
 void		analog_clock();
-void		test_rays_positions();
-void		test_intersections();
 
 #endif

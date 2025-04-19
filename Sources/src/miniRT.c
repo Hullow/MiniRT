@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:14:38 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/18 18:30:52 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:25:15 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ void	my_mlx_pixel_put(t_env *env, int x, int y, int color);
 
 int main()
 {
-	t_object	sp;
 
-	sp.coord = (t_tuple) {0, 0, 0, POINT};
-	sp.diameter = 2.0;
-	sp.color = (t_tuple) {255, 0, 0, COLOR};
 
-	rt_open_window_and_draw(sp);
+	
+	test_matrices();
 	return 0;
 }
 
@@ -48,6 +45,17 @@ int	rgb_to_int(t_tuple col_tuple)
 	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
 	color += (hex_b / 16) * 16 + (hex_b % 16);
 	return (color);
+}
+
+void	test_ray_sphere()
+{
+	t_object	sp;
+
+	sp.coord = (t_tuple) {0, 0, 0, POINT};
+	sp.diameter = 2.0;
+	sp.color = (t_tuple) {255, 0, 0, COLOR};
+
+	rt_open_window_and_draw(sp);	
 }
 
 void	rt_draw(t_env *env, t_object sp)

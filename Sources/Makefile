@@ -61,7 +61,7 @@ RAYSDIR		= rt_raycast \
 UTILS		= rt_utils
 
 TESTS		= rt_test_tuple \
-		#	rt_test_matrix \
+			rt_test_matrix \
 		#	rt_test_transforms_and_rays
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
