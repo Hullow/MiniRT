@@ -58,7 +58,8 @@ TRANSF		= rt_transform \
 RAYSDIR		= rt_raycast \
 			rt_intersections \
 
-UTILS		= rt_utils
+UTILS		= rt_utils \
+			rt_free
 
 TESTS		= rt_test_tuple \
 		#	rt_test_matrix \

@@ -155,7 +155,6 @@ typedef struct s_scene
 	t_camera	cam;
 	t_light		lux;
 	t_object	*objects;
-	t_list		*intersects;
 }	t_scene;
 
 // Input handling
@@ -195,6 +194,7 @@ int			rgb_to_int(t_tuple col_tuple);
 	// General
 
 void	*handle_error(char *function, int errno_value, char *message);
+void	rt_free_scene(t_scene *scene);
 
 	// Math
 		// Basic bricks
@@ -238,7 +238,7 @@ int			matrix_equality(t_matrix a, t_matrix b);
 			// Sub, determinant, cofactor
 
 int			submatrix_errors(t_matrix mat);
-t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub);
+void		submatrix(t_matrix mat, int row, int column, t_matrix *sub);
 float		matrix_minor(t_matrix mat, int row, int column);
 float		matrix_cofactor(t_matrix mat, int row, int column);
 float		determinant(t_matrix mat);

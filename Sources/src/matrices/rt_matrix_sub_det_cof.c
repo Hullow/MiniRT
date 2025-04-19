@@ -33,7 +33,7 @@ n.b.:
 	i.e. init_matrix(mat->rows - 1, mat->columns - 1)
 	- l++: advance by one column in the new matrix after writing
 	- k++: advance by one row in the new matrix after writing a whole row */
-t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub)
+void	submatrix(t_matrix mat, int row, int column, t_matrix *sub)
 {
 	int			i;
 	int			j;
@@ -41,10 +41,7 @@ t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub)
 	int			l;
 
 	if (submatrix_errors(mat))
-	{
 		handle_error(SUBMATRIX, EINVAL, SUB_ERROR);
-		return (mat);
-	}
 	i = -1;
 	k = 0;
 	while (++i < mat.rows)
@@ -55,14 +52,13 @@ t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub)
 		{
 			if (i != row && j != column)
 			{
-				sub.m[k][l] = mat.m[i][j];
+				sub->m[k][l] = mat.m[i][j];
 				l++;
 			}
 		}
 		if (i != row)
 			k++;
 	}
-	return (sub);
 }
 
 /* computes and returns the minor (float) at i, j of an arbitrarily matrix,
@@ -70,9 +66,13 @@ using the submatrix at i,j (row, column), and computing its determinant */
 float	matrix_minor(t_matrix mat, int row, int column)
 {
 	t_matrix	empty_submatrix;
+	float		output;
 
 	empty_submatrix = init_matrix(mat.rows - 1, mat.columns - 1);
-	return (determinant(submatrix(mat, row, column, empty_submatrix)));
+	submatrix(mat, row, column, &empty_submatrix); //What if failure ?
+	output = determinant(empty_submatrix);
+	ft_free_float_tab(&(empty_submatrix).m, empty_submatrix.rows);
+	return (output);
 }
 
 /* computes and returns the cofactor of a matrix, using matrix_minor */

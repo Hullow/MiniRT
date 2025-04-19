@@ -266,6 +266,7 @@ int	main(int argc, char *argv[])
 	if (build_scene(argc, argv, &scene))
 		return (1);
 	miniRT_input_tests(scene);
+	rt_free_scene(&scene);
 	return (0);
 }
 */
