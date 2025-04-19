@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_tuple_advanced_ops.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:38:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 15:33:33 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:30:54 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,16 @@ t_tuple	cross_product(t_tuple a, t_tuple b)
 			(a.y * b.z) - (a.z * b.y),
 			(a.z * b.x) - (a.x * b.z),
 			(a.x * b.y) - (a.y * b.x)));
+}
+
+// Multiply two colors using the Hadamard product (c.x = a.x * b.x, ...)
+// Returns a tuple
+t_tuple	rt_hadamard(t_tuple color1, t_tuple color2)
+{
+	t_tuple	output;
+
+	output.x = color1.x * color2.x;
+	output.y = color1.y * color2.y;
+	output.z = color1.z * color2.z;
+	return (output);
 }

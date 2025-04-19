@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_file_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:29:45 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:07:14 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	rt_read_id(const char *file, t_scene *scene)
 	}
 	errno = 0;
 	line = get_next_line(fd);
-	while(line != NULL && *line != 0 && errno == 0)
+	while (line != NULL && *line != 0 && errno == 0)
 	{
 		rt_count_object(line, scene);
 		free(line);
@@ -55,4 +55,3 @@ int	rt_read_id(const char *file, t_scene *scene)
 	close(fd);
 	return (errno);
 }
-

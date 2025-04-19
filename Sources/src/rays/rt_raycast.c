@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:15:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/11 17:39:45 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:45:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_ray	rt_ray(t_tuple origin, t_tuple direction)
 	t_ray	ray;
 
 	if (origin.w != POINT)
-		handle_error(RT_RAY, EINVAL, "origin is not a point");
+		rt_handle_error(RT_RAY, EINVAL, "origin is not a point");
 	if (direction.w != VECTOR)
-		handle_error(RT_RAY, EINVAL, "direction is not a vector");
+		rt_handle_error(RT_RAY, EINVAL, "direction is not a vector");
 	ray.origin = origin;
 	ray.direction = direction;
 	ray.intersects = NULL;

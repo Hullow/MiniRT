@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 14:54:41 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:45:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ t_matrix	init_matrix(int rows, int columns)
 	mat.columns = columns;
 	mat.m = ft_calloc (rows, sizeof(float *));
 	if (!mat.m)
-		(handle_error(INIT_MATRIX, ENOMEM, "malloc fail"));
+		(rt_handle_error(INIT_MATRIX, ENOMEM, "malloc fail"));
 	malloc_matrix_columns(mat, rows, columns);
 	if (!mat.m)
-		handle_error(INIT_MATRIX, ENOMEM, NULL);
+		rt_handle_error(INIT_MATRIX, ENOMEM, NULL);
 	return (mat);
 }
 
@@ -53,7 +53,7 @@ t_matrix	malloc_matrix_columns(t_matrix mat, int rows, int columns)
 		if (!mat.m[i])
 		{
 			ft_free_float_tab(mat.m, (size_t)rows);
-			handle_error(MAT_MALLOC, ENOMEM, "malloc fail");
+			rt_handle_error(MAT_MALLOC, ENOMEM, "malloc fail");
 			return (mat);
 		}
 		j = 0;

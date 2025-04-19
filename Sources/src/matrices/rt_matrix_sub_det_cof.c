@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 15:13:49 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 15:17:52 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:45:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_matrix	submatrix(t_matrix mat, int row, int column, t_matrix sub)
 
 	if (submatrix_errors(mat))
 	{
-		handle_error(SUBMATRIX, EINVAL, SUB_ERROR);
+		rt_handle_error(SUBMATRIX, EINVAL, SUB_ERROR);
 		return (mat);
 	}
 	i = -1;

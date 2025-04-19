@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_init_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/13 21:26:18 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:17:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static void	rt_spacify(char *line)
 {
 	while (*line)
-    {
-        if (ft_isspace(*line))
-            *line = ' ';
-        line++;
-    }
+	{
+		if (ft_isspace(*line))
+			*line = ' ';
+		line++;
+	}
 }
 
 static void	rt_assign_values(t_scene *scene, char **values)
@@ -52,10 +52,7 @@ int	rt_init_scene(const char *file, t_scene *scene)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		handle_error("rt_init_scene", errno, (char *)file);
-		return (1);
-	}
+		return (rt_handle_error("rt_init_scene", errno, (char *)file), 1);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -66,7 +63,6 @@ int	rt_init_scene(const char *file, t_scene *scene)
 		rt_assign_values(scene, splitted);
 		ft_free_tab(splitted);
 		free(line);
-		line = NULL;
 		if (errno)
 		{
 			close(fd);
@@ -76,4 +72,3 @@ int	rt_init_scene(const char *file, t_scene *scene)
 	close(fd);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:56:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/18 16:53:33 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 17:06:27 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
 // 		new_list_item = ft_lstnew(x);
 // 		if (errno)
 // 		{
-// 			handle_error(RAY_INTERSECTS, ENOMEM, NULL);
+// 			rt_handle_error(RAY_INTERSECTS, ENOMEM, NULL);
 // 			// free list
 // 			return ;	
 // 		}
@@ -95,7 +95,7 @@ t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
 // - Evaluates a ray's intersections with objects and returns the ray's hit
 // (the intersection with the lowest "t-value")
 // - no malloc
-// - must be called with a NULL value for "void *hit_object"
+// - must be called with a 0 value for "float t_min"
 // 
 // Returns:
 // where the ray hits (t_intersect), with values:
@@ -103,9 +103,8 @@ t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
 // - ray: set to NULL (because we know which ray it is)
 // - x_distances[2]: t_min in [0], 0 in [1]
 // - x_count: 1
-t_intersect	rt_compute_ray_hit(t_ray ray)
+t_intersect	rt_compute_ray_hit(t_ray ray, float t_min)
 {
-	float		t_min;
 	float		t_iter_0;
 	float		t_iter_1;
 	t_object	hit_object;
@@ -132,7 +131,6 @@ t_intersect	rt_compute_ray_hit(t_ray ray)
 	}
 	return ((t_intersect){hit_object, 0.0, {t_min, 0.0}, 1});
 }
-
 
 // Computes the intersections of a ray on a sphere.
 // Returns a float[2] with the two distances values from the origin of the ray

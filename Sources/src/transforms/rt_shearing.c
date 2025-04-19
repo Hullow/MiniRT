@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 14:17:23 by francis           #+#    #+#             */
-/*   Updated: 2025/03/24 16:49:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:33:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,3 @@ t_matrix	rt_shearing(float *shear_factors)
 	shear.m[2][1] = shear_factors[5];
 	return (shear);
 }
-

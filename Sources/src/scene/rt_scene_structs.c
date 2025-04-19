@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_structs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:27:15 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/24 15:37:19 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:20:21 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	rt_count_object(const char *line, t_scene *scene)
 		line++;
 	if (rt_id_format(*line, *(line + 1), *(line + 2)))
 	{
-		scene->n_A += *line == 'A' && rt_id_format(*line, *(line + 1), 0);
-		scene->n_C += *line == 'C' && rt_id_format(*line, *(line + 1), 0);
-		scene->n_L += *line == 'L' && rt_id_format(*line, *(line + 1), 0);
+		scene->n_a += *line == 'A' && rt_id_format(*line, *(line + 1), 0);
+		scene->n_cam += *line == 'C' && rt_id_format(*line, *(line + 1), 0);
+		scene->n_l += *line == 'L' && rt_id_format(*line, *(line + 1), 0);
 		scene->n_sp += *line == 's' && \
 			rt_id_format(*line, *(line + 1), *(line + 2));
 		scene->n_pl += *line == 'p' && \
@@ -43,12 +43,7 @@ int	rt_count_object(const char *line, t_scene *scene)
 			&& rt_id_format(*line, *(line + 1), *(line + 2));
 	}
 	else if (*line)
-	{
-		errno = EINVAL;
-		ft_putstr_fd("Error\n", STDERR_FILENO);
-		perror(line);
-		return (1);
-	}
+		return (rt_handle_error(RT_COUNT_OBJECT, EINVAL, (char *)line), 1);
 	return (0);
 }
 
@@ -59,7 +54,7 @@ int	rt_count_object(const char *line, t_scene *scene)
 int	rt_malloc_objects(t_scene *scene)
 {
 	scene->n_obj = scene->n_sp + scene->n_cy + scene-> n_pl;
-	if (scene->n_A != 1 || scene->n_C != 1 || scene->n_L != 1)
+	if (scene->n_a != 1 || scene->n_cam != 1 || scene->n_l != 1)
 	{
 		errno = ERANGE;
 		perror("Error\nneed exactly 1 A && 1 C && 1 L");
@@ -73,4 +68,3 @@ int	rt_malloc_objects(t_scene *scene)
 	}
 	return (0);
 }
-

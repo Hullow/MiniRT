@@ -18,13 +18,13 @@ INCLUDEDIR	= include/
 LIBFTDIR	= $(INCLUDEDIR)libft/
 MLXDIR		= $(INCLUDEDIR)mlx/
 
-FILEDIR		= file_check/
-SCENEDIR	= scene/
 MATRIXDIR	= matrices/
-TUPLEDIR	= tuples/
-TRANSFDIR	= transforms/
-UTILSDIR	= utils/
+RAYSDIR		= rays/
+SCENEDIR	= scene/
 TESTDIR		= tests/
+TRANSFDIR	= transforms/
+TUPLEDIR	= tuples/
+UTILSDIR	= utils/
 
 # Libs
 LIBFT		= $(LIBFTDIR)libft.a
@@ -37,11 +37,12 @@ LFTHEADER	= $(INCLUDEDIR)libft/header/
 # Source files
 MAIN		= miniRT
 
-FILECHECK	= rt_file_check
-
-SCENE		= rt_init_scene \
-			rt_objects \
-			rt_scene_structs
+SCENE		= rt_file_check \
+			rt_init_scene \
+			rt_scene_structs \
+			rt_validate_input \
+			rt_assign_objects \
+			rt_assign_view_elements \
 
 MATRIX		= rt_matrix_basic_ops \
 			rt_matrix_general \
@@ -50,37 +51,39 @@ MATRIX		= rt_matrix_basic_ops \
 TUPLE		= rt_tuple_basic_ops \
 			rt_tuple_general \
 			rt_tuple_advanced_ops \
-			rt_color_multiply
 
 TRANSF		= rt_transform \
 			rt_shearing
 
-RAYSDIR		= rt_raycast \
-			rt_intersections \
+RAYS		= rt_raycast \
+			# rt_intersections \
 
-UTILS		= rt_utils
+UTILS		= rt_utils \
+			rt_mlx
 
 TESTS		= rt_test_tuple \
 			rt_test_matrix \
-		#	rt_test_transforms_and_rays
+			rt_test_sphere_draw \
+		#	rt_test_transforms_and_rays \
+		#	rt_test_input.c \
+		#	rt_test_analog_clock.c
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
-			$(addprefix $(SRCDIR)$(FILEDIR), $(addsuffix .c, $(FILECHECK))) \
-			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
+			$(addprefix $(SRCDIR)$(RAYSDIR), $(addsuffix .c, $(RAYS))) \
 			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS))) \
-			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
+			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
-			$(addprefix $(OBJDIR)$(FILEDIR), $(addsuffix .o, $(FILECHECK))) \
-			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
+			$(addprefix $(OBJDIR)$(RAYSDIR), $(addsuffix .o, $(RAYS))) \
+			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS))) \
-			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
+			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
 
 
@@ -106,12 +109,12 @@ $(MLX):
 $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
 	mkdir -p $(OBJDIR)
-	mkdir -p $(OBJDIR)$(FILEDIR)
 	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(TESTDIR)
-	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
+	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(UTILSDIR)
 	@echo "Compiling $(NAME)..."
 

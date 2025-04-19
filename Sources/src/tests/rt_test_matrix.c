@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:18:36 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 15:25:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 17:16:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 
 // add .c to the end of the file and compile with 
 // `gcc -Wall -Wextra -Werror *.c ../utils/rt_utils.c ../tuples/*tuple*.c -lm` to run the tests
-
-// void	test_cofactor();
-// void	test_minor();
-// void	test_submatrix();
-// void	test_matrix_inversion();
-// void	test_determinant_2x2();
-// void	test_determinant_3x3();
-// void	test_determinant_4x4();
-// void	test_tuple_to_mat_conversion_and_diff_size_mat_multiplication();
-// void	test_mat_multiplication();
-// void	test_mat_tuple_multiplication();
-// void	test_transposition();
-// void	test_identity();
-// void	mat_val_init(t_matrix mat, t_matrix mat2, t_matrix mat3);
 
 void	test_matrices()
 {
@@ -41,7 +27,7 @@ void	test_matrices()
 	// test_cofactor();
 	// test_minor();
 	// test_submatrix();
-	// test_tuple_to_mat_conversion_and_diff_size_mat_multiplication();
+	// test_tuple_to_mat_conv_and_diff_size_mat_mul();
 	// test_transposition();
 }
 
@@ -287,7 +273,7 @@ void	test_submatrix()
 	submatrix(sub1, 0, 0, init_matrix(sub2.rows - 1, sub3.columns - 1));
 }
 
-void	test_tuple_to_mat_conversion_and_diff_size_mat_multiplication()
+void	test_tuple_to_mat_conv_and_diff_size_mat_mul()
 {
 	t_matrix mat = convert_tuple_to_matrix(rt_point(1, 2, 3));
 	print_matrix(mat);

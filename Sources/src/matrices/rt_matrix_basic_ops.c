@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:55:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/11 12:13:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/19 15:45:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_matrix	matrix_inversion(t_matrix mat)
 	det = determinant(mat);
 	if (is_equal_float(det, 0))
 	{
-		handle_error(MAT_INV, EINVAL, "matrix not invertible");
+		rt_handle_error(MAT_INV, EINVAL, "matrix not invertible");
 		inv.rows = 0;
 		return (inv);
 	}
