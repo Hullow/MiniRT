@@ -253,7 +253,7 @@ int				matrix_equality(t_matrix a, t_matrix b);
 			// Sub, determinant, cofactor
 
 int				submatrix_errors(t_matrix mat);
-void			submatrix(t_matrix mat, int row, int column, t_matrix *sub);
+t_matrix		submatrix(t_matrix mat, int row, int column, t_matrix sub);
 float			matrix_minor(t_matrix mat, int row, int column);
 float			matrix_cofactor(t_matrix mat, int row, int column);
 float			determinant(t_matrix mat);

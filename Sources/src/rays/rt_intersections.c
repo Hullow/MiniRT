@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
+/*
 // Computes the collision distance between the ray and the plane
 // chapter 9
 t_intersect	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect x)
@@ -29,12 +29,12 @@ t_intersect	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect x)
 	(void)cylinder;
 	return (x);
 }
-
+*/
 // Computes the two collision distances between the ray and the sphere
 // Uses a quadratic equation discriminant = b²-4ac
 // to transform the sphere beform the collision calculus, 
 // the invert of the transformation is applied to the ray
-t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
+/*t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
 {
 	t_tuple	sphere_to_ray;
 	float	a;
@@ -89,7 +89,7 @@ t_intersect	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect x)
 // 		object++;
 // 	}
 // 	return (x);
-}
+}*/
 
 
 // - Evaluates a ray's intersections with objects and returns the ray's hit

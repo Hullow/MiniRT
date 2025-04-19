@@ -41,8 +41,8 @@ MATRIX		= rt_matrix_basic_ops \
 			rt_matrix_general \
 			rt_matrix_sub_det_cof
 
-RAYS		= rt_raycast \
-			# rt_intersections \
+RAYS		= rt_raycast
+# rt_intersections
 
 SCENE		= rt_file_check \
 			rt_init_scene \
@@ -53,32 +53,22 @@ SCENE		= rt_file_check \
 
 TESTS		= rt_test_tuple \
 			rt_test_matrix \
-			rt_test_ray_sphere \
-		#	rt_test_transforms_and_rays \
-		#	rt_test_input.c \
-		#	rt_test_analog_clock.c
+			rt_test_ray_sphere
+#	rt_test_transforms_and_rays \
+#	rt_test_input.c \
+#	rt_test_analog_clock.c
 
 TRANSF		= rt_transform \
-			rt_shearing
+			rt_rotation \
+			rt_handle_transform
 
 TUPLE		= rt_tuple_basic_ops \
 			rt_tuple_general \
-			rt_tuple_advanced_ops \
-			rt_color_multiply
-
-TRANSF		= rt_transform \
-			rt_shearing
-
-RAYSDIR		= rt_raycast \
-			rt_intersections \
+			rt_tuple_advanced_ops
 
 UTILS		= rt_utils \
 			rt_mlx \
 			rt_free
-
-TESTS		= rt_test_tuple \
-		#	rt_test_matrix \
-		#	rt_test_transforms_and_rays
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
