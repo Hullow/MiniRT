@@ -128,13 +128,14 @@ typedef struct s_light
 }	t_light;
 
 typedef struct s_object {
-	t_objtype	type;
-	t_matrix	transform;
-	t_tuple		color;
-	t_tuple		coord;
-	t_tuple		norm;
-	float		diameter;
-	float		height;
+    t_objtype	type;
+    t_matrix	transform;
+	t_matrix	inverse;
+    t_tuple		color;
+    t_tuple		coord;
+    t_tuple		norm;
+    float		diameter;
+    float		height;
 }	t_object;
 
 typedef struct s_intersect
@@ -158,7 +159,6 @@ typedef struct s_scene
 	t_camera	cam;
 	t_light		lux;
 	t_object	*objects;
-	t_list		*intersects;
 }	t_scene;
 
 // Input handling
@@ -214,6 +214,7 @@ int				rgb_to_int(t_tuple col_tuple);
 void			my_mlx_pixel_put(t_env *env, int x, int y, int color);
 int				key_handler(int keycode, t_env *env);
 int				window_closed(t_env *env);
+void			rt_free_scene(t_scene *scene);
 
 	// Math
 		// Tuples and tuple operations
@@ -253,24 +254,20 @@ int				matrix_equality(t_matrix a, t_matrix b);
 			// Sub, determinant, cofactor
 
 int				submatrix_errors(t_matrix mat);
-t_matrix		submatrix(t_matrix mat, int row, int column, t_matrix sub);
+void			submatrix(t_matrix mat, int row, int column, t_matrix *sub);
 float			matrix_minor(t_matrix mat, int row, int column);
 float			matrix_cofactor(t_matrix mat, int row, int column);
 float			determinant(t_matrix mat);
 
 		// Transformations
 
-t_matrix		rt_translation(t_tuple t);
-t_matrix		rt_scaling(t_tuple t);
-t_matrix		rt_shear(float *shear_factors);
-t_matrix		rt_rotation_x(float angle);
-t_matrix		rt_rotation_y(float angle);
-t_matrix		rt_rotation_z(float angle);
-
-		// Objects
-
-t_object		rt_init_sphere(t_tuple coord, float diam, t_tuple color);
-
+t_matrix	rt_translation(t_tuple t);
+t_matrix	rt_scaling(t_tuple t);
+t_matrix	rt_shear(float *shear_factors);
+t_matrix	rt_rotation(t_tuple normal);
+t_matrix	rt_rotation_x(float angle);
+t_matrix	rt_rotation_y(float angle);
+t_matrix	rt_rotation_z(float angle);
 
 		// Ray - Objects intersections
 
