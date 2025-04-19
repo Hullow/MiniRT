@@ -103,6 +103,7 @@ static int	rt_valid_orient(char **orient)
 	return (1);
 }
 
+//Assigns the values for the point light
 void	rt_assign_light(t_scene *scene, char **needle)
 {
 	char	**coord;
@@ -129,6 +130,7 @@ void	rt_assign_light(t_scene *scene, char **needle)
 	ft_free_tab(color);
 }
 
+//Assigns values for the ambiant light
 void	rt_assign_ambient(t_scene *scene, char **needle)
 {
 	char	**color;
@@ -150,6 +152,7 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 	ft_free_tab(color);
 }
 
+//Assigns the values for the camera
 void	rt_assign_camera(t_scene *scene, char **needle)
 {
 	char	**coord;
@@ -176,6 +179,7 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	ft_free_tab(orient);
 }
 
+//Assigns the values for the sphere object
 void	rt_assign_sphere(t_object *sphere, char **needle)
 {
 	char	**coord;
@@ -198,6 +202,7 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 	ft_free_tab(color);
 }
 
+//Assigns the values for the plane object
 void	rt_assign_plane(t_object *plane, char **needle)
 {
 	char	**coord;
@@ -224,6 +229,7 @@ void	rt_assign_plane(t_object *plane, char **needle)
 	ft_free_tab(color);
 }
 
+//Assigns the values for the cylinder object
 void	rt_assign_cylinder(t_object *cylinder, char **needle)
 {
 	char	**coord;
@@ -268,13 +274,36 @@ t_object	rt_init_sphere(t_tuple coord, float diam, t_tuple color)
 	return (sp);
 }
 
+static t_matrix	transform(t_object object)
+{
+	t_matrix	transform;
+
+	transform = rt_translation( \
+		rt_vector(object.coord.x, object.coord.y, object.coord.z));
+	if (object.type == SPHERE)
+	{
+		transform = matrix_multiplication(transform, rt_scaling( \
+			rt_vector(object.diameter, object.diameter, object.diameter)));
+	}
+	if (object.type == CYLINDER)
+	{
+		transform = matrix_multiplication(transform, rt_scaling( \
+			rt_vector(object.diameter, object.height, object.diameter)));
+	}
+	if (object.type == PLANE || object.type == CYLINDER)
+		transform = matrix_multiplication(transform, rt_rotation(object.norm));
+	return (transform);
+}
+
+//Detects the type of object and calls the corresponding constructor
 void	rt_assign_object(t_object *object, char **needle, char type)
 {
-	object->transform = identity_matrix(4, 4);
 	if (type == 's')
 		rt_assign_sphere(object, needle);
 	if (type == 'c')
 		rt_assign_cylinder(object, needle);
 	if (type == 'p')
 		rt_assign_plane(object, needle);
+	object->transform = transform(*object);
+	object->inverse = matrix_inversion(object->transform);
 }

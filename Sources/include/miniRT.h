@@ -126,6 +126,7 @@ typedef struct s_light
 typedef struct s_object {
     t_objtype	type;
     t_matrix	transform;
+	t_matrix	inverse;
     t_tuple		color;
     t_tuple		coord;
     t_tuple		norm;
@@ -251,6 +252,7 @@ t_tuple		rt_hadamard(t_tuple color1, t_tuple color2);
 t_matrix	rt_translation(t_tuple t);
 t_matrix	rt_scaling(t_tuple t);
 t_matrix	rt_shear(float *shear_factors);
+t_matrix	rt_rotation(t_tuple normal);
 t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);

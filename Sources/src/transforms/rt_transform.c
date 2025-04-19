@@ -36,47 +36,37 @@ t_matrix	rt_scaling(t_tuple t)
 	return (scaling);
 }
 
-// Init a rotation matrix of angle around x
-t_matrix	rt_rotation_x(float angle)
+// Init a rotation matrix around the 3 axis
+// Takes in the object's normal vector
+t_matrix	rt_rotation(t_tuple norm)
 {
-	t_matrix	rotation;
-	float		r;
+	t_matrix	rotate;
+	float		alpha;
+	float		beta;
+	float		gamma;
 
-	r = (angle * M_PI) / 180;
-	rotation = identity_matrix(4, 4);
-	rotation.m[1][1] = cosf(r);
-	rotation.m[1][2] = -sinf(r);
-	rotation.m[2][1] = sinf(r);
-	rotation.m[2][2] = cosf(r);
-	return (rotation);
+	alpha = atan2f(norm.x, norm.z);
+	beta = atan2f(-norm.z, sqrtf(norm.x * norm.x + norm.y * norm.y));
+	gamma = atan2f(norm.y, norm.x);
+	rotate = rt_rotation_z(alpha);
+	rotate = matrix_multiplication(rotate, rt_rotation_y(beta));
+	rotate = matrix_multiplication(rotate, rt_rotation_x(gamma));
+	return (rotate);
 }
 
-// Init a rotation matrix of angle around y
-t_matrix	rt_rotation_y(float angle)
+/* Takes in an array of 6 floats shear_factors, which contains, in order:
+	x_to_y, x_to_z, y_to_x,	y_to_z, z_to_x, z_to_y
+*/
+t_matrix	rt_shearing(float *shear_factors)
 {
-	t_matrix	rotation;
-	float		r;
+	t_matrix	shear;
 
-	r = (angle * M_PI) / 180;
-	rotation = identity_matrix(4, 4);
-	rotation.m[0][0] = cosf(r);
-	rotation.m[2][0] = -sinf(r);
-	rotation.m[0][2] = sinf(r);
-	rotation.m[2][2] = cosf(r);
-	return (rotation);
-}
-
-// Init a rotation matrix of angle around z
-t_matrix	rt_rotation_z(float angle)
-{
-	t_matrix	rotation;
-	float		r;
-
-	r = (angle * M_PI) / 180;
-	rotation = identity_matrix(4, 4);
-	rotation.m[0][0] = cosf(r);
-	rotation.m[0][1] = -sinf(r);
-	rotation.m[1][0] = sinf(r);
-	rotation.m[1][1] = cosf(r);
-	return (rotation);
+	shear = identity_matrix(4, 4);
+	shear.m[0][1] = shear_factors[0];
+	shear.m[0][2] = shear_factors[1];
+	shear.m[1][0] = shear_factors[2];
+	shear.m[1][2] = shear_factors[3];
+	shear.m[2][0] = shear_factors[4];
+	shear.m[2][1] = shear_factors[5];
+	return (shear);
 }
