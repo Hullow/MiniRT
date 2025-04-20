@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 19:07:39 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/20 20:45:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ void			test_proj_sim(void);
 
 	// Matrix tests
 
-void			test_matrices();
+void			test_matrices(void);
 void			test_cofactor(void);
 void			test_minor(void);
 void			test_submatrix(void);

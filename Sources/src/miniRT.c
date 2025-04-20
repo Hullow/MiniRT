@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:14:38 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 19:00:04 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/20 20:11:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int main()
 {
-	// test_matrices();
-	test_transforms_and_rays();
+	test_matrices();
+	//test_transforms_and_rays();
 	// test_ray_sphere();
 	return 0;
 }
