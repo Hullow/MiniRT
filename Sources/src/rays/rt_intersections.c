@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:56:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/21 19:06:49 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:26:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,21 +109,16 @@ t_intersect	*rt_ray_sphere_x(t_ray *ray, t_object *sphere, t_intersect *x)
 // - ray: set to NULL (because we know which ray it is)
 // - t[2]: t_min in [0], 0 in [1]
 // - t_count: 1
-t_hit	*rt_find_ray_hit(t_ray *ray, float t_min, t_hit *hit)
+t_intersect *rt_find_ray_hit(t_ray *ray, float t_min)
 {
 	float		t_iter_0;
 	float		t_iter_1;
-	t_object	*hit_object;
-
+	t_intersect	*hit_intersect;
 
 	if (ray->intersects)
 		t_min = ((t_intersect *) ray->intersects->content)->t[0];
 	else
-	{
-		hit->obj = NULL;
-		hit->t = 0;
-		return (hit);
-	}
+		return (NULL);
 	while (ray->intersects)
 	{
 		t_iter_0 = ((t_intersect *) ray->intersects->content)->t[0];
@@ -131,18 +126,20 @@ t_hit	*rt_find_ray_hit(t_ray *ray, float t_min, t_hit *hit)
 		if (t_iter_0 > 0 && t_iter_0 < t_min)
 		{
 			t_min = t_iter_0;
-			hit_object = (t_object *)((t_intersect *)ray->intersects->content)->object;
+			((t_intersect *) ray->intersects->content)->t[1] = 0;
+			((t_intersect *) ray->intersects->content)->t_count = 1;
+			hit_intersect = (t_intersect *)ray->intersects;
 		}
 		if (t_iter_1 > 0 && t_iter_1 < t_min)
 		{
 			t_min = t_iter_1;
-			hit_object = (t_object *)((t_intersect *)ray->intersects->content)->object;
+			((t_intersect *) ray->intersects->content)->t[0] = 0;
+			((t_intersect *) ray->intersects->content)->t_count = 1;
+			hit_intersect = (t_intersect *)ray->intersects;
 		}
 		ray->intersects = ray->intersects->next;
 	}
-	hit->t = t_min;
-	hit->obj = hit_object;
-	return (hit);
+	return (hit_intersect);
 }
 
 // Computes the intersections of a ray on a sphere.

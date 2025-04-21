@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/21 19:07:57 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:26:46 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ t_intersect		*rt_ray_object_x(t_ray *ray, t_object *object);
 t_intersect		*rt_ray_sphere_x(t_ray *ray, t_object *sphere, t_intersect *x);
 t_intersect		*rt_ray_plane_x(t_ray *ray, t_object *plane, t_intersect *x);
 t_intersect		*rt_ray_cylinder_x(t_ray *ray, t_object *cylinder, t_intersect *x);
-t_hit			*rt_find_ray_hit(t_ray *ray, float t_min, t_hit *hit);
+t_intersect		*rt_find_ray_hit(t_ray *ray, float t_min);
 t_ray			rt_transform_ray(t_ray *initial_ray, t_matrix trans);
 
 		// Light and shade

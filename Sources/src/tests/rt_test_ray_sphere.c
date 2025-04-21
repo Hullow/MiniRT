@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:58 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/21 19:10:59 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:27:26 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,10 @@ void	test_ray_sphere(void)
 int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp, int h, int w)
 {
 	int		ret = 0;
-	t_hit	*hit;
 
-	hit = ft_calloc(1, sizeof(t_hit));
-	if (errno)
-		return (rt_handle_error(NULL, ENOMEM, NULL), -1);
 	rt_ray_object_x(ray, sp);
-	hit->obj = sp;
-	hit = rt_find_ray_hit(ray, 0, hit);
+	t_intersect *hit_intersect = NULL;
+	hit_intersect = rt_find_ray_hit(ray, 0);
 	
 	
 	// if (hit->obj == sp)
@@ -57,17 +53,16 @@ int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp, int h, int w)
 	// else
 	// 	ft_putstr_fd("rt_check_if_ray_hits_sphere: hit->obj is unknown\n", 2);
 	
-	(void)h;
-	(void)w;
-	if (hit->obj) // h == 100 && w == 100 && 
+
+	if (h == 100 && w == 100 && hit_intersect)
 	{
-		printf("rt_check_if_ray_hits_sphere: address of hit object: %p\n", hit->obj);
-		printf("hit->obj->color.x: %f\n", hit->obj->color.x);
+		printf("rt_check_if_ray_hits_sphere: address of hit object: %p\n", hit_intersect->object);
+		printf("hit->obj->color.x: %f\n", hit_intersect->object->color.x);
 	}
 	
 
 	
-	if (hit->obj)
+	if (hit_intersect->object)
 		ret = 1;
 	else
 		ret = 0;
