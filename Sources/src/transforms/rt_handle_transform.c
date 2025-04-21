@@ -6,26 +6,26 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:49:52 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/11 15:28:33 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/21 18:10:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-// Applies a transformation to a ray, returning a new malloc-ed ray
+// Applies a transformation to a ray, returning a new (non malloc-ed) ray
 // Input:
 // 	- a pointer to the ray to transform (t_ray *)
 //	- a pointer to the transformation matrix to apply
 //
 // Returns:
 //	- a pointer to the transformed ray (t_ray *)
-t_ray	rt_transform_ray(t_ray initial_ray, t_matrix trans)
+t_ray	rt_transform_ray(t_ray *initial_ray, t_matrix trans)
 {
 	t_tuple		new_origin;
 	t_tuple		new_direction;
 
-	new_origin = matrix_tuple_multiplication(trans, initial_ray.origin);
-	new_direction = matrix_tuple_multiplication(trans, initial_ray.direction);
+	new_origin = matrix_tuple_multiplication(trans, initial_ray->origin);
+	new_direction = matrix_tuple_multiplication(trans, initial_ray->direction);
 	return (rt_ray(new_origin, new_direction));
 }
 

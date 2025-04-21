@@ -41,8 +41,8 @@ MATRIX		= rt_matrix_basic_ops \
 			rt_matrix_general \
 			rt_matrix_sub_det_cof
 
-RAYS		= rt_raycast
-# 			rt_intersections
+RAYS		= rt_raycast \
+			rt_intersections
 
 SCENE		= rt_file_check \
 			rt_init_scene \
@@ -53,7 +53,7 @@ SCENE		= rt_file_check \
 
 TESTS		= rt_test_tuple \
 			rt_test_matrix \
-#			rt_test_ray_sphere \
+			rt_test_ray_sphere \
 #			rt_test_transforms_and_rays \
 #			rt_test_input.c \
 #			rt_test_analog_clock.c

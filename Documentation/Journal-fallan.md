@@ -166,3 +166,12 @@ return result;
 
 - To do: fix `test_transforms_and_rays()`, run `test_matrix()` when pberset finishes, then
 make `test_ray_sphere()` finally work
+
+# 21/4/25
+- MLX env and drawing function: cut into pieces for clarity
+- Worked on drawing a disk (end of Ch.5), alone, then with pberset, but it draws
+a square or a cross (??!!) rather than a disk, and loses the address of the sphere
+for some reason.
+- Commit made in this stage, but decision made to just return a t-value, then compute which
+object is intersected.
+=> or return a modified t_intersect struct with only one t-value, or zero t-values.

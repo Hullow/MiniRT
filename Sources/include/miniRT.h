@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/20 20:45:15 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/21 19:07:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # define COLOR 2.0
 
 # define EPSILON 0.00005
+
+#define A				eq_par[0]
+#define B				eq_par[1]
+#define DISCRIMINANT	eq_par[2]
 
 /* function names for error prints */
 # define UNSPECIFIED 			" – unspecified function\n"
@@ -140,11 +144,16 @@ typedef struct s_object {
 
 typedef struct s_intersect
 {
-	t_object	object;
-	t_ray		ray;
-	float		x_distances[2];
-	int			x_count;
+	t_object	*object;
+	t_ray		*ray;
+	float		t[2];
+	int			t_count;
 }	t_intersect;
+
+typedef struct s_hit {
+	float		t;
+	t_object	*obj;
+} t_hit;
 
 typedef struct s_scene
 {
@@ -196,8 +205,7 @@ typedef struct s_env {
 	t_list	*point_list;
 }				t_env;
 
-void			rt_open_window_and_draw(t_object sp);
-void			rt_draw(t_env *env, t_object sp);
+void			rt_draw(t_env *env, t_object *sp);
 int				rgb_to_int(t_tuple col_tuple);
 
 // Utils
@@ -277,12 +285,12 @@ t_object		rt_init_sphere(t_tuple coord, float diam, t_tuple color);
 
 t_ray			rt_ray(t_tuple origin, t_tuple direction);
 t_tuple			rt_position(t_ray ray, float d);
-t_intersect		rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x);
-t_intersect		rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x);
-t_intersect		rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x);
-t_intersect		rt_ray_object_x(t_ray ray, t_object object);
-void			rt_compute_intersect(t_scene *scene);
-t_ray			rt_transform_ray(t_ray initial_ray, t_matrix trans);
+t_intersect		*rt_ray_object_x(t_ray *ray, t_object *object);
+t_intersect		*rt_ray_sphere_x(t_ray *ray, t_object *sphere, t_intersect *x);
+t_intersect		*rt_ray_plane_x(t_ray *ray, t_object *plane, t_intersect *x);
+t_intersect		*rt_ray_cylinder_x(t_ray *ray, t_object *cylinder, t_intersect *x);
+t_hit			*rt_find_ray_hit(t_ray *ray, float t_min, t_hit *hit);
+t_ray			rt_transform_ray(t_ray *initial_ray, t_matrix trans);
 
 		// Light and shade
 

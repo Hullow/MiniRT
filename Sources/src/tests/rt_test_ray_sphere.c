@@ -1,70 +1,144 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_test_sphere_draw.c                              :+:      :+:    :+:   */
+/*   rt_test_ray_sphere.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:58 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 17:28:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:10:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 void	rt_open_window_and_draw(t_object sp);
-void	rt_draw(t_env *env, t_object sp);
+void	rt_run_window(t_env *env);
+void	rt_set_mlx_env(t_env *env);
+void	rt_draw(t_env *env, t_object *sp);
 void	test_ray_sphere(void);
 
 void	test_ray_sphere(void)
 {
+	t_env		env;
 	t_object	sp;
 
+	sp.type = SPHERE;
 	sp.coord = (t_tuple) {0, 0, 0, POINT};
-	sp.diameter = 2.0;
-	sp.color = (t_tuple) {255, 0, 0, COLOR};
+	sp.diameter = 1.0;
+	sp.color = (t_tuple) {1, 0, 0, COLOR};
+	sp.transform = identity_matrix(4, 4);
+	sp.inverse = matrix_inversion(sp.transform);
+	
+	dprintf(2, "sphere address: %p\n", &sp);
+	
+	rt_set_mlx_env(&env);
+	
+	rt_draw(&env, &sp);
 
-	rt_open_window_and_draw(sp);	
+	rt_run_window(&env);
 }
 
-void	rt_draw(t_env *env, t_object sp)
+int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp, int h, int w)
 {
-	int	h;
-	int	v;
+	int		ret = 0;
+	t_hit	*hit;
+
+	hit = ft_calloc(1, sizeof(t_hit));
+	if (errno)
+		return (rt_handle_error(NULL, ENOMEM, NULL), -1);
+	rt_ray_object_x(ray, sp);
+	hit->obj = sp;
+	hit = rt_find_ray_hit(ray, 0, hit);
 	
-	h = 0;
-	while (h < WINDOW_HEIGHT)
+	
+	// if (hit->obj == sp)
+	// 	ft_putstr_fd("rt_check_if_ray_hits_sphere: hit->obj is sp\n", 2);
+	// else
+	// 	ft_putstr_fd("rt_check_if_ray_hits_sphere: hit->obj is unknown\n", 2);
+	
+	(void)h;
+	(void)w;
+	if (hit->obj) // h == 100 && w == 100 && 
 	{
-		v = 0;
-		while (v < WINDOW_WIDTH)
+		printf("rt_check_if_ray_hits_sphere: address of hit object: %p\n", hit->obj);
+		printf("hit->obj->color.x: %f\n", hit->obj->color.x);
+	}
+	
+
+	
+	if (hit->obj)
+		ret = 1;
+	else
+		ret = 0;
+	free(ray->intersects);
+	ray->intersects = NULL;
+	return ret;
+}
+
+/* defines the ray from the camera to a given pixel of the wall
+	first converts the coordinates to miniRT coordinates (x_mrt, y_mrt, 1) */
+t_ray	*rt_define_ray_to_wall(t_ray *ray, int x_mlx, int y_mlx)
+{
+	int		x_mrt;
+	int		y_mrt;
+
+	x_mrt = (x_mlx / 100) - ((WINDOW_WIDTH / 200));
+	y_mrt = (-y_mlx / 100) + (WINDOW_HEIGHT / 200);
+	ray->direction = subtract_tuple(rt_point(x_mrt, y_mrt, 2), ray->origin);
+	return (ray);
+}
+
+void	rt_draw(t_env *env, t_object *sp)
+{
+	t_ray	ray;
+	int		h;
+	int		w;
+	
+	printf("rt_draw: sphere address: %p\n", sp);
+	printf("rt_draw: hit->obj->color.x: %f\n", sp->color.x);
+	h = 0;
+	ray = rt_ray(rt_point(0, 0, -2), rt_vector(0, 0, 0));
+	while (h < WINDOW_HEIGHT) // 60)
+	{
+		w = 0;
+		while (w < WINDOW_WIDTH) // 80)
 		{
-			// if ray hits sphere, then put red pixel (otherwise nothing)
-			
-			my_mlx_pixel_put(env, v, WINDOW_HEIGHT - h, rgb_to_int(sp.color));
-			v++;
+			rt_define_ray_to_wall(&ray, w, h);
+			if (rt_check_if_ray_hits_sphere(&ray, sp, h, w)) // if ray hits sphere, then put red pixel (otherwise nothing)
+			{
+				// printf("(%d, %d): red\n", h, w);
+				my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, rgb_to_int(sp->color));
+			}
+			else
+			{
+				// printf("(%d, %d): black\n", h, w);				
+				my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, 0);
+			}
+			w++;
 		}
 		h++;
 	}
 }
 
-void	rt_open_window_and_draw(t_object sp)
+void	rt_set_mlx_env(t_env *env)
 {
-	t_env	env;
-
-	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
-	env.img = mlx_new_image(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	env.addr = mlx_get_data_addr(env.img, &env.bits_per_pixel, \
-		&env.line_length, &env.endian);
-
-	rt_draw(&env, sp);
-	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
-	mlx_hook(env.win, 2, 1L << 0, key_handler, &env);
-	mlx_hook(env.win, 17, 0, window_closed, &env);
-	mlx_loop(env.mlx);
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
+	env->img = mlx_new_image(env->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	env->addr = mlx_get_data_addr(env->img, &env->bits_per_pixel, \
+		&env->line_length, &env->endian);
 }
 
-/* 
+void	rt_run_window(t_env *env)
+{
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	mlx_hook(env->win, 2, 1L << 0, key_handler, env);
+	mlx_hook(env->win, 17, 0, window_closed, env);
+	mlx_loop(env->mlx);
+}
+
+/*
 // creates a new mlx window with
 // hooks for key presses, launching
 // key_handler, and for mouse clicks that
