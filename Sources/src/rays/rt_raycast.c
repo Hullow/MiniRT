@@ -39,3 +39,21 @@ t_tuple	rt_position(t_ray ray, float d)
 	point = add_tuple(ray.origin, multiply_tuple_by_scalar(ray.direction, d));
 	return (point);
 }
+
+// Computes the normal at the hit point on an object
+// Tuple of type vector
+t_tuple	rt_normal_at(t_object object, t_tuple point)
+{
+	t_tuple		local_point;
+	t_tuple		local_normal;
+	t_matrix	transpose_normal;
+	t_tuple		world_normal;
+
+	local_point = matrix_tuple_multiplication(object.inverse, point);
+	local_normal = (t_tuple)local_normal_at(object, local_point); // missing function. coded at sphere chapter
+	transpose_normal = matrix_transposition(convert_tuple_to_matrix( \
+		matrix_tuple_multiplication(object.inverse, local_normal)));
+		print_matrix(transpose_normal);
+	world_normal = rt_vector(transpose_normal.m[0][0], transpose_normal.m[1][0], transpose_normal.m[2][0]);
+	return (normalize(world_normal));
+}

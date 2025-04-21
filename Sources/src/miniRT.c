@@ -14,7 +14,8 @@
 
 int main()
 {
-	test_matrices();
+	test_shape();
+	// test_matrices();
 	//test_transforms_and_rays();
 	// test_ray_sphere();
 	return 0;

@@ -14,20 +14,35 @@
 
 // Computes the collision distance between the ray and the plane
 // chapter 9
-t_intersect	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect x)
+void	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x)
 {
-	(void)ray;
-	(void)plane;
-	return (x);
+	t_tuple	local_intersect;
+	float	t;
+
+	if (abs(ray.direction.y) < EPSILON) // edge case: ray paralel to plane normal
+	{
+		x->x_count = 0;
+		x->ray = ray;
+		x->object = plane;
+		return ;
+	}
+	t = -ray.origin.y / ray.direction.y;
+	local_intersect = rt_point(ray.origin.x + t * ray.direction.x, \
+								ray.origin.y + t * ray.direction.y, \
+								ray.origin.y + t * ray.direction.z);
+	x->object = plane;
+	x->ray = ray;
+	x->x_count = 1;
+	x->x_distances[0] = t;
+	//store the point value in the intersect too ??? would make sense
 }
 
 // Computes the two collision distances between the ray and the cylinder
 // chapter 13
-t_intersect	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect x)
+void	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x)
 {
 	(void)ray;
 	(void)cylinder;
-	return (x);
 }
 
 void	rt_compute_ray_sphere_params(float **equation_params, t_object sphere, t_ray ray, t_tuple sphere_to_ray);
@@ -52,7 +67,7 @@ void	rt_compute_ray_sphere_params(float **equation_params, t_object sphere, t_ra
 // Uses a quadratic equation discriminant = b²-4ac
 // to transform the sphere beform the collision calculus, 
 // the invert of the transformation is applied to the ray
-t_intersect	*rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x)
+void	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x)
 {
 	t_tuple		sphere_to_ray;
 	float		eq_par[4]; // equation_parameters
@@ -81,7 +96,6 @@ t_intersect	*rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x)
 		ray.intersects = new_list_item;
 	else
 		ft_lstadd_back(&ray.intersects, new_list_item);
-	return (x);
 }
 
 // TO DO: WRITE CODE TO ADD ITEMS TO INTERSECT LIST (see below old code)
@@ -168,10 +182,10 @@ t_intersect	rt_ray_object_x(t_ray ray, t_object object)
 	x.ray = ray;
 	x.x_count = 0;
 	if (object.type == SPHERE)
-		return (rt_ray_sphere_x(ray, object, x));
+		return (rt_ray_sphere_x(rt_transform_ray(ray, object.inverse), object, &x), x);
 	if (object.type == CYLINDER)
-		return (rt_ray_cylinder_x(ray, object, x));
+		return (rt_ray_cylinder_x(rt_transform_ray(ray, object.inverse), object, &x), x);
 	if (object.type == PLANE)
-		return (rt_ray_sphere_x(ray, object, x));
+		return (rt_ray_sphere_x(rt_transform_ray(ray, object.inverse), object, &x), x);
 	return (x);
 }

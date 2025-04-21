@@ -277,12 +277,13 @@ t_object		rt_init_sphere(t_tuple coord, float diam, t_tuple color);
 
 t_ray			rt_ray(t_tuple origin, t_tuple direction);
 t_tuple			rt_position(t_ray ray, float d);
-t_intersect		rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x);
-t_intersect		rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x);
-t_intersect		rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x);
+void			rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x);
+void			rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x);
+void			rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x);
 t_intersect		rt_ray_object_x(t_ray ray, t_object object);
 void			rt_compute_intersect(t_scene *scene);
 t_ray			rt_transform_ray(t_ray initial_ray, t_matrix trans);
+t_tuple			rt_normal_at(t_object object, t_tuple point);
 
 		// Light and shade
 
@@ -342,5 +343,9 @@ void			test_ray_sphere(void);
 void			test_rays_positions(void);
 void			test_intersections(void);
 void			analog_clock(void);
+
+	// Shape tests and generic intersect tests
+
+void			test_shape(void);
 
 #endif
