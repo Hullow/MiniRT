@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 18:10:21 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/20 20:45:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,15 +258,20 @@ float			matrix_minor(t_matrix mat, int row, int column);
 float			matrix_cofactor(t_matrix mat, int row, int column);
 float			determinant(t_matrix mat);
 
-		// Transformations
+// Transformations
 
-t_matrix	rt_translation(t_tuple t);
-t_matrix	rt_scaling(t_tuple t);
-t_matrix	rt_shear(float *shear_factors);
-t_matrix	rt_rotation(t_tuple normal);
-t_matrix	rt_rotation_x(float angle);
-t_matrix	rt_rotation_y(float angle);
-t_matrix	rt_rotation_z(float angle);
+t_matrix		rt_translation(t_tuple t);
+t_matrix		rt_scaling(t_tuple t);
+t_matrix		rt_shearing(float *shear_factors);
+t_matrix		rt_rotation(t_tuple normal);
+t_matrix		rt_rotation_x(float angle);
+t_matrix		rt_rotation_y(float angle);
+t_matrix		rt_rotation_z(float angle);
+
+// Objects
+
+t_object		rt_init_sphere(t_tuple coord, float diam, t_tuple color);
+
 
 		// Ray - Objects intersections
 
@@ -282,14 +287,14 @@ t_ray			rt_transform_ray(t_ray initial_ray, t_matrix trans);
 		// Light and shade
 
 
-		/////////////////////////////////////////////////
-		/////////////////// Tests ///////////////////////
-		/////////////////////////////////////////////////
-			// Input
+/////////////////////////////////////////////////
+/////////////////// Tests ///////////////////////
+/////////////////////////////////////////////////
+	// Input tests
 
 void			miniRT_input_tests(t_scene scene);
 
-			// Tuple tests
+	// Tuple tests
 
 typedef struct s_projectile {
 	t_tuple	position;
@@ -307,9 +312,9 @@ t_projectile	init_projectile(t_tuple position, t_tuple velocity);
 t_projectile	tick(t_environment env, t_projectile proj);
 void			test_proj_sim(void);
 
-			// Matrix tests
+	// Matrix tests
 
-void			test_matrices();
+void			test_matrices(void);
 void			test_cofactor(void);
 void			test_minor(void);
 void			test_submatrix(void);
@@ -324,17 +329,18 @@ void			test_transposition(void);
 void			test_identity(void);
 void			mat_val_init(t_matrix mat, t_matrix mat2, t_matrix mat3);
 
-			// Transforms and ray tests
+	// Transforms and ray tests
 
-void			test_ray_sphere(void);
-void			test_rays_positions(void);
-void			test_intersections(void);
+void			test_transforms_and_rays(void);
 void			test_transforms(void);
 void			test_shear(void);
 void			test_translation(void);
 void			test_scaling(void);
 void			test_rotation(void);
 void			test_transform_handling(void);
+void			test_ray_sphere(void);
+void			test_rays_positions(void);
+void			test_intersections(void);
 void			analog_clock(void);
 
 #endif
