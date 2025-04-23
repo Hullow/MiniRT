@@ -4,7 +4,7 @@ Project done at [Ecole 42 Lausanne](https://42lausanne.ch/), by PBerset ([@Sukor
 ## Description
 A raytracing rendering engine in C using 42's [minilibX](https://github.com/42paris/minilibx-linux) graphical library.
 
-The program takes in an input [scene](/Sources/scenes/) which define a camera position and can contain spheres, cylinders and planes. The minilibx handles windows and the drawing of pixels.
+The program takes in an input [scene](/Sources/scenes/), which can contain spheres, cylinders and planes, and has a defined camera position. The minilibx handles windows and the drawing of pixels.
 
 ## Usage
 🏗️ (under construction)
