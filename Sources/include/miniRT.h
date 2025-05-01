@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/01 14:52:20 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/01 19:02:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@
 # define RT_RAY					" – rt_ray\n"
 # define RT_POSITION			" – rt_position\n"
 # define INIT_SP				" – rt_init_sphere\n"
-# define RT_RAY_OBJ_X			" – rt_ray_object_intersect\n"
+# define RT_RAY_OBJ_X			" – rt_ray_object_pair_intersect\n"
 # define RT_TRANS_RAY			" – rt_transform_ray\n"
 # define SET_SP_TRANS			" – rt_set_sphere_transform\n"
-# define INTERSECTION			" – rt_intersection\n"
+# define INTERSECTION			" – rt_pair_intersection\n"
 # define RAY_INTERSECTS			" – rt_compute_ray_intersects\n"
 
 # define SUB_ERROR 				"Invalid input: null matrix, \
@@ -142,12 +142,17 @@ typedef struct s_object {
     float		height;
 }	t_object;
 
-typedef struct s_intersect
+typedef struct s_pair_intersect
 {
 	t_object	*object;
-	t_ray		*ray;
 	float		t[2];
 	int			t_count;
+}	t_pair_intersect;
+
+typedef struct s_intersect
+{
+	float		t;
+	t_object	*object;
 }	t_intersect;
 
 typedef struct s_hit {
@@ -287,8 +292,8 @@ t_ray			rt_ray(t_tuple origin, t_tuple direction);
 t_tuple			rt_position(t_ray ray, float d);
 t_intersect		*rt_ray_object_x(t_ray *ray, t_object *object);
 t_intersect		*rt_ray_sphere_x(t_ray *ray, t_object *sphere);
-t_intersect		*rt_ray_plane_x(t_ray *ray, t_object *plane, t_intersect *x);
-t_intersect		*rt_ray_cylinder_x(t_ray *ray, t_object *cylinder, t_intersect *x);
+t_intersect		*rt_ray_plane_x(t_ray *ray, t_object *plane);
+t_intersect		*rt_ray_cylinder_x(t_ray *ray, t_object *cylinder);
 t_intersect		*rt_find_ray_hit(t_ray *ray);
 t_ray			rt_transform_ray(t_ray *initial_ray, t_matrix trans);
 
@@ -348,7 +353,7 @@ void			test_rotation(void);
 void			test_transform_handling(void);
 void			test_ray_sphere(void);
 void			test_rays_positions(void);
-void			test_intersections(void);
+void			test_pair_intersections(void);
 void			analog_clock(void);
 
 #endif

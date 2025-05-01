@@ -178,3 +178,12 @@ object is intersected.
 
 # 1/5/25
 - debugging: rt_ray_sphere_intersection (issue with lstnew/memcpy not copying the intersection properly). Using printf
+- `rt_draw` and `rt_define_ray_to_wall`: x_mlx, y_mly types to float, leading to less fixed discriminant down the line (in `rt_ray_sphere_x`)
+- Fixed segfaults so far. Now the issue is only black pixels are drawn (no intersection found with sphere).
+- Need to check the implementation while re-reading the book. Even if sphere has diam = 100.0, no hit, weirdly.
+- Changed t_intersect data structure from pair + t-count + object to single t-value + object 
+(also removed member "ray" which was not needed)
+=> rewrote rt_intersections.c and rt_test_ray_sphere (to check/finish) to fit this
+=> compiles but still doesn't make a difference. at least now easier to debug
+
+- To do: finish re-implementing book-mentioned features. incl. previous tests that were skipped for intersection
