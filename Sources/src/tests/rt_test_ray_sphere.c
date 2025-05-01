@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:58 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/21 19:27:26 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/01 15:04:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	rt_run_window(t_env *env);
 void	rt_set_mlx_env(t_env *env);
 void	rt_draw(t_env *env, t_object *sp);
 void	test_ray_sphere(void);
+int		rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp, int h, int w);
+t_ray	*rt_define_ray_to_wall(t_ray *ray, int x_mlx, int y_mlx);
 
 void	test_ray_sphere(void)
 {
@@ -37,51 +39,6 @@ void	test_ray_sphere(void)
 	rt_draw(&env, &sp);
 
 	rt_run_window(&env);
-}
-
-int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp, int h, int w)
-{
-	int		ret = 0;
-
-	rt_ray_object_x(ray, sp);
-	t_intersect *hit_intersect = NULL;
-	hit_intersect = rt_find_ray_hit(ray, 0);
-	
-	
-	// if (hit->obj == sp)
-	// 	ft_putstr_fd("rt_check_if_ray_hits_sphere: hit->obj is sp\n", 2);
-	// else
-	// 	ft_putstr_fd("rt_check_if_ray_hits_sphere: hit->obj is unknown\n", 2);
-	
-
-	if (h == 100 && w == 100 && hit_intersect)
-	{
-		printf("rt_check_if_ray_hits_sphere: address of hit object: %p\n", hit_intersect->object);
-		printf("hit->obj->color.x: %f\n", hit_intersect->object->color.x);
-	}
-	
-
-	
-	if (hit_intersect->object)
-		ret = 1;
-	else
-		ret = 0;
-	free(ray->intersects);
-	ray->intersects = NULL;
-	return ret;
-}
-
-/* defines the ray from the camera to a given pixel of the wall
-	first converts the coordinates to miniRT coordinates (x_mrt, y_mrt, 1) */
-t_ray	*rt_define_ray_to_wall(t_ray *ray, int x_mlx, int y_mlx)
-{
-	int		x_mrt;
-	int		y_mrt;
-
-	x_mrt = (x_mlx / 100) - ((WINDOW_WIDTH / 200));
-	y_mrt = (-y_mlx / 100) + (WINDOW_HEIGHT / 200);
-	ray->direction = subtract_tuple(rt_point(x_mrt, y_mrt, 2), ray->origin);
-	return (ray);
 }
 
 void	rt_draw(t_env *env, t_object *sp)
@@ -107,13 +64,52 @@ void	rt_draw(t_env *env, t_object *sp)
 			}
 			else
 			{
-				// printf("(%d, %d): black\n", h, w);				
+				// printf("(%d, %d): black\n", h, w);
 				my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, 0);
 			}
 			w++;
 		}
 		h++;
 	}
+}
+
+int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp, int h, int w)
+{
+	int		ret = 0;
+
+	t_intersect *hit_intersect = rt_ray_object_x(ray, sp);
+	printf("rt_check_if_ray_hits_sphere: t_count: %d\n", ((t_intersect *) ray->intersects->content)->t_count);
+	hit_intersect = rt_find_ray_hit(ray);
+	if (!hit_intersect->object || hit_intersect->object != sp)
+	{
+		printf("hit_intersect: no object found/not a sphere\n");
+		ret = 0;
+	}
+	else
+		ret = 1;
+
+	if (h == 100 && w == 100 && hit_intersect)
+	{
+		printf("rt_check_if_ray_hits_sphere: address of hit object: %p\n", hit_intersect->object);
+		printf("hit->obj->color.x: %f\n", hit_intersect->object->color.x);
+	}
+
+	free(ray->intersects);
+	ray->intersects = NULL;
+	return ret;
+}
+
+/* defines the ray from the camera to a given pixel of the wall
+	first converts the coordinates to miniRT coordinates (x_mrt, y_mrt, 1) */
+t_ray	*rt_define_ray_to_wall(t_ray *ray, int x_mlx, int y_mlx)
+{
+	int		x_mrt;
+	int		y_mrt;
+
+	x_mrt = (x_mlx / 100) - ((WINDOW_WIDTH / 200));
+	y_mrt = (-y_mlx / 100) + (WINDOW_HEIGHT / 200);
+	ray->direction = subtract_tuple(rt_point(x_mrt, y_mrt, 2), ray->origin);
+	return (ray);
 }
 
 void	rt_set_mlx_env(t_env *env)

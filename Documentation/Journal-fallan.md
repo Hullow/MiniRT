@@ -175,3 +175,6 @@ for some reason.
 - Commit made in this stage, but decision made to just return a t-value, then compute which
 object is intersected.
 => or return a modified t_intersect struct with only one t-value, or zero t-values.
+
+# 1/5/25
+- debugging: rt_ray_sphere_intersection (issue with lstnew/memcpy not copying the intersection properly). Using printf
