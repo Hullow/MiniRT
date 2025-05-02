@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/01 19:02:55 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:33:46 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,6 +354,7 @@ void			test_transform_handling(void);
 void			test_ray_sphere(void);
 void			test_rays_positions(void);
 void			test_pair_intersections(void);
+void			test_ray_intersections_hits();
 void			analog_clock(void);
 
 #endif

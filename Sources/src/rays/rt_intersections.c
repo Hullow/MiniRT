@@ -73,8 +73,6 @@ t_intersect	*rt_init_intersect(float t_value, t_object *object)
 	return (x);
 }
 
-
-
 /* Adds an intersection struct to the linked list of intersections of the ray
 	1. Creates new list item with the intersection struct
 	2. Specifies which object is being intersected (using pointer t_object *)
@@ -135,7 +133,10 @@ t_intersect	*rt_ray_sphere_x(t_ray *ray, t_object *sphere)
 	sphere_to_ray = subtract_tuple(transformed_ray.origin, sphere->coord);
 	rt_compute_ray_sphere_params(eq_par, sphere, transformed_ray, sphere_to_ray);
 	if (DISCRIMINANT < 0)
-		return (printf("rt_ray_sphere_x: discriminant is < 0\n"), NULL);
+	{
+		// printf("rt_ray_sphere_x: discriminant is < 0\n");
+		return (NULL);
+	}
 	x1 = rt_init_intersect((-B - sqrtf(DISCRIMINANT)) / (2.0f * A), sphere);
 	if (!x1)
 		return (NULL);
@@ -151,7 +152,7 @@ t_intersect	*rt_ray_sphere_x(t_ray *ray, t_object *sphere)
 }
 
 // - Evaluates a ray's intersections with objects and returns the ray's hit
-// (the intersection with the lowest "t-value")
+// (the intersection with the lowest nonnegative "t-value")
 // - no malloc
 // 
 // Returns:
@@ -175,23 +176,17 @@ t_intersect *rt_find_ray_hit(t_ray *ray)
 	while (ray->intersects)
 	{
 		iterator = (t_intersect *) (ray->intersects->content);
-		if (t_min == INT_MAX)
-		{
-			t_min = iterator->t;
-			hit_intersect = iterator;
-			printf("rt_find_ray_hit: set t_min to iterator->t==%f\n", t_min);
-		}
-		else if (iterator->t > 0 && iterator->t < t_min)
+		if (iterator->t > 0 && t_min > iterator->t)
 		{
 			t_min = iterator->t;
 			hit_intersect = iterator;
 		}
 		ray->intersects = ray->intersects->next;
 	}
-	if (hit_intersect)
-		    printf("rt_find_ray_hit: => hit_intersect set to (t: %f, obj: %p)\n", hit_intersect->t, hit_intersect->object); // => never comes up in my tests
-	else
-		printf("rt_find_ray_hit: returning hit_intersect == NULL\n");
+	// if (hit_intersect)
+	// 	    printf("rt_find_ray_hit: => hit_intersect set to (t: %f, obj: %p)\n", hit_intersect->t, hit_intersect->object); // => never comes up in my tests
+	// else
+	// 	printf("rt_find_ray_hit: returning hit_intersect == NULL\n");
 	return (hit_intersect);
 }
 

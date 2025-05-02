@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:58 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/01 19:02:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:43:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	rt_draw(t_env *env, t_object *sp);
 void	test_ray_sphere(void);
 void	rt_initialize_test_sphere(t_object *sp);
 int		rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp);
-t_ray	*rt_define_ray_to_wall(t_ray *ray, float x_mlx, float y_mlx);
+t_ray	*rt_define_ray_to_wall(t_ray *ray, float x_mlx, float y_mlx, float wall_z);
 
 void	test_ray_sphere(void)
 {
@@ -37,7 +37,7 @@ void	rt_initialize_test_sphere(t_object *sp)
 {
 	sp->type = SPHERE;
 	sp->coord = (t_tuple) {0, 0, 0, POINT};
-	sp->diameter = 1;
+	sp->diameter = 2;
 	sp->color = (t_tuple) {1, 0, 0, COLOR};
 	sp->transform = identity_matrix(4, 4);
 	sp->inverse = matrix_inversion(sp->transform);
@@ -45,29 +45,36 @@ void	rt_initialize_test_sphere(t_object *sp)
 
 void	rt_draw(t_env *env, t_object *sp)
 {
-	t_ray	ray;
+	t_tuple		ray_origin;
+	t_tuple		ray_direction;
+	t_ray		ray;
+	float		wall_z; // the wall's position on z-axis 
 	float		h;
 	float		w;
+
+	// General coordinates (n.b. sphere coordinates are already given as argument)
+	ray_origin = rt_point(0, 0, -5);
+	ray_direction = rt_vector(0, 0, 1);
+	ray = rt_ray(ray_origin, ray_direction);
+	wall_z = 5;
 	
-	// printf("rt_draw: sphere address: %p\n", sp);
-	// printf("rt_draw: hit->obj->color.x: %f\n", sp->color.x);
+	// Looping through each possible ray/pixel to check hits with the sphere, 
 	h = 0;
-	ray = rt_ray(rt_point(0, 0, -2), rt_vector(0, 0, 0));
-	while (h < WINDOW_HEIGHT) // 60)
+	while (h < WINDOW_HEIGHT)
 	{
 		w = 0;
-		while (w < WINDOW_WIDTH) // 80)
+		while (w < WINDOW_WIDTH)
 		{
-			rt_define_ray_to_wall(&ray, w, h);
+			rt_define_ray_to_wall(&ray, w, h, wall_z);
 			if (rt_check_if_ray_hits_sphere(&ray, sp)) // if ray hits sphere, then put red pixel (otherwise nothing)
 			{
-				printf("(%d, %d): red\n", (int) h, (int) w);
+				// printf("(%d, %d): red\n", (int) h, (int) w);
 				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int(sp->color));
 			}
 			else
 			{
-				printf("(%d, %d): black\n", (int) h, (int) w);
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, 0);
+				// printf("(%d, %d): black\n", (int) h, (int) w);
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int((t_tuple){1, 1, 1, COLOR}));
 			}
 			w++;
 		}
@@ -84,12 +91,12 @@ int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp)
 	hit_intersect = rt_find_ray_hit(ray);
 	if (!hit_intersect)
 	{
-		printf("rt_check_if_ray_hits_sphere: hit_intersect: NULL\n");
+		// printf("rt_check_if_ray_hits_sphere: hit_intersect: NULL\n");
 		ret = 0;
 	}
 	else if (!hit_intersect->object || hit_intersect->object != sp)
 	{
-		printf("hit_intersect: no object found/not a sphere\n");
+		// printf("hit_intersect: no object found/not a sphere\n");
 		ret = 0;
 	}
 	else
@@ -100,17 +107,29 @@ int	rt_check_if_ray_hits_sphere(t_ray *ray, t_object *sp)
 	return ret;
 }
 
+// coordinate conversion:
+// x_mlx: 0-100
+// y_mlx: 0-100
+//
+// x_mrt: -5 to 5
+// y_mrt: -5 to 5
+//
+// x_mrt = x_mlx/100 
+
 /* defines the ray from the camera to a given pixel of the wall
 	first converts the coordinates to miniRT coordinates (x_mrt, y_mrt, 1) */
-t_ray	*rt_define_ray_to_wall(t_ray *ray, float x_mlx, float y_mlx)
+t_ray	*rt_define_ray_to_wall(t_ray *ray, float x_mlx, float y_mlx, float wall_z)
 {
 	float		x_mrt;
 	float		y_mrt;
+	t_tuple		wall_coords;
 
 	x_mrt = (x_mlx / 100) - ((WINDOW_WIDTH / 200));
 	y_mrt = (-y_mlx / 100) + (WINDOW_HEIGHT / 200);
-	ray->direction = subtract_tuple(rt_point(x_mrt, y_mrt, 2), ray->origin);
-	printf("rt_define_ray_to_wall: input is (%f, %f), defined ray as {%f, %f, %f}\n", x_mlx, y_mlx, ray->direction.x, ray->direction.y, ray->direction.z);
+	wall_coords = (t_tuple) {x_mrt, y_mrt, wall_z, POINT};	
+
+	ray->direction = subtract_tuple(wall_coords, ray->origin);
+	// printf("rt_define_ray_to_wall: input (%.2f, %.2f), wall_coords: (%.2f, %.2f, %.2f), defined ray->direction as {%.2f, %.2f, %.2f}\n", x_mlx, y_mlx, wall_coords.x, wall_coords.y, wall_coords.z, ray->direction.x, ray->direction.y, ray->direction.z);
 	return (ray);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:14:38 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/21 14:33:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/02 16:23:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int main()
 {
 	// test_matrices();
-	//test_transforms_and_rays();
+	// test_transforms_and_rays();
 	test_ray_sphere();
 	return 0;
 }

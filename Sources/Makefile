@@ -54,7 +54,7 @@ SCENE		= rt_file_check \
 TESTS		= rt_test_tuple \
 			rt_test_matrix \
 			rt_test_ray_sphere \
-#			rt_test_transforms_and_rays \
+			rt_test_transforms_and_rays \
 #			rt_test_input.c \
 #			rt_test_analog_clock.c
 

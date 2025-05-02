@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:49:52 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/21 18:10:55 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/02 14:20:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_ray	rt_transform_ray(t_ray *initial_ray, t_matrix trans)
 	return (rt_ray(new_origin, new_direction));
 }
 
+// LIKELY USELESS
 // Resets a sphere's transformation to the one given as argument (t_matrix *).
 // frees the previously assigned transformation (default: identity)
 // Returns: NULL in all cases

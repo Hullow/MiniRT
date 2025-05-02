@@ -187,3 +187,10 @@ object is intersected.
 => compiles but still doesn't make a difference. at least now easier to debug
 
 - To do: finish re-implementing book-mentioned features. incl. previous tests that were skipped for intersection
+
+# 2/5/25
+- Tests ch.5 : passed `test_ray_intersections_hits();`, (ray touches sphere in two points, tangent, misses sphere, ...)
+- Next: tracking intersections => tests. Didn't implement it exactly like prescribed in the book, but tests pass for hits (`rt_find_ray_hits`)
+- TL;DR ch.5 tests passed, except for 1-2 specific intersect functions not implemented.
+- Red disk success! Ayaaaaaa ! Japan flag too ! Issou
+
