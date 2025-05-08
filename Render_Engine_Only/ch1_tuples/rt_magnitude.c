@@ -30,6 +30,6 @@ t_tuple	rt_normalize(t_tuple vector)
 	norm.x = vector.x / rt_magnitude(vector);
 	norm.y = vector.y / rt_magnitude(vector);
 	norm.z = vector.z / rt_magnitude(vector);
-	norm.w = vector.w;
+	norm.w = (float)vector.w / rt_magnitude(vector);
 	return (norm);
 }

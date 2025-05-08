@@ -26,6 +26,7 @@ void	test_matrix(void);
 void	test_transform(void);
 void	test_intersect(void);
 void	test_mlx(void);
+void	test_light(void);
 
 //Structs
 
@@ -191,5 +192,11 @@ void		rt_discriminant(t_ray ray, t_object object, t_intersect *intersect);
 float		rt_hit(float t1, float t2);
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);
+
+//CH6 Light and Shadows
+
+t_tuple		rt_normal_at(t_object obj, t_tuple point);
+t_tuple		rt_reflect(t_tuple in, t_tuple normal);
+
 
 #endif

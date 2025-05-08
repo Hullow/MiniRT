@@ -22,9 +22,9 @@ t_matrix	rt_mul_matrix(t_matrix a, t_matrix b)
 	int			i;
 	int			j;
 
-	i = 0;
 	mul.rows = 4;
 	mul.columns = 4;
+	i = 0;
 	while (i < 4)
 	{
 		j = 0;

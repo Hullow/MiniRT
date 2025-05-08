@@ -773,11 +773,65 @@ void	test_mlx()
 
 	sp = rt_sphere(rt_color(255, 0, 0));
 	rt_print_matrix(sp.transform);
-	sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
-	sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
+	//sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
+	//sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
 	rt_print_matrix(sp.transform);
 	env = mlx_set_env();
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	rt_draw(&env, sp, ray);
 	mlx_run_window(&env);
+}
+
+void	test_light()
+{
+	printf("Normal basic tests\n");
+	t_object	sphere;
+	t_tuple		normal;
+	
+	sphere = rt_sphere(rt_color(1, 0, 0));
+	normal = rt_normal_at(sphere, rt_point(1, 0, 0));
+	rt_print_tuple(normal);
+	normal = rt_normal_at(sphere, rt_point(0, 1, 0));
+	rt_print_tuple(normal);
+	normal = rt_normal_at(sphere, rt_point(0, 0, 1));
+	rt_print_tuple(normal);
+	normal = rt_normal_at(sphere, rt_point(sqrtf(3)/3, sqrtf(3)/3, sqrtf(3)/3));
+	rt_print_tuple(normal);
+	printf("sqrt3 /3: %f\n\n", sqrtf(3)/3);
+
+	printf("Normal of translated sphere\n");
+
+	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(0, 1, 0)));
+	normal = rt_normal_at(sphere, rt_point(0, 1.70711, -0.70711));
+	rt_print_tuple(normal);
+	printf("\n");
+
+	printf("Normal of scaled sphere\n");
+	t_matrix	rotate;
+	t_matrix	scale;
+	t_matrix	transform;
+
+	scale = rt_scaling(rt_vector(1, 0.5, 1));
+	rotate = rt_rotation_z(M_PI / 5);
+	transform = rt_mul_matrix(scale, rotate);
+	sphere.transform = rt_set_transform(sphere, transform);
+	normal = rt_normal_at(sphere, rt_point(0, sqrtf(2)/2, -sqrtf(2)/2));
+	rt_print_tuple(normal);
+
+	printf("Reflecting a vector\n");
+	t_tuple	vector;
+	t_tuple	reflect;
+
+	printf("45 deg\n");
+	vector = rt_vector(1, -1, 0);
+	normal = rt_vector(0, 1, 0);
+	reflect = rt_reflect(vector, normal);
+	rt_print_tuple(reflect);
+
+	printf("Slanted\n");
+	vector = rt_vector(0, -1, 0);
+	normal = rt_vector(sqrtf(2)/2, sqrtf(2)/2, 0);
+	reflect = rt_reflect(vector, normal);
+	rt_print_tuple(reflect);
+	printf("\n");
 }

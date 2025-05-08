@@ -14,6 +14,6 @@
 
 int	main()
 {
-	test_mlx();
+	test_light();
 	return (0);
 }
