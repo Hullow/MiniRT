@@ -13,4 +13,8 @@ SOURCES:
 	@make -C mlx/ all
 	$(CC) $(FLAGS) -Imlx $(SOURCES) mlx/libmlx.a $(MLXFLAGS) -lm -o $(NAME)
 
-.PHONY: all
+clean:
+	rm -rf $(NAME)
+	@make -C mlx/ clean
+
+.PHONY: all clean

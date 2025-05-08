@@ -12,4 +12,7 @@
 
 #include "../micro_rt.h"
 
-
+void rt_lighting() //prolly not void
+{
+	/*TODO*/
+}

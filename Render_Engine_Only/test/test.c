@@ -634,7 +634,7 @@ void	test_intersect()
 	t_object	sphere;
 	t_intersect	intersect;
 	
-	sphere = rt_sphere(rt_color(255, 0, 0));
+	sphere = rt_sphere(rt_color(255, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	intersect = rt_intersect(sphere, ray);
 	printf("XS Count = %d, [0] = %f, [1] = %f\n", intersect.count, intersect.first, intersect.last);
@@ -771,7 +771,7 @@ void	test_mlx()
 	t_object	sp;
 	t_ray		ray;
 
-	sp = rt_sphere(rt_color(255, 0, 0));
+	sp = rt_sphere(rt_color(255, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
 	rt_print_matrix(sp.transform);
 	//sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
 	//sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
@@ -788,7 +788,7 @@ void	test_light()
 	t_object	sphere;
 	t_tuple		normal;
 	
-	sphere = rt_sphere(rt_color(1, 0, 0));
+	sphere = rt_sphere(rt_color(1, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
 	normal = rt_normal_at(sphere, rt_point(1, 0, 0));
 	rt_print_tuple(normal);
 	normal = rt_normal_at(sphere, rt_point(0, 1, 0));
@@ -833,5 +833,25 @@ void	test_light()
 	normal = rt_vector(sqrtf(2)/2, sqrtf(2)/2, 0);
 	reflect = rt_reflect(vector, normal);
 	rt_print_tuple(reflect);
+	printf("\n");
+
+	printf("Phong light reflection\n");
+	t_light	light;
+
+	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0, 0), 1.0f);
+	rt_print_light(light);
+	printf("\n");
+
+	printf("Material\n");
+	t_material	material;
+
+	material = rt_material(0.1, 0.9, 0.9, 200.0f);
+	rt_print_material(material);
+	printf("\n");
+
+	printf("Sphere with material\n");
+
+	sphere = rt_sphere(rt_color(255, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
+	rt_print_sphere(sphere);
 	printf("\n");
 }

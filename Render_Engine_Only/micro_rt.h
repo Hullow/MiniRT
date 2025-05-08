@@ -83,6 +83,15 @@ typedef struct s_matrix
 
 //Objects
 
+/// @brief Material contains light effects. Not color because norminette
+typedef struct s_material
+{
+	float	ambient;
+	float	diffuse;
+	float	specular;
+	float	shininess;
+}	t_material;
+
 typedef enum e_shape
 {
 	SPHERE,
@@ -90,12 +99,14 @@ typedef enum e_shape
 	CYLINDER
 }	t_shape;
 
+/// @brief Object struct. Color and material separated because norminette
 typedef struct s_object
 {
 	t_shape		shape;
 	t_tuple		origin;
 	t_tuple		norm;
 	t_tuple		color;
+	t_material	material;
 	t_matrix	transform;
 	float		diameter;
 	float		height;
@@ -117,6 +128,30 @@ typedef struct s_intersect
 	float		first;
 	float		last;
 }	t_intersect;
+
+//Light
+
+typedef struct s_ambient
+{
+	float	intensity;
+	t_tuple	color;
+}	t_ambient;
+
+typedef struct s_camera
+{
+	t_tuple	coord;
+	t_tuple	orient;
+	float	fov;
+}	t_camera;
+
+typedef struct s_light
+{
+	t_tuple	coord;
+	float	intensity;
+	t_tuple	color;
+}	t_light;
+
+
 
 //CH1 Tuples
 
@@ -185,7 +220,8 @@ t_matrix	rt_rotation_z(float angle);
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
 void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray ray, float t);
-t_object	rt_sphere(t_tuple color);
+t_object	rt_sphere(t_tuple color, t_material material);
+void		rt_print_sphere(t_object sphere);
 t_intersect	rt_intersect(t_object object, t_ray ray);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object object, t_intersect *intersect);
@@ -197,6 +233,10 @@ t_matrix	rt_set_transform(t_object object, t_matrix transform);
 
 t_tuple		rt_normal_at(t_object obj, t_tuple point);
 t_tuple		rt_reflect(t_tuple in, t_tuple normal);
+t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
+void		rt_print_light(t_light light);
+t_material	rt_material(float amb, float dif, float spec, float shine);
+void		rt_print_material(t_material mat);
 
 
 #endif
