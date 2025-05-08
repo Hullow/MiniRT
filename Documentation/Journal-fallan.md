@@ -166,3 +166,31 @@ return result;
 
 - To do: fix `test_transforms_and_rays()`, run `test_matrix()` when pberset finishes, then
 make `test_ray_sphere()` finally work
+
+# 21/4/25
+- MLX env and drawing function: cut into pieces for clarity
+- Worked on drawing a disk (end of Ch.5), alone, then with pberset, but it draws
+a square or a cross (??!!) rather than a disk, and loses the address of the sphere
+for some reason.
+- Commit made in this stage, but decision made to just return a t-value, then compute which
+object is intersected.
+=> or return a modified t_intersect struct with only one t-value, or zero t-values.
+
+# 1/5/25
+- debugging: rt_ray_sphere_intersection (issue with lstnew/memcpy not copying the intersection properly). Using printf
+- `rt_draw` and `rt_define_ray_to_wall`: x_mlx, y_mly types to float, leading to less fixed discriminant down the line (in `rt_ray_sphere_x`)
+- Fixed segfaults so far. Now the issue is only black pixels are drawn (no intersection found with sphere).
+- Need to check the implementation while re-reading the book. Even if sphere has diam = 100.0, no hit, weirdly.
+- Changed t_intersect data structure from pair + t-count + object to single t-value + object 
+(also removed member "ray" which was not needed)
+=> rewrote rt_intersections.c and rt_test_ray_sphere (to check/finish) to fit this
+=> compiles but still doesn't make a difference. at least now easier to debug
+
+- To do: finish re-implementing book-mentioned features. incl. previous tests that were skipped for intersection
+
+# 2/5/25
+- Tests ch.5 : passed `test_ray_intersections_hits();`, (ray touches sphere in two points, tangent, misses sphere, ...)
+- Next: tracking intersections => tests. Didn't implement it exactly like prescribed in the book, but tests pass for hits (`rt_find_ray_hits`)
+- TL;DR ch.5 tests passed, except for 1-2 specific intersect functions not implemented.
+- Red disk success! Ayaaaaaa ! Japan flag too ! Issou
+

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 17:00:10 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/02 15:05:05 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_object	rt_init_sphere(t_tuple coord, float diam, t_tuple color)
 	printf("rt_init_sphere\n- input (%f, %f, %f)\n", color.x, color.y, color.z);
 	printf("- output (%f, %f, %f)\n", sp.color.x, sp.color.y, sp.color.z);
 	sp.transform = identity_matrix(4, 4);
+	sp.inverse = sp.transform;
 	sp.diameter = diam;
 	return (sp);
 }

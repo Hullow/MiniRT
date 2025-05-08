@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:11:00 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 15:32:55 by fallan           ###   ########.fr       */
+/*   Updated: 2025/04/21 16:25:14 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,9 @@ t_tuple	subtract_tuple(t_tuple minuend, t_tuple subtrahend)
 	t_tuple	c;
 
 	c.x = 0;
-	if (minuend.w == POINT && subtrahend.w == POINT)
+	if (minuend.w == VECTOR && subtrahend.w == POINT)
 	{
-		printf("Error\nadd_tuple: can't subtract point from point\n");
-		return (c);
-	}
-	else if (minuend.w == VECTOR && subtrahend.w == POINT)
-	{
-		printf("Error\nadd_tuple: can't subtract point from vector\n");
+		printf("Error\nsubtract_tuple: can't subtract point from vector\n");
 		return (c);
 	}
 	c.w = minuend.w - subtrahend.w;
