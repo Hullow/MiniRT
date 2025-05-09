@@ -930,6 +930,8 @@ void	test_light_render()
 	h = 0;
 	while (h < WINDOW_HEIGHT)
 	{
+		if ((h + 1) % 100 == 0)
+		printf("Progressing: %f\n", (float)((float)(h + 1) / (float)WINDOW_HEIGHT * 100.0f));
 		w = 0;
 		while (w < WINDOW_WIDTH)
 		{
