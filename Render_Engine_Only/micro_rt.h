@@ -27,6 +27,7 @@ void	test_transform(void);
 void	test_intersect(void);
 void	test_mlx(void);
 void	test_light(void);
+void	test_light_render(void);
 
 //Structs
 
@@ -237,6 +238,8 @@ t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
 void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
-
+t_camera	rt_camera(t_tuple coord, t_tuple orient, float fov);
+t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, t_tuple eyev, t_tuple normalv);
+t_tuple		rt_normalize_color(t_tuple color);
 
 #endif

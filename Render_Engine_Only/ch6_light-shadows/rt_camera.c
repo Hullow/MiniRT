@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_camera.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/06 16:07:47 by pberset          ###   ########.fr       */
+/*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/09 14:12:13 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "micro_rt.h"
+#include "../micro_rt.h"
 
-int	main()
+t_camera	rt_camera(t_tuple coord, t_tuple orient, float fov)
 {
-	test_light_render();
-	return (0);
+	t_camera	camera;
+
+	camera.coord = coord;
+	camera.orient = orient;
+	camera.fov = fov;
+	return	(camera);
 }

@@ -775,7 +775,7 @@ void	test_mlx()
 	rt_print_matrix(sp.transform);
 	//sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
 	//sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
-	rt_print_matrix(sp.transform);
+	//rt_print_matrix(sp.transform);
 	env = mlx_set_env();
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	rt_draw(&env, sp, ray);
@@ -851,7 +851,105 @@ void	test_light()
 
 	printf("Sphere with material\n");
 
-	sphere = rt_sphere(rt_color(255, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere = rt_sphere(rt_color(255, 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
 	rt_print_sphere(sphere);
 	printf("\n");
+
+	printf("Light - eye - surface\n");
+	t_tuple	result;
+	t_tuple	point;
+	t_tuple	eyev;
+
+	normal = rt_vector(0, 0, -1);
+	point = rt_point(0, 0, 0);
+	eyev = rt_vector(0, 0, -1);
+	light.coord = rt_point(0, 0, -10);
+	result = rt_lighting(sphere, light, point, eyev, normal);
+	rt_print_tuple(result);
+	printf("\n");
+
+	printf("Light - eye 45 - surface\n");
+
+	light.coord = rt_point(0, 0, -10);
+	eyev = rt_vector(0, sqrtf(2)/2, -sqrtf(2)/2);
+
+	result = rt_lighting(sphere, light, point, eyev, normal);
+	rt_print_tuple(result);
+	printf("\n");
+
+	printf("Eye - light 45 - surface\n");
+
+	light.coord = rt_point(0, 10, -10);
+	eyev = rt_vector(0, 0, -1);
+	result = rt_lighting(sphere, light, point, eyev, normal);
+	rt_print_tuple(result);
+	printf("\n");
+
+	printf("Eye = light reflect - surface\n");
+
+	light.coord = rt_point(0, 10, -10);
+	eyev = rt_vector(0, -sqrtf(2)/2, -sqrtf(2)/2);
+	result = rt_lighting(sphere, light, point, eyev, normal);
+	rt_print_tuple(result);
+	printf("\n");
+
+	printf("Eye - surface - light\n");
+
+	light.coord = rt_point(0, 0, 10);
+	eyev = rt_vector(0, 0, -1);
+	result = rt_lighting(sphere, light, point, eyev, normal);
+	rt_print_tuple(result);
+	printf("\n");
+}
+
+void	test_light_render()
+{
+	printf("CH6 - Putting it together\n");
+	t_camera	camera;
+	t_env		env;
+	t_ray		ray;
+	t_intersect	intersect;
+	t_light		light;
+	t_object	sphere;
+	t_tuple		point;
+	t_tuple 	eyev;
+	t_tuple		normalv;
+	t_tuple		color;
+
+	int			h;
+	int			w;
+	float		wall_z;
+
+	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
+	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
+	ray = rt_ray(camera.coord, camera.orient);
+	env = mlx_set_env();
+
+	wall_z = 5;
+	h = 0;
+	while (h < WINDOW_HEIGHT)
+	{
+		w = 0;
+		while (w < WINDOW_WIDTH)
+		{
+			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
+			intersect = rt_intersect(sphere, ray);
+			if(intersect.count != 0)
+			{
+				point = rt_position(ray, rt_hit(intersect.first, intersect.last));
+				normalv = rt_normal_at(intersect.object, point);
+				eyev = rt_negate_tuple(ray.direction);
+				color = rt_lighting(intersect.object, light, point, eyev, normalv);
+				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
+			}
+			else
+			{
+				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int((t_tuple){0, 0, 0, COLOR}));
+			}
+			w++;
+		}
+		h++;
+	}
+	mlx_run_window(&env);
 }

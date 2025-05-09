@@ -31,7 +31,7 @@ int	rgb_to_int(t_tuple c)
 
 void	rt_draw(t_env *env, t_object obj, t_ray ray)
 {
-	float		wall_z; 
+	float		wall_z;
 	float		h;
 	float		w;
 
