@@ -941,6 +941,7 @@ void	test_light_render()
 				normalv = rt_normal_at(intersect.object, point);
 				eyev = rt_negate_tuple(ray.direction);
 				color = rt_lighting(intersect.object, light, point, eyev, normalv);
+				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
 			}
 			else

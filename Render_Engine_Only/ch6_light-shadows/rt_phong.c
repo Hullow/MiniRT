@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/08 17:30:25 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/09 19:33:45 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,15 @@ t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, t_tuple eyev, t_tuple 
 	return (rt_add_color(ambient, rt_add_color(diffuse, specular)));
 }
 
-t_tuple	rt_normalize_color(t_tuple color)
+t_tuple	rt_reinhard_tonemap(t_tuple color)
 {
 	t_tuple	normal;
-	float	max;
+	float	exposure;
 
-	max = fmax(fmax(color.x, color.y), color.z);
-	if (max < 0)
-		return (rt_color(0, 0, 0));
-	normal.x = color.x / max;
-	normal.y = color.y / max;
-	normal.z = color.z / max;
+	exposure = 1.0f;
+	normal.x = color.x / (1 + color.x * exposure);
+	normal.y = color.y / (1 + color.y * exposure);
+	normal.z = color.z / (1 + color.z * exposure);
 	normal.w = COLOR;
 	return (normal);
 }

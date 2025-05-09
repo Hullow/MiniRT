@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/07 11:11:07 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/09 19:35:45 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,6 @@ t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
 t_camera	rt_camera(t_tuple coord, t_tuple orient, float fov);
 t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, t_tuple eyev, t_tuple normalv);
-t_tuple		rt_normalize_color(t_tuple color);
+t_tuple		rt_reinhard_tonemap(t_tuple color);
 
 #endif
