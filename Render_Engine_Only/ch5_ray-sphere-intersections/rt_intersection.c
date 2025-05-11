@@ -3,18 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersection.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
 /*   Updated: 2025/05/17 18:10:06 by fallan           ###   ########.fr       */
+=======
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/11 19:26:13 by francis          ###   ########.fr       */
+>>>>>>> aa4f48d (Fixes to compile on MacOS: Makefile + rt_intersections)
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../micro_rt.h"
 
+<<<<<<< HEAD
 /// @brief Compute a point from a distance d traveled along the ray
 /// @return position (t_tuple of type POINT)
 t_tuple	rt_position(t_ray ray, float d)
+=======
+t_intersect	rt_intersect(t_object object, t_ray ray)
+{
+	t_intersect	intersect;
+	t_matrix	ray_transform;
+
+	rt_inversion(object.transform, &ray_transform);
+	ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
+	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
+	if (object.shape == SPHERE)
+		rt_discriminant(ray, object, &intersect);
+	else
+		intersect = (t_intersect) {.count = 0};
+	return (intersect);
+}
+
+t_tuple	rt_position(t_ray ray, float t)
+>>>>>>> aa4f48d (Fixes to compile on MacOS: Makefile + rt_intersections)
 {
 	t_tuple	position;
 
