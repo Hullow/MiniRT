@@ -45,6 +45,7 @@ SRCMEM	= ft_memset \
 	ft_memcmp_int \
 	ft_free_tab \
 	ft_free_int_tab \
+	ft_free_float_tab \
 	ft_calloc
 
 SRCCHR	= ft_isalpha \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_general.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:04:56 by fallan            #+#    #+#             */
-/*   Updated: 2025/03/24 15:30:39 by pberset          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:45:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,24 @@ and initialize the value of each matrix element to 0
 
 Returns: a pointer to the initialized matrix (t_matrix *)
 */
-t_matrix	*init_matrix(int rows, int columns)
+t_matrix	init_matrix(int rows, int columns)
 {
-	t_matrix	*mat;
+	t_matrix	mat;
 
-	mat = malloc (sizeof(t_matrix));
-	if (!mat)
-		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
-	mat->rows = rows;
-	mat->columns = columns;
-	mat->m = malloc (rows * sizeof(float *));
-	if (!mat->m)
-		return (handle_error(INIT_MATRIX, ENOMEM, "malloc fail")); // remove "malloc fail" ?
-	if (!malloc_matrix_columns(mat, rows, columns))
-		return (handle_error(INIT_MATRIX, ENOMEM, NULL));
+	mat.rows = rows;
+	mat.columns = columns;
+	mat.m = ft_calloc (rows, sizeof(float *));
+	if (!mat.m)
+		(rt_handle_error(INIT_MATRIX, ENOMEM, "malloc fail"));
+	malloc_matrix_columns(mat, rows, columns);
+	if (!mat.m)
+		rt_handle_error(INIT_MATRIX, ENOMEM, NULL);
 	return (mat);
 }
 
 /* mallocs matrix columns (called from init_matrix),
 and initialize all values to 0 */
-t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns)
+t_matrix	malloc_matrix_columns(t_matrix mat, int rows, int columns)
 {
 	int	i;
 	int	j;
@@ -51,13 +49,17 @@ t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns)
 	i = 0;
 	while (i < rows)
 	{
-		mat->m[i] = ft_calloc (columns, sizeof(float));
-		if (!mat->m[i])
-			return (handle_error(MAT_MALLOC, ENOMEM, "malloc fail")); // remove "malloc fail" ?
+		mat.m[i] = ft_calloc (columns, sizeof(float));
+		if (!mat.m[i])
+		{
+			ft_free_float_tab(mat.m, (size_t)rows);
+			rt_handle_error(MAT_MALLOC, ENOMEM, "malloc fail");
+			return (mat);
+		}
 		j = 0;
 		while (j < columns)
 		{
-			mat->m[i][j] = 0;
+			mat.m[i][j] = 0;
 			j++;
 		}
 		i++;
@@ -66,15 +68,13 @@ t_matrix	*malloc_matrix_columns(t_matrix *mat, int rows, int columns)
 }
 
 /* initializes and returns an identity matrix of size (rows, columns)*/
-t_matrix	*identity_matrix(int rows, int columns)
+t_matrix	identity_matrix(int rows, int columns)
 {
-	t_matrix	*mat;
+	t_matrix	mat;
 	int			i;
 	int			j;
 
 	mat = init_matrix(rows, columns);
-	if (!mat)
-		return (handle_error(ID_MATRIX, ENOMEM, NULL));
 	i = 0;
 	while (i < rows)
 	{
@@ -82,7 +82,7 @@ t_matrix	*identity_matrix(int rows, int columns)
 		while (j < columns)
 		{
 			if (i == j)
-				mat->m[i][j] = 1;
+				mat.m[i][j] = 1;
 			j++;
 		}
 		i++;
@@ -91,42 +91,36 @@ t_matrix	*identity_matrix(int rows, int columns)
 }
 
 /* converts a tuple to a 1x4 matrix (4 rows, 1 column) */
-t_matrix	*convert_tuple_to_matrix(t_tuple *tuple)
+t_matrix	convert_tuple_to_matrix(t_tuple tuple)
 {
-	t_matrix	*mat;
+	t_matrix	mat;
 
-	if (!tuple)
-		return (handle_error(CONV_TUP_MAT, EINVAL, "null input"));
 	mat = init_matrix(4, 1);
-	if (!mat)
-		return (handle_error(CONV_TUP_MAT, ENOMEM, NULL));
-	mat->m[0][0] = tuple->x;
-	mat->m[1][0] = tuple->y;
-	mat->m[2][0] = tuple->z;
-	mat->m[3][0] = tuple->w;
+	mat.m[0][0] = tuple.x;
+	mat.m[1][0] = tuple.y;
+	mat.m[2][0] = tuple.z;
+	mat.m[3][0] = tuple.w;
 	return (mat);
 }
 
 /* prints out all the values of a matrix */
-int	print_matrix(t_matrix *mat)
+int	print_matrix(t_matrix mat)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	if (!mat)
-		return (-1);
-	printf("Printing out matrix at address {%p}\n", mat);
+	printf("Printing out matrix at address {%p}\n", &mat);
 	printf("---------------------------------------------\n");
-	while (i < mat->rows)
+	while (i < mat.rows)
 	{
 		j = -1;
 		printf("|");
-		while (++j < mat->columns)
+		while (++j < mat.columns)
 		{
-			if (mat->m[i][j] >= 0.0)
+			if (mat.m[i][j] >= 0.0)
 				printf(" ");
-			printf(" %.6f |", mat->m[i][j]);
+			printf(" %.6f |", mat.m[i][j]);
 		}
 		printf("\n");
 		i++;
