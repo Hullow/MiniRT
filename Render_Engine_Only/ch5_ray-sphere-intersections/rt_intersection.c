@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersection.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 18:08:49 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/11 19:26:13 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_intersect	rt_intersect(t_object object, t_ray ray)
 	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
 	if (object.shape == SPHERE)
 		rt_discriminant(ray, object, &intersect);
+	else
+		intersect = (t_intersect) {.count = 0};
 	return (intersect);
 }
 
