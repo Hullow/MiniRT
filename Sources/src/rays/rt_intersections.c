@@ -1,118 +1,244 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_intersections.c                                 :+:      :+:    :+:   */
+/*   rt_pair_intersections.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 10:35:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/17 17:08:53 by fallan           ###   ########.fr       */
+/*   Created: 2025/04/04 17:56:56 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/01 17:08:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/* 
-// Computes all the intersects between a ray and the objects in the scene
-// Stores intersections in a linked list in the ray struct
-static void	rt_compute_ray_intersects(
-	t_scene *scene, t_ray *ray, t_object *object)
+t_intersect	*rt_init_intersect(float t_value, t_object *object);
+t_intersect	*rt_add_intersect_to_ray_list(t_intersect *x1, t_intersect *x2, t_ray *ray);
+
+// Computes the collision distance between the ray and the plane
+// chapter 9
+t_intersect	*rt_ray_plane_x(t_ray *ray, t_object *plane)
+void	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x)
 {
-	int			i;
-	t_list		*new_list_item;
+	t_tuple	local_intersect;
+	float	t;
+
+	if (abs(ray.direction.y) < EPSILON) // edge case: ray paralel to plane normal
+	{
+		x->x_count = 0;
+		x->ray = ray;
+		x->object = plane;
+		return ;
+	}
+	t = -ray.origin.y / ray.direction.y;
+	local_intersect = rt_point(ray.origin.x + t * ray.direction.x, \
+								ray.origin.y + t * ray.direction.y, \
+								ray.origin.y + t * ray.direction.z);
+	x->object = plane;
+	x->ray = ray;
+	x->x_count = 1;
+	x->x_distances[0] = t;
+	//store the point value in the intersect too ??? would make sense
+	t_intersect	*x = NULL;
+
+	(void)ray;
+	(void)plane;
+	return (x);
+}
+
+// Computes the two collision distances between the ray and the cylinder
+// chapter 13
+t_intersect	*rt_ray_cylinder_x(t_ray *ray, t_object *cylinder)
+void	rt_ray_cylinder_x(t_ray ray, t_object cylinder, t_intersect *x)
+{
+	t_intersect	*x = NULL;
+
+	(void)ray;
+	(void)cylinder;
+}
+
+/* Helper function for rt_ray_sphere_x: does the actual computations to find
+the quadratic equations' parameters, including determinant
+
+	Returns: an array of three floats: a, b, the discriminant (c is forgotten)*/
+void	rt_compute_ray_sphere_params(float equation_params[3], t_object *sphere, t_ray transformed_ray, t_tuple sphere_to_ray)
+{
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+
+	a = dot_product(transformed_ray.direction, transformed_ray.direction);
+	b = 2.0f * dot_product(transformed_ray.direction, sphere_to_ray);
+	c = dot_product(sphere_to_ray, sphere_to_ray) - \
+		powf((sphere->diameter / 2.0f), 2);
+	discriminant = (b * b) - (4.0f * a * c);
+	// printf("%f^2 (== %f) - 4 * %f * %f (== %f) == %f\n", b, (b * b), a, c, 4.0f * a * c, discriminant);
+	equation_params[0] = a;
+	equation_params[1] = b;
+	equation_params[2] = discriminant;
+}
+
+// Computes the two collision distances between the ray and the sphere
+// Uses a quadratic equation discriminant = b²-4ac
+// to transform the sphere beform the collision calculus, 
+// the invert of the transformation is applied to the ray
+void	rt_ray_sphere_x(t_ray ray, t_object sphere, t_intersect *x)
+/* Mallocs and returns a new t_intersect struct, with a t-value and an
+intersected object given as parameters */
+t_intersect	*rt_init_intersect(float t_value, t_object *object)
+{
 	t_intersect	*x;
 
-	scene->n_obj = scene->n_sp + scene->n_pl + scene->n_cy; // need to compute this before in the code => input handling?
-	while (i < scene->n_obj)
-	{
-		x = rt_ray_object_x(*ray, object);
-		new_list_item = ft_lstnew(x);
-		if (errno)
-		{
-			handle_error(RAY_INTERSECTS, ENOMEM, NULL);
-			// free list
-			return ;	
-		}
-		if (!ray->intersects)
-			ray->intersects = new_list_item;
-		else
-			ft_lstadd_back(&ray->intersects, new_list_item);
-		i++;
-		object++;
-	}
+	x = ft_calloc(1, sizeof(t_pair_intersect));
+	if (errno)
+		return (rt_handle_error(RT_RAY_OBJ_X, ENOMEM, NULL));
+	x->t = t_value;
+	x->object = object;
+	return (x);
 }
-*/
 
+/* Adds an intersection struct to the linked list of intersections of the ray
+	1. Creates new list item with the intersection struct
+	2. Specifies which object is being intersected (using pointer t_object *)
+	3. Adds the list item to the end of the ray's list of intersections
+	
+	Returns: the first intersection (x1 )*/
+t_intersect	*rt_add_intersect_to_ray_list(t_intersect *x1, t_intersect *x2, t_ray *ray)
+{
+	t_list		*list_item_1;
+	t_list		*list_item_2;
+
+	list_item_1 = ft_lstnew(x1);
+	if (errno)
+	{
+		// free list
+		return(rt_handle_error(RAY_INTERSECTS, ENOMEM, NULL));
+	}
+	list_item_2 = ft_lstnew(x2);
+	if (errno)
+	{
+		// free list
+		return(rt_handle_error(RAY_INTERSECTS, ENOMEM, NULL));
+	}
+	if (!ray->intersects)
+		ray->intersects = list_item_1;
+	else
+		ft_lstadd_back(&ray.intersects, new_list_item);
+		ft_lstadd_back(&ray->intersects, list_item_1);
+	ft_lstadd_back(&ray->intersects, list_item_2);
+	return (x1);
+}
+
+
+// Computes the (zero/one/two) collision distances between a ray and a sphere
+//
+// How it works:
+// 1. Calloc a t_pair_intersect, set its intersections t_count to 0, object to sphere
+// 2. Transform the ray using the inverse of the sphere's transformation
+// 3. Compute the sphere to ray vector
+// 4. Compute the parameters eq_par[3] for the quadratic equation to be solved
+// 5. Check the discriminant's value:
+//		- if negative, return (with t_count previously set to 0)
+//  	- if 0, set t_count to 1
+//		- if > 0, set t_count to 2
+// 6. Fills the two t-values of our intersections t[0] and t[1]
+// 7. Return
+//
+// Returns: the t_pair_intersect that was computed
+// (n.b.: rt_add_intersect_to_ray_list adds it to the ray's intersections list)
+t_intersect	*rt_ray_sphere_x(t_ray *ray, t_object *sphere)
+{
+	t_intersect	*x1;
+	t_intersect	*x2;
+	t_ray		transformed_ray;
+	t_tuple		sphere_to_ray;
+	float		eq_par[3]; // equation_parameters
+
+	transformed_ray = rt_transform_ray(ray, sphere->inverse);
+	sphere_to_ray = subtract_tuple(transformed_ray.origin, sphere->coord);
+	rt_compute_ray_sphere_params(eq_par, sphere, transformed_ray, sphere_to_ray);
+	if (DISCRIMINANT < 0)
+	{
+		// printf("rt_ray_sphere_x: discriminant is < 0\n");
+		return (NULL);
+	}
+	x1 = rt_init_intersect((-B - sqrtf(DISCRIMINANT)) / (2.0f * A), sphere);
+	if (!x1)
+		return (NULL);
+	if (DISCRIMINANT == 0)
+		x2 = x1;
+	else
+	{
+		x2 = rt_init_intersect((-B + sqrtf(DISCRIMINANT)) / (2.0f * A), sphere);
+		if (!x2)
+			return (NULL);
+	}
+	return (rt_add_intersect_to_ray_list(x1, x2, ray));
+}
 
 // - Evaluates a ray's intersections with objects and returns the ray's hit
-// (the intersection with the lowest "t-value")
+// (the intersection with the lowest nonnegative "t-value")
 // - no malloc
-// - must be called with a NULL value for "void *hit_object"
 // 
 // Returns:
 // where the ray hits (t_intersect), with values:
-// - object: a pointer to the object hit (or NULL if none)
-// - ray: set to NULL (because we know which ray it is)
-// - x_distances[2]: t_min in [0], 0 in [1]
-// - x_count: 1
-t_intersect	rt_compute_ray_hit(t_ray *ray, void	*hit_object)
+// - t: the t-value of the intersection
+// - object: a pointer to the object hit
+// or NULL if no hit found
+t_intersect *rt_find_ray_hit(t_ray *ray)
 {
-	float	t_min;
-	float	t_iter_0;
-	float	t_iter_1;
+	float		t_min = INT_MAX; // What does t==0 mean ? Invisible ?
+	t_intersect	*hit_intersect = NULL;
+	t_intersect	*iterator = NULL;
 
-	if (ray->intersects)
-		t_min = ((t_intersect *) ray->intersects->content)->x_distances[0];
-	else
-		return ((t_intersect){NULL, NULL, {0.0, 0.0}, 0});
+	if (!ray->intersects || !ray->intersects->content)
+	{
+		// printf("rt_find_ray_hit: no t_intersect list or -> content found for the ray, returning NULL\n");
+		return (NULL);
+	}
+	// else
+	// printf("rt_find_ray_hit: one intersect found for the ray, continuing\n");
 	while (ray->intersects)
 	{
-		t_iter_0 = ((t_intersect *) ray->intersects->content)->x_distances[0];
-		t_iter_1 = ((t_intersect *) ray->intersects->content)->x_distances[1];
-		if (t_iter_0 > 0 && t_iter_0 < t_min)
+		iterator = (t_intersect *) (ray->intersects->content);
+		if (iterator->t > 0 && t_min > iterator->t)
 		{
-			t_min = t_iter_0;
-			hit_object = ((t_intersect *) ray->intersects->content)->object;
-		}
-		if (t_iter_1 > 0 && t_iter_1 < t_min)
-		{
-			t_min = t_iter_1;
-			hit_object = ((t_intersect *) ray->intersects->content)->object;
+			t_min = iterator->t;
+			hit_intersect = iterator;
 		}
 		ray->intersects = ray->intersects->next;
 	}
-	return ((t_intersect){hit_object, NULL, {t_min, 0.0}, 1});
+	// if (hit_intersect)
+	// 	    printf("rt_find_ray_hit: => hit_intersect set to (t: %f, obj: %p)\n", hit_intersect->t, hit_intersect->object); // => never comes up in my tests
+	// else
+	// 	printf("rt_find_ray_hit: returning hit_intersect == NULL\n");
+	return (hit_intersect);
 }
 
-/* // Computes the hits for all rays (to be precised)
-//
-// How it works:
-// - Loops over all rays (one ray per pixel, # based on the size of the window)
-// 
-// - First calls rt_compute_ray_intersects to compute all intersects of a ray
-// and the objects in the scene
-// - Then calls rt_compute_ray_hit to compute the hit from these intersects
-void	rt_compute_hits(t_scene *scene)
+// Computes the intersections of a ray on an object (sphere, cylinder, plane)
+// Returns a float[2] with the two (or one if plane) distances values from the 
+// origin of the ray to the surfaces of the object
+t_intersect	*rt_ray_object_x(t_ray *ray, t_object *object)
 {
-	int 		j;
-	int			n_rays;
-	t_intersect	hit;
-	t_ray		ray;
-	int			t_value;
-	void		*hit_object;
+	t_intersect	x;
+	t_object	type;
 
-	n_rays = WINDOW_WIDTH * WINDOW_HEIGHT;
-	j = 0;
-	while (j < n_rays)
-	{
-		rt_compute_ray_intersects(scene, &ray, scene->objects);
-		hit = rt_compute_ray_hit(&ray, NULL);
-		if (hit.object) // if an object was hit, here are the relevant values:
-		{
-			t_value = hit.x_distances[0];
-			hit_object = hit.object;	
-		}
-		j++;
-	}
+	x.object = object;
+	x.ray = ray;
+	x.x_count = 0;
+	if (object.type == SPHERE)
+		return (rt_ray_sphere_x(rt_transform_ray(ray, object.inverse), object, &x), x);
+	if (object.type == CYLINDER)
+		return (rt_ray_cylinder_x(rt_transform_ray(ray, object.inverse), object, &x), x);
+	if (object.type == PLANE)
+		return (rt_ray_sphere_x(rt_transform_ray(ray, object.inverse), object, &x), x);
+	return (x);
+	if (object->type == SPHERE)
+		return (rt_ray_sphere_x(ray, object));
+	if (object->type == CYLINDER)
+		return (rt_ray_cylinder_x(ray, object));
+	if (object->type == PLANE)
+		return (rt_ray_plane_x(ray, object));
+	return (NULL);
 }
- */
