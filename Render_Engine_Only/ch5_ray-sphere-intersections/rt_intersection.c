@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 19:26:13 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/14 16:24:50 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ t_intersect	rt_intersect(t_object object, t_ray ray)
 	t_intersect	intersect;
 	t_matrix	ray_transform;
 
+	// ray transformation
 	rt_inversion(object.transform, &ray_transform);
 	ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
 	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
+	
 	if (object.shape == SPHERE)
-		rt_discriminant(ray, object, &intersect);
+		rt_ray_sphere_intersects(ray, object, &intersect);
 	else
 		intersect = (t_intersect) {.count = 0};
 	return (intersect);
@@ -43,7 +45,15 @@ t_tuple	rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin)
 	return (distance);
 }
 
-void	rt_discriminant(t_ray ray, t_object sphere, t_intersect *intersect)
+/* Helper function for rt_ray_sphere_x: does the actual computations to find
+the quadratic equations' parameters, including determinant
+
+	Returns: an array of three floats: a, b, the discriminant (c is forgotten)*/
+///	@brief computes the ray<->sphere-intersection
+/// @param ray		 n.b.: already transformed
+/// @param sphere	 the sphere	
+/// @param intersect a pointer to the t_intersect struct to be filled
+void	rt_ray_sphere_intersects(t_ray ray, t_object sphere, t_intersect *intersect)
 {
 	float	discriminant;
 	float	a;
@@ -58,15 +68,17 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_intersect *intersect)
 	b = 2 * rt_dot_product(ray.direction, sp_ray);
 	c = rt_dot_product(sp_ray, sp_ray) - 1;
 	discriminant = b * b - 4 * a * c;
+	intersect->count = 0;
 	if (discriminant < 0)
-	{
 		errno = EDISCRIMINANT;
-		intersect->count = 0;
-		return ;
+	else
+	{
+		intersect->count = 1;
+		intersect->first = (b - sqrtf(discriminant)) / (2 * a);
+		intersect->last = (-b - sqrtf(discriminant)) / (2 * a);
+		if (intersect->first != intersect->last)
+			intersect->count = 2;
 	}
-	intersect->count = 2;
-	intersect->first = (-b - sqrtf(discriminant)) / (2 * a);
-	intersect->last = (-b + sqrtf(discriminant)) / (2 * a);
 }
 
 /// @brief Returns the hit between two t values

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/12 01:10:31 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/14 18:47:49 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	test_intersect(void);
 void	test_mlx(void);
 void	test_light(void);
 void	test_light_render(void);
+void	test_world(void);
 
 //Structs
 
@@ -51,11 +52,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 600
+#  define WINDOW_WIDTH 800
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 400
+#  define WINDOW_HEIGHT 600
 # endif
 
 # ifndef WINDOW_NAME
@@ -85,6 +86,11 @@ typedef struct s_matrix
 //Objects
 
 /// @brief Material contains light effects. Not color because norminette
+/// @param ambient	typical values between 0 and 1
+/// @param diffuse	typical values between 0 and 1
+/// @param specular	typical values between 0 and 1
+/// @param shininess values between 10 (v. large highlight) and 200 (v. small)
+/// 				 seem to work best, though there is no actual upper bound
 typedef struct s_material
 {
 	float	ambient;
@@ -145,14 +151,16 @@ typedef struct s_camera
 	float	fov;
 }	t_camera;
 
+/// @brief	struct for light source
+///	@param	coord		: a POINT tuple for the position
+/// @param	intensity	: float, typically between 0 and 1, can be larger
+/// @param	color		: a COLOR tuple
 typedef struct s_light
 {
 	t_tuple	coord;
 	float	intensity;
 	t_tuple	color;
 }	t_light;
-
-
 
 //CH1 Tuples
 
@@ -225,7 +233,7 @@ t_object	rt_sphere(t_tuple color, t_material material);
 void		rt_print_sphere(t_object sphere);
 t_intersect	rt_intersect(t_object object, t_ray ray);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
-void		rt_discriminant(t_ray ray, t_object object, t_intersect *intersect);
+void		rt_ray_sphere_intersects(t_ray ray, t_object object, t_intersect *intersect);
 float		rt_hit(float t1, float t2);
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);

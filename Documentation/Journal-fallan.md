@@ -217,3 +217,13 @@ reinhard tone. It works ! Diffuse, ambient, specular :)
 pberset's work
 - Folder order: removed fdf folder in Documentation/, it's pollution
 - To do tomorrow: finish re-reading chapter and code, then order and re-add comments on functions
+
+# 13/4/25
+- Playing with sphere transformations (installed Blender to understand shearing better). All seems to work
+
+# 14/4/25
+- Started merging Render_Engine_Only with rest of project => will do it tomorrow with pberset
+- Started reading Chapter 7 Making a Scene. Created world type, also wrote the first tests to satisfy. Initialization works, with variadic arguments (should probably be removed later...)
+- Retouched `rt_discriminant` in Render_engine a bit (renamed `rt_ray_sphere_intersects` because that's what it is). (doesn't break sphere rendering).
+- Moved the contents of the inner loop of `test_light_render()` to a new function `rt_render_sphere_pixel()`
+- Started working on threaded version of this function `rt_thread_render_sphere_pixel()`. It compiles but is very slow, doesn't seem to work. Debugging with Gemini in Copilot

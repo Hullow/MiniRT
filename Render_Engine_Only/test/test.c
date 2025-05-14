@@ -902,61 +902,230 @@ void	test_light()
 	printf("\n");
 }
 
-void	test_light_render()
+#include <pthread.h>
+/// @brief draws each pixel of our sphere rendering, by defining the ray,
+/// calculating its intersects with the sphere, then computing the color
+/// @param ray 
+/// @param sphere 
+/// @param w 
+/// @param h 
+/// @param wall_z z coordinates of the wall on which we're projecting
+/// @param light 
+/// @param env
+void rt_render_sphere_pixel(t_ray ray, t_object sphere, int w, int h, float wall_z, \
+t_light light, t_env *env)
 {
-	printf("CH6 - Putting it together\n");
-	t_camera	camera;
-	t_env		env;
-	t_ray		ray;
 	t_intersect	intersect;
-	t_light		light;
-	t_object	sphere;
 	t_tuple		point;
-	t_tuple 	eyev;
+	t_tuple		eyev;
 	t_tuple		normalv;
 	t_tuple		color;
 
-	int			h;
-	int			w;
-	float		wall_z;
+	ray = rt_define_ray_to_wall(ray, w, h, wall_z);
+	intersect = rt_intersect(sphere, ray);
+	if (intersect.count != 0)
+	{
+		point = rt_position(ray, rt_hit(intersect.first, intersect.last));
+		normalv = rt_normal_at(intersect.object, point);
+		eyev = rt_negate_tuple(ray.direction);
+		color = rt_lighting(intersect.object, light, point, eyev, normalv);
+		color = rt_reinhard_tonemap(color);
+		my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
+	}
+	else
+	{
+		my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, rgb_to_int((t_tuple){0, 0, 0, COLOR}));
+	}
+}
 
-	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
-	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
-	// sphere.transform = rt_mul_matrix(rt_scaling(rt_vector(1, 0.3, 1)), rt_rotation_z(90));
-	float shear_factors[6] = {1, 1, 1.2, 1, 1, 0.8};
-	sphere.transform = rt_shearing(shear_factors);
-	// sphere.transform = rt_scaling(rt_vector(1, 0.3, 1));
-	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
-	ray = rt_ray(camera.coord, camera.orient);
+
+typedef struct s_arg_struct {
+	// general, same for all threads => put into single *general* struct, and point to it ?
+	t_ray			ray;
+	t_object		sphere;
+	// pthread_mutex_t *w_mut;
+	float			wall_z;
+	t_light			light;
+	t_env			*env;
+	// specific to each thread
+	int				h;
+	int				w;
+} t_arg_struct;
+
+
+void *rt_thread_render_sphere_pixel(void *vargp)
+{
+	t_arg_struct	*ta_struct;
+	t_intersect	intersect;
+	t_tuple		point;
+	t_tuple		eyev;
+	t_tuple		normalv;
+	t_tuple		color;
+
+	if (!vargp)
+		return NULL;
+	ta_struct = (t_arg_struct *) vargp;
+	// printf("thread routine for pixels (h: %d, w: %d)\n", ta_struct->h, ta_struct->w);
+	ta_struct->ray = rt_define_ray_to_wall(ta_struct->ray, ta_struct->w, ta_struct->h, ta_struct->wall_z);
+	intersect = rt_intersect(ta_struct->sphere, ta_struct->ray);
+	if (intersect.count != 0)
+	{
+		point = rt_position(ta_struct->ray, rt_hit(intersect.first, intersect.last));
+		normalv = rt_normal_at(intersect.object, point);
+		eyev = rt_negate_tuple(ta_struct->ray.direction);
+		color = rt_lighting(intersect.object, ta_struct->light, point, eyev, normalv);
+		color = rt_reinhard_tonemap(color);
+		my_mlx_pixel_put(ta_struct->env, ta_struct->w, WINDOW_HEIGHT - ta_struct->h, rgb_to_int(color));
+	}
+	else
+		my_mlx_pixel_put(ta_struct->env, ta_struct->w, WINDOW_HEIGHT - ta_struct->h, rgb_to_int((t_tuple){0, 0, 1, COLOR}));
+	
+	return NULL;
+}
+
+void	test_light_render()
+{
+	printf("CH6 - Putting it together\n");
+	t_camera		camera;
+	t_env			env;
+	t_ray			ray;
+	t_light			light;
+	t_object		sphere;
+	pthread_t		threads[WINDOW_WIDTH / 4];
+	t_arg_struct	thread_arg_struct[WINDOW_WIDTH / 4];
+	
+	int				h;
+	int				w;
+	float			wall_z;
+	int 			i;
+
 	env = mlx_set_env();
-
+	camera = rt_camera(rt_point(0, 0, -100), rt_vector(0, 0, 1), 200.0f);
+	ray = rt_ray(camera.coord, camera.orient);
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 12), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere.transform = rt_mul_matrix(rt_rotation_z(60), rt_scaling(rt_vector(2, 0.6, 2)));
+	rt_print_matrix(sphere.transform);
+	// float shear_factors[6] = {-1, 0, 0, 0, 0, 0};
+	// sphere.transform = rt_shearing(shear_factors);
+	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	wall_z = 5;
 	h = 0;
-	while (h < WINDOW_HEIGHT)
+
+	// pthread_mutex_init(&w_mut, NULL); // initialize the w mutex (but maybe it's useless)
+	
+	// initialize the arg structs for each thread. only h and w will vary
+	while (h < WINDOW_HEIGHT) // Outer loop for each row
 	{
-		if ((h + 1) % 100 == 0)
-		printf("Progressing: %f\n", (float)((float)(h + 1) / (float)WINDOW_HEIGHT * 100.0f));
 		w = 0;
-		while (w < WINDOW_WIDTH)
+		if (h % 50 == 0)
+			printf("progress: row %d\n", h);
+		while (w < WINDOW_WIDTH) // Inner loop for pixels in a row
 		{
-			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
-			intersect = rt_intersect(sphere, ray);
-			if(intersect.count != 0)
+			i = 0;
+			// inner section creating a small batch of threads
+			while (i < WINDOW_WIDTH / 4 && (w * i) < WINDOW_WIDTH) // 0 -> 1/4; 1/4 -> 2/4; ...
 			{
-				point = rt_position(ray, rt_hit(intersect.first, intersect.last));
-				normalv = rt_normal_at(intersect.object, point);
-				eyev = rt_negate_tuple(ray.direction);
-				color = rt_lighting(intersect.object, light, point, eyev, normalv);
-				color = rt_reinhard_tonemap(color);
-				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
+				thread_arg_struct[i] = (t_arg_struct) {
+					.ray = ray,
+					.sphere = sphere,
+					.wall_z = wall_z,
+					.light = light,
+					.env = &env	};
+				thread_arg_struct[i].h = h;
+				thread_arg_struct[i].w = w + i;
+				
+				pthread_create(&threads[i], NULL, rt_thread_render_sphere_pixel, &thread_arg_struct[i]);
+				w++;
 			}
-			else
+			int k = 0;
+			while (k < i) // join from 1/4 -> 0; 2/4 -> 1/4; ...
 			{
-				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int((t_tuple){0, 0, 0, COLOR}));
+				pthread_join(threads[k], NULL);
+				k++;
 			}
-			w++;
+			w += i; // Move to the next batch of pixels in a row
 		}
 		h++;
 	}
 	mlx_run_window(&env);
+}
+
+typedef struct s_world {
+	t_light		light;
+	int			obj_count;
+	t_object	*objects; // array
+}	t_world;
+
+/* t_intersect	*rt_intersect_world(t_world world, t_ray ray)
+{
+	t_intersect	*intersections;
+} */
+
+#include <stdarg.h>
+/// @brief initializes a t_world struct
+/// @param light the light source
+/// @param obj_count the number of objects
+/// @param object variadic argument, can take in multiple objects
+/// @param  
+/// @return the initialized world (returns only w/ the light if obj_count == 0)
+t_world	rt_init_world(t_light light, int obj_count, ...)
+{
+	va_list		ap;
+	int			i;
+	t_object	obj_array[obj_count];
+	t_world		world;
+
+	world.light = light;
+	world.obj_count = obj_count;
+	if (obj_count <= 0)
+		return (world);
+	va_start(ap, obj_count);
+	i = 0;
+	while (i < obj_count)
+	{
+		obj_array[i] = va_arg(ap, t_object);
+		i++;
+	}
+	world.objects = obj_array;
+	va_end(ap);
+	return (world);
+}
+
+void	test_world()
+{
+	t_world		world;
+	printf("test_world:\n***********\n\n");
+
+	// light
+	t_tuple		light_position = rt_point(-10, 10, -10);
+	t_tuple		light_color = rt_color(255, 255, 255);
+	float		light_intensity = 1.0f;
+	t_light		light = rt_light(light_color, light_position, light_intensity);
+
+	// objects
+	t_object	sp_outer = (t_object) {.shape = SPHERE, 
+		.diameter = 2.0f,
+		.color = rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255),
+		.origin = rt_point(0, 0, 0),
+		.transform = rt_identity_matrix(),
+		.material = rt_material(0.1, 0.7, 0.2, 200.0f)};
+
+	t_object	sp_inner = (t_object) {.shape = SPHERE, 
+		.diameter = 2.0f,
+		.color = rt_color(0, 255, 0),
+		.origin = rt_point(0, 0, 0),
+		.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5)),
+		.material = rt_material(0.5, 0.2, 0.2, 100.0f)};
+
+	// initializing the world
+	world = rt_init_world(light, 2, sp_outer, sp_inner);
+
+	printf("initializing the world\n***********************\n");
+	printf("world.light.color: ");
+	rt_print_tuple(world.light.color);
+	printf("world.light.coord: ");
+	rt_print_tuple(world.light.coord);
+	printf("world.light.intensity: %f\n", world.light.intensity);
+	printf("world.objects[0].diameter: %2.f, world.objects[1].diameter: %2.f\n",
+		world.objects[0].diameter, world.objects[1].diameter);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_test_tuple.c                                    :+:      :+:    :+:   */
+/*   rt_test_projectile_sim.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:35:34 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/18 18:30:42 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/14 13:38:18 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,99 +111,4 @@ void	test_proj_sim()
 	proj.position.x, proj.position.y, proj.position.z,
 	proj.velocity.x, proj.velocity.y, proj.velocity.z, count);
 	// free_projectile_and_environment(proj, env);
-}
-
-/* main to test the functions */
-void	test_tuple()
-{
-	// test_proj_sim();
-
-	// t_tuple neg_b = rt_vector(-0.1000001, 0.4, -15.0);
-	// t_tuple p = (t_tuple){4, -4, 3, 0};
-	// t_tuple c = rt_vector(-2, -4, -6);
-	// t_tuple a = rt_vector(1, -2, 3);
-	// t_tuple b = rt_vector(5, 6, 7);
-	// t_tuple double_b = rt_vector(10, 12, 14);
-
-
-	// printf("a has coordinates x: %f, y:%f, z:%f and is a ", a.x, a.y, a.z);
-	// if (a.w == POINT)
-	// 	printf("point\n");
-	// else
-	// 	printf("vector\n");
-	// printf("b has coordinates x: %f, y:%f, z:%f and is a ", b.x, b.y, b.z);
-	// if (b.w == POINT)
-	// 	printf("point\n");
-	// else
-	// 	printf("vector\n");
-
-	// if (p.w == POINT)
-	// 	printf("p is a point\n");
-	// else if (p.w == VECTOR)
-	// 	printf("p is a vector\n");
-		
-
-	// if (is_equal_float(a.x, b.x))
-	// 	printf("a.x and b.x are equal\n");
-	// else
-	// 	printf("a.x and b.x are not equal\n");
-	// if (is_equal_tuple(add_tuple(a, b), c))
-	// 	printf("adding tuples: a+b == c\n");
-	// else
-	// 	printf("adding tuples: a+b != c\n");
-	
-	// if (is_equal_tuple(subtract_tuple(a, b), c))
-	// 	printf("subtracting tuples: a-b == c\n");
-	// else
-	// 	printf("subtracting tuples: a-b != c\n");
-
-	// if (is_equal_tuple(negate_tuple(a), c))
-	// 	printf("negate a == c\n");
-	// else
-	// 	printf("negate a != c\n");
-
-	
-	// MULTIPLICATIONS
-	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 1), b))
-	// 	printf("multiply b by 1 == b\n");
-	// else
-	// 	printf("multiply b by 1 != b\n");
-	// if (is_equal_tuple(divide_tuple_by_scalar(b, 1), b))
-	// 	printf("divide b by 1 == b\n");
-	// else
-	// 	printf("divide b by 1 != b\n");
-	// if (is_equal_tuple(divide_tuple_by_scalar(b, 0), rt_vector(0,0,0)))
-	// 	printf("divide b by 0 == 0\n");
-	// else
-	// 	printf("divide b by 0 != 0\n");
-	// if (is_equal_tuple(divide_tuple_by_scalar(double_b, 2), b))
-	// 	printf("divide double_b by 2 == b\n");
-	// else
-	// 	printf("divide double_b by 2 != b\n");
-	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 2), double_b))
-	// 	printf("multiply b by 2 == double_b\n");
-	// else
-	// 	printf("multiply b by 2 != double_b\n");
-
-	// if (is_equal_tuple(multiply_tuple_by_scalar(b, 0), rt_vector(0,0,0)))
-	// 	printf("multiply b by 0 == 0\n");
-	// else
-	// 	printf("multiply b by 0 != 0\n");
-
-
-	/* magnitude, dot product, cross product */
-	/*****************************************/
-	// t_tuple	sample_vector = rt_vector(1, 2, 3);
-	// printf("sample vector has magnitude: %f; squared: %f\n", magnitude(sample_vector), powf(magnitude(sample_vector), 2));
-	// t_tuple	normd = normalize(sample_vector);
-	// printf("sample vector normalised is (%f, %f, %f) and has magnitude %f\n", normd.x, normd.y, normd.z, magnitude(normd));
-	
-	// printf("dot product of sample vector and another vector is %f\n", dot_product(sample_vector, rt_vector(2, 3, 4)));
-
-	// t_tuple	cross = cross_product(rt_vector(1, 2, 3), rt_vector(2, 3, 4));
-	// t_tuple	cross2 = cross_product(rt_vector(2, 3, 4), rt_vector(1, 2, 3));
-	// printf("the cross product (0, -1, 0) x (0, 0, -1) is (%f, %f, %f)\n", cross.x, cross.y, cross.z);
-	// printf("the cross product (0, 0, -1) x (0, -1, 0) is (%f, %f, %f)\n", cross2.x, cross2.y, cross2.z);
-	
-
 }

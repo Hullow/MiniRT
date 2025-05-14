@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_rotation.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:31:13 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 12:31:15 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/14 13:33:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
