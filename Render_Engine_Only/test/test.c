@@ -903,6 +903,7 @@ void	test_light()
 }
 
 #include <pthread.h>
+#include <unistd.h>
 /// @brief draws each pixel of our sphere rendering, by defining the ray,
 /// calculating its intersects with the sphere, then computing the color
 /// @param ray 
@@ -955,31 +956,44 @@ typedef struct s_arg_struct {
 
 void *rt_thread_render_sphere_pixel(void *vargp)
 {
-	t_arg_struct	*ta_struct;
-	t_intersect	intersect;
-	t_tuple		point;
-	t_tuple		eyev;
-	t_tuple		normalv;
-	t_tuple		color;
+	t_arg_struct	*args;
+	t_intersect		intersect;
+	t_tuple			point;
+	t_tuple			eyev;
+	t_tuple			normalv;
+	t_tuple			color;
 
 	if (!vargp)
 		return NULL;
-	ta_struct = (t_arg_struct *) vargp;
-	// printf("thread routine for pixels (h: %d, w: %d)\n", ta_struct->h, ta_struct->w);
-	ta_struct->ray = rt_define_ray_to_wall(ta_struct->ray, ta_struct->w, ta_struct->h, ta_struct->wall_z);
-	intersect = rt_intersect(ta_struct->sphere, ta_struct->ray);
-	if (intersect.count != 0)
+	args = (t_arg_struct *) vargp;
+	while (args->h < WINDOW_HEIGHT)
 	{
-		point = rt_position(ta_struct->ray, rt_hit(intersect.first, intersect.last));
-		normalv = rt_normal_at(intersect.object, point);
-		eyev = rt_negate_tuple(ta_struct->ray.direction);
-		color = rt_lighting(intersect.object, ta_struct->light, point, eyev, normalv);
-		color = rt_reinhard_tonemap(color);
-		my_mlx_pixel_put(ta_struct->env, ta_struct->w, WINDOW_HEIGHT - ta_struct->h, rgb_to_int(color));
+		args->w = 0;
+		while (args->w < WINDOW_WIDTH)
+		{
+			args->ray = rt_define_ray_to_wall(args->ray, args->w, args->h, args->wall_z);
+			intersect = rt_intersect(args->sphere, args->ray);
+			if (intersect.count != 0)
+			{
+				point = rt_position(args->ray, rt_hit(intersect.first, intersect.last));
+				normalv = rt_normal_at(intersect.object, point);
+				eyev = rt_negate_tuple(args->ray.direction);
+				color = rt_lighting(intersect.object, args->light, point, eyev, normalv);
+				color = rt_reinhard_tonemap(color);
+				// pthread_mutex_lock(); // lock env mutex
+				my_mlx_pixel_put(args->env, args->w, WINDOW_HEIGHT - args->h, rgb_to_int(color));
+				// pthread_mutex_unlock(); // unlock env mutex
+			}
+			else
+			{
+				// pthread_mutex_lock(); // lock env mutex
+				my_mlx_pixel_put(args->env, args->w, WINDOW_HEIGHT - args->h, rgb_to_int((t_tuple){0, 0, 1, COLOR}));
+				// pthread_mutex_unlock(); // unlock env mutex
+			}
+			args->w++;
+		}
+		args->h += NUM_THREADS;
 	}
-	else
-		my_mlx_pixel_put(ta_struct->env, ta_struct->w, WINDOW_HEIGHT - ta_struct->h, rgb_to_int((t_tuple){0, 0, 1, COLOR}));
-	
 	return NULL;
 }
 
@@ -991,11 +1005,9 @@ void	test_light_render()
 	t_ray			ray;
 	t_light			light;
 	t_object		sphere;
-	pthread_t		threads[WINDOW_WIDTH / 4];
-	t_arg_struct	thread_arg_struct[WINDOW_WIDTH / 4];
-	
-	int				h;
-	int				w;
+	pthread_t		threads[NUM_THREADS];
+	t_arg_struct	thread_arg_struct[NUM_THREADS];
+
 	float			wall_z;
 	int 			i;
 
@@ -1009,44 +1021,24 @@ void	test_light_render()
 	// sphere.transform = rt_shearing(shear_factors);
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	wall_z = 5;
-	h = 0;
 
-	// pthread_mutex_init(&w_mut, NULL); // initialize the w mutex (but maybe it's useless)
-	
-	// initialize the arg structs for each thread. only h and w will vary
-	while (h < WINDOW_HEIGHT) // Outer loop for each row
+	i = 0;
+	while (i < NUM_THREADS)
 	{
-		w = 0;
-		if (h % 50 == 0)
-			printf("progress: row %d\n", h);
-		while (w < WINDOW_WIDTH) // Inner loop for pixels in a row
-		{
-			i = 0;
-			// inner section creating a small batch of threads
-			while (i < WINDOW_WIDTH / 4 && (w * i) < WINDOW_WIDTH) // 0 -> 1/4; 1/4 -> 2/4; ...
-			{
-				thread_arg_struct[i] = (t_arg_struct) {
-					.ray = ray,
-					.sphere = sphere,
-					.wall_z = wall_z,
-					.light = light,
-					.env = &env	};
-				thread_arg_struct[i].h = h;
-				thread_arg_struct[i].w = w + i;
-				
-				pthread_create(&threads[i], NULL, rt_thread_render_sphere_pixel, &thread_arg_struct[i]);
-				w++;
-			}
-			int k = 0;
-			while (k < i) // join from 1/4 -> 0; 2/4 -> 1/4; ...
-			{
-				pthread_join(threads[k], NULL);
-				k++;
-			}
-			w += i; // Move to the next batch of pixels in a row
-		}
-		h++;
+		thread_arg_struct[i] = (t_arg_struct) {
+			.ray = ray,
+			.sphere = sphere,
+			.wall_z = wall_z,
+			.light = light,
+			.env = &env,
+			thread_arg_struct[i].h = i,
+			thread_arg_struct[i].w = 0
+		};
+		pthread_create(&threads[i], NULL, rt_thread_render_sphere_pixel, &thread_arg_struct[i]);
 	}
+	while (i-- > 0)
+		pthread_join(threads[i], NULL);
+	printf("seg check\n");
 	mlx_run_window(&env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/14 18:47:49 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:14:47 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ typedef struct s_tuple
 
 # ifndef WINDOW_NAME
 #  define WINDOW_NAME "micro_rt"
+# endif
+
+# ifndef NUM_THREADS
+#  define NUM_THREADS 4
 # endif
 
 typedef struct s_env {
