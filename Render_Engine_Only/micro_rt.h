@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/15 12:14:47 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:54:14 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,6 @@ typedef struct s_tuple
 
 # ifndef WINDOW_NAME
 #  define WINDOW_NAME "micro_rt"
-# endif
-
-# ifndef NUM_THREADS
-#  define NUM_THREADS 4
 # endif
 
 typedef struct s_env {
@@ -134,11 +130,15 @@ typedef struct s_ray
 
 typedef struct s_intersect
 {
-	t_object	object;
-	int			count;
-	float		first;
-	float		last;
+	t_object	*object;
+	float		t;
 }	t_intersect;
+
+typedef struct s_intersect_collection
+{
+	t_intersect *intersections;
+	int			count;
+}	t_intersect_coll;
 
 //Light
 
@@ -165,6 +165,23 @@ typedef struct s_light
 	float	intensity;
 	t_tuple	color;
 }	t_light;
+
+// scene struct
+typedef struct s_scene
+{
+	int					n_a;
+	int					n_l;
+	int					n_cam;
+	int					n_sp;
+	int					n_pl;
+	int					n_cy;
+	int					n_obj;
+	t_ambient			amb;
+	t_camera			cam;
+	t_light				lux;
+	t_object			*objects;
+	t_intersect_coll	xs;
+}	t_scene;
 
 //CH1 Tuples
 
@@ -237,7 +254,9 @@ t_object	rt_sphere(t_tuple color, t_material material);
 void		rt_print_sphere(t_object sphere);
 t_intersect	rt_intersect(t_object object, t_ray ray);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
-void		rt_ray_sphere_intersects(t_ray ray, t_object object, t_intersect *intersect);
+void	rt_ray_sphere_intersects(t_ray ray, t_object *sphere, t_intersect_coll *xs, int i);
+t_intersect_coll	rt_intersect_ray_scene(t_ray ray, t_scene scene);
+t_intersect	rt_find_hit(t_intersect_coll xs);
 float		rt_hit(float t1, float t2);
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);

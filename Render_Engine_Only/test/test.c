@@ -1,6 +1,6 @@
 #include "../micro_rt.h"
 
-void	test_tuples()
+/* void	test_tuples()
 {	
 	t_tuple	point;
 	t_tuple	vector;
@@ -764,6 +764,8 @@ void	test_intersect()
 	intersect = rt_intersect(sphere, ray);
 	printf("count = %d, [0] = %f, [1] = %f\n", intersect.count, intersect.first, intersect.last);
 }
+ */
+
 
 void	test_mlx()
 {
@@ -778,7 +780,8 @@ void	test_mlx()
 	//rt_print_matrix(sp.transform);
 	env = mlx_set_env();
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	rt_draw(&env, sp, ray);
+	// rt_draw(&env, sp, ray);
+	(void)ray;
 	mlx_run_window(&env);
 }
 
@@ -902,8 +905,7 @@ void	test_light()
 	printf("\n");
 }
 
-#include <pthread.h>
-#include <unistd.h>
+/* 
 /// @brief draws each pixel of our sphere rendering, by defining the ray,
 /// calculating its intersects with the sphere, then computing the color
 /// @param ray 
@@ -937,121 +939,13 @@ t_light light, t_env *env)
 	{
 		my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, rgb_to_int((t_tuple){0, 0, 0, COLOR}));
 	}
-}
+} */
 
-
-typedef struct s_arg_struct {
-	// general, same for all threads => put into single *general* struct, and point to it ?
-	t_ray			ray;
-	t_object		sphere;
-	// pthread_mutex_t *w_mut;
-	float			wall_z;
-	t_light			light;
-	t_env			*env;
-	// specific to each thread
-	int				h;
-	int				w;
-} t_arg_struct;
-
-
-void *rt_thread_render_sphere_pixel(void *vargp)
-{
-	t_arg_struct	*args;
-	t_intersect		intersect;
-	t_tuple			point;
-	t_tuple			eyev;
-	t_tuple			normalv;
-	t_tuple			color;
-
-	if (!vargp)
-		return NULL;
-	args = (t_arg_struct *) vargp;
-	while (args->h < WINDOW_HEIGHT)
-	{
-		args->w = 0;
-		while (args->w < WINDOW_WIDTH)
-		{
-			args->ray = rt_define_ray_to_wall(args->ray, args->w, args->h, args->wall_z);
-			intersect = rt_intersect(args->sphere, args->ray);
-			if (intersect.count != 0)
-			{
-				point = rt_position(args->ray, rt_hit(intersect.first, intersect.last));
-				normalv = rt_normal_at(intersect.object, point);
-				eyev = rt_negate_tuple(args->ray.direction);
-				color = rt_lighting(intersect.object, args->light, point, eyev, normalv);
-				color = rt_reinhard_tonemap(color);
-				// pthread_mutex_lock(); // lock env mutex
-				my_mlx_pixel_put(args->env, args->w, WINDOW_HEIGHT - args->h, rgb_to_int(color));
-				// pthread_mutex_unlock(); // unlock env mutex
-			}
-			else
-			{
-				// pthread_mutex_lock(); // lock env mutex
-				my_mlx_pixel_put(args->env, args->w, WINDOW_HEIGHT - args->h, rgb_to_int((t_tuple){0, 0, 1, COLOR}));
-				// pthread_mutex_unlock(); // unlock env mutex
-			}
-			args->w++;
-		}
-		args->h += NUM_THREADS;
-	}
-	return NULL;
-}
-
-void	test_light_render()
-{
-	printf("CH6 - Putting it together\n");
-	t_camera		camera;
-	t_env			env;
-	t_ray			ray;
-	t_light			light;
-	t_object		sphere;
-	pthread_t		threads[NUM_THREADS];
-	t_arg_struct	thread_arg_struct[NUM_THREADS];
-
-	float			wall_z;
-	int 			i;
-
-	env = mlx_set_env();
-	camera = rt_camera(rt_point(0, 0, -100), rt_vector(0, 0, 1), 200.0f);
-	ray = rt_ray(camera.coord, camera.orient);
-	sphere = rt_sphere(rt_color(255, 0.2 * 255, 12), rt_material(0.1, 0.9, 0.9, 200.0f));
-	sphere.transform = rt_mul_matrix(rt_rotation_z(60), rt_scaling(rt_vector(2, 0.6, 2)));
-	rt_print_matrix(sphere.transform);
-	// float shear_factors[6] = {-1, 0, 0, 0, 0, 0};
-	// sphere.transform = rt_shearing(shear_factors);
-	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
-	wall_z = 5;
-
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		thread_arg_struct[i] = (t_arg_struct) {
-			.ray = ray,
-			.sphere = sphere,
-			.wall_z = wall_z,
-			.light = light,
-			.env = &env,
-			thread_arg_struct[i].h = i,
-			thread_arg_struct[i].w = 0
-		};
-		pthread_create(&threads[i], NULL, rt_thread_render_sphere_pixel, &thread_arg_struct[i]);
-	}
-	while (i-- > 0)
-		pthread_join(threads[i], NULL);
-	printf("seg check\n");
-	mlx_run_window(&env);
-}
-
-typedef struct s_world {
+/* typedef struct s_world {
 	t_light		light;
 	int			obj_count;
 	t_object	*objects; // array
 }	t_world;
-
-/* t_intersect	*rt_intersect_world(t_world world, t_ray ray)
-{
-	t_intersect	*intersections;
-} */
 
 #include <stdarg.h>
 /// @brief initializes a t_world struct
@@ -1082,10 +976,27 @@ t_world	rt_init_world(t_light light, int obj_count, ...)
 	va_end(ap);
 	return (world);
 }
+	
+// in test_world:
+
+	// initializing the world
+	// world = rt_init_world(light, 2, sp_outer, sp_inner);
+
+	// printf("initializing the world\n***********************\n");
+	// printf("world.light.color: ");
+	// rt_print_tuple(world.light.color);
+	// printf("world.light.coord: ");
+	// rt_print_tuple(world.light.coord);
+	// printf("world.light.intensity: %f\n", world.light.intensity);
+	// printf("world.objects[0].diameter: %2.f, world.objects[1].diameter: %2.f\n",
+	// 	world.objects[0].diameter, world.objects[1].diameter);
+*/
+
+
 
 void	test_world()
 {
-	t_world		world;
+	// t_world		world;
 	printf("test_world:\n***********\n\n");
 
 	// light
@@ -1109,15 +1020,89 @@ void	test_world()
 		.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5)),
 		.material = rt_material(0.5, 0.2, 0.2, 100.0f)};
 
-	// initializing the world
-	world = rt_init_world(light, 2, sp_outer, sp_inner);
 
-	printf("initializing the world\n***********************\n");
-	printf("world.light.color: ");
-	rt_print_tuple(world.light.color);
-	printf("world.light.coord: ");
-	rt_print_tuple(world.light.coord);
-	printf("world.light.intensity: %f\n", world.light.intensity);
-	printf("world.objects[0].diameter: %2.f, world.objects[1].diameter: %2.f\n",
-		world.objects[0].diameter, world.objects[1].diameter);
+	// Intersecting a world with a ray
+	t_object scene_objects[2];
+	scene_objects[0] = sp_inner;
+	scene_objects[1] = sp_outer;
+	t_camera camera = rt_camera(rt_point(0, 0, -10), rt_vector(0, 0, 1), 60.0f);
+
+	t_scene scene;
+	scene.n_obj = 2;
+	scene.objects = scene_objects;
+	scene.lux = light;
+	scene.cam = camera;
+	scene.n_sp = 2;
+	scene.n_pl = 0;
+	scene.n_l = 1;
+	scene.n_cy = 0;
+
+	t_ray ray = rt_ray(scene.cam.coord, scene.cam.orient);
+	scene.xs = rt_intersect_ray_scene(ray, scene);
+	printf("total intersection count: %d\n", scene.xs.count);
+	int i = 0;
+	while (i < scene.xs.count)
+	{
+		printf("scene.intersections[%d]: %f (object: %p)\n",
+			i, scene.xs.intersections[i].t, scene.xs.intersections[i].object);
+		i++;
+	}
+	t_intersect hit = rt_find_hit(scene.xs);
+	if (hit.object == &sp_inner)
+		printf("the ray hit the inner sphere\n");
+	else if (hit.object == &sp_outer)
+		printf("the ray hit the outer sphere\n");
+	else
+		printf("the ray hit no sphere\n");
+}
+
+t_intersect_coll	rt_intersect_ray_scene(t_ray ray, t_scene scene)
+{
+	t_intersect_coll	xs;
+	t_intersect intersect_array[200];
+	int					i;
+
+	xs.intersections = intersect_array;
+	xs.count = 0;
+	i = 0;
+	while (i < scene.n_obj)
+	{
+		if (scene.objects[i].shape == SPHERE)
+			rt_ray_sphere_intersects(ray, &scene.objects[i], &xs, i);
+		else if	(scene.objects[i].shape == CYLINDER)
+			continue ;
+		else if	(scene.objects[i].shape == PLANE)
+			continue ;
+		i++;
+	}
+	return (xs);
+}
+
+#include <limits.h>
+/// @brief Evaluates a collection of intersections with objects and returns
+/// the hit (intersection with the lowest nonnegative "t-value"; if it exists)
+/// 
+/// @param xs the collection of intersections
+/// @returns the hit (as t_intersect)
+t_intersect	rt_find_hit(t_intersect_coll xs)
+{
+	t_intersect	hit;
+	float		t_min = INT_MAX;
+	int 		i;
+
+	hit = (t_intersect) {.t = 0, .object = NULL};
+	if (!xs.intersections || xs.count == 0)
+		return (hit);
+	i = 0;
+	while (i < xs.count)
+	{
+		if (xs.intersections[i].t > 0 && xs.intersections[i].t < t_min)
+		{
+			t_min = xs.intersections[i].t;
+			hit.t = xs.intersections[i].t;
+			hit.object = xs.intersections[i].object;
+		}
+		i++;
+	}
+	return (hit);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_canvas.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:39:51 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/08 09:39:53 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/15 15:44:16 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	rgb_to_int(t_tuple c)
 	color += (hex_b / 16) * 16 + (hex_b % 16);
 	return (color);
 }
-
+/* 
 void	rt_draw(t_env *env, t_object obj, t_ray ray)
 {
 	float		wall_z;
@@ -56,6 +56,8 @@ void	rt_draw(t_env *env, t_object obj, t_ray ray)
 		h++;
 	}
 }
+ */
+
 
 // draws a pixel
 // the if checks if a pixel is outside the window,
