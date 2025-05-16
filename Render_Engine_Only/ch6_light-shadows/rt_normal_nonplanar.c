@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_normal_nonplanar.c                              :+:      :+:    :+:   */
+/*   rt_normal_nonplanar_ok.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:22:59 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/08 13:23:00 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/16 18:39:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_tuple	rt_normal_at(t_object obj, t_tuple world_point)
 	rt_inversion(obj.transform, &invert);
 	object_point = rt_mul_tuple_matrix(invert, world_point);
 	object_normal = rt_sub_tuple(object_point, rt_point(0, 0, 0));
-	world_normal = rt_mul_tuple_matrix(rt_matrix_transpose(invert), object_normal);
+	world_normal = \
+		rt_mul_tuple_matrix(rt_matrix_transpose(invert), object_normal);
 	return (rt_normalize(world_normal));
 }
 

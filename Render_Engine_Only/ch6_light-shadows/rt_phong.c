@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_phong.c                                         :+:      :+:    :+:   */
+/*   rt_phong_ok.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 18:38:22 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:42:36 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 /// @param eyev vector from point to camera
 /// @param normalv normal vector on the point hit
 /// @return the color of the point with lighting applied
-t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, t_tuple eyev, t_tuple normalv)
+t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, \
+	t_tuple eyev, t_tuple normalv)
 {
 	t_tuple	color;
 	t_tuple	dir_to_light;
@@ -57,7 +58,8 @@ t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, t_tuple eyev, t_tuple 
 	return (rt_add_color(ambient, rt_add_color(diffuse, specular)));
 }
 
-/// @brief Tonemapping that gives good results. tweak exposure between 0.5 and 5.0
+/// @brief Tonemapping that gives good results.
+/// 	   tweak exposure between 0.5 and 5.0
 /// @param color 
 /// @return the toned color
 t_tuple	rt_reinhard_tonemap(t_tuple color)
@@ -73,7 +75,8 @@ t_tuple	rt_reinhard_tonemap(t_tuple color)
 	return (normal);
 }
 
-/// @brief Sets all colors between 0 and 1 proportionally. Loses a lot of contrast
+/// @brief Sets all colors between 0 and 1 proportionally.
+/// 	   Loses a lot of contrast
 /// @param color 
 /// @return the normalized color
 t_tuple	rt_normalize_color(t_tuple color)
@@ -82,7 +85,7 @@ t_tuple	rt_normalize_color(t_tuple color)
 	t_tuple	normal;
 
 	max = fmax(fmax(color.x, color.y), color.z);
-	normal.x = color.x / max;	
+	normal.x = color.x / max;
 	normal.y = color.y / max;
 	normal.z = color.z / max;
 	normal.w = color.w;
@@ -94,10 +97,11 @@ t_tuple	rt_normalize_color(t_tuple color)
 /// @return the toned color
 t_tuple	rt_filmic_tonemap(t_tuple color)
 {
-    t_tuple toned;
-    toned.x = logf(color.x + 1.0) / logf(2.0 + 8.0);
-    toned.y = logf(color.y + 1.0) / logf(2.0 + 8.0);
-    toned.z = logf(color.z + 1.0) / logf(2.0 + 8.0);
-    toned.w = color.w;
-    return toned;
+	t_tuple	toned;
+
+	toned.x = logf(color.x + 1.0) / logf(2.0 + 8.0);
+	toned.y = logf(color.y + 1.0) / logf(2.0 + 8.0);
+	toned.z = logf(color.z + 1.0) / logf(2.0 + 8.0);
+	toned.w = color.w;
+	return (toned);
 }

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:11:14 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/02 16:33:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/16 20:06:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@
 #define DISCRIMINANT	eq_par[2]
 
 /* function names for error prints */
+# define RT_COUNT_OBJECT		" – rt_count_object\n"
+# define RT_VALID_COORD			" – rt_valid_coord\n"
+# define RT_VALID_COLOR			" – rt_valid_color\n"
+# define RT_VALID_ORIENT		" – rt_valid_orient\n"
 # define UNSPECIFIED 			" – unspecified function\n"
+
+RT_MAGNITUDE
+
 # define MAT_MALLOC 			" – malloc_matrix_columns\n"
 # define INIT_MATRIX 			" – init_matrix\n"
 # define CONV_TUP_MAT 			" – convert_tuple_to_matrix\n"
@@ -52,10 +59,6 @@
 # define MAT_INV				" – matrix_inversion\n"
 # define DET					" – determinant\n"
 # define SUBMATRIX 				" – submatrix\n"
-# define RT_VALID_COORD			" – rt_valid_coord\n"
-# define RT_VALID_COLOR			" – rt_valid_color\n"
-# define RT_VALID_ORIENT		" – rt_valid_orient\n"
-# define RT_COUNT_OBJECT		" – rt_count_object\n"
 # define RT_RAY					" – rt_ray\n"
 # define RT_POSITION			" – rt_position\n"
 # define INIT_SP				" – rt_init_sphere\n"
@@ -234,7 +237,7 @@ void			rt_free_scene(t_scene *scene);
 t_tuple			rt_point(float x, float y, float z);
 t_tuple			rt_vector(float x, float y, float z);
 t_tuple			rt_color(float r, float g, float b);
-int				is_equal_tuple(t_tuple a, t_tuple b);
+int				rt_is_equal_tuple(t_tuple a, t_tuple b);
 t_tuple			add_tuple(t_tuple a, t_tuple b);
 t_tuple			subtract_tuple(t_tuple minuend, t_tuple subtrahend);
 t_tuple			negate_tuple(t_tuple a);

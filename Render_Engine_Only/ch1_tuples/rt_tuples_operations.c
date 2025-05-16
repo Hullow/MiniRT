@@ -1,39 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_tuples_operations.c                             :+:      :+:    :+:   */
+/*   rt_tuples_operations_ok.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/01 10:56:30 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/16 20:06:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../micro_rt.h"
 
+/// @brief adds two tuples by adding all elements and 
+/// returning the resulting tuple
+/// - if a and b are points, prints an error message and returns rt_point(0,0,0)
+/// - if two are vectors, return a vector (0 + 0 == 0)
+/// - if one is point and the other a vector, return a point (1 + 0 == 1)
+/// @param a tuple
+/// @param b tuple
+/// @return the result of the addition (tuple)
 t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 {
 	t_tuple	add;
-	float	add_x;
-	float	add_y;
-	float	add_z;
 
 	errno = 0;
 	if (a.w == POINT && b.w == POINT)
 	{
-		errno = EINVAL;
-		add = rt_point(0, 0, 0);
-		return (add);
+		rt_handle_error(RT_ADD_TUPLE, EINVAL, "\ncan't add point to point");
+		return (rt_point(0, 0, 0));
 	}
-	add_x = a.x + b.x;
-	add_y = a.y + b.y;
-	add_z = a.z + b.z;
-	add = rt_point(add_x, add_y, add_z);
+	add.x = a.x + b.x;
+	add.y = a.y + b.y;
+	add.z = a.z + b.z;
 	add.w = a.w + b.w;
 	return (add);
 }
-
+		
+/// @brief subtracts two tuples (a - b)
+///
+/// - if a and b are VECTOR, returns a VECTOR
+///
+/// - if a is a POINT and b a VECTOR, returns a POINT
+///
+/// - error cases:
+/// 	(1) a is a VECTOR, b is a POINT;
+/// 	(2) a and b are POINT;
+///
+/// @return the tuple resulting from the subtraction
 t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 {
 	t_tuple	sub;
@@ -42,27 +56,52 @@ t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 	float	sub_z;
 
 	errno = 0;
-	if ((a.w == VECTOR && b.w == POINT))
+	if ((a.w == VECTOR && b.w == POINT) || (a.w == POINT && b.w == POINT))
 	{
-		errno = EINVAL;
+		rt_handle_error(RT_SUB_TUPLE, EINVAL, "\ninvalid input");
 		sub = rt_point(0, 0, 0);
 		return (sub);
 	}
 	sub_x = a.x - b.x;
 	sub_y = a.y - b.y;
 	sub_z = a.z - b.z;
-	sub = rt_point(sub_x, sub_y, sub_z);
 	sub.w = a.w - b.w;
 	return (sub);
 }
 
-t_tuple	rt_negate_tuple(t_tuple	a)
+/// @brief Gives us the opposite of a vector
+/// @param a input vector
+/// @return negated vector
+t_tuple	rt_negate_vector(t_tuple a)
 {
 	t_tuple	negate;
 
+	if (a.w != VECTOR)
+	{
+		rt_handle_error(RT_NEGATE_VECTOR, EINVAL, "\ncan only negate vector");
+		return (a);
+	}
 	negate.x = -a.x;
 	negate.y = -a.y;
 	negate.z = -a.z;
 	negate.w = a.w;
 	return (negate);
 }
+
+/// @brief Checks if two tuples are equal using is_equal_float for each element
+/// @param a tuple
+/// @param b tuple
+/// @return 1 (true) if all elements are equal, 0 (false) otherwise
+int	rt_is_equal_tuple(t_tuple a, t_tuple b)
+{
+	if (!is_equal_float(a.w, b.w))
+		return (0);
+	if (!is_equal_float(a.x, b.x))
+		return (0);
+	if (!is_equal_float(a.y, b.y))
+		return (0);
+	if (!is_equal_float(a.z, b.z))
+		return (0);
+	return (1);
+}
+	

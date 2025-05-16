@@ -8,7 +8,7 @@ subject: Personal journal for MiniRT project
 - Coordinate choice: left-handed, like the book (see Implementation.md)
 - Implemented math functions abs_float() and is_equal_float()
 - Tuples: implemented tuple type, tuple init functions point() and vector(), 
-tuple manipulation functions add_tuple(), subtract_tuple() and is_equal_tuple()
+tuple manipulation functions add_tuple(), subtract_tuple() and rt_is_equal_tuple()
 - To do next time: test tuple manipulation functions
 
 # 21/2/25
@@ -217,3 +217,16 @@ reinhard tone. It works ! Diffuse, ambient, specular :)
 pberset's work
 - Folder order: removed fdf folder in Documentation/, it's pollution
 - To do tomorrow: finish re-reading chapter and code, then order and re-add comments on functions
+# 15/5/25
+- Worked on multithreading a bit, and t_intersect_coll (aggregation of t_intersect)
+
+# 16/5/25
+- Discussed t_intersect structure(s) with pberset, decided I would focus on "merge"
+and he would continue working on t_intersect types
+- New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
+	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
+	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
+- Oops, worked in fallan branch instead of ch6merge branch. Will need to cherry-pick the commit(s) 
+
+# 17/5/25
+- Cherry-picked the "merging render-engine with sources" commit in ch6merge branch

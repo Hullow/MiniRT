@@ -54,7 +54,7 @@ void	test_tuples()
 	sub_vects = rt_sub_tuple(rt_vector(0, 0, 0), vector);
 	rt_print_tuple(sub_vects);
 	printf("Negate tuple\n");
-	vector = rt_negate_tuple(vector);
+	vector = rt_negate_vector(vector);
 	rt_print_tuple(vector);
 	printf("\n");
 	
@@ -64,16 +64,16 @@ void	test_tuples()
 
 	vector = rt_vector(1, -2, 3);
 	scalar = 3.5f;
-	scale = rt_scale_vector(vector, scalar);
+	scale = rt_scale_tuple(vector, scalar);
 	printf("Scale by %f = ", scalar);
 	rt_print_tuple(scale);
 	scalar = 1.0f / 2.0f;
-	scale = rt_scale_vector(vector, scalar);
+	scale = rt_scale_tuple(vector, scalar);
 	printf("Scale by %f = ", scalar);
 	rt_print_tuple(scale);
 	printf("Divide tuple\n");
 	scalar = 2.0f;
-	scale = rt_divide_vector(vector, scalar);
+	scale = rt_divide_tuple(vector, scalar);
 	printf("Divide by %f = ", scalar);
 	rt_print_tuple(scale);
 	printf("\n");
@@ -764,6 +764,35 @@ void	test_intersect()
 	intersect = rt_intersect(sphere, ray);
 	printf("count = %d, [0] = %f, [1] = %f\n", intersect.count, intersect.first, intersect.last);
 }
+*/
+
+/* void	rt_draw(t_env *env, t_object obj, t_ray ray)
+{
+	float		wall_z;
+	float		h;
+	float		w;
+
+	wall_z = 5;
+	h = 0;
+	while (h < WINDOW_HEIGHT)
+	{
+		w = 0;
+		while (w < WINDOW_WIDTH)
+		{
+			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
+			if (rt_intersect(obj, ray).count != 0)
+			{
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int(obj.color));
+			}
+			else
+			{
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int((t_tuple){1, 1, 1, COLOR}));
+			}
+			w++;
+		}
+		h++;
+	}
+} */
 
 void	test_mlx()
 {
@@ -922,10 +951,11 @@ void	test_light_render()
 
 	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
-	// sphere.transform = rt_mul_matrix(rt_scaling(rt_vector(1, 0.3, 1)), rt_rotation_z(90));
-	float shear_factors[6] = {1, 1, 1.2, 1, 1, 0.8};
-	sphere.transform = rt_shearing(shear_factors);
-	// sphere.transform = rt_scaling(rt_vector(1, 0.3, 1));
+
+	// shearing + 0.5 scaling
+	float shear_factors[6] = {2, 1, 2, 1, 1, 1};
+	sphere.transform = rt_mul_matrix(rt_scaling(rt_vector(0.5, 0.5, 0.5)), rt_shearing(shear_factors));
+
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -945,7 +975,7 @@ void	test_light_render()
 			{
 				point = rt_position(ray, rt_hit(intersect.first, intersect.last));
 				normalv = rt_normal_at(intersect.object, point);
-				eyev = rt_negate_tuple(ray.direction);
+				eyev = rt_negate_vector(ray.direction);
 				color = rt_lighting(intersect.object, light, point, eyev, normalv);
 				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
