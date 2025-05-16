@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_light.c                                         :+:      :+:    :+:   */
+/*   rt_light_ok.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:59:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/14 15:55:19 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:40:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_light	rt_light(t_tuple color, t_tuple coord, float intensity)
 	light.color = color;
 	light.coord = coord;
 	light.intensity = intensity;
-
 	return (light);
 }
 
@@ -51,12 +50,11 @@ t_material	rt_material(float amb, float dif, float spec, float shine)
 	material.diffuse = dif;
 	material.specular = spec;
 	material.shininess = shine;
-
 	return (material);
 }
 
 void	rt_print_material(t_material mat)
 {
-	printf("ambient: %f, diffuse: %f, specular: %f, shininess: %f\n",\
+	printf("ambient: %f, diffuse: %f, specular: %f, shininess: %f\n", \
 		mat.ambient, mat.diffuse, mat.specular, mat.shininess);
 }

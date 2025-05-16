@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_matrix_definition.cell                             :+:      :+:    :+:   */
+/*   rt_matrix_definition_ok.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:46:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/01 16:46:37 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/16 18:34:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../micro_rt.h"
 
-t_matrix	rt_identity_matrix()
+/// @brief initializes and returns an identity matrix (on the stack, no malloc)
+t_matrix	rt_identity_matrix(void)
 {
 	t_matrix	matrix;
 	int			i;
@@ -43,7 +44,7 @@ t_matrix	rt_identity_matrix()
 /// @return 1 if matrices are equal, 0 otherwise.
 int	rt_matrix_equality(t_matrix a, t_matrix b)
 {
-	int i;
+	int	i;
 	int	j;
 
 	if (a.rows != b.rows || a.columns != b.columns)

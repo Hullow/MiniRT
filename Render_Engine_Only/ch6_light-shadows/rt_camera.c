@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_camera.c                                        :+:      :+:    :+:   */
+/*   rt_camera_ok.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/09 14:12:13 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/16 18:39:26 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ t_camera	rt_camera(t_tuple coord, t_tuple orient, float fov)
 	camera.coord = coord;
 	camera.orient = orient;
 	camera.fov = fov;
-	return	(camera);
+	return (camera);
 }

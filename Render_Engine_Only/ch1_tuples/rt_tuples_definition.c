@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_tuples_definition.c                             :+:      :+:    :+:   */
+/*   rt_tuples_definition_ok.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:39:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/14 15:53:26 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:31:46 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../micro_rt.h"
 
+/// @return t_tuple of type VECTOR (0.0)
 t_tuple	rt_vector(float x, float y, float z)
 {
 	t_tuple	vector;
@@ -20,9 +21,10 @@ t_tuple	rt_vector(float x, float y, float z)
 	vector.y = y;
 	vector.z = z;
 	vector.w = VECTOR;
-	return(vector);
+	return (vector);
 }
 
+/// @return t_tuple of type POINT (1.0)
 t_tuple	rt_point(float x, float y, float z)
 {
 	t_tuple	point;
@@ -31,14 +33,14 @@ t_tuple	rt_point(float x, float y, float z)
 	point.y = y;
 	point.z = z;
 	point.w = POINT;
-	return(point);
+	return (point);
 }
 
 /// @brief sets a normalized t_tuple COLOR
 /// @param r RED [0-255] value
 /// @param g GREEN [0-255] value
 /// @param b BLUE [0-255] value
-/// @return t_tuple of type COLOR with normalized values.
+/// @return t_tuple of type COLOR (2.0) with normalized values (/255).
 /// On error, sets errno and returns nulled color.
 t_tuple	rt_color(float r, float g, float b)
 {
@@ -49,14 +51,14 @@ t_tuple	rt_color(float r, float g, float b)
 		(g < 0.0f || g > 255.0f) || \
 		(b < 0.0f || b > 255.0f))
 	{
-		errno = EINVAL;
+		rt_handle_error(RT_COLOR, EINVAL, "\ninvalid color input");
 		return (rt_color(0.0f, 0.0f, 0.0f));
 	}
 	color.x = r / 255.0f;
 	color.y = g / 255.0f;
 	color.z = b / 255.0f;
 	color.w = COLOR;
-	return(color);
+	return (color);
 }
 
 void	rt_print_tuple(t_tuple t)

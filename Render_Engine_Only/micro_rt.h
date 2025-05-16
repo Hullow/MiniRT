@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/15 15:54:14 by fallan           ###   ########.fr       */
+/*   Created: 2025/05/16 18:33:04 by fallan            #+#    #+#             */
+/*   Updated: 2025/05/16 20:06:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_tuple
 
 //Canvas
 
+
 # ifndef WINDOW_WIDTH
 #  define WINDOW_WIDTH 800
 # endif
@@ -62,6 +63,36 @@ typedef struct s_tuple
 # ifndef WINDOW_NAME
 #  define WINDOW_NAME "micro_rt"
 # endif
+
+//Constants
+
+# define EPSILON 0.00005
+
+/* function names for error prints */
+# define RT_COUNT_OBJECT		" – rt_count_object\n"
+# define RT_VALID_COORD			" – rt_valid_coord\n"
+# define RT_VALID_COLOR			" – rt_valid_color\n"
+# define RT_VALID_ORIENT		" – rt_valid_orient\n"
+# define RT_MAGNITUDE			" – rt_magnitude\n"
+# define RT_NORMALIZE			" – rt_normalize\n"
+# define RT_COLOR				" – rt_color\n"
+# define RT_NEGATE_VECTOR		" – rt_negate_vector\n"
+# define RT_SCALE_VECTOR		" – rt_scale_vector\n"
+# define RT_SUB_TUPLE			" - rt_sub_tuple\n"
+# define RT_ADD_TUPLE			" - rt_add_tuple\n"
+# define RT_DIVIDE_TUPLE		" – rt_divide_tuple\n"
+# define RT_DOT_PRODUCT			" – rt_dot_product\n"
+# define RT_CROSS_PRODUCT		" – rt_cross_product\n"
+# define RT_SUB_COLOR			" - rt_sub_color\n"
+# define RT_ADD_COLOR			" - rt_add_color\n"
+# define RT_SCALE_COLOR			" - rt_scale_color\n"
+# define RT_MUL_COLOR			" - rt_mul_color\n"
+# define RT_RAY					" - rt_ray\n"
+
+# define UNSPECIFIED 			" – unspecified function\n"
+
+//  	EDOM 	Math argument out of domain of func
+//  	ERANGE 	Math result not representable
 
 typedef struct s_env {
 	void	*mlx;
@@ -183,6 +214,9 @@ typedef struct s_scene
 	t_intersect_coll	xs;
 }	t_scene;
 
+//CH0 Parsing
+
+
 //CH1 Tuples
 
 t_tuple		rt_point(float x, float y, float z);
@@ -191,13 +225,15 @@ t_tuple		rt_color(float r, float g, float b);
 void		rt_print_tuple(t_tuple t);
 t_tuple		rt_add_tuple(t_tuple a, t_tuple b);
 t_tuple		rt_sub_tuple(t_tuple a, t_tuple b);
-t_tuple		rt_negate_tuple(t_tuple	a);
+t_tuple		rt_negate_vector(t_tuple	a);
 t_tuple		rt_scale_vector(t_tuple a, float s);
-t_tuple		rt_divide_vector(t_tuple a, float d);
+t_tuple		rt_divide_tuple(t_tuple a, float d);
 float		rt_magnitude(t_tuple vector);
 t_tuple		rt_normalize(t_tuple vector);
 float		rt_dot_product(t_tuple a, t_tuple b);
 t_tuple		rt_cross_product(t_tuple a, t_tuple b);
+t_tuple		rt_hadamard(t_tuple color1, t_tuple color2);
+int			rt_is_equal_tuple(t_tuple a, t_tuple b);
 
 //CH2 Drawing on canvas
 
@@ -243,6 +279,7 @@ t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);
 t_matrix	rt_shearing(float *shear_factors);
+
 //CH5 Ray-Sphere intersections
 
 # define EDISCRIMINANT 133
@@ -253,8 +290,9 @@ t_tuple		rt_position(t_ray ray, float t);
 t_object	rt_sphere(t_tuple color, t_material material);
 void		rt_print_sphere(t_object sphere);
 t_intersect	rt_intersect(t_object object, t_ray ray);
+t_intersect	rt_init_intersect(float t_value, t_object *obj);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
-void	rt_ray_sphere_intersects(t_ray ray, t_object *sphere, t_intersect_coll *xs, int i);
+void		rt_discriminant(t_ray ray, t_object *sphere, t_intersect_coll *xs, int i);
 t_intersect_coll	rt_intersect_ray_scene(t_ray ray, t_scene scene);
 t_intersect	rt_find_hit(t_intersect_coll xs);
 float		rt_hit(float t1, float t2);
@@ -270,9 +308,14 @@ void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
 t_camera	rt_camera(t_tuple coord, t_tuple orient, float fov);
-t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, t_tuple eyev, t_tuple normalv);
+t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, \
+	t_tuple eyev, t_tuple normalv);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple 	rt_filmic_tonemap(t_tuple color);
+
+// Utils
+
+void		*rt_handle_error(char *function, int errno_value, char *message);
 
 #endif

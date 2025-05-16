@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_matrix_inversion.c                              :+:      :+:    :+:   */
+/*   rt_matrix_inversion_ok.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:45:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/05 17:44:04 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:34:50 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ float	rt_determinant(t_matrix m)
 	return (det);
 }
 
+/// @brief removes one specified row and one specified column from a matrix, and
+/// returns the resulting matrix (input matrix isn't modified nor freed)
+/// @param m 
+/// @param row 
+/// @param col 
+/// @param sub 
 void	rt_sub_matrix(t_matrix m, int row, int col, t_matrix *sub)
 {
 	int			i;
@@ -46,13 +52,13 @@ void	rt_sub_matrix(t_matrix m, int row, int col, t_matrix *sub)
 	while (++i < m.rows)
 	{
 		if (i == row)
-			continue;
+			continue ;
 		j = -1;
 		l = 0;
 		while (++j < m.columns)
 		{
 			if (j == col)
-				continue;
+				continue ;
 			sub->cell[k][l] = m.cell[i][j];
 			l++;
 		}
@@ -60,6 +66,8 @@ void	rt_sub_matrix(t_matrix m, int row, int col, t_matrix *sub)
 	}
 }
 
+/// @brief computes and returns the minor (float) at i, j of a matrix,
+/// using the submatrix at i,j (row, column), and computing its determinant
 float	rt_minor(t_matrix m, int row, int col)
 {
 	float		minor;
@@ -70,6 +78,7 @@ float	rt_minor(t_matrix m, int row, int col)
 	return (minor);
 }
 
+/// @brief computes and returns the cofactor of a matrix, using matrix_minor
 float	rt_cofactor(t_matrix m, int row, int col)
 {
 	float	cofactor;
@@ -80,6 +89,8 @@ float	rt_cofactor(t_matrix m, int row, int col)
 	return (cofactor);
 }
 
+/// @brief inverts a matrix of any size (row, columns <= 4)
+/// @returns void (the inverted matrix is given in parameters)
 void	rt_inversion(t_matrix m, t_matrix *invert)
 {
 	float		det;

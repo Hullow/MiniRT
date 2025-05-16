@@ -54,7 +54,7 @@
 	sub_vects = rt_sub_tuple(rt_vector(0, 0, 0), vector);
 	rt_print_tuple(sub_vects);
 	printf("Negate tuple\n");
-	vector = rt_negate_tuple(vector);
+	vector = rt_negate_vector(vector);
 	rt_print_tuple(vector);
 	printf("\n");
 	
@@ -64,16 +64,16 @@
 
 	vector = rt_vector(1, -2, 3);
 	scalar = 3.5f;
-	scale = rt_scale_vector(vector, scalar);
+	scale = rt_scale_tuple(vector, scalar);
 	printf("Scale by %f = ", scalar);
 	rt_print_tuple(scale);
 	scalar = 1.0f / 2.0f;
-	scale = rt_scale_vector(vector, scalar);
+	scale = rt_scale_tuple(vector, scalar);
 	printf("Scale by %f = ", scalar);
 	rt_print_tuple(scale);
 	printf("Divide tuple\n");
 	scalar = 2.0f;
-	scale = rt_divide_vector(vector, scalar);
+	scale = rt_divide_tuple(vector, scalar);
 	printf("Divide by %f = ", scalar);
 	rt_print_tuple(scale);
 	printf("\n");
@@ -764,8 +764,35 @@ void	test_intersect()
 	intersect = rt_intersect(sphere, ray);
 	printf("count = %d, [0] = %f, [1] = %f\n", intersect.count, intersect.first, intersect.last);
 }
- */
+*/
 
+/* void	rt_draw(t_env *env, t_object obj, t_ray ray)
+{
+	float		wall_z;
+	float		h;
+	float		w;
+
+	wall_z = 5;
+	h = 0;
+	while (h < WINDOW_HEIGHT)
+	{
+		w = 0;
+		while (w < WINDOW_WIDTH)
+		{
+			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
+			if (rt_intersect(obj, ray).count != 0)
+			{
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int(obj.color));
+			}
+			else
+			{
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int((t_tuple){1, 1, 1, COLOR}));
+			}
+			w++;
+		}
+		h++;
+	}
+} */
 
 void	test_mlx()
 {
@@ -924,128 +951,48 @@ t_light light, t_env *env)
 	t_tuple		normalv;
 	t_tuple		color;
 
-	ray = rt_define_ray_to_wall(ray, w, h, wall_z);
-	intersect = rt_intersect(sphere, ray);
-	if (intersect.count != 0)
+	int			h;
+	int			w;
+	float		wall_z;
+
+	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
+
+	// shearing + 0.5 scaling
+	float shear_factors[6] = {2, 1, 2, 1, 1, 1};
+	sphere.transform = rt_mul_matrix(rt_scaling(rt_vector(0.5, 0.5, 0.5)), rt_shearing(shear_factors));
+
+	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
+	ray = rt_ray(camera.coord, camera.orient);
+	env = mlx_set_env();
+
+	wall_z = 5;
+	h = 0;
+	while (h < WINDOW_HEIGHT)
 	{
-		point = rt_position(ray, rt_hit(intersect.first, intersect.last));
-		normalv = rt_normal_at(intersect.object, point);
-		eyev = rt_negate_tuple(ray.direction);
-		color = rt_lighting(intersect.object, light, point, eyev, normalv);
-		color = rt_reinhard_tonemap(color);
-		my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
-	}
-	else
-	{
-		my_mlx_pixel_put(env, w, WINDOW_HEIGHT - h, rgb_to_int((t_tuple){0, 0, 0, COLOR}));
-	}
-} */
-
-/* typedef struct s_world {
-	t_light		light;
-	int			obj_count;
-	t_object	*objects; // array
-}	t_world;
-
-#include <stdarg.h>
-/// @brief initializes a t_world struct
-/// @param light the light source
-/// @param obj_count the number of objects
-/// @param object variadic argument, can take in multiple objects
-/// @param  
-/// @return the initialized world (returns only w/ the light if obj_count == 0)
-t_world	rt_init_world(t_light light, int obj_count, ...)
-{
-	va_list		ap;
-	int			i;
-	t_object	obj_array[obj_count];
-	t_world		world;
-
-	world.light = light;
-	world.obj_count = obj_count;
-	if (obj_count <= 0)
-		return (world);
-	va_start(ap, obj_count);
-	i = 0;
-	while (i < obj_count)
-	{
-		obj_array[i] = va_arg(ap, t_object);
-		i++;
-	}
-	world.objects = obj_array;
-	va_end(ap);
-	return (world);
-}
-	
-// in test_world:
-
-	// initializing the world
-	// world = rt_init_world(light, 2, sp_outer, sp_inner);
-
-	// printf("initializing the world\n***********************\n");
-	// printf("world.light.color: ");
-	// rt_print_tuple(world.light.color);
-	// printf("world.light.coord: ");
-	// rt_print_tuple(world.light.coord);
-	// printf("world.light.intensity: %f\n", world.light.intensity);
-	// printf("world.objects[0].diameter: %2.f, world.objects[1].diameter: %2.f\n",
-	// 	world.objects[0].diameter, world.objects[1].diameter);
-*/
-
-
-
-void	test_world()
-{
-	// t_world		world;
-	printf("test_world:\n***********\n\n");
-
-	// light
-	t_tuple		light_position = rt_point(-10, 10, -10);
-	t_tuple		light_color = rt_color(255, 255, 255);
-	float		light_intensity = 1.0f;
-	t_light		light = rt_light(light_color, light_position, light_intensity);
-
-	// objects
-	t_object	sp_outer = (t_object) {.shape = SPHERE, 
-		.diameter = 2.0f,
-		.color = rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255),
-		.origin = rt_point(0, 0, 0),
-		.transform = rt_identity_matrix(),
-		.material = rt_material(0.1, 0.7, 0.2, 200.0f)};
-
-	t_object	sp_inner = (t_object) {.shape = SPHERE, 
-		.diameter = 2.0f,
-		.color = rt_color(0, 255, 0),
-		.origin = rt_point(0, 0, 0),
-		.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5)),
-		.material = rt_material(0.5, 0.2, 0.2, 100.0f)};
-
-
-	// Intersecting a world with a ray
-	t_object scene_objects[2];
-	scene_objects[0] = sp_inner;
-	scene_objects[1] = sp_outer;
-	t_camera camera = rt_camera(rt_point(0, 0, -10), rt_vector(0, 0, 1), 60.0f);
-
-	t_scene scene;
-	scene.n_obj = 2;
-	scene.objects = scene_objects;
-	scene.lux = light;
-	scene.cam = camera;
-	scene.n_sp = 2;
-	scene.n_pl = 0;
-	scene.n_l = 1;
-	scene.n_cy = 0;
-
-	t_ray ray = rt_ray(scene.cam.coord, scene.cam.orient);
-	scene.xs = rt_intersect_ray_scene(ray, scene);
-	printf("total intersection count: %d\n", scene.xs.count);
-	int i = 0;
-	while (i < scene.xs.count)
-	{
-		printf("scene.intersections[%d]: %f (object: %p)\n",
-			i, scene.xs.intersections[i].t, scene.xs.intersections[i].object);
-		i++;
+		if ((h + 1) % 100 == 0)
+		printf("Progressing: %f\n", (float)((float)(h + 1) / (float)WINDOW_HEIGHT * 100.0f));
+		w = 0;
+		while (w < WINDOW_WIDTH)
+		{
+			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
+			intersect = rt_intersect(sphere, ray);
+			if(intersect.count != 0)
+			{
+				point = rt_position(ray, rt_hit(intersect.first, intersect.last));
+				normalv = rt_normal_at(intersect.object, point);
+				eyev = rt_negate_vector(ray.direction);
+				color = rt_lighting(intersect.object, light, point, eyev, normalv);
+				color = rt_reinhard_tonemap(color);
+				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
+			}
+			else
+			{
+				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int((t_tuple){0, 0, 0, COLOR}));
+			}
+			w++;
+		}
+		h++;
 	}
 	t_intersect hit = rt_find_hit(scene.xs);
 	if (hit.object == &sp_inner)
