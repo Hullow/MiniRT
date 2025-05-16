@@ -226,7 +226,7 @@ and he would continue working on t_intersect types
 - New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
 	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
 	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
-- Oops, worked in fallan branch instead of ch6merge branch. Will need to cherry-pick the commit(s) 
+- Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
 
 # 17/5/25
 - Cherry-picked the "merging render-engine with sources" commit in ch6merge branch
