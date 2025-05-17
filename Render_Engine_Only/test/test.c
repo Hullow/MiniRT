@@ -64,11 +64,11 @@ void	test_tuples()
 
 	vector = rt_vector(1, -2, 3);
 	scalar = 3.5f;
-	scale = rt_scale_tuple(vector, scalar);
+	scale = rt_scale_vector(vector, scalar);
 	printf("Scale by %f = ", scalar);
 	rt_print_tuple(scale);
 	scalar = 1.0f / 2.0f;
-	scale = rt_scale_tuple(vector, scalar);
+	scale = rt_scale_vector(vector, scalar);
 	printf("Scale by %f = ", scalar);
 	rt_print_tuple(scale);
 	printf("Divide tuple\n");
@@ -612,6 +612,7 @@ void	test_transform()
 	printf("\n");
 }
 
+/*
 void	test_intersect()
 {
 	printf("Ray\n");

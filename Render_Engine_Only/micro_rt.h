@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   micro_rt.h                                          :+:    :+:           */
+/*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 15:23:48 by fallan         ########   odam.nl        */
+/*   Updated: 2025/05/17 18:09:36 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ typedef struct s_ray
 
 typedef struct s_intersect
 {
-	t_object	*object;
+	t_object	object;
 	float		t;
 }	t_intersect;
 
@@ -306,5 +306,5 @@ t_tuple 	rt_filmic_tonemap(t_tuple color);
 // Utils
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
-
+int			is_equal_float(float a, float b);
 #endif

@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_assign_objects.c                                :+:      :+:    :+:   */
+/*   rt_assign_objects_check_with_pberset.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/02 15:05:05 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:14:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+/* #include "miniRT.h"
 
-/* initializes a sphere based on a tuple for coordinates, a float for diameter, 
-and a tuple for color. Both input tuples to be initialized on the stack, thus:
-(t_tuple){.x = , .y = , .z = } */
+/// @brief initializes a sphere based on:
+/// @param coord tuple
+/// @param diam float
+/// @param color tuple
+/// @return the initialized sphere
 t_object	rt_init_sphere(t_tuple coord, float diam, t_tuple color)
 {
 	t_object	sp;
@@ -104,3 +106,5 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	ft_free_tab(norm);
 	ft_free_tab(color);
 }
+
+*/

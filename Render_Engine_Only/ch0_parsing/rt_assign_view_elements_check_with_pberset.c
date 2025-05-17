@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_assign_view_elements.c                          :+:      :+:    :+:   */
+/*   rt_assign_view_elements_check_with_pberset.        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:06:53 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 16:14:24 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:14:24 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "miniRT.h"
 
 void	rt_assign_light(t_scene *scene, char **needle)
@@ -89,3 +90,4 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	ft_free_tab(coord);
 	ft_free_tab(orient);
 }
+*/

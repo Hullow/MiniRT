@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 15:22:39 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:10:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_intersect	rt_init_intersect(float t_value, t_object *obj)
 	t_intersect	i;
 
 	i.t = t_value;
-	i.object = obj;
+	i.object = *obj;
 	return (i);
 }
 
