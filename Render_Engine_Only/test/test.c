@@ -922,6 +922,10 @@ void	test_light_render()
 
 	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
+	// sphere.transform = rt_mul_matrix(rt_scaling(rt_vector(1, 0.3, 1)), rt_rotation_z(90));
+	float shear_factors[6] = {1, 1, 1.2, 1, 1, 0.8};
+	sphere.transform = rt_shearing(shear_factors);
+	// sphere.transform = rt_scaling(rt_vector(1, 0.3, 1));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();

@@ -140,6 +140,14 @@ be feasible for each shape to manually preserve the sort order of that intersect
 via hex (FF0000)
 - Managed to draw a fully red window
 
+# 17/4/25
+- Working on ray-sphere intersection: finished writing formula, updated Makefile
+while discussing it with pberset
+- No success running it so far, and surprise: segfault, likely from numerous matrix calculation mallocs.
+Will look at pberset's malloc-less version instead of fixing it at this current stage.
+
+to do: add t_matrix *inverse_transform in t_sphere 
+
 # 18/4/25
 - Forked pberset's branch to new branch "no-malloc", reorganized tests in that 
 branch, rewrote test_tuple to remove mallocs and validated these tests from miniRT's main using make rather than ad-hoc compilation
@@ -194,3 +202,18 @@ object is intersected.
 - TL;DR ch.5 tests passed, except for 1-2 specific intersect functions not implemented.
 - Red disk success! Ayaaaaaa ! Japan flag too ! Issou
 
+# 8/5/25
+- Fixed makefile for macOS
+- Debugging in the afternoon at 42 but not for very long (I think)
+
+# 9/5/25
+- Reading through Light and Reflection (ch. 6)
+
+# 11/5/25
+- Trying to printf debug rt_lighting; pberset fixes the "hole" in the sphere, then add
+reinhard tone. It works ! Diffuse, ambient, specular :)
+- Makefile macOS: added conditional flag (ifeq...endif)
+- Git ordering: deleted no-malloc, polymorph branches, merged the other 3 together from
+pberset's work
+- Folder order: removed fdf folder in Documentation/, it's pollution
+- To do tomorrow: finish re-reading chapter and code, then order and re-add comments on functions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 18:38:13 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/12 01:10:31 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 800
+#  define WINDOW_WIDTH 600
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 600
+#  define WINDOW_HEIGHT 400
 # endif
 
 # ifndef WINDOW_NAME
@@ -213,7 +213,7 @@ t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);
-
+t_matrix	rt_shearing(float *shear_factors);
 //CH5 Ray-Sphere intersections
 
 # define EDISCRIMINANT 133
