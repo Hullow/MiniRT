@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 18:09:36 by fallan           ###   ########.fr       */
-=======
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:08:13 by pberset          ###   ########.fr       */
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
+/*   Updated: 2025/05/17 19:13:43 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +158,6 @@ typedef struct s_intersect
 {
 	t_object	object;
 	float		t;
-<<<<<<< HEAD
-}	t_intersect;
-=======
 }	t_inter;
 
 typedef struct s_xs
@@ -175,7 +165,6 @@ typedef struct s_xs
 	int			count;
 	t_inter	*inter;
 }	t_xs;
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 
 typedef struct s_intersect_collection
 {
@@ -205,26 +194,6 @@ typedef struct s_light
 	t_tuple	color;
 }	t_light;
 
-<<<<<<< HEAD
-// scene struct
-typedef struct s_scene
-{
-	int					n_a;
-	int					n_l;
-	int					n_cam;
-	int					n_sp;
-	int					n_pl;
-	int					n_cy;
-	int					n_obj;
-	t_ambient			amb;
-	t_camera			cam;
-	t_light				lux;
-	t_object			*objects;
-	t_intersect_coll	xs;
-}	t_scene;
-
-//CH0 Parsing
-=======
 //Scene
 
 typedef struct s_scene
@@ -252,7 +221,6 @@ typedef struct s_comps
 	t_tuple		normalv;
 	int			inside;
 }	t_comps;
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 
 
 //CH1 Tuples
@@ -316,10 +284,6 @@ t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);
-<<<<<<< HEAD
-t_matrix	rt_shearing(float *shear_factors);
-=======
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 
 //CH5 Ray-Sphere intersections
 
@@ -330,20 +294,11 @@ void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray ray, float t);
 t_object	rt_sphere(t_tuple color, t_material material);
 void		rt_print_sphere(t_object sphere);
-<<<<<<< HEAD
-t_intersect	rt_intersect(t_object object, t_ray ray);
-t_intersect	rt_init_intersect(float t_value, t_object *obj);
-t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
-void		rt_discriminant(t_ray ray, t_object *sp, \
-	t_intersect_coll *xs, int i);
-float		rt_hit(float t1, float t2);
-=======
 t_inter		rt_intersect(float t, t_object obj);
 void		rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
 t_inter		rt_hit(t_xs xs);
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);
 
@@ -362,17 +317,10 @@ t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple 	rt_filmic_tonemap(t_tuple color);
 
-<<<<<<< HEAD
-// Utils
-
-void		*rt_handle_error(char *function, int errno_value, char *message);
-int			is_equal_float(float a, float b);
-=======
 //CH7 Scene
 
 void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
 
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 #endif
