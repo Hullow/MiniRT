@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/17 18:12:23 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 19:56:42 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "micro_rt.h"
 
 /* handles the error print by printing to STDERR:
 - "Error" followed by

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:39:51 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:14:47 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/17 19:54:25 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../micro_rt.h"
 
-<<<<<<< HEAD:Render_Engine_Only/ch2_colors/rt_mlx.c
-=======
 int	rgb_to_int(t_tuple c)
 {
 	int	hex_r;

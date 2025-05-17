@@ -1,19 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_interion.c                                  :+:      :+:    :+:   */
+/*   rt_intersection.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 18:10:06 by fallan           ###   ########.fr       */
-=======
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 19:26:13 by francis          ###   ########.fr       */
->>>>>>> aa4f48d (Fixes to compile on MacOS: Makefile + rt_intersections)
+/*   Updated: 2025/05/17 19:53:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +35,10 @@ void	rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i)
 }
 
 t_tuple	rt_position(t_ray ray, float t)
->>>>>>> aa4f48d (Fixes to compile on MacOS: Makefile + rt_intersections)
 {
 	t_tuple	position;
 
-	position = rt_add_tuple(ray.origin, rt_scale_vector(ray.direction, d));
+	position = rt_add_tuple(ray.origin, rt_scale_vector(ray.direction, t));
 	return (position);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:17:54 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/17 19:55:40 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,5 +316,10 @@ t_tuple 	rt_filmic_tonemap(t_tuple color);
 void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
+
+//Utils
+
+void		*rt_handle_error(char *function, int errno_value, char *message);
+int			is_equal_float(float a, float b);
 
 #endif

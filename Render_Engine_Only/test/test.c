@@ -954,7 +954,7 @@ void	test_light_render()
 			{
 				point = rt_position(ray, rt_hit(xs).t);
 				normalv = rt_normal_at(xs.inter[0].object, point);
-				eyev = rt_negate_tuple(ray.direction);
+				eyev = rt_negate_vector(ray.direction);
 				color = rt_lighting(xs.inter[0].object, light, point, eyev, normalv);
 				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));

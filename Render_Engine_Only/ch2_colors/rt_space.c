@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_space.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:47:06 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:15:05 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/17 19:54:15 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ t_ray	rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z)
 	x_mrt = (x_mlx / 100) - ((WINDOW_WIDTH / 200));
 	y_mrt = (-y_mlx / 100) + (WINDOW_HEIGHT / 200);
 	wall_coords = (t_tuple) {x_mrt, -y_mrt, wall_z, POINT};	
-
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 	ray.direction = rt_normalize(rt_sub_tuple(wall_coords, ray.origin));
 	return (ray);
 }

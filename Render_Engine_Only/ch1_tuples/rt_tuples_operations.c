@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_tuples_operations_ok.c                          :+:      :+:    :+:   */
+/*   rt_tuples_operations.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/16 20:06:41 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 19:55:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 {
 	t_tuple	sub;
-	float	sub_x;
-	float	sub_y;
-	float	sub_z;
 
 	errno = 0;
 	if ((a.w == VECTOR && b.w == POINT) || (a.w == POINT && b.w == POINT))
@@ -62,9 +59,9 @@ t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 		sub = rt_point(0, 0, 0);
 		return (sub);
 	}
-	sub_x = a.x - b.x;
-	sub_y = a.y - b.y;
-	sub_z = a.z - b.z;
+	sub.x = a.x - b.x;
+	sub.y = a.y - b.y;
+	sub.z = a.z - b.z;
 	sub.w = a.w - b.w;
 	return (sub);
 }
