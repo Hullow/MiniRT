@@ -969,3 +969,85 @@ void	test_light_render()
 	}
 	mlx_run_window(&env);
 }
+
+void	test_scene()
+{
+	printf("Setup a world\n");
+	t_scene		scene;
+	t_light		light;
+	t_object	sphere;
+	t_material	material;
+	
+	scene.n_obj = 2;
+	scene.n_sp = 2;
+	light = rt_light(rt_color(255, 255, 255), rt_point(-10, -10, -10), 1.0);
+	scene.lux = light;
+	scene.objects = (t_object *)calloc(scene.n_obj, sizeof(t_object));
+	material = rt_material(0.1, 0.7, 0.2, 200.0);
+	sphere = rt_sphere(rt_color(0.8 * 255, 255, 0.6 * 255), material);
+	scene.objects[0] = sphere;
+	sphere.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
+	scene.objects[1] = sphere;
+	rt_print_sphere(scene.objects[0]);
+	rt_print_sphere(scene.objects[1]);
+	printf("\n");
+	
+	printf("Intersect a world with a ray\n");
+	t_ray	ray;
+	t_xs	xs;
+	int		j;
+
+
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	xs.inter = (t_inter *)calloc(scene.n_obj * 2, sizeof(t_inter));
+	xs.count = 0;
+	rt_intersect_scene(scene, ray, &xs);
+	j = 0;
+	printf("xs.count = %d\n", xs.count);
+	while (j < scene.n_obj * 2)
+	{
+		printf("xs.t[%d] = %f\n", j, xs.inter[j].t);
+		j++;
+	}
+	printf("\n");
+
+	printf("The hit");
+	t_inter	hit;
+
+	hit = rt_hit(xs);
+	printf(" is %f\n", hit.t);
+	printf("\n");
+
+	printf("Computed values\n");
+	t_comps	comps;
+	t_inter	inter;
+
+	printf("from the outside\n");
+	sphere = rt_sphere(rt_color(0.8 * 255, 255, 0.6 * 255), material);
+	inter = rt_intersect(4, sphere);
+	comps = rt_prepare_computations(inter, ray);
+	printf("comp.inside = %d\n", comps.inside);
+
+	printf("from the inside\n");
+	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
+	inter = rt_intersect(1, sphere);
+	comps = rt_prepare_computations(inter, ray);
+	printf("comp.inside = %d\n", comps.inside);
+	rt_print_tuple(comps.normalv);
+	printf("\n");
+
+	printf("Shade hit\n");
+	t_tuple	color;
+
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	scene.lux = rt_light(rt_color(255, 255, 255), rt_point(0, 0.25, 0), 1.0);
+	sphere = scene.objects[0];
+	inter = rt_intersect(4, sphere);
+	comps = rt_prepare_computations(inter, ray);
+	color = rt_shade_hit(scene, comps);
+	rt_print_tuple(color);
+	printf("\n");
+
+	free(scene.objects);
+	free(xs.inter);
+}
