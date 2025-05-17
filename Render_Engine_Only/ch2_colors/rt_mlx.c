@@ -12,6 +12,58 @@
 
 #include "../micro_rt.h"
 
+<<<<<<< HEAD:Render_Engine_Only/ch2_colors/rt_mlx.c
+=======
+int	rgb_to_int(t_tuple c)
+{
+	int	hex_r;
+	int	hex_g;
+	int	hex_b;
+	int	color;
+
+	hex_r = (int) (c.x * 255);
+	hex_g = (int) (c.y * 255);
+	hex_b = (int) (c.z * 255);
+	color = 0;
+	color += (hex_r / 16) * pow(16, 5) + (hex_r % 16) * pow(16, 4);
+	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
+	color += (hex_b / 16) * 16 + (hex_b % 16);
+	return (color);
+}
+/*
+void	rt_draw(t_env *env, t_object obj, t_ray ray)
+{
+	float		wall_z;
+	float		h;
+	float		w;
+	t_xs		xs;
+	t_inter		inter[2];
+	int			noneed = 0;
+
+	wall_z = 5;
+	h = 0;
+	xs.inter = inter;
+	while (h < WINDOW_HEIGHT)
+	{
+		w = 0;
+		while (w < WINDOW_WIDTH)
+		{
+			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
+			if (rt_intersects(obj, ray, xs.inter, &noneed).count != 0)
+			{
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int(obj.color));
+			}
+			else
+			{
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int((t_tuple){1, 1, 1, COLOR}));
+			}
+			w++;
+		}
+		h++;
+	}
+}
+*/
+>>>>>>> 31eda3a (corrected ch6 xs and intersect):Render_Engine_Only/ch2_colors/rt_canvas.c
 // draws a pixel
 // the if checks if a pixel is outside the window,
 // and ignores it (to avoid a segfault)

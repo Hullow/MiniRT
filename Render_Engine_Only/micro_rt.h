@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
 /*   Updated: 2025/05/17 18:09:36 by fallan           ###   ########.fr       */
+=======
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/17 19:08:13 by pberset          ###   ########.fr       */
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +35,7 @@ void	test_intersect(void);
 void	test_mlx(void);
 void	test_light(void);
 void	test_light_render(void);
+void	test_scene(void);
 
 //Structs
 
@@ -52,11 +60,11 @@ typedef struct s_tuple
 
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 600
+#  define WINDOW_WIDTH 800
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 400
+#  define WINDOW_HEIGHT 600
 # endif
 
 # ifndef WINDOW_NAME
@@ -157,7 +165,17 @@ typedef struct s_intersect
 {
 	t_object	object;
 	float		t;
+<<<<<<< HEAD
 }	t_intersect;
+=======
+}	t_inter;
+
+typedef struct s_xs
+{
+	int			count;
+	t_inter	*inter;
+}	t_xs;
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 
 typedef struct s_intersect_collection
 {
@@ -187,6 +205,7 @@ typedef struct s_light
 	t_tuple	color;
 }	t_light;
 
+<<<<<<< HEAD
 // scene struct
 typedef struct s_scene
 {
@@ -205,6 +224,35 @@ typedef struct s_scene
 }	t_scene;
 
 //CH0 Parsing
+=======
+//Scene
+
+typedef struct s_scene
+{
+	int			n_a;
+	int			n_l;
+	int			n_cam;
+	int			n_sp;
+	int			n_pl;
+	int			n_cy;
+	int			n_obj;
+	t_ambient	amb;
+	t_camera	cam;
+	t_light		lux;
+	t_object	*objects;
+}	t_scene;
+
+
+typedef struct s_comps
+{
+	float		t;
+	t_object	object;
+	t_tuple		point;
+	t_tuple		eyev;
+	t_tuple		normalv;
+	int			inside;
+}	t_comps;
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 
 
 //CH1 Tuples
@@ -236,7 +284,7 @@ t_env		mlx_set_env(void);
 void		mlx_run_window(t_env *env);
 t_ray		rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z);
 int			rgb_to_int(t_tuple c);
-void		rt_draw(t_env *env, t_object sp, t_ray ray);
+//void		rt_draw(t_env *env, t_object sp, t_ray ray);
 void		my_mlx_pixel_put(t_env *env, int x, int y, int color);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
@@ -268,7 +316,10 @@ t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);
+<<<<<<< HEAD
 t_matrix	rt_shearing(float *shear_factors);
+=======
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 
 //CH5 Ray-Sphere intersections
 
@@ -279,12 +330,20 @@ void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray ray, float t);
 t_object	rt_sphere(t_tuple color, t_material material);
 void		rt_print_sphere(t_object sphere);
+<<<<<<< HEAD
 t_intersect	rt_intersect(t_object object, t_ray ray);
 t_intersect	rt_init_intersect(float t_value, t_object *obj);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object *sp, \
 	t_intersect_coll *xs, int i);
 float		rt_hit(float t1, float t2);
+=======
+t_inter		rt_intersect(float t, t_object obj);
+void		rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i);
+t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
+void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
+t_inter		rt_hit(t_xs xs);
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);
 
@@ -303,8 +362,17 @@ t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple 	rt_filmic_tonemap(t_tuple color);
 
+<<<<<<< HEAD
 // Utils
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
+=======
+//CH7 Scene
+
+void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
+t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
+t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
+
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 #endif

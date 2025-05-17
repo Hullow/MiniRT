@@ -26,7 +26,12 @@ t_ray	rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z)
 
 	x_mrt = (x_mlx / 100) - ((WINDOW_WIDTH / 200));
 	y_mrt = (-y_mlx / 100) + (WINDOW_HEIGHT / 200);
+<<<<<<< HEAD
 	wall_coords = (t_tuple){x_mrt, -y_mrt, wall_z, POINT};
+=======
+	wall_coords = (t_tuple) {x_mrt, -y_mrt, wall_z, POINT};	
+
+>>>>>>> 31eda3a (corrected ch6 xs and intersect)
 	ray.direction = rt_normalize(rt_sub_tuple(wall_coords, ray.origin));
 	return (ray);
 }

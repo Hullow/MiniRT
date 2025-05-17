@@ -14,6 +14,6 @@
 
 int	main()
 {
-	test_light_render();
+	test_scene();
 	return (0);
 }
