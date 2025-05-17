@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:13:43 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/17 19:14:36 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,6 @@ typedef struct s_xs
 	int			count;
 	t_inter	*inter;
 }	t_xs;
-
-typedef struct s_intersect_collection
-{
-	t_intersect *intersections;
-	int			count;
-}	t_intersect_coll;
 
 //Light
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_mlx.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 10:41:51 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 15:21:38 by fallan           ###   ########.fr       */
+/*   Created: 2025/05/08 09:39:51 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/17 19:14:47 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	rt_draw(t_env *env, t_object obj, t_ray ray)
 	}
 }
 */
->>>>>>> 31eda3a (corrected ch6 xs and intersect):Render_Engine_Only/ch2_colors/rt_canvas.c
 // draws a pixel
 // the if checks if a pixel is outside the window,
 // and ignores it (to avoid a segfault)

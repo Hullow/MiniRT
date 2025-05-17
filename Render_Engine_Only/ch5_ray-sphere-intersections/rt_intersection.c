@@ -19,14 +19,6 @@
 
 #include "../micro_rt.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/// @brief Compute a point from a distance d traveled along the ray
-/// @return position (t_tuple of type POINT)
-t_tuple	rt_position(t_ray ray, float d)
-=======
-t_intersect	rt_intersect(t_object object, t_ray ray)
-=======
 t_inter	rt_intersect(float t, t_object obj)
 {
 	t_inter	i;
@@ -37,7 +29,6 @@ t_inter	rt_intersect(float t, t_object obj)
 }
 
 void	rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i)
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 {
 	t_matrix	ray_transform;
 
@@ -67,59 +58,15 @@ t_tuple	rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin)
 	return (distance);
 }
 
-<<<<<<< HEAD
-t_intersect	rt_init_intersect(float t_value, t_object *obj)
-{
-	t_intersect	i;
-
-	i.t = t_value;
-	i.object = *obj;
-	return (i);
-}
-
-///	@brief computes the ray<->sphere-intersection
-/// @param ray		 n.b.: already transformed
-/// @param sphere	 the sphere	
-/// @param intersect a pointer to the t_intersect struct to be filled
-///
-/// n.b.: d -> discriminant
-/// @returns nothing, everything is stored in intersect
-void	rt_discriminant(t_ray ray, t_object *sp, \
-	t_intersect_coll *xs, int i)
-{
-	float	d;
-=======
 void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 {
 	float	discr;
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 	float	a;
 	float	b;
 	float	c;
 	t_tuple	sp_ray;
 
 	errno = 0;
-<<<<<<< HEAD
-	sp_ray = rt_sphere_to_ray(ray.origin, sp->origin);
-	a = rt_dot_product(ray.direction, ray.direction);
-	b = 2 * rt_dot_product(ray.direction, sp_ray);
-	c = rt_dot_product(sp_ray, sp_ray) - 1;
-	d = b * b - 4 * a * c;
-	if (d < 0)
-		errno = EDISCRIMINANT;
-	else
-	{
-		xs->count++;
-		xs->intersections[i] = rt_init_intersect((-b + sqrtf(d)) / (2 * a), sp);
-		if (d > 0)
-		{
-			xs->count++;
-			xs->intersections[i + 1] = \
-				rt_init_intersect((-b - sqrtf(d)) / (2 * a), sp);
-		}
-	}
-}
-=======
 	sp_ray = rt_sphere_to_ray(ray.origin, sphere.origin);
 	a = rt_dot_product(ray.direction, ray.direction);
 	b = 2 * rt_dot_product(ray.direction, sp_ray);
@@ -140,4 +87,3 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 	}
 }
 
->>>>>>> 31eda3a (corrected ch6 xs and intersect)

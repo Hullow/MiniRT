@@ -611,10 +611,6 @@ void	test_transform()
 	rt_print_tuple(point);
 	printf("\n");
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 /*
 void	test_intersect()
 {
@@ -774,35 +770,6 @@ void	test_intersect()
 
 	free(xs.inter);
 }
-*/
-
-/* void	rt_draw(t_env *env, t_object obj, t_ray ray)
-{
-	float		wall_z;
-	float		h;
-	float		w;
-
-	wall_z = 5;
-	h = 0;
-	while (h < WINDOW_HEIGHT)
-	{
-		w = 0;
-		while (w < WINDOW_WIDTH)
-		{
-			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
-			if (rt_intersect(obj, ray).count != 0)
-			{
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int(obj.color));
-			}
-			else
-			{
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int((t_tuple){1, 1, 1, COLOR}));
-			}
-			w++;
-		}
-		h++;
-	}
-} */
 
 void	test_mlx()
 {
@@ -964,14 +931,6 @@ void	test_light_render()
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
 	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
-<<<<<<< HEAD
-
-	// shearing + 0.5 scaling
-	float shear_factors[6] = {2, 1, 2, 1, 1, 1};
-	sphere.transform = rt_mul_matrix(rt_scaling(rt_vector(0.5, 0.5, 0.5)), rt_shearing(shear_factors));
-
-=======
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -993,17 +952,10 @@ void	test_light_render()
 			rt_intersects(sphere, ray, &xs, &noneed);
 			if(xs.count != 0)
 			{
-<<<<<<< HEAD
-				point = rt_position(ray, rt_hit(intersect.first, intersect.last));
-				normalv = rt_normal_at(intersect.object, point);
-				eyev = rt_negate_vector(ray.direction);
-				color = rt_lighting(intersect.object, light, point, eyev, normalv);
-=======
 				point = rt_position(ray, rt_hit(xs).t);
 				normalv = rt_normal_at(xs.inter[0].object, point);
 				eyev = rt_negate_tuple(ray.direction);
 				color = rt_lighting(xs.inter[0].object, light, point, eyev, normalv);
->>>>>>> 31eda3a (corrected ch6 xs and intersect)
 				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
 			}
