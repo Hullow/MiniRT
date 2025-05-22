@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_utils.c                                         :+:      :+:    :+:   */
+/*   rt_utils.c                                          :+:    :+:           */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 17:22:45 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 09:59:54 by fallan         ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "micro_rt.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int	length;
+
+	length = 0;
+	while (str[length] != 0)
+		length++;
+	return (length);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < ft_strlen(s))
+	{
+		write(fd, &s[i], sizeof(char));
+		i++;
+	}
+}
 
 /* handles the error print by printing to STDERR:
 - "Error" followed by

@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rt_canvas.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 09:39:51 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/08 09:39:53 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/23 10:00:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../micro_rt.h"
 
-int	rgb_to_int(t_tuple c)
-{
-	int	hex_r;
-	int	hex_g;
-	int	hex_b;
-	int	color;
-
-	hex_r = (int) (c.x * 255);
-	hex_g = (int) (c.y * 255);
-	hex_b = (int) (c.z * 255);
-	color = 0;
-	color += (hex_r / 16) * pow(16, 5) + (hex_r % 16) * pow(16, 4);
-	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
-	color += (hex_b / 16) * 16 + (hex_b % 16);
-	return (color);
-}
 /*
 void	rt_draw(t_env *env, t_object obj, t_ray ray)
 {
@@ -49,11 +33,13 @@ void	rt_draw(t_env *env, t_object obj, t_ray ray)
 			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
 			if (rt_intersects(obj, ray, xs.inter, &noneed).count != 0)
 			{
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int(obj.color));
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, \
+				rgb_to_int(obj.color));
 			}
 			else
 			{
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, rgb_to_int((t_tuple){1, 1, 1, COLOR}));
+				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, \
+				rgb_to_int((t_tuple){1, 1, 1, COLOR}));
 			}
 			w++;
 		}
@@ -61,6 +47,7 @@ void	rt_draw(t_env *env, t_object obj, t_ray ray)
 	}
 }
 */
+
 // draws a pixel
 // the if checks if a pixel is outside the window,
 // and ignores it (to avoid a segfault)
@@ -97,7 +84,6 @@ int	key_handler(int keycode, t_env *env)
 int	window_closed(t_env *env)
 {
 	printf("Window closed, program stopping\n");
-	// ft_free_list(env->point_list);
 	mlx_destroy_image(env->mlx, env->img);
 	mlx_destroy_window(env->mlx, env->mlx_win);
 	// exit(1);

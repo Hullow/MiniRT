@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_magnitude.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:06:43 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/01 14:06:45 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/23 09:58:23 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

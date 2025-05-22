@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   micro_rt.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 18:38:13 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/23 10:02:26 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,32 @@ typedef struct s_tuple
 # ifndef MAX_OBJECTS
 #  define MAX_OBJECTS 100
 # endif
+
+/* function names for error prints */
+# define RT_COUNT_OBJECT		" – rt_count_object\n"
+# define RT_VALID_COORD			" – rt_valid_coord\n"
+# define RT_VALID_COLOR			" – rt_valid_color\n"
+# define RT_VALID_ORIENT		" – rt_valid_orient\n"
+# define RT_MAGNITUDE			" – rt_magnitude\n"
+# define RT_NORMALIZE			" – rt_normalize\n"
+# define RT_COLOR				" – rt_color\n"
+# define RT_NEGATE_VECTOR		" – rt_negate_vector\n"
+# define RT_SCALE_VECTOR		" – rt_scale_vector\n"
+# define RT_SUB_TUPLE			" - rt_sub_tuple\n"
+# define RT_ADD_TUPLE			" - rt_add_tuple\n"
+# define RT_DIVIDE_TUPLE		" – rt_divide_tuple\n"
+# define RT_DOT_PRODUCT			" – rt_dot_product\n"
+# define RT_CROSS_PRODUCT		" – rt_cross_product\n"
+# define RT_SUB_COLOR			" - rt_sub_color\n"
+# define RT_ADD_COLOR			" - rt_add_color\n"
+# define RT_SCALE_COLOR			" - rt_scale_color\n"
+# define RT_MUL_COLOR			" - rt_mul_color\n"
+# define RT_RAY					" - rt_ray\n"
+
+# define UNSPECIFIED 			" – unspecified function\n"
+
+//  	EDOM 	Math argument out of domain of func
+//  	ERANGE 	Math result not representable
 
 typedef struct s_env {
 	void	*mlx;
@@ -230,7 +256,7 @@ int			window_closed(t_env *env);
 //CH3 Matrices
 
 # define ENOTINVERTIBLE 132
-# define EPSILON 1e-9
+# define EPSILON 0.00005
 
 t_matrix	rt_identity_matrix(void);
 void		rt_print_matrix(t_matrix m);
@@ -292,5 +318,12 @@ t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
 t_tuple		rt_color_at(t_scene scene, t_ray ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
+t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
+	t_tuple forward);
+
+//Utils
+
+void		*rt_handle_error(char *function, int errno_value, char *message);
+int			is_equal_float(float a, float b);
 
 #endif

@@ -1130,15 +1130,49 @@ void	test_rgb_to_int()
 
 void	test_view_transform()
 {
-	printf ("View Transformation\n");
+	printf ("View Transformation tests:\n\n");
 	t_tuple		from;
 	t_tuple		to;
 	t_tuple		up;
 	t_matrix	view_transform;
 
+	printf("- transformation matrix for the default orientation:\n");
 	from = rt_point(0, 0, 0);
 	to = rt_point(0, 0, -1);
 	up = rt_vector(0, 1, 0);
 	view_transform = rt_view_transform(from, to, up);
+	if (rt_matrix_equality(view_transform, rt_identity_matrix()))
+		printf("the view transformation matrix == identity matrix\n");
+	else
+		printf("the view transformation matrix NOT == identity matrix\n");
+	
+	printf("\n- a view transformation matrix looking in the positive z direction:\n");
+	from = rt_point(0, 0, 0);
+	to = rt_point(0, 0, 1);
+	up = rt_vector(0, 1, 0);
+	view_transform = rt_view_transform(from, to, up);
+	if (rt_matrix_equality(view_transform, rt_scaling(rt_vector(-1, 1, -1))))
+		printf("the view transformation matrix == scaling(-1, 1, -1)\n");
+	else
+		printf("the view transformation matrix NOT == scaling(-1, 1, -1)\n");
+		
+		
+	printf("\n- the view transformation matrix moves the world:\n");
+	from = rt_point(0, 0, 8);
+	to = rt_point(0, 0, 0);
+	up = rt_vector(0, 1, 0);
+	view_transform = rt_view_transform(from, to, up);
+	if (rt_matrix_equality(view_transform, rt_translation(rt_vector(0, 0, -8))))
+		printf("the view transformation matrix == translation(0, 0, -8)\n");
+	else
+		printf("the view transformation matrix NOT == translation(0, 0, -8)\n");
+		
+		
+	printf("\n- an arbitrary view transformation:\n");
+	from = rt_point(1, 3, 2);
+	to = rt_point(4, -2, 8);
+	up = rt_vector(1, 1, 0);
+	view_transform = rt_view_transform(from, to, up);
 	rt_print_matrix(view_transform);
+
 }

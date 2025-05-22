@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/15 10:04:22 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/23 10:01:46 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
 {
 	t_tuple	color;
 
-	color = rt_lighting(comp.object, scene.lux, comp.point, comp.eyev, comp.normalv);
+	color = rt_lighting(
+			comp.object, scene.lux, comp.point, comp.eyev, comp.normalv);
 	return (color);
 }
 

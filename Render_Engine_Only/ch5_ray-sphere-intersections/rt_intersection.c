@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/11 19:26:13 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/22 20:10:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,3 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 		(*i)++;
 	}
 }
-
