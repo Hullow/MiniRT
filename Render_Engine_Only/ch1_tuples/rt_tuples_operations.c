@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:55:19 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:16:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 		rt_handle_error(RT_ADD_TUPLE, EINVAL, "\ncan't add point to point");
 		return (rt_point(0, 0, 0));
 	}
+	add.x = a.x + b.x;
+	add.y = a.y + b.y;
+	add.z = a.z + b.z;
 	add.x = a.x + b.x;
 	add.y = a.y + b.y;
 	add.z = a.z + b.z;
@@ -62,7 +65,6 @@ t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 	sub.x = a.x - b.x;
 	sub.y = a.y - b.y;
 	sub.z = a.z - b.z;
-	sub.w = a.w - b.w;
 	return (sub);
 }
 

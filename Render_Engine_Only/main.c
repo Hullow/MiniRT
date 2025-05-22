@@ -14,6 +14,6 @@
 
 int	main()
 {
-	test_scene();
+	test_view_transform();
 	return (0);
 }
