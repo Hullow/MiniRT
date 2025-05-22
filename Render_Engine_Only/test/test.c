@@ -1080,9 +1080,27 @@ void	test_scene()
 	color = rt_color_at(scene, ray);
 	rt_print_tuple(color);
 	printf("\n");
+	
+	printf("Shade hit ray hits\n");
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	
+	rt_default_scene(&scene);
+	color = rt_color_at(scene, ray);
+	rt_print_tuple(color);
+	printf("\n");
+
+	printf("Shade hit behind ray\n");
+	ray = rt_ray(rt_point(0, 0, 0.75), rt_vector(0, 0, -1));
+	
+	scene.objects[0].material.ambient = 1;
+	scene.objects[1].material.ambient = 1;
+	
+	color = rt_color_at(scene, ray);
+	rt_print_tuple(color);
+	rt_print_tuple(scene.objects[1].color);
+	printf("\n");
 
 	free(scene.objects);
-	free(xs.inter);
 }
 
 void	test_rgb_to_int()

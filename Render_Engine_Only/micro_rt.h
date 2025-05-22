@@ -63,6 +63,10 @@ typedef struct s_tuple
 #  define WINDOW_NAME "micro_rt"
 # endif
 
+# ifndef MAX_OBJECTS
+#  define MAX_OBJECTS 100
+# endif
+
 typedef struct s_env {
 	void	*mlx;
 	void	*mlx_win;
@@ -280,6 +284,7 @@ t_tuple 	rt_filmic_tonemap(t_tuple color);
 
 //CH7 Scene
 
+void		rt_default_scene(t_scene *scene);
 void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
