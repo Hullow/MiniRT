@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_init_scene.c                                    :+:      :+:    :+:   */
+/*   rt_init_scene_check_with_pberset.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 17:17:57 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:14:44 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "miniRT.h"
 
 static t_matrix	transform(t_object object)
@@ -106,3 +107,4 @@ int	rt_init_scene(const char *file, t_scene *scene)
 	close(fd);
 	return (0);
 }
+*/

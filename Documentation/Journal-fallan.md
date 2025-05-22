@@ -238,3 +238,17 @@ and he would continue working on t_intersect types
 	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
 	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
 - Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
+# 15/5/25
+- Worked on multithreading a bit, and t_intersect_coll (aggregation of t_intersect)
+
+# 16/5/25
+- Discussed t_intersect structure(s) with pberset, decided I would focus on "merge"
+and he would continue working on t_intersect types
+- New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
+	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
+	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
+- Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
+
+# 17/5/25
+- Cherry-picked the "merging render-engine with sources" commit in ch6merge branch
+- Compared tests in Sources/ with Render_Engine_Only: ordered things

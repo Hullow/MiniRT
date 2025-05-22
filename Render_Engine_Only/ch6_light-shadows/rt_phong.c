@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_phong_ok.c                                      :+:      :+:    :+:   */
+/*   rt_phong.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/16 18:42:36 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:07:12 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, \
 	else
 	{
 		diffuse = rt_scale_color(color, o.material.diffuse * light_dot_normal);
-		reflect = rt_reflect(rt_negate_tuple(dir_to_light), normalv);
+		reflect = rt_reflect(rt_negate_vector(dir_to_light), normalv);
 		reflect = rt_normalize(reflect);
 		reflect_dot_camera = rt_dot_product(reflect, eyev);
 		if (reflect_dot_camera <= 0)

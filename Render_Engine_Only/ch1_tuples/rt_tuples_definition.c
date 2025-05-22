@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_tuples_definition_ok.c                          :+:      :+:    :+:   */
+/*   rt_tuples_definition.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:39:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/16 18:31:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 15:20:33 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ t_tuple	rt_color(float r, float g, float b)
 
 void	rt_print_tuple(t_tuple t)
 {
-	printf("{x = %f, y = %f, z = %f}", t.x, t.y, t.z);
+	printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
 	if (t.w == VECTOR)
-		printf(" of type VECTOR\n");
+		printf("of type VECTOR\n");
 	if (t.w == POINT)
-		printf(" of type POINT\n");
+		printf("of type POINT\n");
 	if (t.w == COLOR)
-		printf(" of type COLOR\n");
+		printf("of type COLOR\n");
 }

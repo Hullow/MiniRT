@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_file_check.c                                    :+:      :+:    :+:   */
+/*   rt_file_check_check_with_pberset.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:31:00 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 17:07:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:14:34 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "miniRT.h"
 
 // Returns 1 if the file extension is wrong. Otherwise 0
@@ -55,3 +56,4 @@ int	rt_read_id(const char *file, t_scene *scene)
 	close(fd);
 	return (errno);
 }
+*/

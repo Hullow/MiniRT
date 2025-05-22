@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_validate_input.c                                :+:      :+:    :+:   */
+/*   rt_validate_input_check_with_pberset.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:03:06 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 17:03:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:15:02 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "miniRT.h"
 
 int	rt_valid_color(char **color)
@@ -79,3 +80,4 @@ int	rt_valid_orient(char **orient)
 				"\nwrong number of orientation arguments"), 0);
 	return (1);
 }
+*/

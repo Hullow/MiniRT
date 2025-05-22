@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_scene_structs.c                                 :+:      :+:    :+:   */
+/*   rt_scene_structs_check_with_pberset.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:27:15 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/19 17:20:21 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/17 18:14:51 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "miniRT.h"
 
 static int	rt_id_format(const char a, const char b, const char c)
@@ -68,3 +69,4 @@ int	rt_malloc_objects(t_scene *scene)
 	}
 	return (0);
 }
+*/

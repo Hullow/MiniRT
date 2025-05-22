@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 18:33:04 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/16 20:06:59 by fallan           ###   ########.fr       */
+/*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/17 19:55:40 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	test_intersect(void);
 void	test_mlx(void);
 void	test_light(void);
 void	test_light_render(void);
-void	test_world(void);
+void	test_scene(void);
 
 //Structs
 
@@ -117,11 +117,6 @@ typedef struct s_matrix
 //Objects
 
 /// @brief Material contains light effects. Not color because norminette
-/// @param ambient	typical values between 0 and 1
-/// @param diffuse	typical values between 0 and 1
-/// @param specular	typical values between 0 and 1
-/// @param shininess values between 10 (v. large highlight) and 200 (v. small)
-/// 				 seem to work best, though there is no actual upper bound
 typedef struct s_material
 {
 	float	ambient;
@@ -161,15 +156,15 @@ typedef struct s_ray
 
 typedef struct s_intersect
 {
-	t_object	*object;
+	t_object	object;
 	float		t;
-}	t_intersect;
+}	t_inter;
 
-typedef struct s_intersect_collection
+typedef struct s_xs
 {
-	t_intersect *intersections;
 	int			count;
-}	t_intersect_coll;
+	t_inter	*inter;
+}	t_xs;
 
 //Light
 
@@ -186,10 +181,6 @@ typedef struct s_camera
 	float	fov;
 }	t_camera;
 
-/// @brief	struct for light source
-///	@param	coord		: a POINT tuple for the position
-/// @param	intensity	: float, typically between 0 and 1, can be larger
-/// @param	color		: a COLOR tuple
 typedef struct s_light
 {
 	t_tuple	coord;
@@ -197,24 +188,33 @@ typedef struct s_light
 	t_tuple	color;
 }	t_light;
 
-// scene struct
+//Scene
+
 typedef struct s_scene
 {
-	int					n_a;
-	int					n_l;
-	int					n_cam;
-	int					n_sp;
-	int					n_pl;
-	int					n_cy;
-	int					n_obj;
-	t_ambient			amb;
-	t_camera			cam;
-	t_light				lux;
-	t_object			*objects;
-	t_intersect_coll	xs;
+	int			n_a;
+	int			n_l;
+	int			n_cam;
+	int			n_sp;
+	int			n_pl;
+	int			n_cy;
+	int			n_obj;
+	t_ambient	amb;
+	t_camera	cam;
+	t_light		lux;
+	t_object	*objects;
 }	t_scene;
 
-//CH0 Parsing
+
+typedef struct s_comps
+{
+	float		t;
+	t_object	object;
+	t_tuple		point;
+	t_tuple		eyev;
+	t_tuple		normalv;
+	int			inside;
+}	t_comps;
 
 
 //CH1 Tuples
@@ -246,7 +246,7 @@ t_env		mlx_set_env(void);
 void		mlx_run_window(t_env *env);
 t_ray		rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z);
 int			rgb_to_int(t_tuple c);
-void		rt_draw(t_env *env, t_object sp, t_ray ray);
+//void		rt_draw(t_env *env, t_object sp, t_ray ray);
 void		my_mlx_pixel_put(t_env *env, int x, int y, int color);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
@@ -278,7 +278,6 @@ t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);
-t_matrix	rt_shearing(float *shear_factors);
 
 //CH5 Ray-Sphere intersections
 
@@ -289,13 +288,11 @@ void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray ray, float t);
 t_object	rt_sphere(t_tuple color, t_material material);
 void		rt_print_sphere(t_object sphere);
-t_intersect	rt_intersect(t_object object, t_ray ray);
-t_intersect	rt_init_intersect(float t_value, t_object *obj);
+t_inter		rt_intersect(float t, t_object obj);
+void		rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
-void		rt_discriminant(t_ray ray, t_object *sphere, t_intersect_coll *xs, int i);
-t_intersect_coll	rt_intersect_ray_scene(t_ray ray, t_scene scene);
-t_intersect	rt_find_hit(t_intersect_coll xs);
-float		rt_hit(float t1, float t2);
+void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
+t_inter		rt_hit(t_xs xs);
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);
 
@@ -314,8 +311,15 @@ t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple 	rt_filmic_tonemap(t_tuple color);
 
-// Utils
+//CH7 Scene
+
+void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
+t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
+t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
+
+//Utils
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
+int			is_equal_float(float a, float b);
 
 #endif

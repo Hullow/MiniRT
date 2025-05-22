@@ -11,7 +11,7 @@ endif
 
 MLXFLAGS = -lmlx -lXext -lX11
 
-SOURCES = $(wildcard ./main.c ./ch*/*.c ./test/*.c)
+SOURCES = $(wildcard ./main.c ./rt_utils.c ./ch*/*.c ./test/*.c)
 
 all: SOURCES
 
