@@ -291,5 +291,6 @@ void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
 t_tuple		rt_color_at(t_scene scene, t_ray ray);
+t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 
 #endif

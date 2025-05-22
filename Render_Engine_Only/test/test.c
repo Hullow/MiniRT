@@ -1130,5 +1130,15 @@ void	test_rgb_to_int()
 
 void	test_view_transform()
 {
+	printf ("View Transformation\n");
+	t_tuple		from;
+	t_tuple		to;
+	t_tuple		up;
+	t_matrix	view_transform;
 
+	from = rt_point(0, 0, 0);
+	to = rt_point(0, 0, -1);
+	up = rt_vector(0, 1, 0);
+	view_transform = rt_view_transform(from, to, up);
+	rt_print_matrix(view_transform);
 }
