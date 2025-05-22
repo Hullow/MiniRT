@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/06 16:07:47 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "micro_rt.h"
+#include "miniRT.h"
 
 int	main()
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_rotation_ok.c                                   :+:      :+:    :+:   */
+/*   rt_rotation.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:26:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/16 18:32:16 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 // Init a rotation matrix around the 3 axis
 // Takes in the object's normal vector

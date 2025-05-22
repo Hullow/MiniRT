@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_test_input.c                                    :+:      :+:    :+:   */
+/*   test_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:27:46 by fallan            #+#    #+#             */
-/*   Updated: 2025/04/19 17:57:44 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
+/* 
 void	miniRT_input_tests(t_scene scene)
 {
 	if (!errno)
@@ -39,7 +39,7 @@ void	miniRT_input_tests(t_scene scene)
 }
 
 
-/* void	miniRT_input_tests(t_scene scene)
+void	miniRT_input_tests(t_scene scene)
 {
 	if (!errno)
 	{
@@ -74,4 +74,5 @@ void	miniRT_input_tests(t_scene scene)
 			i++;
 		}
 	}
-} */
+}
+*/

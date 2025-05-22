@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_plane_cylinder_ok.c                             :+:      :+:    :+:   */
+/*   rt_plane_cylinder.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:32:05 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/16 18:32:27 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 /* 
 // Computes the collision distance between the ray and the plane

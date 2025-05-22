@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:21:37 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 19:52:15 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 /// @brief Multiplies matrices a and b. For this project, only matrices 4x4
 ///

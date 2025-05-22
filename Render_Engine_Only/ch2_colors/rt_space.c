@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:47:06 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 20:13:01 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 /// @brief 
 /// @param ray 

@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:39:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 15:20:33 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 /// @return t_tuple of type VECTOR (0.0)
 t_tuple	rt_vector(float x, float y, float z)

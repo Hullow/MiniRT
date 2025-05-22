@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_test_shape.c                                    :+:      :+:    :+:   */
+/*   test_shape.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:54:58 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/21 14:55:00 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-/*Sample objects
+/*
+Sample objects
 SPHERE:
 ID COORD          DIAMETER    COLOR
 sp 0.0,0.0,20.6   12.6        10,0,255
@@ -23,7 +24,7 @@ cy 50.0,0.0,20.6    0.0,0.0,1.0    14.2          21.42     10,0,255
 PLANE:
 ID COORD            NORM           COLOR
 pl 0.0,0.0,-10.0    0.0,1.0,0.0    0,0,255
-*/
+
 
 static void	rt_assign_object(t_object *object, char **needle, char type);
 static t_matrix	transform(t_object object);
@@ -44,14 +45,13 @@ void	test_shape(void)
 	ray.direction = rt_vector(1, 2, 3);
 	ray.origin = rt_point(3, 2, 1);
 
-	/*
-	passing scene here. for the list of objects
-	could pass the list directly
-	initially list of intersections was stored in the scene. now can only be in ray
-	no need to keep after pixel put
+	// passing scene here. for the list of objects
+	// could pass the list directly
+	// initially list of intersections was stored in the scene. now can only be in ray
+	// no need to keep after pixel put
 
-	unfinished function for now. Need sphere intersection to work first
-	*/
+	// unfinished function for now. Need sphere intersection to work first
+
 	//ray.intersects = rt_compute_ray_intersects(&scene, ray, shape);
 
 	// This transforms the ray according to the inverse of the transform matrix of the t_object shape
@@ -62,7 +62,7 @@ void	test_shape(void)
 	point = rt_point(1, 2, 3);
 	world_normal = rt_normal_at(shape, point);
 
-	/*test normal_at(shape, point), when shape is a plane always egal shape.norm*/
+	// test normal_at(shape, point), when shape is a plane always egal shape.norm
 }
 
 // Needle contains the values except the id in a splitted string
@@ -99,3 +99,5 @@ static t_matrix	transform(t_object object)
 		transform = matrix_multiplication(transform, rt_rotation(object.norm));
 	return (transform);
 }
+
+*/

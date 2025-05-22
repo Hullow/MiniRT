@@ -1,29 +1,172 @@
-NAME = micro_rt
+# Target executable/library name
+NAME		= miniRT
 
-CC = cc
+# Compiler
+CC			= cc
 
-UNAME_S = $(shell uname -s)
-FLAGS = -Wall -Wextra -Werror -g -pthread # don't forget pthread
-LIBFLAGS = -Lmlx
-ifeq ($(UNAME_S),Darwin) # If the system is macOS (Darwin, add the Library path for X11)
-	LIBFLAGS += -L/opt/X11/lib
-endif
+# Compiler flags
+CFLAGS		= -Wall -Wextra -Werror
+DFLAGS		= -g3
+LIBFLAGS	= -L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lXext -lX11 -lm
+INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 
-MLXFLAGS = -lmlx -lXext -lX11
+# Folders
+SRCDIR		= ./
+OBJDIR		= ../Sources/obj/
+INCLUDEDIR	= ../Sources/include/
 
-SOURCES = $(wildcard ./main.c ./rt_utils.c ./ch*/*.c ./test/*.c)
+LIBFTDIR	= $(INCLUDEDIR)libft/
+MLXDIR		= $(INCLUDEDIR)mlx/
 
-all: SOURCES
+PARSEDIR	= ch0_parsing/
+TUPLEDIR	= ch1_tuples/
+COLORDIR	= ch2_colors/
+MATRIXDIR	= ch3_matrices/
+TRANSFDIR	= ch4_transformations/
+RAYSDIR		= ch5_ray-sphere-intersections/
+LIGHTDIR	= ch6_light-shadows/
+SCENEDIR	= ch7_making-a-scene/
+TESTDIR		= test/
 
-SOURCES:
-	@make -C mlx/ all
-	$(CC) $(FLAGS) -Imlx $(SOURCES) mlx/libmlx.a $(LIBFLAGS) $(MLXFLAGS) -lm -o $(NAME)
+# Libs
+LIBFT		= $(LIBFTDIR)libft.a
+MLX			= $(MLXDIR)libmlx.a
 
-sanitize: CC += -fsanitize=address
-sanitize: all
+# Header
+HEADERS		= $(SRCDIR)$(NAME).h $(LFTHEADER)*.h $(MLXDIR)mlx.h
+LFTHEADER	= $(INCLUDEDIR)libft/header/
 
+# Source files
+MAIN		= main
+
+COLOR		= rt_colors_operations \
+			rt_mlx \
+			rt_space
+
+LIGHT		= rt_camera \
+			rt_light \
+			rt_normal_nonplanar \
+			rt_phong
+
+MATRIX		= rt_matrix_definition \
+			rt_matrix_inversion \
+			rt_matrix_operation
+
+RAYS		= rt_hit \
+			rt_intersection \
+			rt_object \
+			rt_plane_cylinder \
+			rt_ray \
+			rt_ray_transform
+
+SCENE		= rt_scene \
+			rt_view_transform
+
+TESTS		= test \
+			test_input \
+			test_shape \
+			test_thread
+
+TRANSF		= rt_rotation \
+			rt_transform
+
+TUPLE		= rt_magnitude \
+			rt_tuples_definition \
+			rt_tuples_operations \
+			rt_vectors_operations
+
+PARSE		= rt_assign_objects \
+			rt_file_check \
+			rt_scene_structs \
+			rt_validate_input \
+			rt_assign_view_elements \
+			rt_init_scene \
+			rt_utils
+
+SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
+			$(addprefix $(SRCDIR)$(COLORDIR), $(addsuffix .c, $(COLOR))) \
+			$(addprefix $(SRCDIR)$(LIGHTDIR), $(addsuffix .c, $(LIGHT))) \
+			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
+			$(addprefix $(SRCDIR)$(RAYSDIR), $(addsuffix .c, $(RAYS))) \
+			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
+			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS))) \
+			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
+			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
+			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE)))
+
+# Object files
+OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
+			$(addprefix $(OBJDIR)$(COLORDIR), $(addsuffix .o, $(COLOR))) \
+			$(addprefix $(OBJDIR)$(LIGHTDIR), $(addsuffix .o, $(LIGHT))) \
+			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
+			$(addprefix $(OBJDIR)$(RAYSDIR), $(addsuffix .o, $(RAYS))) \
+			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
+			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS))) \
+			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
+			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
+			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE)))
+
+# Default target
+all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
+
+# Build target
+$(NAME): $(OBJ)
+	@echo "Building $(NAME)..."
+	@cp $(LIBFT) $(NAME)
+	@cp $(MLX) $(NAME)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
+
+# Build libft
+$(LIBFT):
+	@make -C $(LIBFTDIR) all
+
+# Build MLX
+$(MLX):
+	@make -C $(MLXDIR) all
+
+# Create object files directory
+$(OBJDIR):
+	@echo "Creating $(NAME) obj directories..."
+	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)$(COLORDIR)
+	mkdir -p $(OBJDIR)$(LIGHTDIR)
+	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(PARSEDIR)
+	mkdir -p $(OBJDIR)$(RAYSDIR)
+	mkdir -p $(OBJDIR)$(SCENEDIR)
+	mkdir -p $(OBJDIR)$(TESTDIR)
+	mkdir -p $(OBJDIR)$(TRANSFDIR)
+	mkdir -p $(OBJDIR)$(TUPLEDIR)
+	@echo "Compiling $(NAME)..."
+
+# Build object files
+$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
+
+# Clean compiled files
 clean:
-	rm -rf $(NAME)
-	@make -C mlx/ clean
+	@echo "Cleaning $(NAME) obj/ directory..."
+	@rm -rf $(OBJDIR)
 
-.PHONY: all clean
+# Full clean
+fclean: clean
+	@echo "Removing $(NAME)..."
+	@rm -rf $(NAME)
+	@make -C $(LIBFTDIR) fclean
+	@make -C $(MLXDIR) clean
+
+# Rebuild from scratch
+re: fclean
+	@echo "Resetting $(NAME)..."
+	@echo ""
+	@$(MAKE) --no-print-directory all
+
+# Phony targets
+.PHONY: all clean fclean re
+
+# $@ nom de la cible
+# $< nom de la premiere dependance
+# $ˆ liste des dependances
+# $? liste des dependances mises a jour
+# $* nom du fichier sans son extension
+# $(wildcard *.c)

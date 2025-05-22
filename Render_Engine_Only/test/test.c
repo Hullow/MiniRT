@@ -1,4 +1,4 @@
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 void	test_tuples()
 {	

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_transform.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:17:30 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:15:11 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 // Init a translation matrix in the direction given by the vector t
 t_matrix	rt_translation(t_tuple t)

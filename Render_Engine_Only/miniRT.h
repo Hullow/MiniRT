@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   micro_rt.h                                         :+:      :+:    :+:   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 19:48:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 21:02:02 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MICRO_RT_H
-# define MICRO_RT_H
+#ifndef MINIRT_H
+# define MINIRT_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -19,6 +19,7 @@
 # include <math.h>
 # include <errno.h>
 # include "./mlx/mlx.h"
+# include "./libft/header/libft.h"
 
 //test
 void	test_tuples(void);
