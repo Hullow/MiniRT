@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_matrix_operation_ok.c                           :+:      :+:    :+:   */
+/*   rt_matrix_operation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:21:37 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/16 20:01:35 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:52:15 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,30 +99,4 @@ t_matrix	rt_matrix_transpose(t_matrix m)
 		i++;
 	}
 	return (transpose);
-}
-
-/// @brief checks if two matrices are equal using is_equal_float on each element
-/// @return 1 if true, 0 if false (including if matrices have different sizes)
-int	rt_matrix_equality(t_matrix a, t_matrix b)
-{
-	int	i;
-	int	j;
-	int	rows;
-	int	columns;
-
-	if (a.rows != b.rows || a.columns != b.columns)
-		return (0);
-	i = -1;
-	rows = a.rows;
-	columns = a.columns;
-	while (++i < rows)
-	{
-		j = -1;
-		while (++j < columns)
-		{
-			if (!is_equal_float(a.cell[i][j], b.cell[i][j]))
-				return (0);
-		}
-	}
-	return (1);
 }

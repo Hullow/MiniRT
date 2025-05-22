@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/17 19:51:35 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 20:07:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
 {
 	t_tuple	color;
 
-	color = rt_lighting(comp.object, scene.lux, comp.point, comp.eyev, comp.normalv);
+	color = rt_lighting(
+			comp.object, scene.lux, comp.point, comp.eyev, comp.normalv);
 	return (color);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_hit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:34:35 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/16 13:34:37 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/22 20:11:03 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ t_inter	rt_hit(t_xs xs)
 	}
 	return (hit);
 }
-

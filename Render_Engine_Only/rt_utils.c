@@ -6,11 +6,33 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/17 19:56:42 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:49:28 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "micro_rt.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int	length;
+
+	length = 0;
+	while (str[length] != 0)
+		length++;
+	return (length);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < ft_strlen(s))
+	{
+		write(fd, &s[i], sizeof(char));
+		i++;
+	}
+}
 
 /* handles the error print by printing to STDERR:
 - "Error" followed by
