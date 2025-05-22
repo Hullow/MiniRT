@@ -15,9 +15,7 @@
 t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 {
 	t_tuple	add;
-	float	add_x;
-	float	add_y;
-	float	add_z;
+
 
 	errno = 0;
 	if (a.w == POINT && b.w == POINT)
@@ -26,10 +24,9 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 		add = rt_point(0, 0, 0);
 		return (add);
 	}
-	add_x = a.x + b.x;
-	add_y = a.y + b.y;
-	add_z = a.z + b.z;
-	add = rt_point(add_x, add_y, add_z);
+	add.x = a.x + b.x;
+	add.y = a.y + b.y;
+	add.z = a.z + b.z;
 	add.w = a.w + b.w;
 	return (add);
 }

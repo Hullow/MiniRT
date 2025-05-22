@@ -224,6 +224,7 @@ int			window_closed(t_env *env);
 //CH3 Matrices
 
 # define ENOTINVERTIBLE 132
+# define EPSILON 1e-9
 
 t_matrix	rt_identity_matrix(void);
 void		rt_print_matrix(t_matrix m);
@@ -282,5 +283,6 @@ t_tuple 	rt_filmic_tonemap(t_tuple color);
 void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
+t_tuple		rt_color_at(t_scene scene, t_ray ray);
 
 #endif

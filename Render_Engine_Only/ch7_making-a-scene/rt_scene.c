@@ -50,6 +50,20 @@ t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
 	t_tuple	color;
 
 	color = rt_lighting(comp.object, scene.lux, comp.point, comp.eyev, comp.normalv);
-	//color = rt_reinhard_tonemap(color);
+	return (color);
+}
+
+t_tuple	rt_color_at(t_scene scene, t_ray ray)
+{
+	t_tuple	color;
+	t_comps	comps;
+	t_xs	xs;
+	t_inter	inter;
+
+	xs.count = 0;
+	rt_intersect_scene(scene, ray, &xs);
+	inter = rt_hit(xs);
+	comps = rt_prepare_computations(inter, ray);
+	color = rt_shade_hit(scene, comps);
 	return (color);
 }

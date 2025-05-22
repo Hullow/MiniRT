@@ -803,6 +803,8 @@ void	test_light()
 	rt_print_tuple(normal);
 	normal = rt_normal_at(sphere, rt_point(sqrtf(3)/3, sqrtf(3)/3, sqrtf(3)/3));
 	rt_print_tuple(normal);
+	normal = rt_normalize(normal);
+	rt_print_tuple(normal);
 	printf("sqrt3 /3: %f\n\n", sqrtf(3)/3);
 
 	printf("Normal of translated sphere\n");
@@ -820,7 +822,7 @@ void	test_light()
 	scale = rt_scaling(rt_vector(1, 0.5, 1));
 	rotate = rt_rotation_z(M_PI / 5);
 	transform = rt_mul_matrix(scale, rotate);
-	sphere.transform = rt_set_transform(sphere, transform);
+	sphere.transform = transform;
 	normal = rt_normal_at(sphere, rt_point(0, sqrtf(2)/2, -sqrtf(2)/2));
 	rt_print_tuple(normal);
 
@@ -921,7 +923,7 @@ void	test_light_render()
 	t_tuple 	eyev;
 	t_tuple		normalv;
 	t_tuple		color;
-	//t_matrix	transform;
+	t_matrix	transform;
 
 	int			h;
 	int			w;
@@ -934,8 +936,8 @@ void	test_light_render()
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
-	//transform = rt_scaling(rt_vector(2, 0.5, 1));
-	//sphere.transform = rt_set_transform(sphere, transform);
+	transform = rt_scaling(rt_vector(2, 0.5, 1));
+	sphere.transform = rt_set_transform(sphere, transform);
 
 	wall_z = 5;
 	h = 0;
@@ -986,6 +988,7 @@ void	test_scene()
 	material = rt_material(0.1, 0.7, 0.2, 200.0);
 	sphere = rt_sphere(rt_color(0.8 * 255, 255, 0.6 * 255), material);
 	scene.objects[0] = sphere;
+	sphere.diameter = 1.0;
 	sphere.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
 	scene.objects[1] = sphere;
 	rt_print_sphere(scene.objects[0]);
@@ -1023,24 +1026,34 @@ void	test_scene()
 	t_inter	inter;
 
 	printf("from the outside\n");
-	sphere = rt_sphere(rt_color(0.8 * 255, 255, 0.6 * 255), material);
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	sphere = scene.objects[0];
 	inter = rt_intersect(4, sphere);
 	comps = rt_prepare_computations(inter, ray);
+	rt_print_sphere(comps.object);
+	rt_print_sphere(inter.object);
+	rt_print_tuple(comps.point);
+	rt_print_tuple(comps.eyev);
+	rt_print_tuple(comps.normalv);
 	printf("comp.inside = %d\n", comps.inside);
 
 	printf("from the inside\n");
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
 	inter = rt_intersect(1, sphere);
 	comps = rt_prepare_computations(inter, ray);
-	printf("comp.inside = %d\n", comps.inside);
+	rt_print_sphere(comps.object);
+	rt_print_sphere(inter.object);
+	rt_print_tuple(comps.point);
+	rt_print_tuple(comps.eyev);
 	rt_print_tuple(comps.normalv);
+	printf("comp.inside = %d\n", comps.inside);
 	printf("\n");
 
 	printf("Shade hit\n");
 	t_tuple	color;
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	scene.lux = rt_light(rt_color(255, 255, 255), rt_point(0, 0.25, 0), 1.0);
+	scene.lux = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0);
 	sphere = scene.objects[0];
 	inter = rt_intersect(4, sphere);
 	comps = rt_prepare_computations(inter, ray);
@@ -1048,6 +1061,51 @@ void	test_scene()
 	rt_print_tuple(color);
 	printf("\n");
 
+	printf("Shade hit from inside\n");
+
+	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
+	scene.lux = rt_light(rt_color(255, 255, 255), rt_point(0, 0.25, 0), 1.0);
+	sphere = scene.objects[1];
+	sphere.material = rt_material(0.1, 0.7, 0.2, 1);
+	sphere.color = rt_color(1.0 * 255, 1.0 * 255, 1.0 * 255);
+	inter = rt_intersect(0.5, sphere);
+	comps = rt_prepare_computations(inter, ray);
+	color = rt_shade_hit(scene, comps);
+	rt_print_tuple(color);
+	printf("\n");
+
+	printf("Shade hit ray missed\n");
+
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 1, 0));
+	color = rt_color_at(scene, ray);
+	rt_print_tuple(color);
+	printf("\n");
+
 	free(scene.objects);
 	free(xs.inter);
+}
+
+void	test_rgb_to_int()
+{
+	// generate color
+	int col;
+	col = rgb_to_int(rt_color(0.90498 * 255, 0.90498 * 255, 0.90498 * 255));
+	printf("rgb_to_int %d \n", col);
+
+	// draw window with color
+	float		h;
+	float		w;
+	t_env env = mlx_set_env();
+	h = 0;
+	while (h < WINDOW_HEIGHT)
+	{
+		w = 0;
+		while (w < WINDOW_WIDTH)
+		{
+			my_mlx_pixel_put(&env, (int) w, WINDOW_HEIGHT - (int) h, col);
+			w++;
+		}
+		h++;
+	}
+	mlx_run_window(&env);
 }

@@ -12,8 +12,12 @@
 
 #include "micro_rt.h"
 
+
+void	test_rgb_to_int();
+
 int	main()
 {
 	test_scene();
+	// test_rgb_to_int();
 	return (0);
 }

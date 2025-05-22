@@ -89,7 +89,7 @@ void	rt_inversion(t_matrix m, t_matrix *invert)
 
 	errno = 0;
 	det = rt_determinant(m);
-	if (det == 0)
+	if (fabs(det) < EPSILON)
 	{
 		errno = ENOTINVERTIBLE;
 		*invert = rt_identity_matrix();

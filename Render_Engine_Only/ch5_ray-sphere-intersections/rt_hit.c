@@ -22,7 +22,7 @@ t_inter	rt_hit(t_xs xs)
 
 	hit.t = INFINITY;
 	if (errno == EDISCRIMINANT)
-		return (xs.inter[0]);
+		return (rt_intersect(0, (t_object){}));
 	i = 0;
 	while (i < xs.count)
 	{

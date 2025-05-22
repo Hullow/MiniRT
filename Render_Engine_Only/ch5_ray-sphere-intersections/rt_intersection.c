@@ -65,10 +65,7 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 	c = rt_dot_product(sp_ray, sp_ray) - 1;
 	discr = b * b - 4 * a * c;
 	if (discr < 0)
-	{
 		errno = EDISCRIMINANT;
-		xs->count += 0;
-	}
 	else
 	{
 		xs->count += 2;
