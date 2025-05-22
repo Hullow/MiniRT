@@ -1109,7 +1109,7 @@ void	test_rgb_to_int()
 	int col;
 	col = rgb_to_int(rt_color(0.90498 * 255, 0.90498 * 255, 0.90498 * 255));
 	printf("rgb_to_int %d \n", col);
-
+	
 	// draw window with color
 	float		h;
 	float		w;
@@ -1126,4 +1126,9 @@ void	test_rgb_to_int()
 		h++;
 	}
 	mlx_run_window(&env);
+}
+
+void	test_view_transform()
+{
+
 }

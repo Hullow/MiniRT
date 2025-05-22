@@ -29,6 +29,8 @@ void	test_mlx(void);
 void	test_light(void);
 void	test_light_render(void);
 void	test_scene(void);
+void	test_rgb_to_int(void);
+void	test_view_transform(void);
 
 //Structs
 

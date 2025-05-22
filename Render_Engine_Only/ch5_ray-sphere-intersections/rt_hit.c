@@ -22,7 +22,8 @@ t_inter	rt_hit(t_xs xs)
 
 	hit.t = INFINITY;
 	if (errno == EDISCRIMINANT)
-		return (rt_intersect(0, rt_sphere(rt_color(0, 0, 0), rt_material(0, 0, 0, 0))));
+		return (rt_intersect(0, \
+				rt_sphere(rt_color(0, 0, 0), rt_material(0, 0, 0, 0))));
 	i = 0;
 	while (i < xs.count)
 	{
