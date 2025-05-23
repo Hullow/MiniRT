@@ -14,6 +14,6 @@
 
 int	main()
 {
-	test_planes();
+	test_render_plane();
 	return (0);
 }

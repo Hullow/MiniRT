@@ -33,6 +33,7 @@ void	test_scene(void);
 void	test_rgb_to_int(void);
 void	test_view_transform(void);
 void	test_planes(void);
+void	test_render_plane(void);
 
 //Structs
 
@@ -302,7 +303,7 @@ t_tuple		rt_position(t_ray ray, float t);
 t_object	rt_sphere(t_tuple color);
 void		rt_print_sphere(t_object sphere);
 t_inter		rt_intersect(float t, t_object obj);
-void		rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i);
+void		rt_intersects(t_object *object, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
 t_inter		rt_hit(t_xs xs);
