@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:27:46 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:13:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	miniRT_input_tests(t_scene scene)
 		printf("ambient color R: %f G: %f B: %f\n", scene.amb.color.x, scene.amb.color.y, scene.amb.color.z);
 		printf("camera coords x: %f y: %f z: %f\n", scene.cam.coord.x, scene.cam.coord.y, scene.cam.coord.z);
 		printf("camera orient x: %f y: %f z: %f\n", scene.cam.orient.x, scene.cam.orient.y, scene.cam.orient.z);
-		printf("camera fov: %f\n", scene.cam.fov);
+		printf("camera field_of_view: %f\n", scene.cam.field_of_view);
 		printf("sphere coords x: %f y: %f z: %f\n", scene.objects->coord.x, scene.objects->coord.y, scene.objects->coord.z);
 		printf("sphere diameter : %f\n", scene.objects->diameter);
 		printf("sphere color R: %f G: %f B: %f\n", scene.objects->color.x, scene.objects->color.y, scene.objects->color.z);
@@ -50,7 +50,7 @@ void	miniRT_input_tests(t_scene scene)
 		printf("ambient color R: %f G: %f B: %f\n", scene.amb.color.x, scene.amb.color.y, scene.amb.color.z);
 		printf("camera coords x: %f y: %f z: %f\n", scene.cam.coord.x, scene.cam.coord.y, scene.cam.coord.z);
 		printf("camera orient x: %f y: %f z: %f\n", scene.cam.orient.x, scene.cam.orient.y, scene.cam.orient.z);
-		printf("camera fov: %f\n", scene.cam.fov);
+		printf("camera field_of_view: %f\n", scene.cam.field_of_view);
 		int i = 0;
 		while (i < scene.n_obj)
 		{

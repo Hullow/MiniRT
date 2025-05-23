@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:03:16 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:23:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	rt_default_scene(t_scene *scene)
 	sphere_2 = rt_sphere(rt_color(255, 255, 255), \
 		rt_material(0.1, 0.7, 0.2, 200));
 	sphere_2.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
+	sphere_2.transform = rt_translation(rt_vector(2, -2, 2));
+	sphere_2.color = rt_color(255, 0, 0);
 	light = rt_light (rt_color(255, 255, 255), rt_point(-10, 10, -10), 1);
+	scene->n_obj = 2;
 	scene->objects[0] = sphere_1;
 	scene->objects[1] = sphere_2;
 	scene->lux = light;
@@ -84,6 +87,8 @@ t_tuple	rt_color_at(t_scene scene, t_ray ray)
 
 	rt_intersect_scene(scene, ray, &xs);
 	inter = rt_hit(xs);
+	if (rt_is_equal_tuple(inter.object.color, rt_color(255, 0, 0)))
+		printf("inter -> hit the red sphere\n");
 	comps = rt_prepare_computations(inter, ray);
 	color = rt_shade_hit(scene, comps);
 	return (color);

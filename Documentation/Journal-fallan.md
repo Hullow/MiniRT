@@ -252,3 +252,15 @@ and he would continue working on t_intersect types
 # 17/5/25
 - Cherry-picked the "merging render-engine with sources" commit in ch6merge branch
 - Compared tests in Sources/ with Render_Engine_Only: ordered things
+
+# 22/5/25
+- Refactoring + preparing merge
+- Ch7 begin: view_transformation => ok, passes tests.
+
+# 23/5/25
+- Successfully merged ch7 begin + folder reordering in pberset. Onwards!
+- Started working on camera (ch7). called init function `rt_camera_book` and the old
+parsing initialization function `rt_camera_parsing`.
+- Modified rt_inversion and tested it (test_matrix, test_intersect -> partial tests ok)
+- only one sphere is shown, unclear why. we try to debug a bit
+=> fixed rt_hit to remove `(if errno = EDISCRIMINANT)` => it works!!!

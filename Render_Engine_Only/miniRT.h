@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                            :+:    :+:           */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:09:08 by fallan         ########   odam.nl        */
+/*   Updated: 2025/05/23 17:47:19 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	test_light_render(void);
 void	test_scene(void);
 void	test_rgb_to_int(void);
 void	test_view_transform(void);
+void	test_camera(void);
 
 //Structs
 
@@ -179,9 +180,15 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_tuple	coord;
-	t_tuple	orient;
-	float	fov;
+	t_tuple		coord;
+	t_tuple		orient;
+	int			hsize;
+	int			vsize;
+	float		field_of_view;
+	t_matrix	transform;
+	float		half_width;
+	float		half_height;
+	float		pixel_size;
 }	t_camera;
 
 typedef struct s_light
@@ -272,7 +279,7 @@ float		rt_determinant(t_matrix m);
 void		rt_sub_matrix(t_matrix m, int row, int col, t_matrix *sub);
 float		rt_minor(t_matrix m, int row, int col);
 float		rt_cofactor(t_matrix m, int row, int col);
-void		rt_inversion(t_matrix m, t_matrix *invert);
+t_matrix	rt_inversion(t_matrix m);
 
 //CH4 Transforms
 
@@ -308,7 +315,6 @@ t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
 void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
-t_camera	rt_camera(t_tuple coord, t_tuple orient, float fov);
 t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, \
 	t_tuple eyev, t_tuple normalv);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
@@ -325,6 +331,11 @@ t_tuple		rt_color_at(t_scene scene, t_ray ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 	t_tuple forward);
+t_camera	rt_camera_book(int hsize, int vsize, float field_of_view);
+t_camera	rt_camera_parsing(t_tuple coord, t_tuple orient, float field_of_view);
+t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
+void		rt_print_camera(t_camera camera);
+void		rt_render(t_camera camera, t_scene scene, t_env *env);
 
 //Utils
 

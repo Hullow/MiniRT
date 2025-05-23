@@ -1,0 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt_camera.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
+/*   Updated: 2025/05/23 18:07:08 by fallan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "miniRT.h"
+
+t_camera	rt_camera_parsing(t_tuple coord, t_tuple orient, float field_of_view)
+{
+	t_camera	camera;
+
+	camera.coord = coord;
+	camera.orient = orient;
+	camera.field_of_view = field_of_view;
+	return (camera);
+}
+
+t_camera	rt_camera_book(int hsize, int vsize, float field_of_view)
+{
+	t_camera	camera;
+	float		half_view;
+	float		aspect;
+
+	camera.hsize = hsize; // WINDOW_WIDTH
+	camera.vsize = vsize; // WINDOW_HEIGHT
+	camera.field_of_view = field_of_view;
+	camera.transform = rt_identity_matrix();
+	half_view = tanf(field_of_view / 2);
+	aspect = (float) hsize / vsize;
+	if (aspect >= 1.0)
+	{
+		camera.half_width = half_view;
+		camera.half_height = half_view / aspect;
+	}
+	else
+	{
+		camera.half_width = half_view * aspect;
+		camera.half_height = half_view;
+	}
+	camera.pixel_size = (camera.half_width * 2) / (hsize); // WINDOW_WIDTH
+	return (camera);
+}
+
+t_ray	rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y)
+{
+	float	offset_xy[2];
+	float	world_xy[2];
+	t_tuple	origin;
+	t_tuple	direction;
+	t_tuple	pixel;
+
+	offset_xy[0] = (pixel_x + 0.5) * camera.pixel_size;
+	offset_xy[1] = (pixel_y + 0.5) * camera.pixel_size;
+	world_xy[0] = camera.half_width - offset_xy[0];
+	world_xy[1] = camera.half_height - offset_xy[1];
+	pixel = rt_mul_tuple_matrix(rt_inversion(camera.transform),
+		rt_point(world_xy[0], world_xy[1], -1));
+	origin = rt_mul_tuple_matrix(rt_inversion(camera.transform),
+		rt_point(0, 0, 0));
+	direction = rt_normalize(rt_sub_tuple(pixel, origin));
+	return (rt_ray(origin, direction));
+}
+
+void	rt_print_camera(t_camera camera)
+{
+	printf("camera:\n");
+	printf("- hsize: %d\n", camera.hsize);
+	printf("- vsize: %d\n", camera.vsize);
+	printf("- field of view: %f\n", camera.field_of_view);
+	printf("- transform:\n");
+	rt_print_matrix(camera.transform);
+}

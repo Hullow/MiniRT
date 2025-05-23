@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:03:52 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:21:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i)
 {
 	t_matrix	ray_transform;
 
-	rt_inversion(object.transform, &ray_transform);
+	ray_transform = rt_inversion(object.transform);
 	ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
 	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
 	if (object.shape == SPHERE)
