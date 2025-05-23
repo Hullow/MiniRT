@@ -34,7 +34,8 @@ SRCFD_	= ft_putchar_fd \
 	ft_puterr_fd \
 	ft_puthex_fd \
 	ft_putptr_fd \
-	ft_putuint_fd
+	ft_putuint_fd \
+	ft_putfloat_fd
 
 SRCMEM	= ft_memset \
 	ft_bzero \

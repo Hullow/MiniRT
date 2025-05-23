@@ -27,8 +27,8 @@ t_ray	rt_ray(t_tuple origin, t_tuple direction)
 
 void	rt_print_ray(t_ray ray)
 {
-	printf("Ray origin\n");
+	ft_printf("Ray origin\n");
 	rt_print_tuple(ray.origin);
-	printf("Ray direction\n");
+	ft_printf("Ray direction\n");
 	rt_print_tuple(ray.direction);
 }

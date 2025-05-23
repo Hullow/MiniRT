@@ -18,10 +18,10 @@ void	rt_default_scene(t_scene *scene)
 	t_object	sphere_2;
 	t_light		light;
 
-	sphere_1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255), \
-		rt_material(0.1, 0.7, 0.2, 200));
-	sphere_2 = rt_sphere(rt_color(255, 255, 255), \
-		rt_material(0.1, 0.7, 0.2, 200));
+	sphere_1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255));
+	sphere_1.material = rt_material(0.1, 0.7, 0.2, 200);
+	sphere_2 = rt_sphere(rt_color(255, 255, 255));
+	sphere_2.material = rt_material(0.1, 0.7, 0.2, 200);
 	sphere_2.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
 	sphere_2.transform = rt_translation(rt_vector(2, -2, 2));
 	sphere_2.color = rt_color(255, 0, 0);

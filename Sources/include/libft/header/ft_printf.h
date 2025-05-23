@@ -16,7 +16,7 @@
 # include "libft.h"
 # include <stdarg.h>
 
-// 42 printf %(c, s, p, d, i, u, x, X, %)
+// 42 printf %(c, s, p, d, i, u, x, X, %, f)
 int	ft_printf(const char *format, ...);
 // Writes unsigned int to the file descriptor
 int	ft_putuint_fd(unsigned int n, int fd);
@@ -26,5 +26,7 @@ int	ft_puthex_fd(unsigned long n, int up, int fd);
 int	ft_putptr_fd(void *p, int fd);
 // Tests if the input character is a space
 int	ft_isspace(char c);
+// Writes float to the file descriptor
+int	ft_putfloat_fd(double f, int fd);
 
 #endif

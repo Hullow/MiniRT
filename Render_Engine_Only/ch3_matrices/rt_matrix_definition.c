@@ -72,14 +72,14 @@ void	rt_print_matrix(t_matrix m)
 	i = 0;
 	while (i < m.rows)
 	{
-		printf("row[%d]: | ", i);
+		ft_printf("row[%d]: | ", i);
 		j = 0;
 		while (j < m.columns)
 		{
-			printf("%f | ", m.cell[i][j]);
+			ft_printf("%f | ", m.cell[i][j]);
 			j++;
 		}
-		printf("\n");
+		ft_printf("\n");
 		i++;
 	}
 }

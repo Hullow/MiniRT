@@ -63,11 +63,11 @@ t_tuple	rt_color(float r, float g, float b)
 
 void	rt_print_tuple(t_tuple t)
 {
-	printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
+	ft_printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
 	if (t.w == VECTOR)
-		printf("of type VECTOR\n");
+		ft_printf("of type VECTOR\n");
 	if (t.w == POINT)
-		printf("of type POINT\n");
+		ft_printf("of type POINT\n");
 	if (t.w == COLOR)
-		printf("of type COLOR\n");
+		ft_printf("of type COLOR\n");
 }

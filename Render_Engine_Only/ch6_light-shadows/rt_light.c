@@ -29,11 +29,11 @@ t_light	rt_light(t_tuple color, t_tuple coord, float intensity)
 
 void	rt_print_light(t_light light)
 {
-	printf("Light\ncoord:\n");
+	ft_printf("Light\ncoord:\n");
 	rt_print_tuple(light.coord);
-	printf("color:\n");
+	ft_printf("color:\n");
 	rt_print_tuple(light.color);
-	printf("intensity: %f\n", light.intensity);
+	ft_printf("intensity: %f\n", light.intensity);
 }
 
 /// @brief Initializes a material struct without color because norminette

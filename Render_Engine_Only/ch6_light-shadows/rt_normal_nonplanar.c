@@ -12,6 +12,19 @@
 
 #include "miniRT.h"
 
+t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
+{
+	t_tuple	normal;
+
+	if (obj.shape == SPHERE)
+		normal = rt_vector(point.x, point.y, point.z);
+	else if (obj.shape == PLANE)
+		normal = rt_normalize(obj.norm);
+	else if (obj.shape == CYLINDER)
+		normal = rt_vector(obj.origin.x, 0, obj.origin.z);
+	return (rt_normalize(normal));
+}
+
 t_tuple	rt_normal_at(t_object obj, t_tuple world_point)
 {
 	t_tuple		object_point;
@@ -21,7 +34,8 @@ t_tuple	rt_normal_at(t_object obj, t_tuple world_point)
 
 	invert = rt_inversion(obj.transform);
 	object_point = rt_mul_tuple_matrix(invert, world_point);
-	object_normal = rt_sub_tuple(object_point, rt_point(0, 0, 0));
+	object_point.w = POINT;
+	object_normal = rt_local_normal_at(obj, object_point);
 	world_normal = \
 		rt_mul_tuple_matrix(rt_matrix_transpose(invert), object_normal);
 	return (rt_normalize(world_normal));

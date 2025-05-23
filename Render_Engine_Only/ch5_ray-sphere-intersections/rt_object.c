@@ -16,7 +16,7 @@
 /// @param color t_tuple type COLOR not in material because norminette
 /// @param material t_material
 /// @return The initialized struct.
-t_object	rt_sphere(t_tuple color, t_material material)
+t_object	rt_sphere(t_tuple color)
 {
 	t_object	sphere;
 
@@ -25,19 +25,32 @@ t_object	rt_sphere(t_tuple color, t_material material)
 	sphere.diameter = 2.0f;
 	sphere.transform = rt_identity_matrix();
 	sphere.color = color;
-	sphere.material = material;
+	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
 	return (sphere);
 }
 
 void	rt_print_sphere(t_object sphere)
 {
-	printf("Sphere diameter: %f\n", sphere.diameter);
-	printf("Origin: ");
+	ft_printf("Sphere diameter: %f\n", sphere.diameter);
+	ft_printf("Origin: ");
 	rt_print_tuple(sphere.origin);
-	printf("Transform:\n");
+	ft_printf("Transform:\n");
 	rt_print_matrix(sphere.transform);
-	printf("Color: ");
+	ft_printf("Color: ");
 	rt_print_tuple(sphere.color);
-	printf("Material: ");
+	ft_printf("Material: ");
 	rt_print_material(sphere.material);
+}
+
+t_object	rt_plane(t_tuple color)
+{
+	t_object	plane;
+
+	plane.shape = PLANE;
+	plane.origin = rt_point(0, 0, 0);
+	plane.norm = rt_vector(0, 1, 0);
+	plane.transform = rt_identity_matrix();
+	plane.color = color;
+	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
+	return (plane);
 }
