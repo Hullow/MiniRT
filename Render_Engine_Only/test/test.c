@@ -1263,23 +1263,20 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	t_tuple	color;
 
 	y = 0;
-	printf("camera.vsize: %d, camera.hsize: %d\n", camera.vsize, camera.hsize);
 	while (y < camera.vsize - 1)
 	{
+		if ((y + 1) % 100 == 0)
+			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
 		x = 0;
 		while (x < camera.hsize - 1)
 		{
 			ray = rt_ray_for_pixel(camera, x, y);
 			color = rt_color_at(scene, ray);
-			// if (x == 5 && y == 5)
-				// test_pixel_at(color);
 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
-			// printf("(%d, %d): ", x, y); rt_print_tuple(color);
 			x++;
 		}
 		y++;
 	}
-	printf("finished rendering\n");
 }
 void	test_planes()
 {
