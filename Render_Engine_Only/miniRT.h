@@ -32,6 +32,7 @@ void	test_light_render(void);
 void	test_scene(void);
 void	test_rgb_to_int(void);
 void	test_view_transform(void);
+void	test_planes(void);
 
 //Structs
 
@@ -135,6 +136,14 @@ typedef enum e_shape
 	CYLINDER
 }	t_shape;
 
+//Rays
+
+typedef struct s_ray
+{
+	t_tuple	origin;
+	t_tuple	direction;
+}	t_ray;
+
 /// @brief Object struct. Color and material separated because norminette
 typedef struct s_object
 {
@@ -143,19 +152,12 @@ typedef struct s_object
 	t_tuple		norm;
 	t_tuple		color;
 	t_material	material;
+	t_ray		saved_ray;
 	t_matrix	transform;
 	float		diameter;
 	float		height;
 
 }	t_object;
-
-//Rays
-
-typedef struct s_ray
-{
-	t_tuple	origin;
-	t_tuple	direction;
-}	t_ray;
 
 typedef struct s_intersect
 {
@@ -249,7 +251,7 @@ t_env		mlx_set_env(void);
 void		mlx_run_window(t_env *env);
 t_ray		rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z);
 int			rgb_to_int(t_tuple c);
-//void		rt_draw(t_env *env, t_object sp, t_ray ray);
+void		rt_draw(t_env *env, t_object sp, t_ray ray);
 void		my_mlx_pixel_put(t_env *env, int x, int y, int color);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
@@ -259,8 +261,13 @@ int			window_closed(t_env *env);
 
 //CH3 Matrices
 
-# define ENOTINVERTIBLE 132
-# define EPSILON 0.00005
+# ifndef ENOTINVERTIBLE
+#  define ENOTINVERTIBLE 132
+# endif
+
+# ifndef EPSILON
+#  define EPSILON 0.00005
+# endif
 
 t_matrix	rt_identity_matrix(void);
 void		rt_print_matrix(t_matrix m);
@@ -285,12 +292,14 @@ t_matrix	rt_rotation_z(float angle);
 
 //CH5 Ray-Sphere intersections
 
-# define EDISCRIMINANT 133
+# ifndef EDISCRIMINANT
+#  define EDISCRIMINANT 133
+# endif
 
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
 void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray ray, float t);
-t_object	rt_sphere(t_tuple color, t_material material);
+t_object	rt_sphere(t_tuple color);
 void		rt_print_sphere(t_object sphere);
 t_inter		rt_intersect(float t, t_object obj);
 void		rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i);
@@ -325,6 +334,15 @@ t_tuple		rt_color_at(t_scene scene, t_ray ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 	t_tuple forward);
+
+//CH9 Planes
+
+# ifndef ERAYPARALLEL
+#  define ERAYPARALLEL 134
+# endif
+
+t_object	rt_plane(t_tuple color);
+void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
 
 //Utils
 

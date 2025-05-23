@@ -794,7 +794,7 @@ void	test_light()
 	t_object	sphere;
 	t_tuple		normal;
 	
-	sphere = rt_sphere(rt_color(1, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere = rt_sphere(rt_color(1, 0, 0));
 	normal = rt_normal_at(sphere, rt_point(1, 0, 0));
 	rt_print_tuple(normal);
 	normal = rt_normal_at(sphere, rt_point(0, 1, 0));
@@ -859,7 +859,7 @@ void	test_light()
 
 	printf("Sphere with material\n");
 
-	sphere = rt_sphere(rt_color(255, 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere = rt_sphere(rt_color(255, 255, 255));
 	rt_print_sphere(sphere);
 	printf("\n");
 
@@ -912,7 +912,7 @@ void	test_light()
 
 void	test_light_render()
 {
-	printf("CH6 - Putting it together\n");
+	ft_printf("CH6 - Putting it together\n");
 	t_camera	camera;
 	t_env		env;
 	t_ray		ray;
@@ -932,7 +932,7 @@ void	test_light_render()
 
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
 	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
-	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -944,7 +944,7 @@ void	test_light_render()
 	while (h < WINDOW_HEIGHT)
 	{
 		if ((h + 1) % 100 == 0)
-		printf("Progressing: %f\n", (float)((float)(h + 1) / (float)WINDOW_HEIGHT * 100.0f));
+		ft_printf("Progressing: %f\n", (float)((float)(h + 1) / (float)WINDOW_HEIGHT * 100.0f));
 		w = 0;
 		while (w < WINDOW_WIDTH)
 		{
@@ -978,15 +978,14 @@ void	test_scene()
 	t_scene		scene;
 	t_light		light;
 	t_object	sphere;
-	t_material	material;
 	
 	scene.n_obj = 2;
 	scene.n_sp = 2;
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, -10, -10), 1.0);
 	scene.lux = light;
 	scene.objects = (t_object *)calloc(scene.n_obj, sizeof(t_object));
-	material = rt_material(0.1, 0.7, 0.2, 200.0);
-	sphere = rt_sphere(rt_color(0.8 * 255, 255, 0.6 * 255), material);
+	sphere = rt_sphere(rt_color(0.8 * 255, 255, 0.6 * 255));
+	sphere.material = rt_material(0.1, 0.7, 0.2, 200.0);
 	scene.objects[0] = sphere;
 	sphere.diameter = 1.0;
 	sphere.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
@@ -1174,5 +1173,36 @@ void	test_view_transform()
 	up = rt_vector(1, 1, 0);
 	view_transform = rt_view_transform(from, to, up);
 	rt_print_matrix(view_transform);
+
+}
+
+void	test_planes()
+{
+	ft_printf("Plane initialisation\n");
+	t_object	plane;
+
+	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
+	plane.transform = rt_translation(rt_vector(2, 3, 4));
+	if (rt_matrix_equality(plane.transform, rt_identity_matrix()))
+		ft_printf("Plane transform is identity\n");
+	else
+		ft_printf("Plane transform is not identity\n");
+	rt_print_matrix(plane.transform);
+	ft_printf("\n");
+
+	ft_printf("Default material\n");
+	//plane.material.ambient = 1;
+	rt_print_material(plane.material);
+	ft_printf("\n");
+
+	ft_printf("Ray plane intersects\n");
+	t_ray	ray;
+	t_xs	xs;
+	int		i;
+
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	plane.transform = rt_set_transform(plane, rt_scaling(rt_vector(2, 2, 2)));
+	rt_intersects(plane, ray, &xs, &i);
+	ft_printf("\n");
 
 }

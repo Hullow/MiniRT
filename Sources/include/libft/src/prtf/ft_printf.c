@@ -31,6 +31,8 @@ static int	flag_identifier(char c, va_list arg)
 		count += ft_puthex_fd(va_arg(arg, unsigned int), 1, 1);
 	else if (c == 'p')
 		count += ft_putptr_fd(va_arg(arg, void *), 1);
+	else if (c == 'f')
+		count += ft_putfloat_fd(va_arg(arg, double), 1);
 	else if (c == '%')
 		count += ft_putchar_fd(c, 1);
 	return (count);

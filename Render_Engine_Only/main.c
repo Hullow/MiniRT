@@ -14,6 +14,6 @@
 
 int	main()
 {
-	test_view_transform();
+	test_light_render();
 	return (0);
 }
