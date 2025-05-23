@@ -6,13 +6,16 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:21:37 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:01:29 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:03:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 /// @brief Multiplies matrices a and b. For this project, only matrices 4x4
+///
+/// algo: column k of the result matrix is the result of a dot product of each
+	/// row of the left matrix with column k of the right matrix
 /// @param a t_matrix
 /// @param b t_matrix
 /// @return the multiplication matrix. sets errno if size of a or b is not 4x4
@@ -41,7 +44,8 @@ t_matrix	rt_mul_matrix(t_matrix a, t_matrix b)
 	return (mul);
 }
 
-static float mat_dot_product(float *a, t_tuple b)
+/// @brief helper function for rt_mul_tuple_matrix
+static float	mat_dot_product(float *a, t_tuple b)
 {
 	float	dot;
 
@@ -74,6 +78,7 @@ t_tuple	rt_mul_tuple_matrix(t_matrix m, t_tuple t)
 	return (mul);
 }
 
+/// @brief initalizes and returns the transpose of a 4*4 matrix
 t_matrix	rt_matrix_transpose(t_matrix m)
 {
 	t_matrix	transpose;

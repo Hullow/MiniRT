@@ -6,11 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:01:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:03:16 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 void	rt_default_scene(t_scene *scene)
 {
@@ -54,12 +54,12 @@ t_comps	rt_prepare_computations(t_inter intersect, t_ray ray)
 	comps.t = intersect.t;
 	comps.object = intersect.object;
 	comps.point = rt_position(ray, comps.t);
-	comps.eyev = rt_negate_tuple(ray.direction);
+	comps.eyev = rt_negate_vector(ray.direction);
 	comps.normalv = rt_normal_at(comps.object, comps.point);
 	if (rt_dot_product(comps.normalv, comps.eyev) < 0)
 	{
 		comps.inside = 1;
-		comps.normalv = rt_negate_tuple(comps.normalv);
+		comps.normalv = rt_negate_vector(comps.normalv);
 	}
 	else
 		comps.inside = 0;

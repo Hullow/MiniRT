@@ -8,7 +8,7 @@ subject: Personal journal for MiniRT project
 - Coordinate choice: left-handed, like the book (see Implementation.md)
 - Implemented math functions abs_float() and is_equal_float()
 - Tuples: implemented tuple type, tuple init functions point() and vector(), 
-tuple manipulation functions add_tuple(), subtract_tuple() and is_equal_tuple()
+tuple manipulation functions add_tuple(), subtract_tuple() and rt_is_equal_tuple()
 - To do next time: test tuple manipulation functions
 
 # 21/2/25
@@ -217,3 +217,38 @@ reinhard tone. It works ! Diffuse, ambient, specular :)
 pberset's work
 - Folder order: removed fdf folder in Documentation/, it's pollution
 - To do tomorrow: finish re-reading chapter and code, then order and re-add comments on functions
+
+# 13/4/25
+- Playing with sphere transformations (installed Blender to understand shearing better). All seems to work
+
+# 14/4/25
+- Started merging Render_Engine_Only with rest of project => will do it tomorrow with pberset
+- Started reading Chapter 7 Making a Scene. Created world type, also wrote the first tests to satisfy. Initialization works, with variadic arguments (should probably be removed later...)
+- Retouched `rt_discriminant` in Render_engine a bit (renamed `rt_ray_sphere_intersects` because that's what it is). (doesn't break sphere rendering).
+- Moved the contents of the inner loop of `test_light_render()` to a new function `rt_render_sphere_pixel()`
+- Started working on threaded version of this function `rt_thread_render_sphere_pixel()`. It compiles but is very slow, doesn't seem to work. Debugging with Gemini in Copilot
+
+# 15/5/25
+- Worked on multithreading a bit, and t_intersect_coll (aggregation of t_intersect)
+
+# 16/5/25
+- Discussed t_intersect structure(s) with pberset, decided I would focus on "merge"
+and he would continue working on t_intersect types
+- New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
+	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
+	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
+- Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
+# 15/5/25
+- Worked on multithreading a bit, and t_intersect_coll (aggregation of t_intersect)
+
+# 16/5/25
+- Discussed t_intersect structure(s) with pberset, decided I would focus on "merge"
+and he would continue working on t_intersect types
+- New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
+	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
+	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
+- Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
+
+# 17/5/25
+- Cherry-picked the "merging render-engine with sources" commit in ch6merge branch
+- Compared tests in Sources/ with Render_Engine_Only: ordered things

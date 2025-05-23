@@ -6,12 +6,18 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:47:06 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:00:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 10:04:25 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
+/// @brief 
+/// @param ray 
+/// @param x_mlx 
+/// @param y_mlx 
+/// @param wall_z 
+/// @return 
 t_ray	rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z)
 {
 	float		x_mrt;

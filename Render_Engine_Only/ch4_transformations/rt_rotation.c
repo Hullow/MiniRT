@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   rt_rotation.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:26:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/02 20:26:30 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
+
+// Init a rotation matrix around the 3 axis
+// Takes in the object's normal vector
+t_matrix	rt_rotation(t_tuple norm)
+{
+	t_matrix	rotate;
+	float		alpha;
+	float		beta;
+	float		gamma;
+
+	alpha = atan2f(norm.x, norm.z);
+	beta = atan2f(-norm.z, sqrtf(norm.x * norm.x + norm.y * norm.y));
+	gamma = atan2f(norm.y, norm.x);
+	rotate = rt_rotation_z(alpha);
+	rotate = rt_mul_matrix(rotate, rt_rotation_y(beta));
+	rotate = rt_mul_matrix(rotate, rt_rotation_x(gamma));
+	return (rotate);
+}
 
 // Init a rotation matrix of angle around x
 //angle is in radians

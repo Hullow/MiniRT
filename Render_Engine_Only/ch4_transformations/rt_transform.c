@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_transform.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:17:30 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/07 11:10:26 by pberset          ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../micro_rt.h"
+#include "miniRT.h"
 
 // Init a translation matrix in the direction given by the vector t
 t_matrix	rt_translation(t_tuple t)
@@ -34,24 +34,6 @@ t_matrix	rt_scaling(t_tuple t)
 	scaling.cell[1][1] = t.y;
 	scaling.cell[2][2] = t.z;
 	return (scaling);
-}
-
-// Init a rotation matrix around the 3 axis
-// Takes in the object's normal vector
-t_matrix	rt_rotation(t_tuple norm)
-{
-	t_matrix	rotate;
-	float		alpha;
-	float		beta;
-	float		gamma;
-
-	alpha = atan2f(norm.x, norm.z);
-	beta = atan2f(-norm.z, sqrtf(norm.x * norm.x + norm.y * norm.y));
-	gamma = atan2f(norm.y, norm.x);
-	rotate = rt_rotation_z(alpha);
-	rotate = rt_mul_matrix(rotate, rt_rotation_y(beta));
-	rotate = rt_mul_matrix(rotate, rt_rotation_x(gamma));
-	return (rotate);
 }
 
 t_matrix	rt_set_transform(t_object object, t_matrix transform)
