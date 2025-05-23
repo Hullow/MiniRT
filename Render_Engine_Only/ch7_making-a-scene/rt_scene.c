@@ -42,7 +42,7 @@ void	rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs)
 	xs->inter = inter_array;
 	while (i < scene.n_obj)
 	{
-		rt_intersects(scene.objects[i], ray, xs, &index);
+		rt_intersects(&(scene.objects[i]), ray, xs, &index);
 		i++;
 	}
 }

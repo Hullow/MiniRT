@@ -1310,7 +1310,7 @@ void	test_render_plane()
 	xs.inter = inter;
 	camera = rt_camera(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
-	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
+	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
 
