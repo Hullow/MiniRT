@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:30:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/23 11:00:40 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:48:39 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	test_light_render()
 	env = mlx_set_env();
 	camera = rt_camera_parsing(rt_point(0, 0, -100), rt_vector(0, 0, 1), 200.0f);
 	ray = rt_ray(camera.coord, camera.orient);
-	sphere = rt_sphere(rt_color(255, 0.2 * 255, 12), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 12));
 	sphere.transform = rt_mul_matrix(rt_rotation_z(60), rt_scaling(rt_vector(2, 0.6, 2)));
 	rt_print_matrix(sphere.transform);
 	// float shear_factors[6] = {-1, 0, 0, 0, 0, 0};

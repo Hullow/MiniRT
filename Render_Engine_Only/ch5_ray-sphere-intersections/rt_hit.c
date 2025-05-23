@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:34:35 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 18:38:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:51:39 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_inter	rt_hit(t_xs xs)
 		i++;
 	}
 	if (hit.t == INFINITY)
-		return (rt_intersect(0, \
-			rt_sphere(rt_color(0, 0, 0), rt_material(0, 0, 0, 0))));
+		return (rt_intersect(0, rt_sphere(rt_color(0, 0, 0))));
 	return (hit);
 }
