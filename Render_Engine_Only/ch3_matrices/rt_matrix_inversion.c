@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:45:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 16:55:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,24 +90,21 @@ float	rt_cofactor(t_matrix m, int row, int col)
 }
 
 /// @brief inverts a matrix of any size (row, columns <= 4)
-/// @returns void (the inverted matrix is given in parameters)
-void	rt_inversion(t_matrix m, t_matrix *invert)
+/// @returns the inverted matrix
+t_matrix	rt_inversion(t_matrix m)
 {
 	float		det;
 	float		cofactor;
+	t_matrix	invert;
 	int			i;
 	int			j;
 
 	errno = 0;
 	det = rt_determinant(m);
 	if (fabs(det) < EPSILON)
-	{
-		errno = ENOTINVERTIBLE;
-		*invert = rt_identity_matrix();
-		return ;
-	}
-	invert->rows = m.rows;
-	invert->columns = m.columns;
+		return (errno = ENOTINVERTIBLE, rt_identity_matrix());
+	invert.rows = m.rows;
+	invert.columns = m.columns;
 	i = -1;
 	while (++i < m.rows)
 	{
@@ -115,7 +112,8 @@ void	rt_inversion(t_matrix m, t_matrix *invert)
 		while (++j < m.columns)
 		{
 			cofactor = rt_cofactor(m, i, j);
-			invert->cell[j][i] = cofactor / det;
+			invert.cell[j][i] = cofactor / det;
 		}
 	}
+	return (invert);
 }

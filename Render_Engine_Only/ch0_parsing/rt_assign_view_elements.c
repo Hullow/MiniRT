@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:06:53 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/23 11:13:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	errno = 0;
 	coord = ft_split(*needle, ',');
 	orient = ft_split(*(needle + 1), ',');
-	scene->cam.fov = ft_strtof(*(needle + 2));
-	if (scene->cam.fov > 180.0 || scene->cam.fov < 0.0)
+	scene->cam.field_of_view = ft_strtof(*(needle + 2));
+	if (scene->cam.field_of_view > 180.0 || scene->cam.field_of_view < 0.0)
 	{
 		errno = ERANGE;
-		perror("Error\nwrong fov value");
+		perror("Error\nwrong field_of_view value");
 	}
 	if (!rt_valid_orient(orient) || !rt_valid_coord(coord) || errno != 0)
 	{

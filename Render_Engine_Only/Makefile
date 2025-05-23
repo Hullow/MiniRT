@@ -49,8 +49,7 @@ COLOR		= rt_colors_operations \
 			rt_mlx \
 			rt_space
 
-LIGHT		= rt_camera \
-			rt_light \
+LIGHT		= rt_light \
 			rt_normal_nonplanar \
 			rt_phong
 
@@ -66,6 +65,7 @@ RAYS		= rt_hit \
 			rt_ray_transform
 
 SCENE		= rt_scene \
+			rt_camera \
 			rt_view_transform
 
 TESTS		= test \

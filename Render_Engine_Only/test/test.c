@@ -154,290 +154,291 @@ void	test_tuples()
 
 void	test_matrix()
 {
-	printf("Matrix equality\n");
+// 	printf("Matrix equality\n");
 	t_matrix	matrix;
 	t_matrix	matrix2;
-	int			equal;
+// 	int			equal;
 	
-	matrix.rows = 2;
-	matrix.columns = 2;
-	matrix.cell[0][0] = 1;
-	matrix.cell[0][1] = 3;
-	matrix.cell[1][0] = 5.5f;
-	matrix.cell[1][1] = 6.5f;
-	matrix2.rows = 2;
-	matrix2.columns = 2;
-	matrix2.cell[0][0] = 1;
-	matrix2.cell[0][1] = 2;
-	matrix2.cell[1][0] = 5.5f;
-	matrix2.cell[1][1] = 6.5f;
+// 	matrix.rows = 2;
+// 	matrix.columns = 2;
+// 	matrix.cell[0][0] = 1;
+// 	matrix.cell[0][1] = 3;
+// 	matrix.cell[1][0] = 5.5f;
+// 	matrix.cell[1][1] = 6.5f;
+// 	matrix2.rows = 2;
+// 	matrix2.columns = 2;
+// 	matrix2.cell[0][0] = 1;
+// 	matrix2.cell[0][1] = 2;
+// 	matrix2.cell[1][0] = 5.5f;
+// 	matrix2.cell[1][1] = 6.5f;
 
-	equal = rt_matrix_equality(matrix, matrix2);
-	if (equal)
-		printf("matrices are equal\n\n");
-	else
-		printf("matrices are not equal\n\n");
+// 	equal = rt_matrix_equality(matrix, matrix2);
+// 	if (equal)
+// 		printf("matrices are equal\n\n");
+// 	else
+// 		printf("matrices are not equal\n\n");
 
-	printf("Matrix multiplication\n");
+// 	printf("Matrix multiplication\n");
 	t_matrix	m_mul;
 
-	matrix.rows = 4;
-	matrix.columns = 4;
-	matrix.cell[0][0] = 1;
-	matrix.cell[0][1] = 2;
-	matrix.cell[0][2] = 3;
-	matrix.cell[0][3] = 4;
-	matrix.cell[1][0] = 5;
-	matrix.cell[1][1] = 6;
-	matrix.cell[1][2] = 7;
-	matrix.cell[1][3] = 8;
-	matrix.cell[2][0] = 9;
-	matrix.cell[2][1] = 8;
-	matrix.cell[2][2] = 7;
-	matrix.cell[2][3] = 6;
-	matrix.cell[3][0] = 5;
-	matrix.cell[3][1] = 4;
-	matrix.cell[3][2] = 3;
-	matrix.cell[3][3] = 2;
-	matrix2.rows = 4;
-	matrix2.columns = 4;
-	matrix2.cell[0][0] = -2;
-	matrix2.cell[0][1] = 1;
-	matrix2.cell[0][2] = 2;
-	matrix2.cell[0][3] = 3;
-	matrix2.cell[1][0] = 3;
-	matrix2.cell[1][1] = 2;
-	matrix2.cell[1][2] = 1;
-	matrix2.cell[1][3] = -1;
-	matrix2.cell[2][0] = 4;
-	matrix2.cell[2][1] = 3;
-	matrix2.cell[2][2] = 6;
-	matrix2.cell[2][3] = 5;
-	matrix2.cell[3][0] = 1;
-	matrix2.cell[3][1] = 2;
-	matrix2.cell[3][2] = 7;
-	matrix2.cell[3][3] = 8;
+// 	matrix.rows = 4;
+// 	matrix.columns = 4;
+// 	matrix.cell[0][0] = 1;
+// 	matrix.cell[0][1] = 2;
+// 	matrix.cell[0][2] = 3;
+// 	matrix.cell[0][3] = 4;
+// 	matrix.cell[1][0] = 5;
+// 	matrix.cell[1][1] = 6;
+// 	matrix.cell[1][2] = 7;
+// 	matrix.cell[1][3] = 8;
+// 	matrix.cell[2][0] = 9;
+// 	matrix.cell[2][1] = 8;
+// 	matrix.cell[2][2] = 7;
+// 	matrix.cell[2][3] = 6;
+// 	matrix.cell[3][0] = 5;
+// 	matrix.cell[3][1] = 4;
+// 	matrix.cell[3][2] = 3;
+// 	matrix.cell[3][3] = 2;
+// 	matrix2.rows = 4;
+// 	matrix2.columns = 4;
+// 	matrix2.cell[0][0] = -2;
+// 	matrix2.cell[0][1] = 1;
+// 	matrix2.cell[0][2] = 2;
+// 	matrix2.cell[0][3] = 3;
+// 	matrix2.cell[1][0] = 3;
+// 	matrix2.cell[1][1] = 2;
+// 	matrix2.cell[1][2] = 1;
+// 	matrix2.cell[1][3] = -1;
+// 	matrix2.cell[2][0] = 4;
+// 	matrix2.cell[2][1] = 3;
+// 	matrix2.cell[2][2] = 6;
+// 	matrix2.cell[2][3] = 5;
+// 	matrix2.cell[3][0] = 1;
+// 	matrix2.cell[3][1] = 2;
+// 	matrix2.cell[3][2] = 7;
+// 	matrix2.cell[3][3] = 8;
 
-	m_mul = rt_mul_matrix(matrix, matrix2);
-	rt_print_matrix(m_mul);
-	printf("\n");
+// 	m_mul = rt_mul_matrix(matrix, matrix2);
+// 	rt_print_matrix(m_mul);
+// 	printf("\n");
 
-	printf("Matrix tuple multiplication\n");
-	t_tuple	tuple;
-	t_tuple	m_tuple;
+// 	printf("Matrix tuple multiplication\n");
+// 	t_tuple	tuple;
+// 	t_tuple	m_tuple;
 
-	tuple = rt_point(1, 2, 3);
-	matrix.cell[0][0] = 1;
-	matrix.cell[0][1] = 2;
-	matrix.cell[0][2] = 3;
-	matrix.cell[0][3] = 4;
-	matrix.cell[1][0] = 2;
-	matrix.cell[1][1] = 4;
-	matrix.cell[1][2] = 4;
-	matrix.cell[1][3] = 2;
-	matrix.cell[2][0] = 8;
-	matrix.cell[2][1] = 6;
-	matrix.cell[2][2] = 4;
-	matrix.cell[2][3] = 1;
-	matrix.cell[3][0] = 0;
-	matrix.cell[3][1] = 0;
-	matrix.cell[3][2] = 0;
-	matrix.cell[3][3] = 1;
-	m_tuple = rt_mul_tuple_matrix(matrix, tuple);
-	rt_print_tuple(m_tuple);
-	printf("\n");
+// 	tuple = rt_point(1, 2, 3);
+// 	matrix.cell[0][0] = 1;
+// 	matrix.cell[0][1] = 2;
+// 	matrix.cell[0][2] = 3;
+// 	matrix.cell[0][3] = 4;
+// 	matrix.cell[1][0] = 2;
+// 	matrix.cell[1][1] = 4;
+// 	matrix.cell[1][2] = 4;
+// 	matrix.cell[1][3] = 2;
+// 	matrix.cell[2][0] = 8;
+// 	matrix.cell[2][1] = 6;
+// 	matrix.cell[2][2] = 4;
+// 	matrix.cell[2][3] = 1;
+// 	matrix.cell[3][0] = 0;
+// 	matrix.cell[3][1] = 0;
+// 	matrix.cell[3][2] = 0;
+// 	matrix.cell[3][3] = 1;
+// 	m_tuple = rt_mul_tuple_matrix(matrix, tuple);
+// 	rt_print_tuple(m_tuple);
+// 	printf("\n");
 
-	printf("Identity matrix\n");
+// 	printf("Identity matrix\n");
 	
 	matrix = rt_identity_matrix();
-	matrix2.cell[0][0] = 0;
-	matrix2.cell[0][1] = 1;
-	matrix2.cell[0][2] = 2;
-	matrix2.cell[0][3] = 4;
-	matrix2.cell[1][0] = 1;
-	matrix2.cell[1][1] = 2;
-	matrix2.cell[1][2] = 4;
-	matrix2.cell[1][3] = 8;
-	matrix2.cell[2][0] = 2;
-	matrix2.cell[2][1] = 4;
-	matrix2.cell[2][2] = 8;
-	matrix2.cell[2][3] = 16;
-	matrix2.cell[3][0] = 4;
-	matrix2.cell[3][1] = 8;
-	matrix2.cell[3][2] = 16;
-	matrix2.cell[3][3] = 32;
-	m_mul = rt_mul_matrix(matrix, matrix2);
-	rt_print_matrix(m_mul);
-	m_tuple = rt_mul_tuple_matrix(matrix, tuple);
-	rt_print_tuple(m_tuple);
-	printf("\n");
+	matrix2 = rt_identity_matrix();
+	// matrix2.cell[0][0] = 0;
+	// matrix2.cell[0][1] = 1;
+	// matrix2.cell[0][2] = 2;
+	// matrix2.cell[0][3] = 4;
+	// matrix2.cell[1][0] = 1;
+	// matrix2.cell[1][1] = 2;
+	// matrix2.cell[1][2] = 4;
+	// matrix2.cell[1][3] = 8;
+	// matrix2.cell[2][0] = 2;
+	// matrix2.cell[2][1] = 4;
+	// matrix2.cell[2][2] = 8;
+	// matrix2.cell[2][3] = 16;
+	// matrix2.cell[3][0] = 4;
+	// matrix2.cell[3][1] = 8;
+	// matrix2.cell[3][2] = 16;
+	// matrix2.cell[3][3] = 32;
+// 	m_mul = rt_mul_matrix(matrix, matrix2);
+// 	rt_print_matrix(m_mul);
+// 	m_tuple = rt_mul_tuple_matrix(matrix, tuple);
+// 	rt_print_tuple(m_tuple);
+// 	printf("\n");
 
-	printf("Transpose\n");
-	t_matrix transp;
+// 	printf("Transpose\n");
+// 	t_matrix transp;
 
-	matrix.cell[0][0] = 0;
-	matrix.cell[0][1] = 9;
-	matrix.cell[0][2] = 3;
-	matrix.cell[0][3] = 0;
-	matrix.cell[1][0] = 9;
-	matrix.cell[1][1] = 8;
-	matrix.cell[1][2] = 0;
-	matrix.cell[1][3] = 8;
-	matrix.cell[2][0] = 1;
-	matrix.cell[2][1] = 8;
-	matrix.cell[2][2] = 5;
-	matrix.cell[2][3] = 3;
-	matrix.cell[3][0] = 0;
-	matrix.cell[3][1] = 0;
-	matrix.cell[3][2] = 5;
-	matrix.cell[3][3] = 8;
-	transp = rt_matrix_transpose(matrix);
-	rt_print_matrix(transp);
-	printf("Transpose identity\n");
-	transp = rt_identity_matrix();
-	rt_print_matrix(transp);
-	printf("\n");
+// 	matrix.cell[0][0] = 0;
+// 	matrix.cell[0][1] = 9;
+// 	matrix.cell[0][2] = 3;
+// 	matrix.cell[0][3] = 0;
+// 	matrix.cell[1][0] = 9;
+// 	matrix.cell[1][1] = 8;
+// 	matrix.cell[1][2] = 0;
+// 	matrix.cell[1][3] = 8;
+// 	matrix.cell[2][0] = 1;
+// 	matrix.cell[2][1] = 8;
+// 	matrix.cell[2][2] = 5;
+// 	matrix.cell[2][3] = 3;
+// 	matrix.cell[3][0] = 0;
+// 	matrix.cell[3][1] = 0;
+// 	matrix.cell[3][2] = 5;
+// 	matrix.cell[3][3] = 8;
+// 	transp = rt_matrix_transpose(matrix);
+// 	rt_print_matrix(transp);
+// 	printf("Transpose identity\n");
+// 	transp = rt_identity_matrix();
+// 	rt_print_matrix(transp);
+// 	printf("\n");
 
 	printf("Matrix inversion\n");
 
-	matrix.rows = 2;
-	matrix.columns = 2;
-	matrix.cell[0][0] = 1;
-	matrix.cell[0][1] = 5;
-	matrix.cell[1][0] = -3;
-	matrix.cell[1][1] = 2;
-	printf("Determinant = %f\n\n", rt_determinant(matrix));
+	// matrix.rows = 2;
+	// matrix.columns = 2;
+	// matrix.cell[0][0] = 1;
+	// matrix.cell[0][1] = 5;
+	// matrix.cell[1][0] = -3;
+	// matrix.cell[1][1] = 2;
+	// printf("Determinant = %f\n\n", rt_determinant(matrix));
 
-	t_matrix	sub;
+	// t_matrix	sub;
 
-	matrix.rows = 3;
-	matrix.columns = 3;
-	matrix.cell[0][0] = 1;
-	matrix.cell[0][1] = 5;
-	matrix.cell[0][2] = 0;
-	matrix.cell[1][0] = -3;
-	matrix.cell[1][1] = 2;
-	matrix.cell[1][2] = 7;
-	matrix.cell[2][0] = 0;
-	matrix.cell[2][1] = 6;
-	matrix.cell[2][2] = -3;
-	rt_sub_matrix(matrix, 0, 2, &sub);
-	printf("Sub matrix\n");
-	rt_print_matrix(sub);
-	printf("\n");
-	matrix.rows = 4;
-	matrix.columns = 4;
-	matrix.cell[0][0] = -6;
-	matrix.cell[0][1] = 1;
-	matrix.cell[0][2] = 1;
-	matrix.cell[0][3] = 6;
-	matrix.cell[1][0] = -8;
-	matrix.cell[1][1] = 5;
-	matrix.cell[1][2] = 8;
-	matrix.cell[1][3] = 6;
-	matrix.cell[2][0] = -1;
-	matrix.cell[2][1] = 0;
-	matrix.cell[2][2] = 8;
-	matrix.cell[2][3] = 2;
-	matrix.cell[3][0] = -7;
-	matrix.cell[3][1] = 1;
-	matrix.cell[3][2] = -1;
-	matrix.cell[3][3] = 1;
-	rt_sub_matrix(matrix, 2, 1, &sub);
-	printf("Sub matrix\n");
-	rt_print_matrix(sub);
-	printf("\n");
+	// matrix.rows = 3;
+	// matrix.columns = 3;
+	// matrix.cell[0][0] = 1;
+	// matrix.cell[0][1] = 5;
+	// matrix.cell[0][2] = 0;
+	// matrix.cell[1][0] = -3;
+	// matrix.cell[1][1] = 2;
+	// matrix.cell[1][2] = 7;
+	// matrix.cell[2][0] = 0;
+	// matrix.cell[2][1] = 6;
+	// matrix.cell[2][2] = -3;
+	// rt_sub_matrix(matrix, 0, 2, &sub);
+	// printf("Sub matrix\n");
+	// rt_print_matrix(sub);
+	// printf("\n");
+	// matrix.rows = 4;
+	// matrix.columns = 4;
+	// matrix.cell[0][0] = -6;
+	// matrix.cell[0][1] = 1;
+	// matrix.cell[0][2] = 1;
+	// matrix.cell[0][3] = 6;
+	// matrix.cell[1][0] = -8;
+	// matrix.cell[1][1] = 5;
+	// matrix.cell[1][2] = 8;
+	// matrix.cell[1][3] = 6;
+	// matrix.cell[2][0] = -1;
+	// matrix.cell[2][1] = 0;
+	// matrix.cell[2][2] = 8;
+	// matrix.cell[2][3] = 2;
+	// matrix.cell[3][0] = -7;
+	// matrix.cell[3][1] = 1;
+	// matrix.cell[3][2] = -1;
+	// matrix.cell[3][3] = 1;
+	// rt_sub_matrix(matrix, 2, 1, &sub);
+	// printf("Sub matrix\n");
+	// rt_print_matrix(sub);
+	// printf("\n");
 
-	matrix.rows = 3;
-	matrix.columns = 3;
-	matrix.cell[0][0] = 3;
-	matrix.cell[0][1] = 5;
-	matrix.cell[0][2] = 0;
-	matrix.cell[1][0] = 2;
-	matrix.cell[1][1] = -1;
-	matrix.cell[1][2] = -7;
-	matrix.cell[2][0] = 6;
-	matrix.cell[2][1] = -1;
-	matrix.cell[2][2] = 5;
-	rt_sub_matrix(matrix, 1, 0, &sub);
-	printf("Determinant submatrix 1,0: %f\n", rt_determinant(sub));
-	printf("Minor 1,0: %f\n\n", rt_minor(matrix, 1, 0));
+	// matrix.rows = 3;
+	// matrix.columns = 3;
+	// matrix.cell[0][0] = 3;
+	// matrix.cell[0][1] = 5;
+	// matrix.cell[0][2] = 0;
+	// matrix.cell[1][0] = 2;
+	// matrix.cell[1][1] = -1;
+	// matrix.cell[1][2] = -7;
+	// matrix.cell[2][0] = 6;
+	// matrix.cell[2][1] = -1;
+	// matrix.cell[2][2] = 5;
+	// rt_sub_matrix(matrix, 1, 0, &sub);
+	// printf("Determinant submatrix 1,0: %f\n", rt_determinant(sub));
+	// printf("Minor 1,0: %f\n\n", rt_minor(matrix, 1, 0));
 
-	printf("minor 0,0: %f\ncofactor 0,0: %f\n", rt_minor(matrix, 0, 0), rt_cofactor(matrix, 0, 0));
-	printf("minor 1,0: %f\ncofactor 1,0: %f\n\n", rt_minor(matrix, 1, 0), rt_cofactor(matrix, 1, 0));
+	// printf("minor 0,0: %f\ncofactor 0,0: %f\n", rt_minor(matrix, 0, 0), rt_cofactor(matrix, 0, 0));
+	// printf("minor 1,0: %f\ncofactor 1,0: %f\n\n", rt_minor(matrix, 1, 0), rt_cofactor(matrix, 1, 0));
 
-	matrix.cell[0][0] = 1;
-	matrix.cell[0][1] = 2;
-	matrix.cell[0][2] = 6;
-	matrix.cell[1][0] = -5;
-	matrix.cell[1][1] = 8;
-	matrix.cell[1][2] = -4;
-	matrix.cell[2][0] = 2;
-	matrix.cell[2][1] = 6;
-	matrix.cell[2][2] = 4;
-	printf("Cofactor 0,0: %f\n", rt_cofactor(matrix, 0, 0));
-	printf("Cofactor 0,1: %f\n", rt_cofactor(matrix, 0, 1));
-	printf("Cofactor 0,2: %f\n", rt_cofactor(matrix, 0, 2));
-	printf("Determinant of A: %f\n\n", rt_determinant(matrix));
+	// matrix.cell[0][0] = 1;
+	// matrix.cell[0][1] = 2;
+	// matrix.cell[0][2] = 6;
+	// matrix.cell[1][0] = -5;
+	// matrix.cell[1][1] = 8;
+	// matrix.cell[1][2] = -4;
+	// matrix.cell[2][0] = 2;
+	// matrix.cell[2][1] = 6;
+	// matrix.cell[2][2] = 4;
+	// printf("Cofactor 0,0: %f\n", rt_cofactor(matrix, 0, 0));
+	// printf("Cofactor 0,1: %f\n", rt_cofactor(matrix, 0, 1));
+	// printf("Cofactor 0,2: %f\n", rt_cofactor(matrix, 0, 2));
+	// printf("Determinant of A: %f\n\n", rt_determinant(matrix));
 
-	matrix.rows = 4;
-	matrix.columns = 4;
-	matrix.cell[0][0] = -2;
-	matrix.cell[0][1] = -8;
-	matrix.cell[0][2] = 3;
-	matrix.cell[0][3] = 5;
-	matrix.cell[1][0] = -3;
-	matrix.cell[1][1] = 1;
-	matrix.cell[1][2] = 7;
-	matrix.cell[1][3] = 3;
-	matrix.cell[2][0] = 1;
-	matrix.cell[2][1] = 2;
-	matrix.cell[2][2] = -9;
-	matrix.cell[2][3] = 6;
-	matrix.cell[3][0] = -6;
-	matrix.cell[3][1] = 7;
-	matrix.cell[3][2] = 7;
-	matrix.cell[3][3] = -9;
-	printf("Cofactor 0,0: %f\n", rt_cofactor(matrix, 0, 0));
-	printf("Cofactor 0,1: %f\n", rt_cofactor(matrix, 0, 1));
-	printf("Cofactor 0,2: %f\n", rt_cofactor(matrix, 0, 2));
-	printf("Cofactor 0,3: %f\n", rt_cofactor(matrix, 0, 3));
-	printf("Determinant of A: %f\n\n", rt_determinant(matrix));
+	// matrix.rows = 4;
+	// matrix.columns = 4;
+	// matrix.cell[0][0] = -2;
+	// matrix.cell[0][1] = -8;
+	// matrix.cell[0][2] = 3;
+	// matrix.cell[0][3] = 5;
+	// matrix.cell[1][0] = -3;
+	// matrix.cell[1][1] = 1;
+	// matrix.cell[1][2] = 7;
+	// matrix.cell[1][3] = 3;
+	// matrix.cell[2][0] = 1;
+	// matrix.cell[2][1] = 2;
+	// matrix.cell[2][2] = -9;
+	// matrix.cell[2][3] = 6;
+	// matrix.cell[3][0] = -6;
+	// matrix.cell[3][1] = 7;
+	// matrix.cell[3][2] = 7;
+	// matrix.cell[3][3] = -9;
+	// printf("Cofactor 0,0: %f\n", rt_cofactor(matrix, 0, 0));
+	// printf("Cofactor 0,1: %f\n", rt_cofactor(matrix, 0, 1));
+	// printf("Cofactor 0,2: %f\n", rt_cofactor(matrix, 0, 2));
+	// printf("Cofactor 0,3: %f\n", rt_cofactor(matrix, 0, 3));
+	// printf("Determinant of A: %f\n\n", rt_determinant(matrix));
 
-	matrix.cell[0][0] = 6;
-	matrix.cell[0][1] = 4;
-	matrix.cell[0][2] = 4;
-	matrix.cell[0][3] = 4;
-	matrix.cell[1][0] = 5;
-	matrix.cell[1][1] = 5;
-	matrix.cell[1][2] = 7;
-	matrix.cell[1][3] = 6;
-	matrix.cell[2][0] = 4;
-	matrix.cell[2][1] = -9;
-	matrix.cell[2][2] = 3;
-	matrix.cell[2][3] = -7;
-	matrix.cell[3][0] = 9;
-	matrix.cell[3][1] = 1;
-	matrix.cell[3][2] = 7;
-	matrix.cell[3][3] = -6;
-	printf("Determinant of A: %f\n", rt_determinant(matrix));
-	matrix.cell[0][0] = -4;
-	matrix.cell[0][1] = 2;
-	matrix.cell[0][2] = -2;
-	matrix.cell[0][3] = -3;
-	matrix.cell[1][0] = 9;
-	matrix.cell[1][1] = 6;
-	matrix.cell[1][2] = 2;
-	matrix.cell[1][3] = 6;
-	matrix.cell[2][0] = 0;
-	matrix.cell[2][1] = -5;
-	matrix.cell[2][2] = 1;
-	matrix.cell[2][3] = -5;
-	matrix.cell[3][0] = 0;
-	matrix.cell[3][1] = 0;
-	matrix.cell[3][2] = 0;
-	matrix.cell[3][3] = 0;
-	printf("Determinant of A: %f\n\n", rt_determinant(matrix));
+	// matrix.cell[0][0] = 6;
+	// matrix.cell[0][1] = 4;
+	// matrix.cell[0][2] = 4;
+	// matrix.cell[0][3] = 4;
+	// matrix.cell[1][0] = 5;
+	// matrix.cell[1][1] = 5;
+	// matrix.cell[1][2] = 7;
+	// matrix.cell[1][3] = 6;
+	// matrix.cell[2][0] = 4;
+	// matrix.cell[2][1] = -9;
+	// matrix.cell[2][2] = 3;
+	// matrix.cell[2][3] = -7;
+	// matrix.cell[3][0] = 9;
+	// matrix.cell[3][1] = 1;
+	// matrix.cell[3][2] = 7;
+	// matrix.cell[3][3] = -6;
+	// printf("Determinant of A: %f\n", rt_determinant(matrix));
+	// matrix.cell[0][0] = -4;
+	// matrix.cell[0][1] = 2;
+	// matrix.cell[0][2] = -2;
+	// matrix.cell[0][3] = -3;
+	// matrix.cell[1][0] = 9;
+	// matrix.cell[1][1] = 6;
+	// matrix.cell[1][2] = 2;
+	// matrix.cell[1][3] = 6;
+	// matrix.cell[2][0] = 0;
+	// matrix.cell[2][1] = -5;
+	// matrix.cell[2][2] = 1;
+	// matrix.cell[2][3] = -5;
+	// matrix.cell[3][0] = 0;
+	// matrix.cell[3][1] = 0;
+	// matrix.cell[3][2] = 0;
+	// matrix.cell[3][3] = 0;
+	// printf("Determinant of A: %f\n\n", rt_determinant(matrix));
 
 	t_matrix	inverse;
 
@@ -457,8 +458,8 @@ void	test_matrix()
 	matrix.cell[3][1] = -3;
 	matrix.cell[3][2] = 7;
 	matrix.cell[3][3] = 4;
-	rt_inversion(matrix, &inverse);
-	printf("Deterimant: %f\n", rt_determinant(matrix));
+	inverse = rt_inversion(matrix);
+	printf("Determinant: %f\n", rt_determinant(matrix));
 	printf("Cofactor 2,3: %f\n", rt_cofactor(matrix, 2, 3));
 	printf("-160/532 = %f && inverse[3][2]: %f\n", -160.0f/532.0f, inverse.cell[3][2]);
 	printf("Cofactor 3,2: %f\n", rt_cofactor(matrix, 3, 2));
@@ -500,19 +501,20 @@ void	test_matrix()
 	matrix2.cell[3][1] = -2;
 	matrix2.cell[3][2] = 0;
 	matrix2.cell[3][3] = 5;
-	m_mul = rt_mul_matrix(matrix, matrix2);
-	printf("A\n");
+	printf("A:\n");
 	rt_print_matrix(matrix);
-	printf("B\n");
+	printf("B:\n");
 	rt_print_matrix(matrix2);
+	m_mul = rt_mul_matrix(matrix, matrix2);
 	printf("C = A * B\n");
 	rt_print_matrix(m_mul);
-	printf("C * inv(B)\n");
-	rt_inversion(matrix2, &inverse);
+	printf("C * inv(B) (must == A)\n");
+	inverse = rt_inversion(matrix2);
 	m_mul = rt_mul_matrix(m_mul, inverse);
 	rt_print_matrix(m_mul);
 }
 
+/*
 void	test_transform()
 {
 	printf("Translation\n");
@@ -524,7 +526,7 @@ void	test_transform()
 	transform = rt_translation(rt_vector(5, -3, 2));
 	point = rt_mul_tuple_matrix(transform, rt_point(-3, 4, 5));
 	rt_print_tuple(point);
-	rt_inversion(transform, &inverse);
+	= rt_inversion(transform);
 	point = rt_mul_tuple_matrix(inverse, rt_point(-3, 4, 5));
 	rt_print_tuple(point);
 	vector = rt_vector(-3, 4, 5);
@@ -538,7 +540,7 @@ void	test_transform()
 	rt_print_tuple(rt_mul_tuple_matrix(transform, point));
 	vector = rt_vector(-4, 6, 8);
 	rt_print_tuple(rt_mul_tuple_matrix(transform, vector));
-	rt_inversion(transform, &inverse);
+	= rt_inversion(transform);
 	rt_print_tuple(rt_mul_tuple_matrix(inverse, vector));
 	transform = rt_scaling(rt_vector(-1, 1, 1));
 	point = rt_point(2, 3, 4);
@@ -553,7 +555,7 @@ void	test_transform()
 	transform = rt_rotation_x(M_PI / 2);
 	rt_print_tuple(rt_mul_tuple_matrix(transform, point));
 	transform = rt_rotation_x(M_PI / 4);
-	rt_inversion(transform, &inverse);
+	= rt_inversion(transform);
 	rt_print_tuple(rt_mul_tuple_matrix(inverse, point));
 	printf("\n");
 
@@ -565,7 +567,7 @@ void	test_transform()
 	transform = rt_rotation_y(M_PI / 2);
 	rt_print_tuple(rt_mul_tuple_matrix(transform, point));
 	transform = rt_rotation_y(M_PI / 4);
-	rt_inversion(transform, &inverse);
+	= rt_inversion(transform);
 	rt_print_tuple(rt_mul_tuple_matrix(inverse, point));
 	printf("\n");
 
@@ -577,7 +579,7 @@ void	test_transform()
 	transform = rt_rotation_z(M_PI / 2);
 	rt_print_tuple(rt_mul_tuple_matrix(transform, point));
 	transform = rt_rotation_z(M_PI / 4);
-	rt_inversion(transform, &inverse);
+	= rt_inversion(transform);
 	rt_print_tuple(rt_mul_tuple_matrix(inverse, point));
 	printf("\n");
 
@@ -611,7 +613,10 @@ void	test_transform()
 	rt_print_tuple(point);
 	printf("\n");
 }
-/*
+
+*/
+
+
 void	test_intersect()
 {
 	printf("Ray\n");
@@ -631,66 +636,66 @@ void	test_intersect()
 	printf("\n");
 
 	printf("Intersection\n");
-	t_object	plane;
+	t_object	sphere;
 	t_xs		xs;
 	int			i = 0;
 	
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
-	sphere = rt_sphere(rt_color(255, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sphere = rt_sphere(rt_color(255, 0, 0));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("XS Count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Intersection at tangent\n");
 	
 	ray = rt_ray(rt_point(0, 1, -5), rt_vector(0, 0, 1));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("XS Count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Miss the sphere\n");
 	
 	ray = rt_ray(rt_point(0, 2, -5), rt_vector(0, 0, 1));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("XS Count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Ray origin in sphere\n");
 	
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("XS Count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Sphere behind ray\n");
 	
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("XS Count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("The hit\n");
 	t_inter	hit;
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1)); //2 hits
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
+	rt_intersects(&sphere, ray, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 1, -5), rt_vector(0, 0, 1)); //1 hit tangent
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
+	rt_intersects(&sphere, ray, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 2, -5), rt_vector(0, 0, 1)); //no hit
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
+	rt_intersects(&sphere, ray, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1)); //1 hit inside sphere
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
+	rt_intersects(&sphere, ray, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1)); //2 hits negative
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
+	rt_intersects(&sphere, ray, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	printf("\n");
@@ -699,8 +704,8 @@ void	test_intersect()
 	free(xs.inter);
 	xs.inter = (t_inter *)calloc(4, sizeof(t_inter));
 	
-	xs.inter[0].object = sphere;
-	xs.inter[1].object = sphere;
+	xs.inter[i - 2].object = sphere;
+	xs.inter[i - 1].object = sphere;
 	xs.inter[2].object = sphere;
 	xs.inter[3].object = sphere;
 	xs.inter[4].object = sphere;
@@ -708,8 +713,8 @@ void	test_intersect()
 	xs.inter[6].object = sphere;
 	xs.inter[7].object = sphere;
 	xs.count = 8;
-	xs.inter[0].t = 5.0f;
-	xs.inter[1].t = 6.0f;
+	xs.inter[i - 2].t = 5.0f;
+	xs.inter[i - 1].t = 6.0f;
 	xs.inter[2].t = 7.0f;
 	xs.inter[3].t = 12.0f;
 	xs.inter[4].t = -3.0f;
@@ -757,27 +762,28 @@ void	test_intersect()
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	sphere.transform = rt_set_transform(sphere, rt_scaling(rt_vector(2, 2, 2)));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Intersecting a translated sphere with a ray\n");
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(5, 0, 0)));
-	xs = rt_intersects(&sphere, ray, xs.inter, &i);
-	printf("count = %d, [0] = %f, [1] = %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	rt_intersects(&sphere, ray, &xs, &i);
+	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 
 	free(xs.inter);
 }
 
+/*
 void	test_mlx()
 {
 	t_env		env;
 	t_object	sp;
 	t_ray		ray;
 
-	sp = rt_sphere(rt_color(255, 0, 0), rt_material(0.1, 0.9, 0.9, 200.0f));
+	sp = rt_sphere(rt_color(255, 0, 0));
 	rt_print_matrix(sp.transform);
 	//sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
 	//sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
@@ -931,7 +937,7 @@ void	test_light_render()
 	int			i;
 
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
-	camera = rt_camera(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
+	camera = rt_camera_parsing(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
@@ -955,9 +961,9 @@ void	test_light_render()
 			if(xs.count != 0)
 			{
 				point = rt_position(ray, rt_hit(xs).t);
-				normalv = rt_normal_at(xs.inter[0].object, point);
+				normalv = rt_normal_at(xs.inter[i].object, point);
 				eyev = rt_negate_vector(ray.direction);
-				color = rt_lighting(xs.inter[0].object, light, point, eyev, normalv);
+				color = rt_lighting(xs.inter[i].object, light, point, eyev, normalv);
 				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
 			}
@@ -1173,9 +1179,108 @@ void	test_view_transform()
 	up = rt_vector(1, 1, 0);
 	view_transform = rt_view_transform(from, to, up);
 	rt_print_matrix(view_transform);
-
 }
 
+void	test_camera()
+{
+	printf("Test camera\n***********\n");
+	t_camera	camera;
+	// t_ray		ray;
+	t_scene		scene;
+	t_object	objects[2];
+
+	scene.objects = objects;
+
+	// printf("Constructing a camera:\n");
+	// camera = rt_camera_book(160, 120, M_PI / 2);
+	// rt_print_camera(camera);
+
+	// printf("\nthe pixel size for a horizontal canvas:\n");
+	// camera = rt_camera_book(200, 125, M_PI / 2);
+	// printf("=> camera.pixel_size: %f\n", camera.pixel_size);
+	
+	// printf("\nthe pixel size for a vertical canvas:\n");
+	// camera = rt_camera_book(125, 200, M_PI / 2);
+	// printf("=> camera.pixel_size: %f\n", camera.pixel_size);
+	
+	// printf("\nconstructing a ray through the center of the canvas\n");
+	// camera = rt_camera_book(201, 101, M_PI / 2);
+	// ray = rt_ray_for_pixel(camera, 100, 50);
+	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
+	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
+
+	// printf("\nconstructing a ray through a corner of the canvas\n");
+	// camera = rt_camera_book(201, 101, M_PI / 2);
+	// ray = rt_ray_for_pixel(camera, 0, 0);
+	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
+	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
+
+	// printf("\nconstructing a ray when the camera is transformed\n");
+	// camera = rt_camera_book(201, 101, M_PI / 2);
+	// camera.transform = rt_mul_matrix(
+	// 	rt_rotation_y(M_PI / 4), rt_translation(rt_vector(0, -2, 5)));
+	// ray = rt_ray_for_pixel(camera, 100, 50);
+	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
+	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
+
+	printf("\nrendering a world with a camera\n");
+	rt_default_scene(&scene);
+	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+
+	// camera settings
+	t_tuple from;
+	t_tuple to;
+	t_tuple up;
+	from = rt_point(0, 0, -5);
+	to = rt_point(0, 0, 0);
+	up = rt_vector(0, 1, 0);
+	camera.transform = rt_view_transform(from, to, up);
+
+	// mlx settings
+	t_env	env;
+	env = mlx_set_env();
+	rt_render(camera, scene, &env);
+	mlx_run_window(&env);
+}
+
+void	test_pixel_at(t_tuple color)
+{
+	if (rt_is_equal_tuple(color, rt_color(0.38066, 0.47583, 0.2855)))
+		printf("at (5, 5), color is equal to (0.38066, 0.47583, 0.2855) (correct)\n");
+	else
+	{
+		printf("at (5, 5), color is NOT equal to (0.38066, 0.47583, 0.2855) \
+			(incorrect)\ntuple value is:");
+		rt_print_tuple(color);
+	}
+}
+
+void	rt_render(t_camera camera, t_scene scene, t_env *env)
+{
+	t_ray	ray;
+	int		x;
+	int		y;
+	t_tuple	color;
+
+	y = 0;
+	printf("camera.vsize: %d, camera.hsize: %d\n", camera.vsize, camera.hsize);
+	while (y < camera.vsize - 1)
+	{
+		x = 0;
+		while (x < camera.hsize - 1)
+		{
+			ray = rt_ray_for_pixel(camera, x, y);
+			color = rt_color_at(scene, ray);
+			// if (x == 5 && y == 5)
+				// test_pixel_at(color);
+			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
+			// printf("(%d, %d): ", x, y); rt_print_tuple(color);
+			x++;
+		}
+		y++;
+	}
+	printf("finished rendering\n");
+}
 void	test_planes()
 {
 	ft_printf("Plane initialisation\n");
@@ -1308,7 +1413,7 @@ void	test_render_plane()
 	int			i;
 
 	xs.inter = inter;
-	camera = rt_camera(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
+	camera = rt_camera_parsing(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
