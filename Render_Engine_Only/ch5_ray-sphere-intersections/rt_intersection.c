@@ -30,6 +30,8 @@ void	rt_intersects(t_object object, t_ray ray, t_xs *xs, int *i)
 	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
 	if (object.shape == SPHERE)
 		rt_discriminant(ray, object, xs, i);
+	else if (object.shape == PLANE)
+		rt_ray_plane_x(object, ray, xs, i);
 	else
 		xs->count = 0;
 }

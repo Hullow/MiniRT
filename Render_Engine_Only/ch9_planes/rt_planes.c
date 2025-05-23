@@ -18,7 +18,7 @@ void	rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i)
 	float		t;
 
 	errno = 0;
-	if (fabs(ray.direction.y) < EPSILON) // edge case: ray paralel to plane normal
+	if (fabs(ray.direction.y) < EPSILON)
 	{
 		xs->count = 0;
 		errno = ERAYPARALLEL;

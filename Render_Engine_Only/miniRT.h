@@ -343,6 +343,7 @@ t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 
 t_object	rt_plane(t_tuple color);
 void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
+t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
 //Utils
 

@@ -1195,14 +1195,68 @@ void	test_planes()
 	rt_print_material(plane.material);
 	ft_printf("\n");
 
-	ft_printf("Ray plane intersects\n");
-	t_ray	ray;
-	t_xs	xs;
-	int		i;
+	ft_printf("Ray scaled plane intersect\n");
+	t_ray		ray;
+	t_matrix	ray_transform;
 
+	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	plane.transform = rt_set_transform(plane, rt_scaling(rt_vector(2, 2, 2)));
-	rt_intersects(plane, ray, &xs, &i);
+	//rt_intersects(plane, ray, &xs, &i); produces the result below
+	rt_inversion(plane.transform, &ray_transform);
+	ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
+	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
+	rt_print_ray(ray);
 	ft_printf("\n");
 
+	ft_printf("Ray translated plane intersect\n");
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
+	plane.transform = rt_set_transform(plane, rt_translation(rt_vector(5, 0, 0)));
+	//rt_intersects(plane, ray, &xs, &i); produces the result below
+	rt_inversion(plane.transform, &ray_transform);
+	ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
+	ray.direction = rt_mul_tuple_matrix(ray_transform, ray.direction);
+	rt_print_ray(ray);
+	ft_printf("\n");
+
+	ft_printf("Normal translated sphere intersect\n");
+	t_tuple		normal_at;
+	t_object	sphere;
+
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
+	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(0, 1, 0)));
+	normal_at = rt_normal_at(sphere, rt_point(0, 1.70711, -0.70711));
+	rt_print_tuple(normal_at);
+	ft_printf("\n");
+
+	ft_printf("Normal scaled rotated sphere intersect\n");
+	t_matrix	transform;
+
+	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
+	transform = rt_mul_matrix(rt_scaling(rt_vector(1.0, 0.5, 1.0)), \
+							rt_rotation_z(M_PI / 5));
+	sphere.transform = rt_set_transform(sphere, transform);
+	normal_at = rt_normal_at(sphere, rt_point(0, sqrtf(2)/2, -sqrtf(2)/2));
+	rt_print_tuple(normal_at);
+	ft_printf("\n");
+
+	ft_printf("Normal on a plane is the same everywhere!\n");
+
+	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
+	normal_at = rt_local_normal_at(plane, rt_point(0, 0, 0));
+	rt_print_tuple(normal_at);
+	normal_at = rt_local_normal_at(plane, rt_point(10, 0, -10));
+	rt_print_tuple(normal_at);
+	normal_at = rt_local_normal_at(plane, rt_point(-5, 0, 150));
+	rt_print_tuple(normal_at);
+	ft_printf("\n");
+
+	ft_printf("Intersect ray parallel to plane\n");
+	t_xs	xs;
+
+	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
+	ray = rt_ray(rt_point(0, 10, 0), rt_vector(0, 0, 1));
+	xs = 
+	ft_printf("\n");
 }
