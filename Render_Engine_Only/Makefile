@@ -5,10 +5,15 @@ NAME		= miniRT
 CC			= cc
 
 # Compiler flags
+UNAME_S		= $(shell uname -s)
 CFLAGS		= -Wall -Wextra -Werror
 DFLAGS		= -g3
-LIBFLAGS	= -L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lXext -lX11 -lm
 INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
+LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
+LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm
+ifeq ($(UNAME_S),Darwin) # If the system is macOS
+        LIBDIRFLAGS += -L/opt/X11/lib
+endif
 
 # Folders
 SRCDIR		= ./
@@ -114,7 +119,7 @@ $(NAME): $(OBJ)
 	@echo "Building $(NAME)..."
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBDIRFLAGS) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -141,7 +146,7 @@ $(OBJDIR):
 
 # Build object files
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean compiled files
 clean:
