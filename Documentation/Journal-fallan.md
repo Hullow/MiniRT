@@ -266,9 +266,9 @@ parsing initialization function `rt_camera_parsing`.
 => fixed rt_hit to remove `(if errno = EDISCRIMINANT)` => it works!!!
 
 # 24/5/25
-- Refactored rt_lighting for the norm => commented out tests, need to update them
 - Discussed project with pberset: I will do Shadows, and he will, after
 debugging planes, connect input/parsing with scene drawing so we can do tests
 using files
-- Should I update tests that call rt_lighting (test_light_render) or not yet ?
-=> ask pberset
+- Refactored rt_lighting for the norm => updated tests, 
+but `test_light_render()` seg faults. No time to fix that test now;
+I will commit and onwards.
