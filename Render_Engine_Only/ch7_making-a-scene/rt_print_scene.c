@@ -29,6 +29,11 @@ void	rt_print_scene(t_scene scene)
 			ft_printf("PLANE %p\n", &scene.objects[i]);
 			rt_print_plane(scene.objects[i]);
 		}
+		else if (scene.objects[i].shape == CYLINDER)
+		{
+			ft_printf("CYLINDER %p\n", &scene.objects[i]);
+			rt_print_cylinder(scene.objects[i]);
+		}
 		ft_printf("\n");
 		i++;
 	}

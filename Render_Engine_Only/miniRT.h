@@ -229,6 +229,24 @@ typedef struct s_comps
 	int			inside;
 }	t_comps;
 
+//CH0 Parsing
+
+int	rt_check_ext(const char *file);
+int	rt_read_id(const char *file, t_scene *scene);
+int	rt_init_scene(const char *file, t_scene *scene);
+int	rt_count_object(const char *line, t_scene *scene);
+int	rt_valid_color(char **color);
+int	rt_valid_coord(char **coord);
+int	rt_valid_orient(char **orient);
+int	rt_check_uniques(t_scene *scene);
+void	rt_assign_light(t_scene *scene, char **needle);
+void	rt_assign_ambient(t_scene *scene, char **needle);
+void	rt_assign_camera(t_scene *scene, char **needle);
+t_matrix	rt_set_transform(t_object object);
+void	rt_assign_sphere(t_object *sphere, char **needle);
+void	rt_assign_plane(t_object *plane, char **needle);
+void	rt_assign_cylinder(t_object *cylinder, char **needle);
+
 
 //CH1 Tuples
 
@@ -319,7 +337,6 @@ t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
 t_inter		rt_hit(t_xs xs);
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
-t_matrix	rt_set_transform(t_object object, t_matrix transform);
 
 //CH6 Light and Shadows
 
@@ -337,7 +354,6 @@ t_tuple 	rt_filmic_tonemap(t_tuple color);
 
 //CH7 Scene
 
-void		rt_default_scene(t_scene *scene);
 void		rt_print_scene(t_scene scene);
 void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
@@ -351,6 +367,7 @@ t_camera	rt_camera_parsing(t_tuple coord, t_tuple orient, float field_of_view);
 t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera camera, t_scene scene, t_env *env);
+t_scene		*test_default_scene(t_scene *scene);
 
 //CH9 Planes
 
@@ -363,9 +380,14 @@ void		rt_print_plane(t_object plane);
 void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
+//CH13 Cylinders
+
+t_object	rt_cylinder(t_tuple color);
+void		rt_print_cylinder(t_object cylinder);
+
 //Utils
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
-int		is_equal_float(float a, float b);
+int			is_equal_float(float a, float b);
 
 #endif

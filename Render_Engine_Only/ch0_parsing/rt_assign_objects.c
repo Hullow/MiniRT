@@ -10,47 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* #include "miniRT.h"
-
-/// @brief initializes a sphere based on:
-/// @param coord tuple
-/// @param diam float
-/// @param color tuple
-/// @return the initialized sphere
-t_object	rt_init_sphere(t_tuple coord, float diam, t_tuple color)
-{
-	t_object	sp;
-
-	sp.coord = rt_point(coord.x, coord.y, coord.z);
-	sp.color = rt_color(color.x, color.y, color.z);
-	printf("rt_init_sphere\n- input (%f, %f, %f)\n", color.x, color.y, color.z);
-	printf("- output (%f, %f, %f)\n", sp.color.x, sp.color.y, sp.color.z);
-	sp.transform = identity_matrix(4, 4);
-	sp.inverse = sp.transform;
-	sp.diameter = diam;
-	return (sp);
-}
+#include "miniRT.h"
 
 void	rt_assign_sphere(t_object *sphere, char **needle)
 {
 	char	**coord;
 	char	**color;
 
-	sphere->type = SPHERE;
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle +2), ',');
-	sphere->diameter = ft_strtof(*(needle +1));
 	if (!rt_valid_color(color) || !rt_valid_coord(coord) || errno != 0)
 	{
 		ft_free_tab(coord);
 		ft_free_tab(color);
 		return ;
 	}
-	sphere->coord = rt_point(
-			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
-	sphere->color = rt_color(
-			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2)));
-	sphere->type = SPHERE;
+	sphere->diameter = ft_strtof(*(needle +1));
+	sphere->origin = rt_point( \
+		ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
+	sphere->shape = SPHERE;
+	sphere->transform = rt_set_transform(*sphere);
+	*sphere = rt_sphere(rt_color( \
+			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
@@ -61,20 +42,20 @@ void	rt_assign_plane(t_object *plane, char **needle)
 	char	**norm;
 	char	**color;
 
-	plane->type = PLANE;
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle +1), ',');
 	color = ft_split(*(needle +2), ',');
-	if (!rt_valid_orient(norm) || !rt_valid_coord(coord)
+	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) \
 		|| !rt_valid_color(color))
 		return (ft_free_tab(coord), ft_free_tab(norm), ft_free_tab(color));
-	plane->coord = rt_point(
+	plane->origin = rt_point(
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	plane->norm = rt_vector(
 			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
-	plane->color = rt_color(
-			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2)));
-	plane->type = PLANE;
+	plane->shape = PLANE;
+	plane->transform = rt_set_transform(*plane);
+	*plane = rt_plane(rt_color(
+			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
@@ -86,25 +67,24 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	char	**norm;
 	char	**color;
 
-	cylinder->type = CYLINDER;
+	cylinder->shape = CYLINDER;
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle +1), ',');
 	color = ft_split(*(needle + 4), ',');
-	cylinder->diameter = ft_strtof(*(needle +2));
-	cylinder->height = ft_strtof(*(needle + 3));
-	if (!rt_valid_orient(norm) || !rt_valid_coord(coord)
+	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) \
 		|| !rt_valid_color(color))
 		return (ft_free_tab(coord), ft_free_tab(norm), ft_free_tab(color));
-	cylinder->coord = rt_point(
+	cylinder->diameter = ft_strtof(*(needle +2));
+	cylinder->height = ft_strtof(*(needle + 3));
+	cylinder->origin = rt_point(
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	cylinder->norm = rt_vector(
 			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
-	cylinder->color = rt_color(
-			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2)));
-	cylinder->type = CYLINDER;
+	cylinder->transform = rt_set_transform(*cylinder);
+	*cylinder = rt_cylinder(rt_color(
+			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
+	cylinder->shape = CYLINDER;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
 }
-
-*/

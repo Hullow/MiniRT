@@ -1,5 +1,52 @@
 #include "miniRT.h"
 
+t_scene	*test_default_scene(t_scene *scene)
+{
+	t_object	plane_1;
+	t_object	plane_2;
+	t_object	sphere_1;
+	t_object	sphere_2;
+	t_object	sphere_3;
+	t_object	sphere_4;
+	t_object	sphere_5;
+	t_light		light;
+
+	plane_1 = rt_plane(rt_color(255, 0.2 * 255, 255));
+	plane_1.transform = rt_translation(rt_vector(0, -5, 0));
+	plane_1.transform = rt_mul_matrix(plane_1.transform, rt_rotation_z(M_PI / 12));
+
+	plane_2 = rt_plane(rt_color(255, 0.5 * 255, 255));
+	plane_2.transform = rt_translation(rt_vector(0, 5, 0));
+	plane_2.transform = rt_mul_matrix(plane_2.transform, rt_rotation_z(M_PI / 12));
+	
+	sphere_1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255));
+	sphere_1.transform = rt_translation(rt_vector(0, 3, 0));
+	
+	sphere_2 = rt_sphere(rt_color(255, 255, 255));
+	sphere_2.transform = rt_translation(rt_vector(3, 1, 0));
+
+	sphere_3 = rt_sphere(rt_color(255, 0, 0));
+	sphere_3.transform = rt_translation(rt_vector(2, -2, 0));
+
+	sphere_4 = rt_sphere(rt_color(0, 0, 255));
+	sphere_4.transform = rt_translation(rt_vector(-2, -2, 0));
+
+	sphere_5 = rt_sphere(rt_color(0, 255, 0));
+	sphere_5.transform = rt_translation(rt_vector(-3, 1, 0));
+
+	light = rt_light (rt_color(255, 255, 255), rt_point(0, 0, 2), 1);
+	scene->n_obj = 6;
+	scene->objects[0] = sphere_1;
+	scene->objects[1] = sphere_2;
+	scene->objects[2] = sphere_3;
+	scene->objects[3] = sphere_4;
+	scene->objects[4] = sphere_5;
+	scene->objects[5] = plane_1;
+	scene->objects[6] = plane_2;
+	scene->lux = light;
+	return (scene);
+}
+
 void	test_tuples()
 {	
 	t_tuple	point;
@@ -754,14 +801,14 @@ void	test_intersect()
 	rt_print_matrix(sphere.transform);
 	printf("Transformed\n");
 	translate = rt_translation(rt_vector(2, 3, 4));
-	sphere.transform = rt_set_transform(sphere, translate);
+	sphere.transform = translate;
 	rt_print_matrix(sphere.transform);
 	printf("\n");
 
 	printf("Intersecting a scaled sphere with a ray\n");
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	sphere.transform = rt_set_transform(sphere, rt_scaling(rt_vector(2, 2, 2)));
+	sphere.transform = rt_scaling(rt_vector(2, 2, 2));
 	rt_intersects(&sphere, ray, &xs, &i);
 	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
@@ -769,7 +816,7 @@ void	test_intersect()
 	printf("Intersecting a translated sphere with a ray\n");
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(5, 0, 0)));
+	sphere.transform = rt_translation(rt_vector(5, 0, 0));
 	rt_intersects(&sphere, ray, &xs, &i);
 	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 
@@ -785,8 +832,8 @@ void	test_mlx()
 
 	sp = rt_sphere(rt_color(255, 0, 0));
 	rt_print_matrix(sp.transform);
-	//sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
-	//sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
+	//sp.transform = rt_scaling(rt_vector(1, 2, 1));
+	//sp.transform = rt_translation(rt_vector(1, 0, 0));
 	//rt_print_matrix(sp.transform);
 	env = mlx_set_env();
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
@@ -815,7 +862,7 @@ void	test_light()
 
 	printf("Normal of translated sphere\n");
 
-	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(0, 1, 0)));
+	sphere.transform = rt_translation(rt_vector(0, 1, 0));
 	normal = rt_normal_at(sphere, rt_point(0, 1.70711, -0.70711));
 	rt_print_tuple(normal);
 	printf("\n");
@@ -943,7 +990,7 @@ void	test_light_render()
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
 	transform = rt_scaling(rt_vector(2, 0.5, 1));
-	sphere.transform = rt_set_transform(sphere, transform);
+	sphere.transform = transform;
 
 	wall_z = 5;
 	h = 0;
@@ -1089,7 +1136,7 @@ void	test_scene()
 	printf("Shade hit ray hits\n");
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	
-	rt_default_scene(&scene);
+	test_default_scene(&scene);
 	color = rt_color_at(scene, ray);
 	rt_print_tuple(color);
 	printf("\n");
@@ -1186,13 +1233,13 @@ void	test_camera()
 	printf("Test camera\n***********\n");
 	t_camera	camera;
 	// t_ray		ray;
-	t_scene		scene;
+	t_scene		*scene = malloc(sizeof(t_scene));
 	t_object	objects[7];
 
-	scene.objects = objects;
+	scene->objects = objects;
 
 	printf("\nrendering a world with a camera\n");
-	rt_default_scene(&scene);
+	scene = test_default_scene(scene);
 	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
 
 	// camera settings
@@ -1207,8 +1254,9 @@ void	test_camera()
 	// mlx settings
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(camera, scene, &env);
+	rt_render(camera, *scene, &env);
 	mlx_run_window(&env);
+	free(scene); // LEAK RISK (exit from mlx)
 }
 
 void	test_pixel_at(t_tuple color)
@@ -1275,7 +1323,7 @@ void	test_planes()
 	xs.inter = inter;
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	plane.transform = rt_set_transform(plane, rt_scaling(rt_vector(2, 2, 2)));
+	plane.transform = rt_scaling(rt_vector(2, 2, 2));
 	rt_intersects(&plane, ray, &xs, &i);
 	rt_print_ray(plane.saved_ray);
 	ft_printf("\n");
@@ -1283,7 +1331,7 @@ void	test_planes()
 	ft_printf("Ray translated plane intersect\n");
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
-	plane.transform = rt_set_transform(plane, rt_translation(rt_vector(5, 0, 0)));
+	plane.transform = rt_translation(rt_vector(5, 0, 0));
 	rt_intersects(&plane, ray, &xs, &i);
 	rt_print_ray(plane.saved_ray);
 	ft_printf("\n");
@@ -1293,7 +1341,7 @@ void	test_planes()
 	t_object	sphere;
 
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
-	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(0, 1, 0)));
+	sphere.transform = rt_translation(rt_vector(0, 1, 0));
 	normal_at = rt_normal_at(sphere, rt_point(0, 1.70711, -0.70711));
 	rt_print_tuple(normal_at);
 	ft_printf("\n");
@@ -1304,7 +1352,7 @@ void	test_planes()
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	transform = rt_mul_matrix(rt_scaling(rt_vector(1.0, 0.5, 1.0)), \
 							rt_rotation_z(M_PI / 5));
-	sphere.transform = rt_set_transform(sphere, transform);
+	sphere.transform = transform;
 	normal_at = rt_normal_at(sphere, rt_point(0, sqrtf(2)/2, -sqrtf(2)/2));
 	rt_print_tuple(normal_at);
 	ft_printf("\n");

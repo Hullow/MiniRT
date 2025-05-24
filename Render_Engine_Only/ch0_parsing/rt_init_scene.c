@@ -10,27 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+
 #include "miniRT.h"
 
-static t_matrix	transform(t_object object)
+t_matrix	rt_set_transform(t_object object)
 {
 	t_matrix	transform;
 
 	transform = rt_translation( \
-		rt_vector(object.coord.x, object.coord.y, object.coord.z));
-	if (object.type == SPHERE)
+		rt_vector(object.origin.x, object.origin.y, object.origin.z));
+	if (object.shape == SPHERE)
 	{
-		transform = matrix_multiplication(transform, rt_scaling( \
+		transform = rt_mul_matrix(transform, rt_scaling( \
 			rt_vector(object.diameter, object.diameter, object.diameter)));
 	}
-	if (object.type == CYLINDER)
+	if (object.shape == CYLINDER)
 	{
-		transform = matrix_multiplication(transform, rt_scaling( \
+		transform = rt_mul_matrix(transform, rt_scaling( \
 			rt_vector(object.diameter, object.height, object.diameter)));
 	}
-	if (object.type == PLANE || object.type == CYLINDER)
-		transform = matrix_multiplication(transform, rt_rotation(object.norm));
+	if (object.shape == PLANE || object.shape == CYLINDER)
+		transform = rt_mul_matrix(transform, rt_rotation(object.norm));
 	return (transform);
 }
 
@@ -43,8 +43,6 @@ static void	rt_assign_object(t_object *object, char **needle, char type)
 		rt_assign_cylinder(object, needle);
 	if (type == 'p')
 		rt_assign_plane(object, needle);
-	object->transform = transform(*object);
-	object->inverse = matrix_inversion(object->transform);
 }
 
 static void	rt_assign_values(t_scene *scene, char **values)
@@ -107,4 +105,3 @@ int	rt_init_scene(const char *file, t_scene *scene)
 	close(fd);
 	return (0);
 }
-*/

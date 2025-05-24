@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+
 #include "miniRT.h"
 
 int	rt_valid_color(char **color)
@@ -80,4 +80,3 @@ int	rt_valid_orient(char **orient)
 				"\nwrong number of orientation arguments"), 0);
 	return (1);
 }
-*/

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
 #include "miniRT.h"
 
 // Returns 1 if the file extension is wrong. Otherwise 0
@@ -56,4 +55,3 @@ int	rt_read_id(const char *file, t_scene *scene)
 	close(fd);
 	return (errno);
 }
-*/

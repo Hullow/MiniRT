@@ -23,7 +23,6 @@ t_object	rt_sphere(t_tuple color)
 	sphere.shape = SPHERE;
 	sphere.origin = rt_point(0, 0, 0);
 	sphere.diameter = 2.0f;
-	sphere.transform = rt_identity_matrix();
 	sphere.color = color;
 	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
 	return (sphere);
@@ -49,7 +48,6 @@ t_object	rt_plane(t_tuple color)
 	plane.shape = PLANE;
 	plane.origin = rt_point(0, 0, 0);
 	plane.norm = rt_vector(0, 1, 0);
-	plane.transform = rt_identity_matrix();
 	plane.color = color;
 	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
 	return (plane);
@@ -65,4 +63,29 @@ void	rt_print_plane(t_object plane)
 	rt_print_tuple(plane.color);
 	ft_printf("Material: ");
 	rt_print_material(plane.material);
+}
+
+t_object	rt_cylinder(t_tuple color)
+{
+	t_object	cylinder;
+
+	cylinder.shape = CYLINDER;
+	cylinder.origin = rt_point(0, 0, 0);
+	cylinder.norm = rt_vector(0, 1, 0);
+	cylinder.color = color;
+	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0f);
+	return (cylinder);
+}
+
+void	rt_print_cylinder(t_object cylinder)
+{
+	ft_printf("Height: %f, Diameter: %f", cylinder.height, cylinder.diameter);
+	ft_printf("Origin: ");
+	rt_print_tuple(cylinder.origin);
+	ft_printf("Transform:\n");
+	rt_print_matrix(cylinder.transform);
+	ft_printf("Color: ");
+	rt_print_tuple(cylinder.color);
+	ft_printf("Material: ");
+	rt_print_material(cylinder.material);
 }
