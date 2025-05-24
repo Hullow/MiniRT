@@ -1187,41 +1187,9 @@ void	test_camera()
 	t_camera	camera;
 	// t_ray		ray;
 	t_scene		scene;
-	t_object	objects[2];
+	t_object	objects[7];
 
 	scene.objects = objects;
-
-	// printf("Constructing a camera:\n");
-	// camera = rt_camera_book(160, 120, M_PI / 2);
-	// rt_print_camera(camera);
-
-	// printf("\nthe pixel size for a horizontal canvas:\n");
-	// camera = rt_camera_book(200, 125, M_PI / 2);
-	// printf("=> camera.pixel_size: %f\n", camera.pixel_size);
-	
-	// printf("\nthe pixel size for a vertical canvas:\n");
-	// camera = rt_camera_book(125, 200, M_PI / 2);
-	// printf("=> camera.pixel_size: %f\n", camera.pixel_size);
-	
-	// printf("\nconstructing a ray through the center of the canvas\n");
-	// camera = rt_camera_book(201, 101, M_PI / 2);
-	// ray = rt_ray_for_pixel(camera, 100, 50);
-	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
-	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
-
-	// printf("\nconstructing a ray through a corner of the canvas\n");
-	// camera = rt_camera_book(201, 101, M_PI / 2);
-	// ray = rt_ray_for_pixel(camera, 0, 0);
-	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
-	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
-
-	// printf("\nconstructing a ray when the camera is transformed\n");
-	// camera = rt_camera_book(201, 101, M_PI / 2);
-	// camera.transform = rt_mul_matrix(
-	// 	rt_rotation_y(M_PI / 4), rt_translation(rt_vector(0, -2, 5)));
-	// ray = rt_ray_for_pixel(camera, 100, 50);
-	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
-	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
 
 	printf("\nrendering a world with a camera\n");
 	rt_default_scene(&scene);

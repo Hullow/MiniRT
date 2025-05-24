@@ -334,6 +334,7 @@ t_tuple 	rt_filmic_tonemap(t_tuple color);
 //CH7 Scene
 
 void		rt_default_scene(t_scene *scene);
+void		rt_print_scene(t_scene scene);
 void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
 t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
@@ -354,6 +355,7 @@ void		rt_render(t_camera camera, t_scene scene, t_env *env);
 # endif
 
 t_object	rt_plane(t_tuple color);
+void		rt_print_plane(t_object plane);
 void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
