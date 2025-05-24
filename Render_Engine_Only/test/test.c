@@ -1233,17 +1233,18 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	y = 0;
 	while (y < camera.vsize - 1)
 	{
-		if ((y + 1) % 100 == 0)
-			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
 		x = 0;
 		while (x < camera.hsize - 1)
 		{
 			ray = rt_ray_for_pixel(camera, x, y);
 			color = rt_color_at(scene, ray);
+			color = rt_reinhard_tonemap(color);
 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
 			x++;
 		}
 		y++;
+		if ((y + 1) % 100 == 0)
+			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
 	}
 }
 void	test_planes()

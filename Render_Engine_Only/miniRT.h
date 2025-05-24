@@ -291,6 +291,10 @@ t_matrix	rt_inversion(t_matrix m);
 
 //CH4 Transforms
 
+# ifndef M_PI
+#  define M_PI 3.141592f
+# endif
+
 t_matrix	rt_translation(t_tuple t);
 t_matrix	rt_scaling(t_tuple t);
 t_matrix	rt_rotation(t_tuple norm);

@@ -19,7 +19,7 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 	if (obj.shape == SPHERE)
 		normal = rt_vector(point.x, point.y, point.z);
 	else if (obj.shape == PLANE)
-		normal = rt_normalize(obj.norm);
+		normal = obj.norm;
 	else if (obj.shape == CYLINDER)
 		normal = rt_vector(obj.origin.x, 0, obj.origin.z);
 	return (rt_normalize(normal));
