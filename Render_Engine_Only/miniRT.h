@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 14:47:35 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:40:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,6 @@ typedef struct s_scene
 	t_object	*objects;
 }	t_scene;
 
-
 typedef struct s_comps
 {
 	float		t;
@@ -229,6 +228,22 @@ typedef struct s_comps
 	int			inside;
 }	t_comps;
 
+// Variables for final calculation
+
+typedef struct s_intermediate_vars {
+	t_tuple	color;
+	t_tuple	dir_to_light;
+	float	light_dot_normal;
+	t_tuple	reflect;
+	float	reflect_dot_camera;
+	float	factor;
+}	t_intermediate_vars;
+
+typedef struct s_lighting_params {
+	t_tuple	ambient;
+	t_tuple	diffuse;
+	t_tuple	specular;
+}	t_lighting_params;
 
 //CH1 Tuples
 
@@ -330,6 +345,9 @@ void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
 t_tuple		rt_lighting(t_light l, t_comps comp);
+t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v);
+t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
+	t_intermediate_vars in, t_lighting_params v);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple 	rt_filmic_tonemap(t_tuple color);

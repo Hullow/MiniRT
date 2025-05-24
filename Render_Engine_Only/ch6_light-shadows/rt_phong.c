@@ -6,26 +6,11 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 15:14:21 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:38:53 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-typedef struct s_intermediate_vars {
-	t_tuple	color;
-	t_tuple	dir_to_light;
-	float	light_dot_normal;
-	t_tuple	reflect;
-	float	reflect_dot_camera;
-	float	factor;
-}	t_intermediate_vars;
-
-typedef struct s_lighting_params {
-	t_tuple	ambient;
-	t_tuple	diffuse;
-	t_tuple	specular;
-}	t_lighting_params;
 
 t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v)
 {
