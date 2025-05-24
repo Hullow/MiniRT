@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
-/*
+
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_a = 0;
@@ -41,18 +41,17 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	if (rt_init_scene(argv[1], scene))
 		return (5);
 	return (0);
-}*/
+}
 
 int	main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-	// t_scene		scene;
-	// t_object	objects[MAX_OBJECTS];
-// 
-	// scene.objects = objects;
-	// if (build_scene(argc, argv, &scene))
-		// return (1);
-	test_camera();
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
 	return (0);
 }
