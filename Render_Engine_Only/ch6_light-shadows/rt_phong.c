@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 15:45:24 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:50:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	t_intermediate_vars	in;
 
 	in.color = rt_scale_color(comp.object.color, l.intensity);
-	v.ambient = rt_scale_color(in.color, comp.object.material.ambient);
+	
+	// v.ambient = rt_scale_color(comp.object.material.ambient.color, comp.object.material.ambient.intensity);
+	
+	// v.ambient = rt_hadamard(rt_scale_color(in.color, comp.object.material.ambient), rt_color(255, 0, 0));
+	// v.ambient = rt_add_color(rt_scale_color(in.color, comp.object.material.ambient), rt_color(127, 0, 0));
+	v.ambient = rt_scale_color(comp.object.material.color, comp.object.material.ambient);
 	in.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	in.light_dot_normal = rt_dot_product(in.dir_to_light, comp.normalv);
 	if (in.light_dot_normal < 0)
@@ -66,6 +71,8 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	else
 		v = rt_colorize_diffuse_specular(l, comp, in, v);
 	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
+	// return (rt_add_color(rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)), rt_color(127, 0, 0)));
+	// return (rt_hadamard(rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)), rt_color(255, 0, 0)));
 }
 
 /// @brief Tonemapping that gives good results.

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 15:50:47 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 16:34:22 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ typedef struct s_tuple
 
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 300
+#  define WINDOW_WIDTH 600
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 200
+#  define WINDOW_HEIGHT 400
 # endif
 
 # ifndef WINDOW_NAME

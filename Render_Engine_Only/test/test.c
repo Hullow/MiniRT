@@ -1298,7 +1298,7 @@ void	test_shadows()
 	light = rt_light(rt_color(1, 1, 1), rt_point(0, 0, -10), 1.0f);
 	c.in_shadow = true;
 	result = rt_lighting(light, c);
-	
+	(void)result;
 }
 
 void	test_planes()
