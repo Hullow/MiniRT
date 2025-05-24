@@ -67,14 +67,15 @@ void	my_mlx_pixel_put(t_env *env, int x, int y, int color)
 // and displays the output in a mlx-handled window
 int	key_handler(int keycode, t_env *env)
 {
+	(void)env;
 	printf("keycode: %d\n", keycode);
 	if (keycode)
 		printf("keycode: %d\n", keycode);
 	if (keycode == 65307)
 	{
 		printf("ESC key pressed, program stopping\n");
-		mlx_destroy_image(env->mlx, env->img);
-		mlx_destroy_window(env->mlx, env->mlx_win);
+		//mlx_destroy_image(env->mlx, env->img);
+		//mlx_destroy_window(env->mlx, env->mlx_win);
 		exit(1);
 	}
 	return (0);
@@ -83,9 +84,10 @@ int	key_handler(int keycode, t_env *env)
 // program closer, is called if the window is closed with the mouse
 int	window_closed(t_env *env)
 {
+	(void)env;
 	printf("Window closed, program stopping\n");
-	mlx_destroy_image(env->mlx, env->img);
-	mlx_destroy_window(env->mlx, env->mlx_win);
+	//mlx_destroy_image(env->mlx, env->img);
+	//mlx_destroy_window(env->mlx, env->mlx_win);
 	// exit(1);
 	return (0);
 }

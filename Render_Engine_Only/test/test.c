@@ -1221,41 +1221,9 @@ void	test_camera()
 	t_camera	camera;
 	// t_ray		ray;
 	t_scene		scene;
-	t_object	objects[2];
+	t_object	objects[7];
 
 	scene.objects = objects;
-
-	// printf("Constructing a camera:\n");
-	// camera = rt_camera_book(160, 120, M_PI / 2);
-	// rt_print_camera(camera);
-
-	// printf("\nthe pixel size for a horizontal canvas:\n");
-	// camera = rt_camera_book(200, 125, M_PI / 2);
-	// printf("=> camera.pixel_size: %f\n", camera.pixel_size);
-	
-	// printf("\nthe pixel size for a vertical canvas:\n");
-	// camera = rt_camera_book(125, 200, M_PI / 2);
-	// printf("=> camera.pixel_size: %f\n", camera.pixel_size);
-	
-	// printf("\nconstructing a ray through the center of the canvas\n");
-	// camera = rt_camera_book(201, 101, M_PI / 2);
-	// ray = rt_ray_for_pixel(camera, 100, 50);
-	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
-	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
-
-	// printf("\nconstructing a ray through a corner of the canvas\n");
-	// camera = rt_camera_book(201, 101, M_PI / 2);
-	// ray = rt_ray_for_pixel(camera, 0, 0);
-	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
-	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
-
-	// printf("\nconstructing a ray when the camera is transformed\n");
-	// camera = rt_camera_book(201, 101, M_PI / 2);
-	// camera.transform = rt_mul_matrix(
-	// 	rt_rotation_y(M_PI / 4), rt_translation(rt_vector(0, -2, 5)));
-	// ray = rt_ray_for_pixel(camera, 100, 50);
-	// printf("ray.origin: ");	rt_print_tuple(ray.origin);
-	// printf("ray.direction: ");	rt_print_tuple(ray.direction);
 
 	printf("\nrendering a world with a camera\n");
 	rt_default_scene(&scene);
@@ -1297,7 +1265,6 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	t_tuple	color;
 
 	y = 0;
-	printf("camera.vsize: %d, camera.hsize: %d\n", camera.vsize, camera.hsize);
 	while (y < camera.vsize - 1)
 	{
 		if ((y + 1) % 100 == 0)
@@ -1307,15 +1274,14 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 		{
 			ray = rt_ray_for_pixel(camera, x, y);
 			color = rt_color_at(scene, ray);
-			// if (x == 5 && y == 5)
-				// test_pixel_at(color);
+			color = rt_reinhard_tonemap(color);
 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
-			// printf("(%d, %d): ", x, y); rt_print_tuple(color);
 			x++;
 		}
 		y++;
+		if ((y + 1) % 100 == 0)
+			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
 	}
-	printf("finished rendering\n");
 }
 
 
@@ -1455,7 +1421,7 @@ void	test_render_plane()
 	xs.inter = inter;
 	camera = rt_camera_parsing(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
-	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
+	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
 	

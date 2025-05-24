@@ -24,7 +24,7 @@ t_inter	rt_hit(t_xs xs)
 	i = 0;
 	while (i < xs.count)
 	{
-		if (xs.inter[i].t >= 0)
+		if (xs.inter[i].t > 0)
 		{
 			if (xs.inter[i].t < hit.t)
 				hit = xs.inter[i];

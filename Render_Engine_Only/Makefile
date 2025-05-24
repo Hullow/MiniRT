@@ -65,6 +65,7 @@ RAYS		= rt_hit \
 			rt_ray_transform
 
 SCENE		= rt_scene \
+			rt_print_scene \
 			rt_camera \
 			rt_view_transform
 

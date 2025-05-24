@@ -15,6 +15,5 @@
 int	main()
 {
 	test_camera();
-	// test_render_plane();
 	return (0);
 }

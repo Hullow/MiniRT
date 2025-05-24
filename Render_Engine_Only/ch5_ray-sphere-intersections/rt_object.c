@@ -31,7 +31,7 @@ t_object	rt_sphere(t_tuple color)
 
 void	rt_print_sphere(t_object sphere)
 {
-	ft_printf("Sphere diameter: %f\n", sphere.diameter);
+	ft_printf("Diameter: %f\n", sphere.diameter);
 	ft_printf("Origin: ");
 	rt_print_tuple(sphere.origin);
 	ft_printf("Transform:\n");
@@ -53,4 +53,16 @@ t_object	rt_plane(t_tuple color)
 	plane.color = color;
 	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
 	return (plane);
+}
+
+void	rt_print_plane(t_object plane)
+{
+	ft_printf("Origin: ");
+	rt_print_tuple(plane.origin);
+	ft_printf("Transform:\n");
+	rt_print_matrix(plane.transform);
+	ft_printf("Color: ");
+	rt_print_tuple(plane.color);
+	ft_printf("Material: ");
+	rt_print_material(plane.material);
 }
