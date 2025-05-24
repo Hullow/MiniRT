@@ -1285,6 +1285,22 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 }
 
 
+void	test_shadows()
+{
+	printf("Test Shadows:\n**************\n");
+
+	t_light light;
+	t_comps	c;
+	t_tuple result;
+
+	c.eyev = rt_vector(0, 0, -1);
+	c.normalv = rt_vector(0, 0, -1);
+	light = rt_light(rt_color(1, 1, 1), rt_point(0, 0, -10), 1.0f);
+	c.in_shadow = true;
+	result = rt_lighting(light, c);
+	
+}
+
 void	test_planes()
 {
 	ft_printf("Plane initialisation\n");

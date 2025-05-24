@@ -272,3 +272,4 @@ using files
 - Refactored rt_lighting for the norm => updated tests, 
 but `test_light_render()` seg faults. No time to fix that test now;
 I will commit and onwards.
+- Started working on Shadows (ch. 9)

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 15:40:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:50:47 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
+# include <stdbool.h>
 # include <errno.h>
 # include "./mlx/mlx.h"
 # include "./libft/header/libft.h"
@@ -226,6 +227,7 @@ typedef struct s_comps
 	t_tuple		eyev;
 	t_tuple		normalv;
 	int			inside;
+	bool		in_shadow;
 }	t_comps;
 
 // Variables for final calculation
