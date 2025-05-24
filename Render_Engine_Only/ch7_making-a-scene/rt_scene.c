@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 18:59:23 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:04:58 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	rt_default_scene(t_scene *scene)
 	
 	sphere_2 = rt_sphere(rt_color(255, 255, 255));
 	sphere_2.material = rt_material(0.1, 0.7, 0.2, 200);
-	sphere_2.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
-	sphere_2.transform = rt_translation(rt_vector(2, -2, 2));
+	// sphere_2.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
+	sphere_2.transform = rt_translation(rt_vector(0.5, 0.5, -0.5));
 	sphere_2.color = rt_color(255, 0, 0);
 
 	light = rt_light (rt_color(255, 255, 255), rt_point(-10, 10, -10), 1);
@@ -80,8 +80,7 @@ t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
 {
 	t_tuple	color;
 
-	color = rt_lighting(
-			comp.object, scene.lux, comp.point, comp.eyev, comp.normalv);
+	color = rt_lighting(scene.lux, comp);
 	return (color);
 }
 
@@ -94,8 +93,6 @@ t_tuple	rt_color_at(t_scene scene, t_ray ray)
 
 	rt_intersect_scene(scene, ray, &xs);
 	inter = rt_hit(xs);
-	if (rt_is_equal_tuple(inter.object.color, rt_color(255, 0, 0)))
-		printf("inter -> hit the red sphere\n");
 	comps = rt_prepare_computations(inter, ray);
 	color = rt_shade_hit(scene, comps);
 	return (color);

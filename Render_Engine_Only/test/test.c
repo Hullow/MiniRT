@@ -794,6 +794,8 @@ void	test_mlx()
 	mlx_run_window(&env);
 }
 */
+
+
 void	test_light()
 {
 	printf("Normal basic tests\n");
@@ -873,12 +875,18 @@ void	test_light()
 	t_tuple	result;
 	t_tuple	point;
 	t_tuple	eyev;
+	t_comps	comp;
 
 	normal = rt_vector(0, 0, -1);
 	point = rt_point(0, 0, 0);
 	eyev = rt_vector(0, 0, -1);
 	light.coord = rt_point(0, 0, -10);
-	result = rt_lighting(sphere, light, point, eyev, normal);
+	comp = (t_comps){
+	.object = sphere,
+	.point = point,
+	.eyev = eyev,
+	.normalv = normal};
+	result = rt_lighting(light, comp);
 	rt_print_tuple(result);
 	printf("\n");
 
@@ -886,8 +894,12 @@ void	test_light()
 
 	light.coord = rt_point(0, 0, -10);
 	eyev = rt_vector(0, sqrtf(2)/2, -sqrtf(2)/2);
-
-	result = rt_lighting(sphere, light, point, eyev, normal);
+	comp = (t_comps){
+	.object = sphere,
+	.point = point,
+	.eyev = eyev,
+	.normalv = normal};
+	result = rt_lighting(light, comp);
 	rt_print_tuple(result);
 	printf("\n");
 
@@ -895,7 +907,12 @@ void	test_light()
 
 	light.coord = rt_point(0, 10, -10);
 	eyev = rt_vector(0, 0, -1);
-	result = rt_lighting(sphere, light, point, eyev, normal);
+	comp = (t_comps){
+	.object = sphere,
+	.point = point,
+	.eyev = eyev,
+	.normalv = normal};
+	result = rt_lighting(light, comp);
 	rt_print_tuple(result);
 	printf("\n");
 
@@ -903,7 +920,12 @@ void	test_light()
 
 	light.coord = rt_point(0, 10, -10);
 	eyev = rt_vector(0, -sqrtf(2)/2, -sqrtf(2)/2);
-	result = rt_lighting(sphere, light, point, eyev, normal);
+	comp = (t_comps){
+	.object = sphere,
+	.point = point,
+	.eyev = eyev,
+	.normalv = normal};
+	result = rt_lighting(light, comp);
 	rt_print_tuple(result);
 	printf("\n");
 
@@ -911,10 +933,18 @@ void	test_light()
 
 	light.coord = rt_point(0, 0, 10);
 	eyev = rt_vector(0, 0, -1);
-	result = rt_lighting(sphere, light, point, eyev, normal);
+
+	comp = (t_comps){
+	.object = sphere,
+	.point = point,
+	.eyev = eyev,
+	.normalv = normal};
+	result = rt_lighting(light, comp);
 	rt_print_tuple(result);
 	printf("\n");
 }
+
+
 
 void	test_light_render()
 {
@@ -930,6 +960,7 @@ void	test_light_render()
 	t_tuple		normalv;
 	t_tuple		color;
 	t_matrix	transform;
+	t_comps		comp;
 
 	int			h;
 	int			w;
@@ -944,7 +975,6 @@ void	test_light_render()
 	env = mlx_set_env();
 	transform = rt_scaling(rt_vector(2, 0.5, 1));
 	sphere.transform = rt_set_transform(sphere, transform);
-
 	wall_z = 5;
 	h = 0;
 	while (h < WINDOW_HEIGHT)
@@ -954,7 +984,6 @@ void	test_light_render()
 		w = 0;
 		while (w < WINDOW_WIDTH)
 		{
-			i = 0;
 			xs.count = 0;
 			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
 			rt_intersects(&sphere, ray, &xs, &i);
@@ -963,7 +992,12 @@ void	test_light_render()
 				point = rt_position(ray, rt_hit(xs).t);
 				normalv = rt_normal_at(xs.inter[i].object, point);
 				eyev = rt_negate_vector(ray.direction);
-				color = rt_lighting(xs.inter[i].object, light, point, eyev, normalv);
+				comp = (t_comps){
+					.object = xs.inter[0].object,
+					.point = point,
+					.eyev = eyev,
+					.normalv = normalv};
+				color = rt_lighting(light, comp);
 				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
 			}
@@ -1266,6 +1300,8 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	printf("camera.vsize: %d, camera.hsize: %d\n", camera.vsize, camera.hsize);
 	while (y < camera.vsize - 1)
 	{
+		if ((y + 1) % 100 == 0)
+			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
 		x = 0;
 		while (x < camera.hsize - 1)
 		{
@@ -1281,6 +1317,8 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	}
 	printf("finished rendering\n");
 }
+
+
 void	test_planes()
 {
 	ft_printf("Plane initialisation\n");
@@ -1392,6 +1430,7 @@ void	test_planes()
 	ft_printf("\n");
 }
 
+
 void	test_render_plane()
 {
 	ft_printf("CH9 - Putting it together\n");
@@ -1406,19 +1445,20 @@ void	test_render_plane()
 	t_tuple		normalv;
 	t_tuple		color;
 	t_inter		inter[1];
-
+	t_comps		comp;
+	
 	int			h;
 	int			w;
 	float		wall_z;
 	int			i;
-
+	
 	xs.inter = inter;
 	camera = rt_camera_parsing(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
-
+	
 	wall_z = 5;
 	h = 0;
 	while (h < WINDOW_HEIGHT)
@@ -1437,7 +1477,12 @@ void	test_render_plane()
 				point = rt_position(ray, rt_hit(xs).t);
 				normalv = rt_normal_at(xs.inter[0].object, point);
 				eyev = rt_negate_vector(ray.direction);
-				color = rt_lighting(xs.inter[0].object, light, point, eyev, normalv);
+				comp = (t_comps){
+					.object = xs.inter[0].object,
+					.point = point,
+					.eyev = eyev,
+					.normalv = normalv};
+				color = rt_lighting(light, comp);
 				color = rt_reinhard_tonemap(color);
 				my_mlx_pixel_put(&env, w, WINDOW_HEIGHT - h, rgb_to_int(color));
 			}
@@ -1451,3 +1496,4 @@ void	test_render_plane()
 	}
 	mlx_run_window(&env);
 }
+

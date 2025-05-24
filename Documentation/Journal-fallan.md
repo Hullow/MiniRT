@@ -264,3 +264,11 @@ parsing initialization function `rt_camera_parsing`.
 - Modified rt_inversion and tested it (test_matrix, test_intersect -> partial tests ok)
 - only one sphere is shown, unclear why. we try to debug a bit
 => fixed rt_hit to remove `(if errno = EDISCRIMINANT)` => it works!!!
+
+# 24/5/25
+- Refactored rt_lighting for the norm => commented out tests, need to update them
+- Discussed project with pberset: I will do Shadows, and he will, after
+debugging planes, connect input/parsing with scene drawing so we can do tests
+using files
+- Should I update tests that call rt_lighting (test_light_render) or not yet ?
+=> ask pberset

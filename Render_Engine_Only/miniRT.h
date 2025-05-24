@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                            :+:    :+:           */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 18:46:34 by fallan         ########   odam.nl        */
+/*   Updated: 2025/05/24 14:47:35 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ typedef struct s_tuple
 
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 800
+#  define WINDOW_WIDTH 300
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 600
+#  define WINDOW_HEIGHT 200
 # endif
 
 # ifndef WINDOW_NAME
@@ -325,8 +325,7 @@ t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
 void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
-t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, \
-	t_tuple eyev, t_tuple normalv);
+t_tuple		rt_lighting(t_light l, t_comps comp);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple 	rt_filmic_tonemap(t_tuple color);

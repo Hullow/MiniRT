@@ -6,11 +6,59 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/24 15:14:21 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+typedef struct s_intermediate_vars {
+	t_tuple	color;
+	t_tuple	dir_to_light;
+	float	light_dot_normal;
+	t_tuple	reflect;
+	float	reflect_dot_camera;
+	float	factor;
+}	t_intermediate_vars;
+
+typedef struct s_lighting_params {
+	t_tuple	ambient;
+	t_tuple	diffuse;
+	t_tuple	specular;
+}	t_lighting_params;
+
+t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v)
+{
+	v.diffuse = rt_color(0, 0, 0);
+	v.specular = rt_color(0, 0, 0);
+	return (v);
+}
+
+t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
+	t_intermediate_vars in, t_lighting_params v)
+{
+	t_object	obj;
+	t_tuple		eyev;
+	t_tuple		normalv;
+
+	obj = comp.object;
+	eyev = comp.eyev;
+	normalv = comp.normalv;
+	v.diffuse = rt_scale_color(
+		in.color, obj.material.diffuse * in.light_dot_normal);
+	in.reflect = rt_reflect(rt_negate_vector(in.dir_to_light), normalv);
+	in.reflect = rt_normalize(in.reflect);
+	in.reflect_dot_camera = rt_dot_product(in.reflect, eyev);
+	if (in.reflect_dot_camera <= 0)
+		v.specular = rt_color(0, 0, 0);
+	else
+	{
+		in.factor = powf(in.reflect_dot_camera, obj.material.shininess);
+		v.specular = rt_scale_color(
+			l.color, l.intensity * obj.material.specular * in.factor);
+	}
+	return (v);
+}
 
 /// @brief 
 /// @param o object for t_material and t_tuple COLOR
@@ -19,43 +67,20 @@
 /// @param eyev vector from point to camera
 /// @param normalv normal vector on the point hit
 /// @return the color of the point with lighting applied
-t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, \
-	t_tuple eyev, t_tuple normalv)
+t_tuple	rt_lighting(t_light l, t_comps comp)
 {
-	t_tuple	color;
-	t_tuple	dir_to_light;
-	t_tuple	ambient;
-	t_tuple	diffuse;
-	t_tuple	specular;
-	float	light_dot_normal;
-	t_tuple	reflect;
-	float	reflect_dot_camera;
-	float	factor;
+	t_lighting_params	v;
+	t_intermediate_vars	in;
 
-	color = rt_scale_color(o.color, l.intensity);
-	dir_to_light = rt_normalize(rt_sub_tuple(l.coord, point));
-	ambient = rt_scale_color(color, o.material.ambient);
-	light_dot_normal = rt_dot_product(dir_to_light, normalv);
-	if (light_dot_normal < 0)
-	{
-		diffuse = rt_color(0, 0, 0);
-		specular = rt_color(0, 0, 0);
-	}
+	in.color = rt_scale_color(comp.object.color, l.intensity);
+	v.ambient = rt_scale_color(in.color, comp.object.material.ambient);
+	in.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
+	in.light_dot_normal = rt_dot_product(in.dir_to_light, comp.normalv);
+	if (in.light_dot_normal < 0)
+		v = rt_dark_diffuse_specular(v);
 	else
-	{
-		diffuse = rt_scale_color(color, o.material.diffuse * light_dot_normal);
-		reflect = rt_reflect(rt_negate_vector(dir_to_light), normalv);
-		reflect = rt_normalize(reflect);
-		reflect_dot_camera = rt_dot_product(reflect, eyev);
-		if (reflect_dot_camera <= 0)
-			specular = rt_color(0, 0, 0);
-		else
-		{
-			factor = powf(reflect_dot_camera, o.material.shininess);
-			specular = rt_scale_color(l.color, l.intensity * o.material.specular * factor);
-		}
-	}
-	return (rt_add_color(ambient, rt_add_color(diffuse, specular)));
+		v = rt_colorize_diffuse_specular(l, comp, in, v);
+	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
 }
 
 /// @brief Tonemapping that gives good results.
