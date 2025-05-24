@@ -1,4 +1,11 @@
-# Mini Ray Tracer 42 Lausanne
+# MiniRT
+Project done at [Ecole 42 Lausanne](https://42lausanne.ch/), by PBerset ([@Sukori](https://github.com/Sukori)) and FAllan ([@Hullow](https://github.com/Hullow)).
+
+## Description
+A raytracing rendering engine in C using 42's [minilibX](https://github.com/42paris/minilibx-linux) graphical library.
+
+The program takes in an input [scene](/Sources/scenes/), which can contain spheres, cylinders and planes, and has a defined camera position. The minilibx handles windows and the drawing of pixels.
+
 ## Scene file formatting
 ### File extension
 
@@ -34,13 +41,43 @@ If the `t_type` is `COLOR`, the user must specify values as `int` from the inter
 
 ### Define objects
 #### Camera
+A camera is defined by its identifier (`char *`), origin coordinates (`t_tuple`), direction vector (`t_tuple`) and field of view (`float`). All parameters shall be defined in this specific order on one single line. separated by spaces. `t_tuple` values are comma separated without spaces.
+
+Summary: `(char*) (t_tuple)POINT (t_tuple)VECTOR (float)`
+
+Example: `C -50.0,0,20 0,0,1 70`
+
 #### Point light
+A point light is defined by its identifier (`char *`), origin coordinates (`t_tuple`), intensity value (`float`) and color (`t_tuple`). All parameters shall be defined in this specific order on one single line. separated by spaces. `t_tuple` values are comma separated without spaces.
+
+Summary: `(char*) (t_tuple)POINT (float) (t_tuple)COLOR`
+
+Example: `L -40.0,50.0,0.0 0.6 10,0,255`
+
 #### Ambient light
+An ambient light is defined by its identifier (`char *`), intensity value (`float`) and color (`t_tuple`). All parameters shall be defined in this specific order on one single line. separated by spaces. `t_tuple` values are comma separated without spaces.
+
+Summary: `(char*) (float) (t_tuple)COLOR`
+
+Example: `A 0.2 255,255,255`
+
 #### Sphere
 A sphere is defined by its identifier (`char *`), center coordinates (`t_tuple`), diameter (`float`), color (`t_tuple`). All parameters shall be defined in this specific order on one single line. separated by spaces. `t_tuple` values are comma separated without spaces.
-Of course, the diameter shall be greater than 0.
+
 Summary: `(char*) (t_tuple)POINT (float) (t_tuple)COLOR`
+
 Example: `sp 3.4,1.0,255 42.24 255,6,234`
 
 #### Plane
+A plane is defined by its identifier (`char *`), one point coordinates (`t_tuple`), the normal vector (`t_tuple`) and color (`t_tuple`). All parameters shall be defined in this specific order on one single line. separated by spaces. `t_tuple` values are comma separated without spaces.
+
+Summary: `(char*) (t_tuple)POINT (t_tuple)VECTOR (t_tuple)COLOR`
+
+Example: `pl 0.0,0.0,-10.0 0.0,1.0,0.0 0,0,255`
+
 #### Cylinder
+A cylinder is defined by its identifier (`char *`), center coordinates (`t_tuple`), the normal vector (`t_tuple`), diameter (`float`), height (`float`) and color (`t_tuple`). All parameters shall be defined in this specific order on one single line. separated by spaces. `t_tuple` values are comma separated without spaces.
+
+Summary: `(char*) (t_tuple)POINT (t_tuple)VECTOR (float) (float) (t_tuple)COLOR`
+
+Example: `cy 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255`
