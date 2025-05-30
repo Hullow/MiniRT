@@ -21,17 +21,14 @@ void	rt_print_scene(t_scene scene)
 	{
 		if (scene.objects[i].shape == SPHERE)
 		{
-			ft_printf("SPHERE %p\n", &scene.objects[i]);
 			rt_print_sphere(scene.objects[i]);
 		}
 		else if (scene.objects[i].shape == PLANE)
 		{
-			ft_printf("PLANE %p\n", &scene.objects[i]);
 			rt_print_plane(scene.objects[i]);
 		}
 		else if (scene.objects[i].shape == CYLINDER)
 		{
-			ft_printf("CYLINDER %p\n", &scene.objects[i]);
 			rt_print_cylinder(scene.objects[i]);
 		}
 		ft_printf("\n");

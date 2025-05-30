@@ -30,15 +30,16 @@ t_object	rt_sphere(t_tuple color)
 
 void	rt_print_sphere(t_object sphere)
 {
+	ft_printf("Sphere %p\n", &sphere);
 	ft_printf("Diameter: %f\n", sphere.diameter);
 	ft_printf("Origin: ");
 	rt_print_tuple(sphere.origin);
-	ft_printf("Transform:\n");
-	rt_print_matrix(sphere.transform);
 	ft_printf("Color: ");
 	rt_print_tuple(sphere.color);
 	ft_printf("Material: ");
 	rt_print_material(sphere.material);
+	ft_printf("Transform:\n");
+	rt_print_matrix(sphere.transform);
 }
 
 t_object	rt_plane(t_tuple color)
@@ -55,37 +56,44 @@ t_object	rt_plane(t_tuple color)
 
 void	rt_print_plane(t_object plane)
 {
+	ft_printf("Plane %p\n", &plane);
 	ft_printf("Origin: ");
 	rt_print_tuple(plane.origin);
-	ft_printf("Transform:\n");
-	rt_print_matrix(plane.transform);
 	ft_printf("Color: ");
 	rt_print_tuple(plane.color);
 	ft_printf("Material: ");
 	rt_print_material(plane.material);
-}
-
-t_object	rt_cylinder(t_tuple color)
-{
-	t_object	cylinder;
-
-	cylinder.shape = CYLINDER;
-	cylinder.origin = rt_point(0, 0, 0);
-	cylinder.norm = rt_vector(0, 1, 0);
-	cylinder.color = color;
-	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0f);
-	return (cylinder);
-}
-
-void	rt_print_cylinder(t_object cylinder)
-{
-	ft_printf("Height: %f, Diameter: %f", cylinder.height, cylinder.diameter);
-	ft_printf("Origin: ");
-	rt_print_tuple(cylinder.origin);
 	ft_printf("Transform:\n");
-	rt_print_matrix(cylinder.transform);
-	ft_printf("Color: ");
-	rt_print_tuple(cylinder.color);
-	ft_printf("Material: ");
-	rt_print_material(cylinder.material);
+	rt_print_matrix(plane.transform);
+}
+
+t_object    rt_cylinder(t_tuple color)
+{
+    t_object    cylinder;
+	
+	cylinder.shape = CYLINDER;
+    cylinder.diameter = 2.0;
+    cylinder.height = 1.0;
+    cylinder.color = color;
+    cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
+    cylinder.norm = rt_vector(0, 1, 0);
+    cylinder.origin = rt_point(0, 0, 0);
+    return (cylinder);
+}
+
+void		rt_print_cylinder(t_object cylinder)
+{
+    ft_printf("Cylinder %p\n", &cylinder);
+    ft_printf("Diameter: %f, ", cylinder.diameter);
+    ft_printf("Height: %f, ", cylinder.height);
+    ft_printf("Origin: ");
+    rt_print_tuple(cylinder.origin);
+    ft_printf("Normal vector: ");
+    rt_print_tuple(cylinder.norm);
+    ft_printf("Color: ");
+    rt_print_tuple(cylinder.color);
+    ft_printf("Material: ");
+    rt_print_material(cylinder.material);
+    ft_printf("Transform:\n");
+    rt_print_matrix(cylinder.transform);
 }

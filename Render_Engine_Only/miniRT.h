@@ -231,21 +231,20 @@ typedef struct s_comps
 
 //CH0 Parsing
 
-int	rt_check_ext(const char *file);
-int	rt_read_id(const char *file, t_scene *scene);
-int	rt_init_scene(const char *file, t_scene *scene);
-int	rt_count_object(const char *line, t_scene *scene);
-int	rt_valid_color(char **color);
-int	rt_valid_coord(char **coord);
-int	rt_valid_orient(char **orient);
-int	rt_check_uniques(t_scene *scene);
-void	rt_assign_light(t_scene *scene, char **needle);
-void	rt_assign_ambient(t_scene *scene, char **needle);
-void	rt_assign_camera(t_scene *scene, char **needle);
-t_matrix	rt_set_transform(t_object object);
-void	rt_assign_sphere(t_object *sphere, char **needle);
-void	rt_assign_plane(t_object *plane, char **needle);
-void	rt_assign_cylinder(t_object *cylinder, char **needle);
+int			rt_check_ext(const char *file);
+int			rt_read_id(const char *file, t_scene *scene);
+int			rt_init_scene(const char *file, t_scene *scene);
+int			rt_count_object(const char *line, t_scene *scene);
+int			rt_valid_color(char **color);
+int			rt_valid_coord(char **coord);
+int			rt_valid_orient(char **orient);
+int			rt_check_uniques(t_scene *scene);
+void		rt_assign_light(t_scene *scene, char **needle);
+void		rt_assign_ambient(t_scene *scene, char **needle);
+void		rt_assign_camera(t_scene *scene, char **needle);
+void		rt_assign_sphere(t_object *sphere, char **needle);
+void		rt_assign_plane(t_object *plane, char **needle);
+void		rt_assign_cylinder(t_object *cylinder, char **needle);
 
 
 //CH1 Tuples
@@ -315,10 +314,11 @@ t_matrix	rt_inversion(t_matrix m);
 
 t_matrix	rt_translation(t_tuple t);
 t_matrix	rt_scaling(t_tuple t);
-t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_rotation_x(float angle);
 t_matrix	rt_rotation_y(float angle);
 t_matrix	rt_rotation_z(float angle);
+t_matrix	rt_rotation(t_tuple norm);
+t_matrix	rt_set_transform(t_object object);
 
 //CH5 Ray-Sphere intersections
 

@@ -45,8 +45,6 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 
 int	main(int argc, char *argv[])
 {
-	argc;
-	argv;
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
 
