@@ -33,7 +33,7 @@ static int	print_leading_zeros(int leading_zeros, int check, int fd)
 	return (check);
 }
 
-int ft_putfloat_fd(double f, int fd)
+int	ft_putfloat_fd(double f, int fd)
 {
 	int		check;
 	int		integer_part;

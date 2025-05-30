@@ -65,13 +65,13 @@ RAYS		= rt_hit \
 			rt_ray_transform
 
 SCENE		= rt_scene \
-			rt_print_scene \
 			rt_camera \
 			rt_view_transform
 
 TESTS		= test \
 			test_input \
 			test_shape \
+			print_objects \
 			test_thread
 
 TRANSF		= rt_rotation \

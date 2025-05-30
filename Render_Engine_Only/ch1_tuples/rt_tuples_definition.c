@@ -60,14 +60,3 @@ t_tuple	rt_color(float r, float g, float b)
 	color.w = COLOR;
 	return (color);
 }
-
-void	rt_print_tuple(t_tuple t)
-{
-	ft_printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
-	if (t.w == VECTOR)
-		ft_printf("of type VECTOR\n");
-	if (t.w == POINT)
-		ft_printf("of type POINT\n");
-	if (t.w == COLOR)
-		ft_printf("of type COLOR\n");
-}

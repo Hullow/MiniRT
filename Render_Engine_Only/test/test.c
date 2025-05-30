@@ -984,7 +984,7 @@ void	test_light_render()
 	int			i;
 
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
-	camera = rt_camera_parsing(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
+	camera = rt_camera_parse(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
@@ -1427,7 +1427,7 @@ void	test_render_plane()
 	int			i;
 
 	xs.inter = inter;
-	camera = rt_camera_parsing(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
+	camera = rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);

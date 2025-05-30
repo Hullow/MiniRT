@@ -86,7 +86,7 @@ void	test_light_render()
 	int 			i;
 
 	env = mlx_set_env();
-	camera = rt_camera_parsing(rt_point(0, 0, -100), rt_vector(0, 0, 1), 200.0f);
+	camera = rt_camera_parse(rt_point(0, 0, -100), rt_vector(0, 0, 1), 200.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 12));
 	sphere.transform = rt_mul_matrix(rt_rotation_z(60), rt_scaling(rt_vector(2, 0.6, 2)));

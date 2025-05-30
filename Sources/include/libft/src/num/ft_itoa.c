@@ -25,7 +25,7 @@ static int	ft_digits_count(int nb)
 	return (digits);
 }
 
-static void	*err_msg()
+static void	*err_msg(void)
 {
 	perror("ft_itoa");
 	return (NULL);

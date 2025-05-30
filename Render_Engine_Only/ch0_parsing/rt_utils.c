@@ -28,8 +28,8 @@ void	*rt_handle_error(char *function, int errno_value, char *message)
 {
 	errno = errno_value;
 	ft_putstr_fd("Error\n", STDERR_FILENO);
-	ft_putstr_fd(function, STDERR_FILENO); // Print {Function name}
-	if (errno) // perror call
+	ft_putstr_fd(function, STDERR_FILENO);
+	if (errno)
 		perror(message);
 	else
 	{
@@ -62,9 +62,9 @@ int	rgb_to_int(t_tuple col_tuple)
 	int	hex_b;
 
 	color = 0;
-	hex_r = (int) (col_tuple.x * 255);
-	hex_g = (int) (col_tuple.y * 255);
-	hex_b = (int) (col_tuple.z * 255);
+	hex_r = (int)(col_tuple.x * 255);
+	hex_g = (int)(col_tuple.y * 255);
+	hex_b = (int)(col_tuple.z * 255);
 	color += (hex_r / 16) * pow(16, 5) + (hex_r % 16) * pow(16, 4);
 	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
 	color += (hex_b / 16) * 16 + (hex_b % 16);

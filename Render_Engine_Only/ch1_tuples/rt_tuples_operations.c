@@ -30,7 +30,7 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 	add.w = a.w + b.w;
 	return (add);
 }
-		
+
 /// @brief subtracts two tuples (a - b)
 ///
 /// - if a and b are VECTOR, returns a VECTOR
@@ -83,4 +83,3 @@ int	rt_is_equal_tuple(t_tuple a, t_tuple b)
 		return (0);
 	return (1);
 }
-	

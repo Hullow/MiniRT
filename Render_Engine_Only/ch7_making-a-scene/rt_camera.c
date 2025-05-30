@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-t_camera	rt_camera_parsing(t_tuple coord, t_tuple orient, float field_of_view)
+t_camera	rt_camera_parse(t_tuple coord, t_tuple orient, float field_of_view)
 {
 	t_camera	camera;
 
@@ -28,8 +28,8 @@ t_camera	rt_camera_book(int hsize, int vsize, float field_of_view)
 	float		half_view;
 	float		aspect;
 
-	camera.hsize = hsize; // WINDOW_WIDTH
-	camera.vsize = vsize; // WINDOW_HEIGHT
+	camera.hsize = hsize;
+	camera.vsize = vsize;
 	camera.field_of_view = field_of_view;
 	camera.transform = rt_identity_matrix();
 	half_view = tanf(field_of_view / 2);
@@ -44,7 +44,7 @@ t_camera	rt_camera_book(int hsize, int vsize, float field_of_view)
 		camera.half_width = half_view * aspect;
 		camera.half_height = half_view;
 	}
-	camera.pixel_size = (camera.half_width * 2) / (hsize); // WINDOW_WIDTH
+	camera.pixel_size = (camera.half_width * 2) / (hsize);
 	return (camera);
 }
 
@@ -60,20 +60,10 @@ t_ray	rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y)
 	offset_xy[1] = (pixel_y + 0.5) * camera.pixel_size;
 	world_xy[0] = camera.half_width - offset_xy[0];
 	world_xy[1] = camera.half_height - offset_xy[1];
-	pixel = rt_mul_tuple_matrix(rt_inversion(camera.transform),
+	pixel = rt_mul_tuple_matrix(rt_inversion(camera.transform), \
 		rt_point(world_xy[0], world_xy[1], -1));
-	origin = rt_mul_tuple_matrix(rt_inversion(camera.transform),
+	origin = rt_mul_tuple_matrix(rt_inversion(camera.transform), \
 		rt_point(0, 0, 0));
 	direction = rt_normalize(rt_sub_tuple(pixel, origin));
 	return (rt_ray(origin, direction));
-}
-
-void	rt_print_camera(t_camera camera)
-{
-	printf("camera:\n");
-	printf("- hsize: %d\n", camera.hsize);
-	printf("- vsize: %d\n", camera.vsize);
-	printf("- field of view: %f\n", camera.field_of_view);
-	printf("- transform:\n");
-	rt_print_matrix(camera.transform);
 }

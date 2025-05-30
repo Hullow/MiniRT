@@ -28,10 +28,10 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 		return ;
 	}
 	sphere->diameter = ft_strtof(*(needle +1));
-	sphere->origin = rt_point( \
+	sphere->origin = rt_point(\
 		ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	transform = rt_set_transform(*sphere);
-	*sphere = rt_sphere(rt_color( \
+	*sphere = rt_sphere(rt_color(\
 		ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
 	sphere->transform = transform;
 	ft_free_tab(coord);
@@ -57,7 +57,7 @@ void	rt_assign_plane(t_object *plane, char **needle)
 	plane->norm = rt_vector(
 			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
 	transform = rt_set_transform(*plane);
-	*plane = rt_plane(rt_color(
+	*plane = rt_plane(rt_color(\
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
 	plane->transform = transform;
 	ft_free_tab(coord);
@@ -86,7 +86,7 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	cylinder->norm = rt_vector(
 			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
 	transform = rt_set_transform(*cylinder);
-	*cylinder = rt_cylinder(rt_color(
+	*cylinder = rt_cylinder(rt_color(\
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
 	cylinder->transform = transform;
 	ft_free_tab(coord);

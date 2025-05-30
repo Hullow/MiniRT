@@ -55,4 +55,3 @@ float	ft_strtof(const char *str)
 		errno = ERANGE;
 	return (output);
 }
-

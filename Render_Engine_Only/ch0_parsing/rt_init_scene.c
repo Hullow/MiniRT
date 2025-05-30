@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "miniRT.h"
 
 t_matrix	rt_set_transform(t_object object)
@@ -19,12 +18,12 @@ t_matrix	rt_set_transform(t_object object)
 
 	if (object.shape == SPHERE)
 	{
-		transform = rt_scaling( \
+		transform = rt_scaling(\
 			rt_vector(object.diameter, object.diameter, object.diameter));
 	}
 	else if (object.shape == CYLINDER)
 	{
-		transform = rt_scaling( \
+		transform = rt_scaling(\
 			rt_vector(object.diameter, object.height, object.diameter));
 		transform = rt_mul_matrix(transform, rt_rotation(object.norm));
 	}
@@ -32,7 +31,7 @@ t_matrix	rt_set_transform(t_object object)
 	{
 		transform = rt_rotation(object.norm);
 	}
-	transform = rt_mul_matrix(transform, rt_translation( \
+	transform = rt_mul_matrix(transform, rt_translation(\
 		rt_vector(object.origin.x, object.origin.y, object.origin.z)));
 	return (transform);
 }

@@ -12,42 +12,6 @@
 
 #include "miniRT.h"
 
-/*
-void	rt_draw(t_env *env, t_object obj, t_ray ray)
-{
-	float		wall_z;
-	float		h;
-	float		w;
-	t_xs		xs;
-	t_inter		inter[2];
-	int			noneed = 0;
-
-	wall_z = 5;
-	h = 0;
-	xs.inter = inter;
-	while (h < WINDOW_HEIGHT)
-	{
-		w = 0;
-		while (w < WINDOW_WIDTH)
-		{
-			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
-			if (rt_intersects(obj, ray, xs.inter, &noneed).count != 0)
-			{
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, \
-				rgb_to_int(obj.color));
-			}
-			else
-			{
-				my_mlx_pixel_put(env, (int) w, WINDOW_HEIGHT - (int) h, \
-				rgb_to_int((t_tuple){1, 1, 1, COLOR}));
-			}
-			w++;
-		}
-		h++;
-	}
-}
-*/
-
 // draws a pixel
 // the if checks if a pixel is outside the window,
 // and ignores it (to avoid a segfault)

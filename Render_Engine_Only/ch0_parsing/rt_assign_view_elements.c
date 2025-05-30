@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "miniRT.h"
 
 void	rt_assign_light(t_scene *scene, char **needle)

@@ -22,19 +22,19 @@
 # include "./libft/header/libft.h"
 
 //test
-void	test_tuples(void);
-void	test_matrix(void);
-void	test_transform(void);
-void	test_intersect(void);
-void	test_mlx(void);
-void	test_light(void);
-void	test_light_render(void);
-void	test_scene(void);
-void	test_rgb_to_int(void);
-void	test_view_transform(void);
-void	test_camera(void);
-void	test_planes(void);
-void	test_render_plane(void);
+void		test_tuples(void);
+void		test_matrix(void);
+void		test_transform(void);
+void		test_intersect(void);
+void		test_mlx(void);
+void		test_light(void);
+void		test_light_render(void);
+void		test_scene(void);
+void		test_rgb_to_int(void);
+void		test_view_transform(void);
+void		test_camera(void);
+void		test_planes(void);
+void		test_render_plane(void);
 
 //Structs
 
@@ -56,7 +56,6 @@ typedef struct s_tuple
 }	t_tuple;
 
 //Canvas
-
 
 # ifndef WINDOW_WIDTH
 #  define WINDOW_WIDTH 800
@@ -170,7 +169,7 @@ typedef struct s_intersect
 typedef struct s_xs
 {
 	int			count;
-	t_inter	*inter;
+	t_inter		*inter;
 }	t_xs;
 
 //Light
@@ -218,7 +217,6 @@ typedef struct s_scene
 	t_object	*objects;
 }	t_scene;
 
-
 typedef struct s_comps
 {
 	float		t;
@@ -245,7 +243,6 @@ void		rt_assign_camera(t_scene *scene, char **needle);
 void		rt_assign_sphere(t_object *sphere, char **needle);
 void		rt_assign_plane(t_object *plane, char **needle);
 void		rt_assign_cylinder(t_object *cylinder, char **needle);
-
 
 //CH1 Tuples
 
@@ -274,13 +271,13 @@ t_tuple		rt_mul_color(t_tuple c1, t_tuple c2);
 void		rt_set_mlx_env(t_env *env);
 t_env		mlx_set_env(void);
 void		mlx_run_window(t_env *env);
-t_ray		rt_define_ray_to_wall(t_ray ray, float x_mlx, float y_mlx, float wall_z);
+t_ray		rt_define_ray_to_wall(t_ray ray, \
+				float x_mlx, float y_mlx, float wall_z);
 int			rgb_to_int(t_tuple c);
 void		rt_draw(t_env *env, t_object sp, t_ray ray);
 void		my_mlx_pixel_put(t_env *env, int x, int y, int color);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
-
 
 /* and then minilibx */
 
@@ -347,10 +344,10 @@ void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
 t_tuple		rt_lighting(t_object o, t_light l, t_tuple point, \
-	t_tuple eyev, t_tuple normalv);
+				t_tuple eyev, t_tuple normalv);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
-t_tuple 	rt_filmic_tonemap(t_tuple color);
+t_tuple		rt_filmic_tonemap(t_tuple color);
 
 //CH7 Scene
 
@@ -361,9 +358,9 @@ t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
 t_tuple		rt_color_at(t_scene scene, t_ray ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
-	t_tuple forward);
+				t_tuple forward);
 t_camera	rt_camera_book(int hsize, int vsize, float field_of_view);
-t_camera	rt_camera_parsing(t_tuple coord, t_tuple orient, float field_of_view);
+t_camera	rt_camera_parse(t_tuple coord, t_tuple orient, float field_of_view);
 t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera camera, t_scene scene, t_env *env);
