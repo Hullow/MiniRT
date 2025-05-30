@@ -1284,6 +1284,22 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	}
 }
 
+void	check_color(t_tuple desired, t_tuple result)
+{
+	if (rt_is_equal_tuple(desired, result))
+	{
+		printf("the desired color was obtained: \n");
+		rt_print_tuple(desired);
+	}
+	else
+	{
+		printf("the desired color was NOT obtained: \n");
+		printf("desired: \n");
+		rt_print_tuple(desired);
+		printf("result: \n");
+		rt_print_tuple(result);
+	}
+}
 
 void	test_shadows()
 {
@@ -1298,7 +1314,7 @@ void	test_shadows()
 	light = rt_light(rt_color(1, 1, 1), rt_point(0, 0, -10), 1.0f);
 	c.in_shadow = true;
 	result = rt_lighting(light, c);
-	(void)result;
+	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), result);
 }
 
 void	test_planes()

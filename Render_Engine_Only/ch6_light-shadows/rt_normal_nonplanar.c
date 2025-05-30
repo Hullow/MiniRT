@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_normal_nonplanar.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:22:59 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 17:47:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/28 15:11:13 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 		normal = obj.norm;
 	else if (obj.shape == CYLINDER)
 		normal = rt_vector(obj.origin.x, 0, obj.origin.z);
+	else
+		normal = rt_vector(0, 0, 0);
 	return (rt_normalize(normal));
 }
 

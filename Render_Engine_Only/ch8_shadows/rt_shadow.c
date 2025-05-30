@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rt_shadow.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 13:53:02 by francis          ###   ########.fr       */
+/*   Created: 2025/05/30 14:00:49 by francis           #+#    #+#             */
+/*   Updated: 2025/05/30 14:01:42 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	main()
+bool	rt_is_shadowed(t_scene scene, t_tuple point)
 {
-	test_shadows();
-	// test_camera();
-	return (0);
+
 }

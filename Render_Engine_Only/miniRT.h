@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 16:34:22 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/30 14:02:09 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	test_view_transform(void);
 void	test_camera(void);
 void	test_planes(void);
 void	test_render_plane(void);
+void	test_shadows(void);
 
 //Structs
 
@@ -338,7 +339,7 @@ t_inter		rt_hit(t_xs xs);
 t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_matrix	rt_set_transform(t_object object, t_matrix transform);
 
-//CH6 Light and Shadows
+//CH6 Light and Shadowing
 
 t_tuple		rt_normal_at(t_object obj, t_tuple point);
 t_tuple		rt_reflect(t_tuple in, t_tuple normal);
@@ -370,6 +371,10 @@ t_camera	rt_camera_parsing(t_tuple coord, t_tuple orient, float field_of_view);
 t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera camera, t_scene scene, t_env *env);
+
+//CH8 Shadows
+bool		rt_is_shadowed(t_scene scene, t_tuple point);
+
 
 //CH9 Planes
 

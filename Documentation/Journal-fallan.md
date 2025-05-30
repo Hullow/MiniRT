@@ -273,3 +273,6 @@ using files
 but `test_light_render()` seg faults. No time to fix that test now;
 I will commit and onwards.
 - Started working on Shadows (ch. 9)
+
+# 30/5/25
+- Back to work (on shadows)
