@@ -1284,22 +1284,138 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	}
 }
 
+void	check_color(t_tuple desired, t_tuple result)
+{
+	if (rt_is_equal_tuple(desired, result))
+	{
+		printf("the desired color was obtained: \n");
+		rt_print_tuple(desired);
+	}
+	else
+	{
+		printf("the desired color was NOT obtained: \n");
+		printf("desired: \n");
+		rt_print_tuple(desired);
+		printf("result: \n");
+		rt_print_tuple(result);
+	}
+}
+
+void	test_point_in_shadow(t_scene scene, t_tuple point, bool desired_value)
+{
+	char	*boolean_values[2];
+
+	printf("- point: \n");
+	rt_print_tuple(point);
+	if (desired_value == true)
+	{
+		boolean_values[0] = "true";
+		boolean_values[1] = "false";
+	}
+	else if (desired_value == false)
+	{
+		boolean_values[0] = "false";
+		boolean_values[1] = "true";
+	}
+	if (rt_is_shadowed(scene, point) == desired_value)
+		printf("\t=> is_shadowed returns %s: OK\n", boolean_values[0]);
+	else
+		printf("\t=> is_shadowed returns %s: KO\n", boolean_values[1]);
+}
+
 
 void	test_shadows()
 {
 	printf("Test Shadows:\n**************\n");
-
+	
 	t_light light;
-	t_comps	c;
+	t_comps	comps;
 	t_tuple result;
-
-	c.eyev = rt_vector(0, 0, -1);
-	c.normalv = rt_vector(0, 0, -1);
+	
+	printf("***Scenario***: Lighting with the surface in shadow\n");
+	comps.eyev = rt_vector(0, 0, -1);
+	comps.normalv = rt_vector(0, 0, -1);
 	light = rt_light(rt_color(1, 1, 1), rt_point(0, 0, -10), 1.0f);
-	c.in_shadow = true;
-	result = rt_lighting(light, c);
-	(void)result;
-}
+	comps.in_shadow = true;
+	result = rt_lighting(light, comps);
+	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), result);
+	
+	t_scene	scene;
+	t_object scene_objects[7];
+	scene.objects = scene_objects;
+	rt_default_scene(&scene);
+	t_tuple	p;
+	
+	// Testing is_shadowed()
+	printf("\nTesting is_shadowed():\n");
+	printf("- light: \n");
+	rt_print_tuple(scene.lux.coord);
+	printf("\n");
+	printf("***Scenario***: There is no shadow when nothing is collinear with point and light\n");
+	p = rt_point(0, 10, 0);
+	test_point_in_shadow(scene, p, false);
+
+	printf("\n***Scenario***: The shadow when an object is between the point and the light\n");
+	p = rt_point(10, -10, 10);
+	test_point_in_shadow(scene, p, true);
+	
+	printf("\n***Scenario***: There is no shadow when an object is behind the light\n");
+	p = rt_point(-20, 20, -20);
+	test_point_in_shadow(scene, p, false);
+	
+	printf("\n***Scenario***: There is no shadow when an object is behind the point\n");
+	p = rt_point(-2, 2, -2);
+	test_point_in_shadow(scene, p, false);
+
+	// Testing updated shade_hit
+	printf("\nTesting updated shade_hit:\n");
+	t_scene		scene2;
+	t_object	sphere1;
+	t_object	sphere2;
+	t_object	scene2_objects[2]; 
+	t_ray		ray;
+	t_inter		i;
+	t_tuple		c;
+	
+	scene2.lux = rt_light(rt_color(1*255, 1*255, 1*255), rt_point(0, 0, -10), 1);
+	sphere1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255)); // color from rt_default_scene 
+	sphere2 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255)); // color from rt_default_scene 
+	sphere2.transform = rt_translation(rt_vector(0, 0, 10));
+	scene2.objects = scene2_objects;
+	scene2.objects[0] = sphere1;
+	scene2.objects[1] = sphere2;
+	
+	printf("\n***Scenario***: shade_hit() is given an intersection in shadow\n");
+	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
+	i = rt_intersect(4, scene2.objects[1]);
+	comps = rt_prepare_computations(i, ray);
+	c = rt_shade_hit(scene, comps);
+	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), c);
+	
+	printf("\n***Scenario***: The hit should offset the point\n");
+	t_object	sphere3;
+	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
+	sphere3 = rt_sphere(rt_color(255, 255, 255));
+	sphere3.transform = rt_translation(rt_vector(0, 0, 1));
+	i = rt_intersect(5, sphere3);
+	comps = rt_prepare_computations(i, ray);
+	if (comps.over_point.z < -EPSILON / 2 && comps.point.z > comps.over_point.z)
+	{
+		printf("\t => all OK:\n");
+		printf("comps.over_point.z < -EPSILON/2 : OK\n");
+		printf("comps.point.z > comps.over_point.z: OK\n");
+	}
+	else
+	{
+		printf("\t => KO:\n");
+		if ((comps.point.z > comps.over_point.z) == false)
+			printf("comps.point.z > comps.over_point.z: KO\n");
+		if ((comps.over_point.z < EPSILON / 2) == false)
+			printf("comps.over_point.z < -EPSILON/2 : KO\n");
+	}
+	
+	
+}	
 
 void	test_planes()
 {

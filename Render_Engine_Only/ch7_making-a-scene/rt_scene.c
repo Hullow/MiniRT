@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_scene.c                                          :+:    :+:           */
+/*   rt_scene.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/24 15:34:42 by fallan         ########   odam.nl        */
+/*   Updated: 2025/05/30 16:52:30 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ t_comps	rt_prepare_computations(t_inter intersect, t_ray ray)
 	}
 	else
 		comps.inside = 0;
+	comps.over_point = 
+		rt_add_tuple(comps.point, rt_scale_vector(comps.normalv, EPSILON));
 	return (comps);
 }
 
@@ -98,6 +100,7 @@ t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
 {
 	t_tuple	color;
 
+	comp.in_shadow = rt_is_shadowed(scene, comp.point);
 	color = rt_lighting(scene.lux, comp);
 	return (color);
 }

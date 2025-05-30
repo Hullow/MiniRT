@@ -273,3 +273,9 @@ using files
 but `test_light_render()` seg faults. No time to fix that test now;
 I will commit and onwards.
 - Started working on Shadows (ch. 9)
+
+# 30/5/25
+- Back to work (on shadows)
+- `is_shadowed()` ok, done very quickly and straightforwardly
+- finished writing code and tests for chapter (`shade_hit()` and `prepare_computations()`),
+but it doesn't pass all tests for some reason.

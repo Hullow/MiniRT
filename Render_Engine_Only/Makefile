@@ -31,6 +31,7 @@ TRANSFDIR	= ch4_transformations/
 RAYSDIR		= ch5_ray-sphere-intersections/
 LIGHTDIR	= ch6_light-shadows/
 SCENEDIR	= ch7_making-a-scene/
+SHADOWDIR	= ch8_shadows/
 PLANESDIR	= ch9_planes/
 TESTDIR		= test/
 
@@ -69,6 +70,8 @@ SCENE		= rt_scene \
 			rt_camera \
 			rt_view_transform
 
+SHADOW		= rt_shadow
+
 TESTS		= test \
 			test_input \
 			test_shape \
@@ -98,6 +101,7 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
 			$(addprefix $(SRCDIR)$(RAYSDIR), $(addsuffix .c, $(RAYS))) \
 			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
+			$(addprefix $(SRCDIR)$(SHADOWDIR), $(addsuffix .c, $(SHADOW))) \
 			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
@@ -111,6 +115,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
 			$(addprefix $(OBJDIR)$(RAYSDIR), $(addsuffix .o, $(RAYS))) \
 			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
+			$(addprefix $(OBJDIR)$(SHADOWDIR), $(addsuffix .o, $(SHADOW))) \
 			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
@@ -145,6 +150,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(PARSEDIR)
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
+	mkdir -p $(OBJDIR)$(SHADOWDIR)
 	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
