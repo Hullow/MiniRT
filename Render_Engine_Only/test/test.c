@@ -1465,3 +1465,53 @@ void	test_render_plane()
 	}
 	mlx_run_window(&env);
 }
+
+void	test_cylinder()
+{
+	t_object	cylinder;
+	t_tuple		color;
+	t_ray		ray;
+	t_tuple		point;
+	t_tuple		direction;
+	t_xs		xs;
+	t_inter		intersects[2];
+	int			noneed;
+
+	noneed = 0;
+	xs.count = 0;
+	xs.inter = intersects;
+	ft_printf("Ray misses cylinder\n");
+
+	color = rt_color(0.8 * 255, 255, 0.2 * 255);
+	cylinder = rt_cylinder(color);
+	point = rt_point(1, 0, 0);
+	direction = rt_vector(0, 1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d\n", errno, xs.count);
+	noneed = 0;
+
+	point = rt_point(0, 0, 0);
+	direction = rt_vector(0, 1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d\n", errno, xs.count);
+	noneed = 0;
+
+	point = rt_point(0, 0, -5);
+	direction = rt_vector(1, 1, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d\n", errno, xs.count);
+	noneed = 0;
+	ft_printf("\n");
+
+	ft_printf("Ray hits cylinder\n");
+
+	point = rt_point(1, 0, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+}

@@ -21,21 +21,6 @@
 # include "./mlx/mlx.h"
 # include "./libft/header/libft.h"
 
-//test
-void		test_tuples(void);
-void		test_matrix(void);
-void		test_transform(void);
-void		test_intersect(void);
-void		test_mlx(void);
-void		test_light(void);
-void		test_light_render(void);
-void		test_scene(void);
-void		test_rgb_to_int(void);
-void		test_view_transform(void);
-void		test_camera(void);
-void		test_planes(void);
-void		test_render_plane(void);
-
 //Structs
 
 //tuples
@@ -381,10 +366,28 @@ t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
 t_object	rt_cylinder(t_tuple color);
 void		rt_print_cylinder(t_object cylinder);
+void		rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i);
 
 //Utils
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
+
+//test
+
+void		test_tuples(void);
+void		test_matrix(void);
+void		test_transform(void);
+void		test_intersect(void);
+void		test_mlx(void);
+void		test_light(void);
+void		test_light_render(void);
+void		test_scene(void);
+void		test_rgb_to_int(void);
+void		test_view_transform(void);
+void		test_camera(void);
+void		test_planes(void);
+void		test_render_plane(void);
+void		test_cylinder(void);
 
 #endif

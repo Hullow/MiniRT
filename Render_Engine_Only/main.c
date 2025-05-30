@@ -51,6 +51,6 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	rt_print_scene(scene);
+	test_cylinder();
 	return (0);
 }

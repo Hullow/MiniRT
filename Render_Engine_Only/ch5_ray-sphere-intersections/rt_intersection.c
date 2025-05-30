@@ -33,6 +33,8 @@ void	rt_intersects(t_object *object, t_ray ray, t_xs *xs, int *i)
 		rt_discriminant(object->saved_ray, *object, xs, i);
 	else if (object->shape == PLANE)
 		rt_ray_plane_x(*object, object->saved_ray, xs, i);
+	else if (object->shape == CYLINDER)
+		rt_ray_cylinder_x(*object, object->saved_ray, xs, i);
 	else
 		xs->count = 0;
 }

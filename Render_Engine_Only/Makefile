@@ -32,6 +32,7 @@ RAYSDIR		= ch5_ray-sphere-intersections/
 LIGHTDIR	= ch6_light-shadows/
 SCENEDIR	= ch7_making-a-scene/
 PLANESDIR	= ch9_planes/
+CYLINDERDIR	= ch13_cylinders/
 TESTDIR		= test/
 
 # Libs
@@ -92,6 +93,8 @@ PARSE		= rt_assign_objects \
 
 PLANE		= rt_planes
 
+CYLINDER	= rt_cylinders
+
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(COLORDIR), $(addsuffix .c, $(COLOR))) \
 			$(addprefix $(SRCDIR)$(LIGHTDIR), $(addsuffix .c, $(LIGHT))) \
@@ -102,7 +105,8 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
-			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE)))
+			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
+			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
@@ -115,7 +119,8 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
-			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE)))
+			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
+			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -149,6 +154,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(PLANESDIR)
+	mkdir -p $(OBJDIR)$(CYLINDERDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files
