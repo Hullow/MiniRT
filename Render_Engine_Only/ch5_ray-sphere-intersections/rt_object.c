@@ -47,6 +47,8 @@ t_object	rt_cylinder(t_tuple color)
 	cylinder.shape = CYLINDER;
 	cylinder.diameter = 2.0;
 	cylinder.height = INFINITY;
+	cylinder.min = -INFINITY;
+	cylinder.max = INFINITY;
 	cylinder.color = color;
 	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
 	cylinder.norm = rt_vector(0, 1, 0);

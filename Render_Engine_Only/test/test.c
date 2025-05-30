@@ -1546,4 +1546,58 @@ void	test_cylinder()
 	point = rt_point(-1, 1, 0);
 	direction = rt_local_normal_at(cylinder, point);
 	rt_print_tuple(direction);
+	ft_printf("\n");
+
+	ft_printf("Truncating a cylinder\n");
+	cylinder.min = 1;
+	cylinder.max = 2;
+
+	point = rt_point(0, 1.5, 0);
+	direction = rt_vector(0.1, 1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 3, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 0, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 2, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 1, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 1.5, -2);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+	ft_printf("\n");
 }

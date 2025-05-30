@@ -142,6 +142,8 @@ typedef struct s_object
 	t_matrix	transform;
 	float		diameter;
 	float		height;
+	float		min;
+	float		max;
 
 }	t_object;
 

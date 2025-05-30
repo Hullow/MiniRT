@@ -21,9 +21,7 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 	else if (obj.shape == PLANE)
 		normal = obj.norm;
 	else if (obj.shape == CYLINDER)
-	{
 		normal = rt_vector(point.x, 0, point.z);
-	}
 	else
 		normal = rt_vector(0, 0, 0);
 	return (rt_normalize(normal));
