@@ -14,8 +14,9 @@
 
 void	rt_assign_sphere(t_object *sphere, char **needle)
 {
-	char	**coord;
-	char	**color;
+	char		**coord;
+	char		**color;
+	t_matrix	transform;
 
 	sphere->shape = SPHERE;
 	coord = ft_split(*needle, ',');
@@ -29,18 +30,20 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 	sphere->diameter = ft_strtof(*(needle +1));
 	sphere->origin = rt_point( \
 		ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
-	sphere->transform = rt_set_transform(*sphere);
+	transform = rt_set_transform(*sphere);
 	*sphere = rt_sphere(rt_color( \
-			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
+		ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
+	sphere->transform = transform;
 	ft_free_tab(coord);
 	ft_free_tab(color);
 }
 
 void	rt_assign_plane(t_object *plane, char **needle)
 {
-	char	**coord;
-	char	**norm;
-	char	**color;
+	char		**coord;
+	char		**norm;
+	char		**color;
+	t_matrix	transform;
 
 	plane->shape = PLANE;
 	coord = ft_split(*needle, ',');
@@ -53,9 +56,10 @@ void	rt_assign_plane(t_object *plane, char **needle)
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	plane->norm = rt_vector(
 			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
-	plane->transform = rt_set_transform(*plane);
+	transform = rt_set_transform(*plane);
 	*plane = rt_plane(rt_color(
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
+	plane->transform = transform;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
@@ -63,9 +67,10 @@ void	rt_assign_plane(t_object *plane, char **needle)
 
 void	rt_assign_cylinder(t_object *cylinder, char **needle)
 {
-	char	**coord;
-	char	**norm;
-	char	**color;
+	char		**coord;
+	char		**norm;
+	char		**color;
+	t_matrix	transform;
 
 	cylinder->shape = CYLINDER;
 	coord = ft_split(*needle, ',');
@@ -80,9 +85,10 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	cylinder->norm = rt_vector(
 			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
-	cylinder->transform = rt_set_transform(*cylinder);
+	transform = rt_set_transform(*cylinder);
 	*cylinder = rt_cylinder(rt_color(
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
+	cylinder->transform = transform;
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);
