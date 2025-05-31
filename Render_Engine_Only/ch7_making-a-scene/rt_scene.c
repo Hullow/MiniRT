@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 14:03:37 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/31 15:12:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_comps	rt_prepare_computations(t_inter intersect, t_ray ray)
 	}
 	else
 		comps.inside = 0;
-	comps.over_point = 
+	comps.over_point = \
 		rt_add_tuple(comps.point, rt_scale_vector(comps.normalv, EPSILON));
 	return (comps);
 }
