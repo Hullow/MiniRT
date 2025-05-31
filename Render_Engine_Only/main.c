@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:19:47 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/31 20:07:53 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,11 @@ int	main(int argc, char *argv[])
 	if (build_scene(argc, argv, &scene))
 		return (1);
 	test_example_scene();
+
+	t_env	env;
+	env = mlx_set_env();
+	rt_render(scene.cam, scene, &env);
+	mlx_run_window(&env);
+
 	return (0);
 }

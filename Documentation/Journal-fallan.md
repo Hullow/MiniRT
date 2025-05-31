@@ -283,3 +283,23 @@ but it doesn't pass all tests for some reason.
 # 31/5/25
 - Trying to render shadow color appropriately, but last test still not passing. Material makes a difference, tried various default colors but none that make it work and make sense.
 - Scene with green spheres and flattened spheres as wall working (except rotated walls => no need to rotate in subject), now let's merge
+- Merge ok, now working on putting parsing with rendering. All is dark for now.
+- Ambient lighting in Phong reflection model (from [Wikipedia](https://en.wikipedia.org/wiki/Phong_reflection_model#Concepts)):
+
+> For each light source in the scene, components `i_s` and `i_d` are defined as the intensities (often as RGB values) of the specular and diffuse components of the light sources, respectively. A single term `i_a` controls the ambient lighting; it is sometimes computed as a sum of contributions from all light sources.
+
+> For each material in the scene, the following parameters are defined:
+	> `k_s`, which is a specular reflection constant, the ratio of reflection of the specular term of incoming light,
+	> `k_d`, which is a diffuse reflection constant, the ratio of reflection of the diffuse term of incoming light (Lambertian reflectance),
+	> `k_a`, which is an ambient reflection constant, the ratio of reflection of the ambient term present in all points in the scene rendered, and
+	> `α`, which is a shininess constant for this material, which is larger for surfaces that are smoother and more mirror-like. When this constant is large the specular highlight is small.
+
+(...)
+> Then the Phong reflection model provides an equation for computing the illumination of each surface point `I_p`:
+
+`I_p = k_a * i_a + (diffuse and specular)`
+
+=> in our project, `i_a` is the intensity of ambient lighting as an RGB value,
+given by our input ambient, and `k_a` the ambient reflection constant of an object's material
+
+- Coded example scene from Ch7_Scene "Putting it together" to `sceneExample.rt`

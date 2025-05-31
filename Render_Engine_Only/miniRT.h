@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:18:20 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/31 20:07:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,7 +422,10 @@ void		test_render_plane(void);
 void		test_cylinder(void);
 void		test_cylinder_render(void);
 void		test_shadows(void);
-void		test_example_scene(void);
+// void		test_example_scene(void);
+void		test_example_scene_planes(void);
+void		test_example_scene_with_flat_spheres(void);
 t_scene		*test_default_scene(t_scene *scene);
+
 
 #endif
