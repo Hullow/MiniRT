@@ -71,7 +71,7 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 	errno = 0;
 	a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
 	if (a < 0)
-		errno = ERAYPARALLEL;
+		rt_intersect_caps(cylinder, ray, xs, i);
 	else
 	{
 		b = 2 * cy_b(ray, 'x') + 2 * cy_b(ray, 'z');
@@ -85,5 +85,6 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 			xs->inter[(*i) + 1] = rt_intersect(cy_t(a, b, discr, 1), cylinder);
 		}
 		cy_post_process(cylinder, ray, xs, i);
+		rt_intersect_caps(cylinder, ray, xs, i);
 	}
 }

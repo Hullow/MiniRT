@@ -144,6 +144,7 @@ typedef struct s_object
 	float		height;
 	float		min;
 	float		max;
+	int			closed;
 
 }	t_object;
 
@@ -369,6 +370,9 @@ t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 t_object	rt_cylinder(t_tuple color);
 void		rt_print_cylinder(t_object cylinder);
 void		rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i);
+int			rt_check_cap(t_ray ray, float t);
+void		rt_intersect_caps(t_object cylinder, t_ray ray, t_xs *xs, int *i);
+t_tuple		rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point);
 
 //Utils
 

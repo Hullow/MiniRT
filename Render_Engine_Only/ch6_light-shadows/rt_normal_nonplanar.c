@@ -12,6 +12,21 @@
 
 #include "miniRT.h"
 
+t_tuple	rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point)
+{
+	t_tuple	normal;
+	float	dist;
+
+	dist = point.x * point.x + point.z * point.z;
+	if (dist < 1 && point.y >= cylinder.max - EPSILON)
+		normal = rt_vector(0, 1, 0);
+	else if (dist < 1 && point.y <= cylinder.min + EPSILON)
+		normal = rt_vector(0, -1, 0);
+	else
+		normal = rt_vector(point.x, 0, point.z);
+	return (normal);
+}
+
 t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 {
 	t_tuple	normal;
@@ -21,7 +36,7 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 	else if (obj.shape == PLANE)
 		normal = obj.norm;
 	else if (obj.shape == CYLINDER)
-		normal = rt_vector(point.x, 0, point.z);
+		normal = rt_local_normal_capped_cylinder(obj, point);
 	else
 		normal = rt_vector(0, 0, 0);
 	return (rt_normalize(normal));

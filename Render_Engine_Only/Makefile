@@ -93,7 +93,8 @@ PARSE		= rt_assign_objects \
 
 PLANE		= rt_planes
 
-CYLINDER	= rt_cylinders
+CYLINDER	= rt_cylinders \
+			rt_caps_intersect
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(COLORDIR), $(addsuffix .c, $(COLOR))) \
