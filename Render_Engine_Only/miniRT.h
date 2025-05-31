@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 16:51:51 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:48:21 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	test_camera(void);
 void	test_planes(void);
 void	test_render_plane(void);
 void	test_shadows(void);
+void	test_example_scene(void);
 
 //Structs
 

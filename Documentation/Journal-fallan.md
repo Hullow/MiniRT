@@ -282,3 +282,4 @@ but it doesn't pass all tests for some reason.
 
 # 31/5/25
 - Trying to render shadow color appropriately, but last test still not passing. Material makes a difference, tried various default colors but none that make it work and make sense.
+- Scene with green spheres and flattened spheres as wall working (except rotated walls => no need to rotate in subject), now let's merge

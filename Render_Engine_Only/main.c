@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 13:53:02 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/31 16:03:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main()
 {
-	test_shadows();
+	// test_shadows();
 	// test_camera();
+	test_example_scene();
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_phong.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 17:59:04 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/31 17:39:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,39 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 	return (v);
 }
 
-/// @brief 
-/// @param o object for t_material and t_tuple COLOR
+/// @brief computes ambient, diffuse and specular components of a pixel's color
 /// @param l light
-/// @param point point on the object's surface where ray and light hit
-/// @param eyev vector from point to camera
-/// @param normalv normal vector on the point hit
+/// @param comp the prepared computations
 /// @return the color of the point with lighting applied
 t_tuple	rt_lighting(t_light l, t_comps comp)
 {
 	t_lighting_params	v;
-	t_intermediate_vars	in;
+	t_intermediate_vars	intm;
 
-	in.color = rt_scale_color(comp.object.color, l.intensity);
+	intm.color = rt_scale_color(comp.object.color, l.intensity);
 	
+		/////// AMBIENT ///////
 	// v.ambient = rt_scale_color(comp.object.material.ambient.color, comp.object.material.ambient.intensity);
-	
-	// v.ambient = rt_hadamard(rt_scale_color(in.color, comp.object.material.ambient), rt_color(255, 0, 0));
-	// v.ambient = rt_add_color(rt_scale_color(in.color, comp.object.material.ambient), rt_color(127, 0, 0));
+	// v.ambient = rt_hadamard(rt_scale_color(intm.color, comp.object.material.ambient), rt_color(255, 0, 0));
+	// v.ambient = rt_add_color(rt_scale_color(intm.color, comp.object.material.ambient), rt_color(127, 0, 0));
 	// v.ambient = rt_scale_color(comp.object.material.color, comp.object.material.ambient);
-	v.ambient = rt_scale_color(in.color, comp.object.material.ambient);
-	rt_print_tuple(v.ambient);
+
+	v.ambient = rt_scale_color(intm.color, comp.object.material.ambient);
 	if (comp.in_shadow == true)
 		return (v.ambient); // if object is in shadows, the only lighting is ambient
-	in.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
-	in.light_dot_normal = rt_dot_product(in.dir_to_light, comp.normalv);
-	if (in.light_dot_normal < 0)
+
+		/////// DIFFUSE AND SPECULAR ///////
+	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
+	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
+	if (intm.light_dot_normal < 0)
 		v = rt_dark_diffuse_specular(v);
 	else
-		v = rt_colorize_diffuse_specular(l, comp, in, v);
+		v = rt_colorize_diffuse_specular(l, comp, intm, v);
+
+
 	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
+
+
 	// return (rt_add_color(rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)), rt_color(127, 0, 0)));
 	// return (rt_hadamard(rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)), rt_color(255, 0, 0)));
 }

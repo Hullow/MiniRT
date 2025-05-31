@@ -1215,6 +1215,97 @@ void	test_view_transform()
 	rt_print_matrix(view_transform);
 }
 
+void	test_example_scene()
+{
+	t_scene		scene;
+	t_object	floor;
+	t_object	left_wall;
+	t_object	right_wall;
+	t_object	middle_sphere;
+	t_object	right_sphere;
+	t_object	left_sphere;
+	t_object	object_array[6];
+
+	// floor: a flattened sphere
+	floor = rt_sphere(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
+	floor.transform = rt_scaling(rt_vector(10, 0.01, 10));
+	floor.material.specular = 0.0;
+
+	// left wall
+	left_wall = rt_sphere(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
+	left_wall.transform = rt_scaling(rt_vector(10, 0.12, 10));
+	left_wall.transform = rt_mul_matrix(rt_rotation_x(M_PI / 2), left_wall.transform);
+	left_wall.transform = rt_mul_matrix(rt_rotation_y(- M_PI / 4), left_wall.transform);
+	left_wall.transform = rt_mul_matrix(rt_translation(rt_vector(0, 0, 5)), left_wall.transform);
+	left_wall.material = floor.material;
+	
+	// right wall
+	right_wall = rt_sphere(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
+	right_wall.transform = 
+	rt_mul_matrix(
+		rt_translation(rt_vector(0, 0, 5)),
+	rt_mul_matrix(
+		rt_rotation_y(M_PI / 4),
+	rt_mul_matrix(
+		rt_rotation_x(M_PI / 2),
+		rt_scaling(rt_vector(10, 0.01, 10))
+	)));
+	right_wall.material = floor.material;
+
+	// middle sphere
+	middle_sphere = rt_sphere(rt_scale_color(rt_color(0.1, 1.0, 0.5), 255)); //
+	middle_sphere.transform = rt_translation(rt_vector(-0.5, 1, 0.5));
+	middle_sphere.material.diffuse = 0.7;
+	middle_sphere.material.specular = 0.3;
+
+	// right sphere
+	right_sphere = rt_sphere(rt_scale_color(rt_color(0.5, 1.0, 0.1), 255));
+	right_sphere.transform = rt_mul_matrix( \
+			rt_translation(rt_vector(1.5, 0.5, -0.5)),
+			rt_scaling(rt_vector(0.5, 0.5, 0.5))
+		);
+	right_sphere.material.diffuse = 0.7;
+	right_sphere.material.specular = 0.3;
+
+	// left sphere
+	left_sphere = rt_sphere(rt_scale_color(rt_color(1.0, 0.8, 0.1), 255));
+	left_sphere.transform = rt_mul_matrix( \
+			rt_translation(rt_vector(-1.5, 0.33, -0.75)),
+			rt_scaling(rt_vector(0.33, 0.33, 0.33))
+		);
+	left_sphere.material.diffuse = 0.7;
+	left_sphere.material.specular = 0.3;
+
+	// add objects to scene
+	object_array[0] = floor;
+	object_array[1] = left_wall;
+	object_array[2] = right_wall;
+	object_array[3] = middle_sphere;
+	object_array[4] = right_sphere;
+	object_array[5] = left_sphere;
+
+	scene.objects = object_array;
+	scene.n_obj = 6;
+
+	// light
+	scene.lux = rt_light( \
+		rt_scale_color(rt_color(1, 1, 1), 255),
+		rt_point(-10, 10, -10),
+		1
+	);
+
+	// camera
+	scene.cam = rt_camera_book(500, 300, M_PI / 3);
+	scene.cam.transform = rt_view_transform( \
+		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
+
+	// mlx and rendering
+	t_env	env;
+	env = mlx_set_env();
+	rt_render(scene.cam, scene, &env);
+	mlx_run_window(&env);
+}
+
 void	test_camera()
 {
 	printf("Test camera\n***********\n");
@@ -1279,8 +1370,6 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 			x++;
 		}
 		y++;
-		if ((y + 1) % 100 == 0)
-			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
 	}
 }
 
@@ -1322,7 +1411,6 @@ void	test_point_in_shadow(t_scene scene, t_tuple point, bool desired_value)
 	else
 		printf("\t=> is_shadowed returns %s: KO\n", boolean_values[1]);
 }
-
 
 void	test_shadows()
 {
@@ -1532,7 +1620,6 @@ void	test_planes()
 	ft_printf("intersects count %d, t : %f, object %d\n", xs.count, xs.inter[0].t, xs.inter[0].object.shape);
 	ft_printf("\n");
 }
-
 
 void	test_render_plane()
 {
