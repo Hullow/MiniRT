@@ -9,6 +9,7 @@ t_scene	*test_default_scene(t_scene *scene)
 	t_object	sphere_3;
 	t_object	sphere_4;
 	t_object	sphere_5;
+	t_object	cylinder;
 	t_light		light;
 
 	plane_1 = rt_plane(rt_color(255, 0.2 * 255, 255));
@@ -34,8 +35,10 @@ t_scene	*test_default_scene(t_scene *scene)
 	sphere_5 = rt_sphere(rt_color(0, 255, 0));
 	sphere_5.transform = rt_translation(rt_vector(-3, 1, 0));
 
+	cylinder = rt_cylinder(rt_color(255, 0.2 * 255, 255));
+
 	light = rt_light (rt_color(255, 255, 255), rt_point(0, 0, 2), 1);
-	scene->n_obj = 6;
+	scene->n_obj = 7;
 	scene->objects[0] = sphere_1;
 	scene->objects[1] = sphere_2;
 	scene->objects[2] = sphere_3;
@@ -43,6 +46,7 @@ t_scene	*test_default_scene(t_scene *scene)
 	scene->objects[4] = sphere_5;
 	scene->objects[5] = plane_1;
 	scene->objects[6] = plane_2;
+	scene->objects[7] = cylinder;
 	scene->lux = light;
 	return (scene);
 }
@@ -1429,6 +1433,7 @@ void	test_render_plane()
 	xs.inter = inter;
 	camera = rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
+	plane.transform = rt_identity_matrix();
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -1600,4 +1605,40 @@ void	test_cylinder()
 	noneed = 0;
 	xs.count = 0;
 	ft_printf("\n");
+
+	ft_printf("Capped (solid) cylinder\n");
+
+	ft_printf("\n");
+}
+
+void	test_cylinder_render()
+{
+	ft_printf("CH13 - Putting it together\n");
+	printf("Test camera\n***********\n");
+	t_camera	camera;
+	// t_ray		ray;
+	t_scene		*scene = malloc(sizeof(t_scene));
+	t_object	objects[7];
+
+	scene->objects = objects;
+
+	printf("\nrendering a world with a camera\n");
+	scene = test_default_scene(scene);
+	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+
+	// camera settings
+	t_tuple from;
+	t_tuple to;
+	t_tuple up;
+	from = rt_point(0, 0, -5);
+	to = rt_point(0, 0, 0);
+	up = rt_vector(0, 1, 0);
+	camera.transform = rt_view_transform(from, to, up);
+
+	// mlx settings
+	t_env	env;
+	env = mlx_set_env();
+	rt_render(camera, *scene, &env);
+	mlx_run_window(&env);
+	free(scene); // LEAK RISK (exit from mlx)
 }

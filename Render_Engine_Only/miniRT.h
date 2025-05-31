@@ -391,5 +391,6 @@ void		test_camera(void);
 void		test_planes(void);
 void		test_render_plane(void);
 void		test_cylinder(void);
+void		test_cylinder_render(void);
 
 #endif

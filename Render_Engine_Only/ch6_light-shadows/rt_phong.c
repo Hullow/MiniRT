@@ -55,7 +55,7 @@ t_tuple	rt_lighting(t_object o, t_light l, t_tuple point, \
 			specular = rt_scale_color(l.color, l.intensity * o.material.specular * factor);
 		}
 	}
-	return (rt_add_color(rt_add_color(ambient, rt_add_color(diffuse, specular)), rt_color(255, 0, 0)));
+	return (rt_add_color(ambient, rt_add_color(diffuse, specular)));
 }
 
 /// @brief Tonemapping that gives good results.

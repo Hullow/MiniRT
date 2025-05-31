@@ -51,6 +51,6 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	test_cylinder();
+	test_camera();
 	return (0);
 }
