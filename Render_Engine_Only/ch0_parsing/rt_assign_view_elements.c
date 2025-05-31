@@ -62,6 +62,16 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 	ft_free_tab(color);
 }
 
+t_matrix	rt_camera_transform(t_camera camera)
+{
+	t_tuple		vtrans;
+	t_matrix	transf;
+
+	vtrans = rt_vector(camera.coord.x, camera.coord.y, camera.coord.z);
+	transf = rt_mul_matrix(rt_rotation(camera.orient), rt_translation(vtrans));
+	return (transf);
+}
+
 void	rt_assign_camera(t_scene *scene, char **needle)
 {
 	char	**coord;
@@ -70,8 +80,8 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	errno = 0;
 	coord = ft_split(*needle, ',');
 	orient = ft_split(*(needle + 1), ',');
-	scene->cam.field_of_view = ft_strtof(*(needle + 2));
-	if (scene->cam.field_of_view > 180.0 || scene->cam.field_of_view < 0.0)
+	scene->cam.field_of_view = ft_strtof(*(needle + 2)) * (M_PI / 180);
+	if (ft_strtof(*(needle + 2)) > 180.0 || ft_strtof(*(needle + 2)) < 0.0)
 	{
 		errno = ERANGE;
 		perror("Error\nwrong field_of_view value");
@@ -86,6 +96,7 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 			ft_strtof(*(orient +2)));
 	scene->cam.coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)),
 			ft_strtof(*(coord +2)));
+	scene->cam.transform = rt_view_transform(scene->cam.coord, rt_add_tuple(scene->cam.coord, scene->cam.orient), rt_vector(0, 1, 0));
 	ft_free_tab(coord);
 	ft_free_tab(orient);
 }

@@ -60,7 +60,10 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	else if (**values == 'A')
 		rt_assign_ambient(scene, needle);
 	else if (**values == 'C')
+	{
 		rt_assign_camera(scene, needle);
+		scene->cam = rt_camera_book(scene->cam);
+	}
 	else
 	{
 		rt_assign_object(&(scene->objects[i]), needle, **values);

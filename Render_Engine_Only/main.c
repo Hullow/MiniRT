@@ -47,10 +47,13 @@ int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
+	t_env		env;
 
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	test_example_scene();
+	env = mlx_set_env();
+	rt_render(scene.cam, scene, &env);
+	mlx_run_window(&env);
 	return (0);
 }
