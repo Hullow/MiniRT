@@ -1,5 +1,58 @@
 #include "miniRT.h"
 
+t_scene	*test_default_scene(t_scene *scene)
+{
+	// t_object	plane_1;
+	// t_object	plane_2;
+	// t_object	sphere_1;
+	// t_object	sphere_2;
+	// t_object	sphere_3;
+	// t_object	sphere_4;
+	// t_object	sphere_5;
+	t_object	cylinder;
+	t_light		light;
+
+	// plane_1 = rt_plane(rt_color(255, 0.2 * 255, 255));
+	// plane_1.transform = rt_translation(rt_vector(0, -5, 0));
+	// plane_1.transform = rt_mul_matrix(plane_1.transform, rt_rotation_z(M_PI / 12));
+
+	// plane_2 = rt_plane(rt_color(255, 0.5 * 255, 255));
+	// plane_2.transform = rt_translation(rt_vector(0, 5, 0));
+	// plane_2.transform = rt_mul_matrix(plane_2.transform, rt_rotation_z(M_PI / 12));
+	
+	// sphere_1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255));
+	// sphere_1.transform = rt_translation(rt_vector(0, 3, 0));
+	
+	// sphere_2 = rt_sphere(rt_color(255, 255, 255));
+	// sphere_2.transform = rt_translation(rt_vector(3, 1, 0));
+
+	// sphere_3 = rt_sphere(rt_color(255, 0, 0));
+	// sphere_3.transform = rt_translation(rt_vector(2, -2, 0));
+
+	// sphere_4 = rt_sphere(rt_color(0, 0, 255));
+	// sphere_4.transform = rt_translation(rt_vector(-2, -2, 0));
+
+	// sphere_5 = rt_sphere(rt_color(0, 255, 0));
+	// sphere_5.transform = rt_translation(rt_vector(-3, 1, 0));
+
+	cylinder = rt_cylinder(rt_color(255, 0.2 * 255, 255));
+	cylinder.min = 1;
+	cylinder.max = 2;
+
+	light = rt_light (rt_color(255, 255, 255), rt_point(0, 0, 2), 1);
+	scene->n_obj = 1;
+	// scene->objects[0] = sphere_1;
+	// scene->objects[1] = sphere_2;
+	// scene->objects[2] = sphere_3;
+	// scene->objects[3] = sphere_4;
+	// scene->objects[4] = sphere_5;
+	// scene->objects[5] = plane_1;
+	// scene->objects[6] = plane_2;
+	scene->objects[0] = cylinder;
+	scene->lux = light;
+	return (scene);
+}
+
 void	test_tuples()
 {	
 	t_tuple	point;
@@ -754,14 +807,14 @@ void	test_intersect()
 	rt_print_matrix(sphere.transform);
 	printf("Transformed\n");
 	translate = rt_translation(rt_vector(2, 3, 4));
-	sphere.transform = rt_set_transform(sphere, translate);
+	sphere.transform = translate;
 	rt_print_matrix(sphere.transform);
 	printf("\n");
 
 	printf("Intersecting a scaled sphere with a ray\n");
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	sphere.transform = rt_set_transform(sphere, rt_scaling(rt_vector(2, 2, 2)));
+	sphere.transform = rt_scaling(rt_vector(2, 2, 2));
 	rt_intersects(&sphere, ray, &xs, &i);
 	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
@@ -769,7 +822,7 @@ void	test_intersect()
 	printf("Intersecting a translated sphere with a ray\n");
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(5, 0, 0)));
+	sphere.transform = rt_translation(rt_vector(5, 0, 0));
 	rt_intersects(&sphere, ray, &xs, &i);
 	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 
@@ -785,8 +838,8 @@ void	test_mlx()
 
 	sp = rt_sphere(rt_color(255, 0, 0));
 	rt_print_matrix(sp.transform);
-	//sp.transform = rt_set_transform(sp, rt_scaling(rt_vector(1, 2, 1)));
-	//sp.transform = rt_set_transform(sp, rt_translation(rt_vector(1, 0, 0)));
+	//sp.transform = rt_scaling(rt_vector(1, 2, 1));
+	//sp.transform = rt_translation(rt_vector(1, 0, 0));
 	//rt_print_matrix(sp.transform);
 	env = mlx_set_env();
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
@@ -817,7 +870,7 @@ void	test_light()
 
 	printf("Normal of translated sphere\n");
 
-	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(0, 1, 0)));
+	sphere.transform = rt_translation(rt_vector(0, 1, 0));
 	normal = rt_normal_at(sphere, rt_point(0, 1.70711, -0.70711));
 	rt_print_tuple(normal);
 	printf("\n");
@@ -968,13 +1021,14 @@ void	test_light_render()
 	int			i;
 
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
-	camera = rt_camera_parsing(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
+	camera = rt_camera_parse(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
 	transform = rt_scaling(rt_vector(2, 0.5, 1));
-	sphere.transform = rt_set_transform(sphere, transform);
+	sphere.transform = transform;
+
 	wall_z = 5;
 	h = 0;
 	while (h < WINDOW_HEIGHT)
@@ -1123,7 +1177,7 @@ void	test_scene()
 	printf("Shade hit ray hits\n");
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	
-	rt_default_scene(&scene);
+	test_default_scene(&scene);
 	color = rt_color_at(scene, ray);
 	rt_print_tuple(color);
 	printf("\n");
@@ -1311,13 +1365,13 @@ void	test_camera()
 	printf("Test camera\n***********\n");
 	t_camera	camera;
 	// t_ray		ray;
-	t_scene		scene;
-	t_object	objects[7];
+	t_scene		*scene = malloc(sizeof(t_scene));
+	t_object	objects[MAX_OBJECTS];
 
-	scene.objects = objects;
+	scene->objects = objects;
 
 	printf("\nrendering a world with a camera\n");
-	rt_default_scene(&scene);
+	scene = test_default_scene(scene);
 	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
 
 	// camera settings
@@ -1332,8 +1386,9 @@ void	test_camera()
 	// mlx settings
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(camera, scene, &env);
+	rt_render(camera, *scene, &env);
 	mlx_run_window(&env);
+	free(scene); // LEAK RISK (exit from mlx)
 }
 
 void	test_pixel_at(t_tuple color)
@@ -1433,7 +1488,7 @@ void	test_shadows()
 	t_scene	scene;
 	t_object scene_objects[7];
 	scene.objects = scene_objects;
-	rt_default_scene(&scene);
+	test_default_scene(&scene);
 	t_tuple	p;
 
 	// Testing is_shadowed()
@@ -1470,8 +1525,8 @@ void	test_shadows()
 	printf("\n***Scenario***: shade_hit() is given an intersection in shadow\n");
 	scene2.n_obj = 2;
 	scene2.lux = rt_light(rt_color(1 * 255, 1 * 255, 1 * 255), rt_point(0, 0, -10), 1);
-	sphere1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255)); // color from rt_default_scene 
-	sphere2 = rt_sphere(rt_color(1.0 * 255, 1.0 * 255, 1.0 * 255)); // color from rt_default_scene 
+	sphere1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255)); // color from test_default_scene 
+	sphere2 = rt_sphere(rt_color(1.0 * 255, 1.0 * 255, 1.0 * 255)); // color from test_default_scene 
 	sphere2.transform = rt_translation(rt_vector(0, 0, 10));
 		
 	scene2_objects[0] = sphere1;
@@ -1538,7 +1593,7 @@ void	test_planes()
 	xs.inter = inter;
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	plane.transform = rt_set_transform(plane, rt_scaling(rt_vector(2, 2, 2)));
+	plane.transform = rt_scaling(rt_vector(2, 2, 2));
 	rt_intersects(&plane, ray, &xs, &i);
 	rt_print_ray(plane.saved_ray);
 	ft_printf("\n");
@@ -1546,7 +1601,7 @@ void	test_planes()
 	ft_printf("Ray translated plane intersect\n");
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
-	plane.transform = rt_set_transform(plane, rt_translation(rt_vector(5, 0, 0)));
+	plane.transform = rt_translation(rt_vector(5, 0, 0));
 	rt_intersects(&plane, ray, &xs, &i);
 	rt_print_ray(plane.saved_ray);
 	ft_printf("\n");
@@ -1556,7 +1611,7 @@ void	test_planes()
 	t_object	sphere;
 
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
-	sphere.transform = rt_set_transform(sphere, rt_translation(rt_vector(0, 1, 0)));
+	sphere.transform = rt_translation(rt_vector(0, 1, 0));
 	normal_at = rt_normal_at(sphere, rt_point(0, 1.70711, -0.70711));
 	rt_print_tuple(normal_at);
 	ft_printf("\n");
@@ -1567,7 +1622,7 @@ void	test_planes()
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	transform = rt_mul_matrix(rt_scaling(rt_vector(1.0, 0.5, 1.0)), \
 							rt_rotation_z(M_PI / 5));
-	sphere.transform = rt_set_transform(sphere, transform);
+	sphere.transform = transform;
 	normal_at = rt_normal_at(sphere, rt_point(0, sqrtf(2)/2, -sqrtf(2)/2));
 	rt_print_tuple(normal_at);
 	ft_printf("\n");
@@ -1643,8 +1698,9 @@ void	test_render_plane()
 	int			i;
 	
 	xs.inter = inter;
-	camera = rt_camera_parsing(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
+	camera = rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
+	plane.transform = rt_identity_matrix();
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -1687,3 +1743,241 @@ void	test_render_plane()
 	mlx_run_window(&env);
 }
 
+
+void	test_cylinder()
+{
+	t_object	cylinder;
+	t_tuple		color;
+	t_ray		ray;
+	t_tuple		point;
+	t_tuple		direction;
+	t_xs		xs;
+	t_inter		intersects[2];
+	int			noneed;
+
+	noneed = 0;
+	xs.count = 0;
+	xs.inter = intersects;
+	ft_printf("Ray misses cylinder\n");
+
+	color = rt_color(0.8 * 255, 255, 0.2 * 255);
+	cylinder = rt_cylinder(color);
+	point = rt_point(1, 0, 0);
+	direction = rt_vector(0, 1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d\n", errno, xs.count);
+	noneed = 0;
+
+	point = rt_point(0, 0, 0);
+	direction = rt_vector(0, 1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d\n", errno, xs.count);
+	noneed = 0;
+
+	point = rt_point(0, 0, -5);
+	direction = rt_vector(1, 1, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("%d Intersections: %d\n", errno, xs.count);
+	noneed = 0;
+	ft_printf("\n");
+
+	ft_printf("Ray hits cylinder\n");
+
+	point = rt_point(1, 0, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 0, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0.5, 0, -5);
+	direction = rt_vector(0.1, 1, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+	ft_printf("\n");
+
+	ft_printf("Normal vector on a cylinder\n");
+	point = rt_point(1, 0, 0);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0, 5, -1);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0, -2, 1);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(-1, 1, 0);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	ft_printf("\n");
+
+	ft_printf("Truncating a cylinder\n");
+	cylinder.min = 1;
+	cylinder.max = 2;
+
+	point = rt_point(0, 1.5, 0);
+	direction = rt_vector(0.1, 1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 3, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 0, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 2, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 1, -5);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 1.5, -2);
+	direction = rt_vector(0, 0, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+	ft_printf("\n");
+
+	ft_printf("Capped (solid) cylinder\n");
+	//cylinder.closed = 1; //false by default, here manually set to true
+	ft_printf("is closed cylinder: %d\n\n", cylinder.closed);
+
+	ft_printf("Intersecting cylinder\'s end cap\n");
+	cylinder.closed = 1;
+	ft_printf("is closed cylinder: %d\n\n", cylinder.closed);
+
+	point = rt_point(0, 3, 0);
+	direction = rt_vector(0, -1, 0);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 3, -2);
+	direction = rt_vector(0, -1, 2);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 4, -2);
+	direction = rt_vector(0, -1, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, 0, -2);
+	direction = rt_vector(0, 1, 2);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+
+	point = rt_point(0, -1, -2);
+	direction = rt_vector(0, 1, 1);
+	ray = rt_ray(point, rt_normalize(direction));
+	rt_ray_cylinder_x(cylinder, ray, &xs, &noneed);
+	ft_printf("Intersections: %d | t0: %f | t1: %f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
+	noneed = 0;
+	xs.count = 0;
+	ft_printf("\n");
+
+	ft_printf("Normal vectors at end caps\n");
+	point = rt_point(0, 1, 0);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0.5, 1, 0);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0, 1, 0.5);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0, 2, 0);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0.5, 2, 0);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	point = rt_point(0, 2, 0.5);
+	direction = rt_local_normal_at(cylinder, point);
+	rt_print_tuple(direction);
+	ft_printf("\n");
+}
+
+void	test_cylinder_render()
+{
+	ft_printf("CH13 - Putting it together\n");
+	printf("Test camera\n***********\n");
+	t_camera	camera;
+	// t_ray		ray;
+	t_scene		*scene = malloc(sizeof(t_scene));
+	t_object	objects[7];
+
+	scene->objects = objects;
+
+	printf("\nrendering a world with a camera\n");
+	scene = test_default_scene(scene);
+	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+
+	// camera settings
+	t_tuple from;
+	t_tuple to;
+	t_tuple up;
+	from = rt_point(0, 0, -5);
+	to = rt_point(0, 0, 0);
+	up = rt_vector(0, 1, 0);
+	camera.transform = rt_view_transform(from, to, up);
+
+	// mlx settings
+	t_env	env;
+	env = mlx_set_env();
+	rt_render(camera, *scene, &env);
+	mlx_run_window(&env);
+	free(scene); // LEAK RISK (exit from mlx)
+}

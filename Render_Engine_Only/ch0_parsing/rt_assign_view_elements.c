@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
 #include "miniRT.h"
 
 void	rt_assign_light(t_scene *scene, char **needle)
@@ -21,11 +20,11 @@ void	rt_assign_light(t_scene *scene, char **needle)
 	errno = 0;
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle + 2), ',');
-	scene->lux.ratio = ft_strtof(*(needle + 1));
-	if (scene->lux.ratio > 1.0 || scene->lux.ratio < 0.0)
+	scene->lux.intensity = ft_strtof(*(needle + 1));
+	if (scene->lux.intensity > 1.0 || scene->lux.intensity < 0.0)
 	{
 		errno = ERANGE;
-		perror("Error\nwrong ratio value");
+		perror("Error\nwrong intensity value");
 	}
 	if (errno != 0 || !rt_valid_color(color) || !rt_valid_coord(coord))
 	{
@@ -47,11 +46,11 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 
 	errno = 0;
 	color = ft_split(*(needle + 1), ',');
-	scene->amb.ratio = ft_strtof(*(needle));
-	if (scene->amb.ratio > 1.0 || scene->amb.ratio < 0.0)
+	scene->amb.intensity = ft_strtof(*(needle));
+	if (scene->amb.intensity > 1.0 || scene->amb.intensity < 0.0)
 	{
 		errno = ERANGE;
-		perror("Error\nwrong ratio value");
+		perror("Error\nwrong intensity value");
 	}
 	if (!rt_valid_color(color) || errno != 0)
 	{
@@ -90,4 +89,3 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	ft_free_tab(coord);
 	ft_free_tab(orient);
 }
-*/

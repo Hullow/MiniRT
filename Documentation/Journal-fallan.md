@@ -260,7 +260,7 @@ and he would continue working on t_intersect types
 # 23/5/25
 - Successfully merged ch7 begin + folder reordering in pberset. Onwards!
 - Started working on camera (ch7). called init function `rt_camera_book` and the old
-parsing initialization function `rt_camera_parsing`.
+parsing initialization function `rt_camera_parse`.
 - Modified rt_inversion and tested it (test_matrix, test_intersect -> partial tests ok)
 - only one sphere is shown, unclear why. we try to debug a bit
 => fixed rt_hit to remove `(if errno = EDISCRIMINANT)` => it works!!!

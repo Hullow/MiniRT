@@ -23,23 +23,9 @@ t_object	rt_sphere(t_tuple color)
 	sphere.shape = SPHERE;
 	sphere.origin = rt_point(0, 0, 0);
 	sphere.diameter = 2.0f;
-	sphere.transform = rt_identity_matrix();
 	sphere.color = color;
 	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
 	return (sphere);
-}
-
-void	rt_print_sphere(t_object sphere)
-{
-	ft_printf("Diameter: %f\n", sphere.diameter);
-	ft_printf("Origin: ");
-	rt_print_tuple(sphere.origin);
-	ft_printf("Transform:\n");
-	rt_print_matrix(sphere.transform);
-	ft_printf("Color: ");
-	rt_print_tuple(sphere.color);
-	ft_printf("Material: ");
-	rt_print_material(sphere.material);
 }
 
 t_object	rt_plane(t_tuple color)
@@ -49,20 +35,24 @@ t_object	rt_plane(t_tuple color)
 	plane.shape = PLANE;
 	plane.origin = rt_point(0, 0, 0);
 	plane.norm = rt_vector(0, 1, 0);
-	plane.transform = rt_identity_matrix();
 	plane.color = color;
 	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
 	return (plane);
 }
 
-void	rt_print_plane(t_object plane)
+t_object	rt_cylinder(t_tuple color)
 {
-	ft_printf("Origin: ");
-	rt_print_tuple(plane.origin);
-	ft_printf("Transform:\n");
-	rt_print_matrix(plane.transform);
-	ft_printf("Color: ");
-	rt_print_tuple(plane.color);
-	ft_printf("Material: ");
-	rt_print_material(plane.material);
+	t_object	cylinder;
+
+	cylinder.shape = CYLINDER;
+	cylinder.diameter = 2.0;
+	cylinder.height = INFINITY;
+	cylinder.min = -INFINITY;
+	cylinder.max = INFINITY;
+	cylinder.closed = 0;
+	cylinder.color = color;
+	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
+	cylinder.norm = rt_vector(0, 1, 0);
+	cylinder.origin = rt_point(0, 0, 0);
+	return (cylinder);
 }

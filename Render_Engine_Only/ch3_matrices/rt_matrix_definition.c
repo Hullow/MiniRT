@@ -63,23 +63,3 @@ int	rt_matrix_equality(t_matrix a, t_matrix b)
 	}
 	return (1);
 }
-
-void	rt_print_matrix(t_matrix m)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < m.rows)
-	{
-		ft_printf("row[%d]: | ", i);
-		j = 0;
-		while (j < m.columns)
-		{
-			ft_printf("%f | ", m.cell[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-}

@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   rt_normal_nonplanar.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:22:59 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/28 15:11:13 by francis          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:11:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_tuple	rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point)
+{
+	t_tuple	normal;
+	float	dist;
+
+	dist = point.x * point.x + point.z * point.z;
+	if (dist < 1 && point.y >= cylinder.max - EPSILON)
+		normal = rt_vector(0, 1, 0);
+	else if (dist < 1 && point.y <= cylinder.min + EPSILON)
+		normal = rt_vector(0, -1, 0);
+	else
+		normal = rt_vector(point.x, 0, point.z);
+	return (normal);
+}
 
 t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 {
@@ -21,7 +36,7 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 	else if (obj.shape == PLANE)
 		normal = obj.norm;
 	else if (obj.shape == CYLINDER)
-		normal = rt_vector(obj.origin.x, 0, obj.origin.z);
+		normal = rt_local_normal_capped_cylinder(obj, point);
 	else
 		normal = rt_vector(0, 0, 0);
 	return (rt_normalize(normal));

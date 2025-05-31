@@ -35,11 +35,3 @@ t_matrix	rt_scaling(t_tuple t)
 	scaling.cell[2][2] = t.z;
 	return (scaling);
 }
-
-t_matrix	rt_set_transform(t_object object, t_matrix transform)
-{
-	t_matrix	modified;
-
-	modified = rt_mul_matrix(object.transform, transform);
-	return (modified);
-}

@@ -27,15 +27,6 @@ t_light	rt_light(t_tuple color, t_tuple coord, float intensity)
 	return (light);
 }
 
-void	rt_print_light(t_light light)
-{
-	ft_printf("Light\ncoord:\n");
-	rt_print_tuple(light.coord);
-	ft_printf("color:\n");
-	rt_print_tuple(light.color);
-	ft_printf("intensity: %f\n", light.intensity);
-}
-
 /// @brief Initializes a material struct without color because norminette
 /// @param amb float
 /// @param dif float
@@ -51,10 +42,4 @@ t_material	rt_material(float amb, float dif, float spec, float shine)
 	material.specular = spec;
 	material.shininess = shine;
 	return (material);
-}
-
-void	rt_print_material(t_material mat)
-{
-	printf("ambient: %f, diffuse: %f, specular: %f, shininess: %f\n", \
-		mat.ambient, mat.diffuse, mat.specular, mat.shininess);
 }

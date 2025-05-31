@@ -24,11 +24,3 @@ t_ray	rt_ray(t_tuple origin, t_tuple direction)
 	ray.direction = direction;
 	return (ray);
 }
-
-void	rt_print_ray(t_ray ray)
-{
-	ft_printf("Ray origin\n");
-	rt_print_tuple(ray.origin);
-	ft_printf("Ray direction\n");
-	rt_print_tuple(ray.direction);
-}

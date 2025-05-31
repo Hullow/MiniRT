@@ -12,7 +12,7 @@
 
 #include "../../header/libft.h"
 
-static void	*err_msg()
+static void	*err_msg(void)
 {
 	perror("ft_strjoin");
 	return (NULL);

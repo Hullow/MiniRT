@@ -26,7 +26,7 @@ static int	ft_setcmp(char c, char const *c_set)
 	return (0);
 }
 
-static void	*err_msg()
+static void	*err_msg(void)
 {
 	perror("ft_strjoin");
 	return (NULL);
