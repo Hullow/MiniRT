@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 16:52:30 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/31 14:03:37 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
 {
 	t_tuple	color;
 
-	comp.in_shadow = rt_is_shadowed(scene, comp.point);
+	comp.in_shadow = rt_is_shadowed(scene, comp.over_point);
 	color = rt_lighting(scene.lux, comp);
 	return (color);
 }

@@ -279,3 +279,6 @@ I will commit and onwards.
 - `is_shadowed()` ok, done very quickly and straightforwardly
 - finished writing code and tests for chapter (`shade_hit()` and `prepare_computations()`),
 but it doesn't pass all tests for some reason.
+
+# 31/5/25
+- Trying to render shadow color appropriately, but last test still not passing. Material makes a difference, tried various default colors but none that make it work and make sense.

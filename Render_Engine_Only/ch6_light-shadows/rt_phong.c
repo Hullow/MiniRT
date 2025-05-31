@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_phong.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 16:54:48 by fallan           ###   ########.fr       */
+/*   Updated: 2025/05/30 17:59:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	// v.ambient = rt_add_color(rt_scale_color(in.color, comp.object.material.ambient), rt_color(127, 0, 0));
 	// v.ambient = rt_scale_color(comp.object.material.color, comp.object.material.ambient);
 	v.ambient = rt_scale_color(in.color, comp.object.material.ambient);
+	rt_print_tuple(v.ambient);
 	if (comp.in_shadow == true)
 		return (v.ambient); // if object is in shadows, the only lighting is ambient
 	in.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
