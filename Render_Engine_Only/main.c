@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 17:19:22 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 18:50:55 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,23 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (5);
 	return (0);
 }
- */
-int	main() //int argc, char *argv[])
-{
-	rgb_to_int(rt_color(125, 12, 42));
-	// t_scene		scene;
-	// t_object	objects[MAX_OBJECTS];
-	// t_env		env;
+*/
 
-	// scene.objects = objects;
-	// if (build_scene(argc, argv, &scene))
-	// 	return (1);
-	// // test_example_scene_with_flat_spheres();
-	// // test_example_scene_planes();
+int	main(int argc, char *argv[])
+{
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+	t_env		env;
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	// test_example_scene_with_flat_spheres();
+	// test_example_scene_planes();
 	
-	// env = mlx_set_env();
-	// rt_render(scene.cam, scene, &env);
-	// mlx_run_window(&env);
+	env = mlx_set_env();
+	rt_render(scene.cam, scene, &env);
+	mlx_run_window(&env);
 
 	return (0);
 }

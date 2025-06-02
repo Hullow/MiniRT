@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:13:54 by fallan            #+#    #+#             */
-/*   Updated: 2025/06/02 17:21:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 18:49:36 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,41 +52,17 @@ int	is_equal_float(float a, float b)
 		return (0);
 }
 
-
-
-
-int	rgb_to_int_simple(t_tuple col_tuple)
-{
-	int	color;
-	int	hex_r;
-	int	hex_g;
-	int	hex_b;
-	
-	color = 0;
-	hex_r = (int)(col_tuple.x * 255);
-	hex_g = (int)(col_tuple.y * 255);
-	hex_b = (int)(col_tuple.z * 255);	
-	color = hex_r * 256 * 256 + hex_g * 256 + hex_b;
-	return (color);
-}
-
-/* Converts a tuple with RGB values ranging from 0 to 1
-(e.g. (0.34, 0.12, 0.56)) to the corresponding int value, which it returns */
 int	rgb_to_int(t_tuple col_tuple)
 {
 	int	color;
-	int	hex_r;
-	int	hex_g;
-	int	hex_b;
-	
+	int	r;
+	int	g;
+	int	b;
+
 	color = 0;
-	hex_r = (int)(col_tuple.x * 255);
-	hex_g = (int)(col_tuple.y * 255);
-	hex_b = (int)(col_tuple.z * 255);
-	color += (hex_r / 16) * pow(16, 5) + (hex_r % 16) * pow(16, 4);
-	color += (hex_g / 16) * pow(16, 3) + (hex_g % 16) * pow(16, 2);
-	color += (hex_b / 16) * 16 + (hex_b % 16);
-	printf("rgb_to_int original: %d\n", color);
-	printf("rgb_to_int simple: %d\n", rgb_to_int_simple(col_tuple));
+	r = (int)(col_tuple.x * 255);
+	g = (int)(col_tuple.y * 255);
+	b = (int)(col_tuple.z * 255);	
+	color = r * 256 * 256 + g * 256 + b;
 	return (color);
 }

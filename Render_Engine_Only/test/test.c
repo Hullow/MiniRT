@@ -1451,7 +1451,12 @@ void	test_example_scene_planes()
 	);
 
 	// camera
-	scene.cam = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 3);
+	scene.cam.field_of_view = 70;
+	scene.cam.orient = rt_vector(0, 0, 1);
+	scene.cam.coord = rt_point(0, 0, -5);
+	scene.cam.hsize = WINDOW_WIDTH;
+	scene.cam.vsize = WINDOW_HEIGHT;
+	scene.cam = rt_calculate_camera_values(scene.cam);
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 

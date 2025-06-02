@@ -324,3 +324,5 @@ Fixes:
 - rt_lighting: no changes to function, only clean up
 - Makefile: added header
 - scenes: added some test scenes
+
+- `rgb_to_int()`: simplified it with the help of Kurt (pkurt ?)
