@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_assign_view_elements.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:06:53 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/23 11:13:32 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 18:18:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 
 	errno = 0;
 	color = ft_split(*(needle + 1), ',');
-	scene->amb.intensity = ft_strtof(*(needle));
-	if (scene->amb.intensity > 1.0 || scene->amb.intensity < 0.0)
+	scene->lux.ambient.intensity = ft_strtof(*(needle));
+	if (scene->lux.ambient.intensity > 1.0 || scene->lux.ambient.intensity < 0.0)
 	{
 		errno = ERANGE;
 		perror("Error\nwrong intensity value");
@@ -57,7 +57,7 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->amb.color = rt_color(
+	scene->lux.ambient.color = rt_color(
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2)));
 	ft_free_tab(color);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:18:20 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 18:29:55 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,10 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	t_tuple	coord;
-	float	intensity;
-	t_tuple	color;
+	t_tuple		coord;
+	float		intensity;
+	t_tuple		color;
+	t_ambient	ambient;
 }	t_light;
 
 //Scene
@@ -200,7 +201,6 @@ typedef struct s_scene
 	int			n_pl;
 	int			n_cy;
 	int			n_obj;
-	t_ambient	amb;
 	t_camera	cam;
 	t_light		lux;
 	t_object	*objects;
@@ -234,6 +234,27 @@ typedef struct s_lighting_params {
 	t_tuple	diffuse;
 	t_tuple	specular;
 }	t_lighting_params;
+
+//test
+
+void		test_tuples(void);
+void		test_matrix(void);
+void		test_transform(void);
+void		test_intersect(void);
+void		test_mlx(void);
+void		test_light(void);
+void		test_light_render(void);
+void		test_scene(void);
+void		test_rgb_to_int(void);
+void		test_view_transform(void);
+void		test_camera(void);
+void		test_planes(void);
+void		test_render_plane(void);
+void		test_cylinder(void);
+void		test_cylinder_render(void);
+void		test_shadows(void);
+void		test_example_scene(void);
+t_scene		*test_default_scene(t_scene *scene);
 
 //CH0 Parsing
 
@@ -404,25 +425,5 @@ t_tuple		rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point);
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
 
-//test
-
-void		test_tuples(void);
-void		test_matrix(void);
-void		test_transform(void);
-void		test_intersect(void);
-void		test_mlx(void);
-void		test_light(void);
-void		test_light_render(void);
-void		test_scene(void);
-void		test_rgb_to_int(void);
-void		test_view_transform(void);
-void		test_camera(void);
-void		test_planes(void);
-void		test_render_plane(void);
-void		test_cylinder(void);
-void		test_cylinder_render(void);
-void		test_shadows(void);
-void		test_example_scene(void);
-t_scene		*test_default_scene(t_scene *scene);
 
 #endif

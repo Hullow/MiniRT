@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:12:23 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 20:49:20 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs)
 	xs->inter = inter_array;
 	while (i < scene.n_obj)
 	{
-
 		ray_transform = rt_inversion(scene.objects[i].transform);
 		scene.objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
 		scene.objects[i].saved_ray.direction = \

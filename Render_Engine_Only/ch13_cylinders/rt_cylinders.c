@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_cylinders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:14:19 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/30 14:14:20 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/06/02 19:53:45 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 	if (xs->inter[*i].t > xs->inter[(*i) + 1].t)
 		cy_swap(xs, *i);
 	y0 = ray.origin.y + xs->inter[*i].t * ray.direction.y;
-	if (cylinder.min < y0 && y0 < cylinder.max)
+	if (cylinder.min - EPSILON < y0 && y0 < cylinder.max + EPSILON)
 	{
 		(xs->count)++;
 		increment++;
 	}
 	y1 = ray.origin.y + xs->inter[(*i) + 1].t * ray.direction.y;
-	if (cylinder.min < y1 && y1 < cylinder.max)
+	if (cylinder.min - EPSILON < y1 && y1 < cylinder.max + EPSILON)
 	{
 		(xs->count)++;
 		increment++;
@@ -70,7 +70,7 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 
 	errno = 0;
 	a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
-	if (a < 0)
+	if (a == 0)
 		rt_intersect_caps(cylinder, ray, xs, i);
 	else
 	{

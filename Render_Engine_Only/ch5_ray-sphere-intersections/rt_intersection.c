@@ -3,68 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rt_intersection.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 18:56:46 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 18:39:27 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	rt_print_material(t_material mat)
-{
-	printf("ambient: %f, diffuse: %f, specular: %f, shininess: %f\n", \
-		mat.ambient, mat.diffuse, mat.specular, mat.shininess);
-}
-
-void	rt_print_tuple(t_tuple t)
-{
-	ft_printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
-	if (t.w == VECTOR)
-		ft_printf("of type VECTOR\n");
-	if (t.w == POINT)
-		ft_printf("of type POINT\n");
-	if (t.w == COLOR)
-		ft_printf("of type COLOR\n");
-}
-
-void	rt_print_matrix(t_matrix m)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < m.rows)
-	{
-		ft_printf("row[%d]: | ", i);
-		j = 0;
-		while (j < m.columns)
-		{
-			ft_printf("%f | ", m.cell[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-}
-
-void	rt_print_sphere(t_object sphere)
-{
-	ft_printf("Sphere %p\n", &sphere);
-	ft_printf("Diameter: %f\n", sphere.diameter);
-	ft_printf("Origin: ");
-	rt_print_tuple(sphere.origin);
-	ft_printf("Color: ");
-	rt_print_tuple(sphere.color);
-	ft_printf("Material: ");
-	rt_print_material(sphere.material);
-	ft_printf("Transform:\n");
-	if (sphere.transform.columns != 4 || sphere.transform.rows != 4)
-		ft_printf("Matrix size error: col: %d row: %d\n", sphere.transform.columns, sphere.transform.rows);
-	else
-		rt_print_matrix(sphere.transform);
-}
 
 t_inter	rt_intersect(float t, t_object obj)
 {
