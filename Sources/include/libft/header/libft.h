@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:55:47 by pberset           #+#    #+#             */
-/*   Updated: 2025/03/04 12:03:54 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/06/02 14:32:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	*ft_calloc(size_t count, size_t size);
 // Frees a tab of strings
 void	ft_free_tab(char **tab);
+// Frees two tabs of strings
+void	ft_free_double_tab(char **first, char **second);
 // Frees a tab of int
 void	ft_free_int_tab(int **tab, size_t size);
 // Frees a tab of float

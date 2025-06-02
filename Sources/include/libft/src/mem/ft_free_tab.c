@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:36:12 by pberset           #+#    #+#             */
-/*   Updated: 2025/04/13 20:55:18 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/02 14:30:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,10 @@ void	ft_free_tab(char **tab)
 	}
 	free(tab);
 	tab = NULL;
+}
+
+void	ft_free_double_tab(char **first, char **second)
+{
+	ft_free_tab(first);
+	ft_free_tab(second);
 }

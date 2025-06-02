@@ -12,6 +12,60 @@
 
 #include "miniRT.h"
 
+void	rt_print_material(t_material mat)
+{
+	printf("ambient: %f, diffuse: %f, specular: %f, shininess: %f\n", \
+		mat.ambient, mat.diffuse, mat.specular, mat.shininess);
+}
+
+void	rt_print_tuple(t_tuple t)
+{
+	ft_printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
+	if (t.w == VECTOR)
+		ft_printf("of type VECTOR\n");
+	if (t.w == POINT)
+		ft_printf("of type POINT\n");
+	if (t.w == COLOR)
+		ft_printf("of type COLOR\n");
+}
+
+void	rt_print_matrix(t_matrix m)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < m.rows)
+	{
+		ft_printf("row[%d]: | ", i);
+		j = 0;
+		while (j < m.columns)
+		{
+			ft_printf("%f | ", m.cell[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+}
+
+void	rt_print_sphere(t_object sphere)
+{
+	ft_printf("Sphere %p\n", &sphere);
+	ft_printf("Diameter: %f\n", sphere.diameter);
+	ft_printf("Origin: ");
+	rt_print_tuple(sphere.origin);
+	ft_printf("Color: ");
+	rt_print_tuple(sphere.color);
+	ft_printf("Material: ");
+	rt_print_material(sphere.material);
+	ft_printf("Transform:\n");
+	if (sphere.transform.columns != 4 || sphere.transform.rows != 4)
+		ft_printf("Matrix size error: col: %d row: %d\n", sphere.transform.columns, sphere.transform.rows);
+	else
+		rt_print_matrix(sphere.transform);
+}
+
 t_inter	rt_intersect(float t, t_object obj)
 {
 	t_inter	i;
@@ -21,20 +75,14 @@ t_inter	rt_intersect(float t, t_object obj)
 	return (i);
 }
 
-void	rt_intersects(t_object *object, t_ray ray, t_xs *xs, int *i)
+void	rt_intersects(t_object object, t_xs *xs, int *i)
 {
-	t_matrix	ray_transform;
-
-	ray_transform = rt_inversion(object->transform);
-	object->saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
-	object->saved_ray.direction = \
-		rt_mul_tuple_matrix(ray_transform, ray.direction);
-	if (object->shape == SPHERE)
-		rt_discriminant(object->saved_ray, *object, xs, i);
-	else if (object->shape == PLANE)
-		rt_ray_plane_x(*object, object->saved_ray, xs, i);
-	else if (object->shape == CYLINDER)
-		rt_ray_cylinder_x(*object, object->saved_ray, xs, i);
+	if (object.shape == SPHERE)
+		rt_discriminant(object.saved_ray, object, xs, i);
+	else if (object.shape == PLANE)
+		rt_ray_plane_x(object, object.saved_ray, xs, i);
+	else if (object.shape == CYLINDER)
+		rt_ray_cylinder_x(object, object.saved_ray, xs, i);
 	else
 		xs->count = 0;
 }

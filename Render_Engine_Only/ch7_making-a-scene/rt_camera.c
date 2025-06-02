@@ -6,34 +6,21 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 18:07:08 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:37:34 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_camera	rt_camera_parse(t_tuple coord, t_tuple orient, float field_of_view)
+t_camera	rt_calculate_camera_values(t_camera camera)
 {
-	t_camera	camera;
+	float	half_view;
+	float	aspect;
 
-	camera.coord = coord;
-	camera.orient = orient;
-	camera.field_of_view = field_of_view;
-	return (camera);
-}
-
-t_camera	rt_camera_book(int hsize, int vsize, float field_of_view)
-{
-	t_camera	camera;
-	float		half_view;
-	float		aspect;
-
-	camera.hsize = hsize;
-	camera.vsize = vsize;
-	camera.field_of_view = field_of_view;
-	camera.transform = rt_identity_matrix();
-	half_view = tanf(field_of_view / 2);
-	aspect = (float) hsize / vsize;
+	camera.transform = rt_view_transform(camera.coord, \
+		rt_add_tuple(camera.coord, camera.orient), rt_vector(0, 1, 0));
+	half_view = tanf(camera.field_of_view / 2);
+	aspect = (float) camera.hsize / camera.vsize;
 	if (aspect >= 1.0)
 	{
 		camera.half_width = half_view;
@@ -44,7 +31,7 @@ t_camera	rt_camera_book(int hsize, int vsize, float field_of_view)
 		camera.half_width = half_view * aspect;
 		camera.half_height = half_view;
 	}
-	camera.pixel_size = (camera.half_width * 2) / (hsize);
+	camera.pixel_size = (camera.half_width * 2) / (camera.hsize);
 	return (camera);
 }
 

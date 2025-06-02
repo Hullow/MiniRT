@@ -72,7 +72,10 @@ void	rt_print_sphere(t_object sphere)
 	ft_printf("Material: ");
 	rt_print_material(sphere.material);
 	ft_printf("Transform:\n");
-	rt_print_matrix(sphere.transform);
+	if (sphere.transform.columns != 4 || sphere.transform.rows != 4)
+		ft_printf("Matrix size error: col: %d row: %d\n", sphere.transform.columns, sphere.transform.rows);
+	else
+		rt_print_matrix(sphere.transform);
 }
 
 void	rt_print_ray(t_ray ray)
@@ -101,6 +104,7 @@ void	rt_print_material(t_material mat)
 void	rt_print_camera(t_camera camera)
 {
 	printf("camera:\n");
+	printf("Pixel size: %f\n", camera.pixel_size);
 	printf("- hsize: %d\n", camera.hsize);
 	printf("- vsize: %d\n", camera.vsize);
 	printf("- field of view: %f\n", camera.field_of_view);
@@ -113,6 +117,9 @@ void	rt_print_scene(t_scene scene)
 	int	i;
 
 	i = 0;
+	ft_printf("N_OBJ : %d\n", scene.n_obj);
+	rt_print_light(scene.lux);
+	rt_print_camera(scene.cam);
 	while (i < scene.n_obj)
 	{
 		if (scene.objects[i].shape == SPHERE)

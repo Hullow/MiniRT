@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 20:10:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:51:42 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	t_lighting_params	v;
 	t_intermediate_vars	intm;
 	
+	intm.color = rt_scale_color(comp.object.color, l.intensity);
 	/////// AMBIENT ///////
 	// t_tuple				ambient_color;
 		// from input:
@@ -75,6 +76,7 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	else
 		v = rt_colorize_diffuse_specular(l, comp, intm, v);
 
+		/////// RETURN : ADD ALL COLOR COMPONENTS TOGETHER ///////
 	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
 }
 

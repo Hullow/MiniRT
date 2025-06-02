@@ -307,3 +307,20 @@ given by our input ambient, and `k_a` the ambient reflection constant of an obje
 
 # 2/6/25
 - Debugging in VSCode: need to do it from pberset's branch.
+- Notes:
+	- Cylinder:
+		- `rt_assign_cylinder` could be refactored for clarity, e.g. an intermediary struct
+		with norm, coord, origin which we init on stack and then forget. no need for all this data in
+		the cylinder struct
+		- cylinder.min, .max seem constant at -+INF ?
+
+- maybe a DARK or NULL_OBJECT to return if no intersection is clearer than a dark sphere of diameter 2 at origin
+
+Fixes:
+- fantom sphere: if intersect.t == 0, return black
+- rt_assign_objects (order)
+- camera init functions: removed transform reinitialisation + refactored.
+- ft_free_double_tab: new function
+- rt_lighting: no changes to function, only clean up
+- Makefile: added header
+- scenes: added some test scenes

@@ -1,5 +1,15 @@
 #include "miniRT.h"
 
+t_camera	rt_camera_parse(t_tuple coord, t_tuple orient, float field_of_view)
+{
+	t_camera	camera;
+
+	camera.coord = coord;
+	camera.orient = orient;
+	camera.field_of_view = field_of_view;
+	return (camera);
+}
+
 t_scene	*test_default_scene(t_scene *scene)
 {
 	// t_object	plane_1;
@@ -1349,7 +1359,7 @@ void	test_example_scene_with_flat_spheres()
 	);
 
 	// camera
-	scene.cam = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 3);
+	scene.cam = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 3);
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 
@@ -1441,7 +1451,7 @@ void	test_example_scene_planes()
 	);
 
 	// camera
-	scene.cam = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 3);
+	scene.cam = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 3);
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 
@@ -1464,7 +1474,7 @@ void	test_camera()
 
 	printf("\nrendering a world with a camera\n");
 	scene = test_default_scene(scene);
-	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+	camera = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
 
 	// camera settings
 	t_tuple from;
@@ -1495,30 +1505,30 @@ void	test_pixel_at(t_tuple color)
 	}
 }
 
-void	rt_render(t_camera camera, t_scene scene, t_env *env)
-{
-	t_ray	ray;
-	int		x;
-	int		y;
-	t_tuple	color;
+// void	rt_render(t_camera camera, t_scene scene, t_env *env)
+// {
+// 	t_ray	ray;
+// 	int		x;
+// 	int		y;
+// 	t_tuple	color;
 
-	y = 0;
-	while (y < camera.vsize - 1)
-	{
-		if ((y + 1) % 100 == 0)
-			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
-		x = 0;
-		while (x < camera.hsize - 1)
-		{
-			ray = rt_ray_for_pixel(camera, x, y);
-			color = rt_color_at(scene, ray);
-			color = rt_reinhard_tonemap(color);
-			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
-			x++;
-		}
-		y++;
-	}
-}
+// 	y = 0;
+// 	while (y < camera.vsize - 1)
+// 	{
+// 		if ((y + 1) % 100 == 0)
+// 			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
+// 		x = 0;
+// 		while (x < camera.hsize - 1)
+// 		{
+// 			ray = rt_ray_for_pixel(camera, x, y);
+// 			color = rt_color_at(scene, ray);
+// 			color = rt_reinhard_tonemap(color);
+// 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
 void	check_color(t_tuple desired, t_tuple result)
 {
@@ -2055,7 +2065,7 @@ void	test_cylinder_render()
 
 	printf("\nrendering a world with a camera\n");
 	scene = test_default_scene(scene);
-	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+	camera = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
 
 	// camera settings
 	t_tuple from;

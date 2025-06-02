@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 20:07:41 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:49:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 600
+#  define WINDOW_WIDTH 300
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 400
+#  define WINDOW_HEIGHT 200
 # endif
 
 # ifndef WINDOW_NAME
@@ -247,6 +247,7 @@ int			rt_valid_orient(char **orient);
 int			rt_check_uniques(t_scene *scene);
 void		rt_assign_light(t_scene *scene, char **needle);
 void		rt_assign_ambient(t_scene *scene, char **needle);
+t_matrix	rt_camera_transform(t_camera camera);
 void		rt_assign_camera(t_scene *scene, char **needle);
 void		rt_assign_sphere(t_object *sphere, char **needle);
 void		rt_assign_plane(t_object *plane, char **needle);
@@ -337,7 +338,7 @@ t_tuple		rt_position(t_ray ray, float t);
 t_object	rt_sphere(t_tuple color);
 void		rt_print_sphere(t_object sphere);
 t_inter		rt_intersect(float t, t_object obj);
-void		rt_intersects(t_object *object, t_ray ray, t_xs *xs, int *i);
+void		rt_intersects(t_object object, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
 t_inter		rt_hit(t_xs xs);
@@ -369,8 +370,7 @@ t_tuple		rt_color_at(t_scene scene, t_ray ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-t_camera	rt_camera_book(int hsize, int vsize, float field_of_view);
-t_camera	rt_camera_parse(t_tuple coord, t_tuple orient, float field_of_view);
+t_camera	rt_calculate_camera_values(t_camera camera);
 t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera camera, t_scene scene, t_env *env);

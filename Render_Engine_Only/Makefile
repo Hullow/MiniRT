@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/02 14:02:17 by fallan            #+#    #+#              #
-#    Updated: 2025/06/02 14:02:18 by fallan           ###   ########.fr        #
+#    Updated: 2025/06/02 16:49:34 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-TESTS		= test \
+#TESTS		= test \
 			test_input \
 			test_shape \
 			print_objects \
@@ -118,12 +118,12 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(RAYSDIR), $(addsuffix .c, $(RAYS))) \
 			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
 			$(addprefix $(SRCDIR)$(SHADOWDIR), $(addsuffix .c, $(SHADOW))) \
-			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
 			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
 			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER)))
+#			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
@@ -133,12 +133,12 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(RAYSDIR), $(addsuffix .o, $(RAYS))) \
 			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
 			$(addprefix $(OBJDIR)$(SHADOWDIR), $(addsuffix .o, $(SHADOW))) \
-			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
 			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
 			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER)))
+#			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -169,7 +169,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(SHADOWDIR)
-	mkdir -p $(OBJDIR)$(TESTDIR)
+#	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(PLANESDIR)
