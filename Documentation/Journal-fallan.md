@@ -303,3 +303,7 @@ but it doesn't pass all tests for some reason.
 given by our input ambient, and `k_a` the ambient reflection constant of an object's material
 
 - Coded example scene from Ch7_Scene "Putting it together" to `sceneExample.rt`
+
+
+# 2/6/25
+- Debugging in VSCode: need to do it from pberset's branch.

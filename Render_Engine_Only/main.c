@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 20:07:53 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 13:56:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	test_example_scene();
-
+	// test_example_scene_with_flat_spheres();
+	// test_example_scene_planes();
 	t_env	env;
 	env = mlx_set_env();
 	rt_render(scene.cam, scene, &env);
