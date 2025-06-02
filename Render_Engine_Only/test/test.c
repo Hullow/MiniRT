@@ -1359,7 +1359,7 @@ void	test_example_scene()
 	);
 
 	// camera
-	scene.cam = rt_camera_book(500, 300, M_PI / 3);
+	scene.cam = rt_calculate_camera_values(500, 300, M_PI / 3);
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 
@@ -1382,7 +1382,7 @@ void	test_camera()
 
 	printf("\nrendering a world with a camera\n");
 	scene = test_default_scene(scene);
-	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+	camera = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
 
 	// camera settings
 	t_tuple from;
@@ -1973,7 +1973,7 @@ void	test_cylinder_render()
 
 	printf("\nrendering a world with a camera\n");
 	scene = test_default_scene(scene);
-	camera = rt_camera_book(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+	camera = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
 
 	// camera settings
 	t_tuple from;

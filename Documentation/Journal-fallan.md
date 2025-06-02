@@ -283,3 +283,22 @@ but it doesn't pass all tests for some reason.
 # 31/5/25
 - Trying to render shadow color appropriately, but last test still not passing. Material makes a difference, tried various default colors but none that make it work and make sense.
 - Scene with green spheres and flattened spheres as wall working (except rotated walls => no need to rotate in subject), now let's merge
+
+# 2/6/25
+- Notes:
+	- Cylinder:
+		- `rt_assign_cylinder` could be refactored for clarity, e.g. an intermediary struct
+		with norm, coord, origin which we init on stack and then forget. no need for all this data in
+		the cylinder struct
+		- cylinder.min, .max seem constant at -+INF ?
+
+- maybe a DARK or NULL_OBJECT to return if no intersection is clearer than a dark sphere of diameter 2 at origin
+
+Fixes:
+- fantom sphere: if intersect.t == 0, return black
+- rt_assign_objects (order)
+- camera init functions: removed transform reinitialisation + refactored.
+- ft_free_double_tab: new function
+- rt_lighting: no changes to function, only clean up
+- Makefile: added header
+- scenes: added some test scenes

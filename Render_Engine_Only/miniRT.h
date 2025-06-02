@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:18:20 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:32:43 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 600
+#  define WINDOW_WIDTH 300
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 400
+#  define WINDOW_HEIGHT 200
 # endif
 
 # ifndef WINDOW_NAME
@@ -370,7 +370,7 @@ t_tuple		rt_color_at(t_scene scene, t_ray ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-t_camera	rt_camera_book(t_camera camera);
+t_camera	rt_calculate_camera_values(t_camera camera);
 t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera camera, t_scene scene, t_env *env);

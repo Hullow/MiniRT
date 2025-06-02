@@ -6,22 +6,19 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 18:07:08 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:37:34 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-
-
-t_camera	rt_camera_book(t_camera camera)
+t_camera	rt_calculate_camera_values(t_camera camera)
 {
-	float		half_view;
-	float		aspect;
+	float	half_view;
+	float	aspect;
 
-	camera.hsize = WINDOW_WIDTH;
-	camera.vsize = WINDOW_HEIGHT;
-	camera.transform = rt_identity_matrix();
+	camera.transform = rt_view_transform(camera.coord, \
+		rt_add_tuple(camera.coord, camera.orient), rt_vector(0, 1, 0));
 	half_view = tanf(camera.field_of_view / 2);
 	aspect = (float) camera.hsize / camera.vsize;
 	if (aspect >= 1.0)

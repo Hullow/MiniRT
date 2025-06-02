@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 15:31:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ t_matrix	rt_set_transform(t_object object)
 	{
 		transform = rt_scaling(\
 			rt_vector(object.diameter, object.height, object.diameter));
-		transform = rt_mul_matrix(transform, rt_rotation(object.norm));
+		transform = rt_mul_matrix(rt_rotation(object.norm), transform);
 	}
 	else
 	{
 		transform = rt_rotation(object.norm);
 	}
-	transform = rt_mul_matrix(transform, rt_translation(\
-		rt_vector(object.origin.x, object.origin.y, object.origin.z)));
+	transform = rt_mul_matrix(rt_translation(\
+		rt_vector(object.origin.x, object.origin.y, object.origin.z)), transform);
 	return (transform);
 }
 
@@ -62,7 +62,7 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	else if (**values == 'C')
 	{
 		rt_assign_camera(scene, needle);
-		scene->cam = rt_camera_book(scene->cam);
+		scene->cam = rt_calculate_camera_values(scene->cam);
 	}
 	else
 	{
@@ -91,6 +91,7 @@ int	rt_init_scene(const char *file, t_scene *scene)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (rt_handle_error("rt_init_scene", errno, (char *)file), 1);
+	
 	while (1)
 	{
 		line = get_next_line(fd);

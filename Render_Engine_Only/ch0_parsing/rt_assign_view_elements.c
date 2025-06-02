@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:06:53 by fallan            #+#    #+#             */
-/*   Updated: 2025/05/23 11:13:32 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/02 15:56:13 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ void	rt_assign_light(t_scene *scene, char **needle)
 	}
 	if (errno != 0 || !rt_valid_color(color) || !rt_valid_coord(coord))
 	{
-		ft_free_tab(coord);
-		ft_free_tab(color);
+		ft_free_double_tab(coord, color);
 		return ;
 	}
 	scene->lux.coord = rt_point(
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	scene->lux.color = rt_color(
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2)));
-	ft_free_tab(coord);
-	ft_free_tab(color);
+	ft_free_double_tab(coord, color);
 }
 
 void	rt_assign_ambient(t_scene *scene, char **needle)
@@ -88,15 +86,14 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	}
 	if (!rt_valid_orient(orient) || !rt_valid_coord(coord) || errno != 0)
 	{
-		ft_free_tab(coord);
-		ft_free_tab(orient);
+		ft_free_double_tab(coord, orient);
 		return ;
 	}
 	scene->cam.orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)),
 			ft_strtof(*(orient +2)));
 	scene->cam.coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)),
 			ft_strtof(*(coord +2)));
-	scene->cam.transform = rt_view_transform(scene->cam.coord, rt_add_tuple(scene->cam.coord, scene->cam.orient), rt_vector(0, 1, 0));
-	ft_free_tab(coord);
-	ft_free_tab(orient);
+	scene->cam.hsize = WINDOW_WIDTH;
+	scene->cam.vsize = WINDOW_HEIGHT;
+	ft_free_double_tab(coord, orient);
 }
