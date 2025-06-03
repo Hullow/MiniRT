@@ -2071,7 +2071,7 @@ void	test_cylinder_render()
 	light.ambient = ambient;
 	
 	// camera settings
-	camera.coord = rt_point(0, 0, 0);
+	camera.coord = rt_point(0, 0, -5);
 	camera.orient = rt_vector(0, 0, 1);
 	camera.field_of_view = M_PI / 3;
 	camera.hsize = WINDOW_WIDTH;

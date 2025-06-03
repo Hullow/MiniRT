@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-static float	cy_t(float a, float b, float discriminant, float signe)
+static float	cy_t(float a, float b, float discriminant, int signe)
 {
 	float	t;
 
@@ -82,8 +82,8 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 		errno = EDISCRIMINANT;
 	else
 	{
-		xs->inter[*i] = rt_intersect(cy_t(a, b, discr, -1.0), cylinder);
-		xs->inter[(*i) + 1] = rt_intersect(cy_t(a, b, discr, 1.0), cylinder);
+		xs->inter[*i] = rt_intersect(cy_t(a, b, discr, -1), cylinder);
+		xs->inter[(*i) + 1] = rt_intersect(cy_t(a, b, discr, 1), cylinder);
 		cy_post_process(cylinder, ray, xs, i);
 	}
 	rt_intersect_caps(cylinder, ray, xs, i);
