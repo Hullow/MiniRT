@@ -2058,8 +2058,9 @@ void	test_cylinder_render()
 
 	//cylinder settings
 	cylinder = rt_cylinder(rt_scale_color(rt_color(0.8, 1.0, 0.2), 255));
-	cylinder.min = 0;
-	cylinder.max = 1;
+	cylinder.min = 1;
+	cylinder.max = 2;
+	cylinder.closed = 1;
 	cylinder.transform = rt_identity_matrix();
 	objects[0] = cylinder;
 
@@ -2076,13 +2077,6 @@ void	test_cylinder_render()
 	camera.hsize = WINDOW_WIDTH;
 	camera.vsize = WINDOW_HEIGHT;
 	camera = rt_calculate_camera_values(camera);
-	t_tuple from;
-	t_tuple to;
-	t_tuple up;
-	from = rt_point(0.0f, 0.0f, -5.0f);
-	to = rt_point(0.0f, 0.0f, 0.0f);
-	up = rt_vector(0.0f, 1.0f, 0.0f);
-	camera.transform = rt_view_transform(from, to, up);
 	
 	//assign scene
 	scene.cam = camera;
