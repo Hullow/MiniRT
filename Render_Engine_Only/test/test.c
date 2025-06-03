@@ -2062,16 +2062,26 @@ void	test_cylinder_render()
 	ft_printf("CH13 - Putting it together\n");
 	printf("Test camera\n***********\n");
 	t_camera	camera;
-	// t_ray		ray;
-	t_scene		*scene = malloc(sizeof(t_scene));
-	t_object	objects[7];
+	t_scene		scene;
+	t_light		light;
+	t_ambient	ambient;
+	t_object	objects[1];
+	t_object	cylinder;
 
-	scene->objects = objects;
+	//cylinder settings
+	cylinder = rt_cylinder(rt_scale_color(rt_color(0.8, 1.0, 0.2), 255));
+	cylinder.min = 1;
+	cylinder.max = 2;
+	cylinder.closed = 1;
+	cylinder.transform = rt_identity_matrix();
+	objects[0] = cylinder;
 
-	printf("\nrendering a world with a camera\n");
-	scene = test_default_scene(scene);
-	camera = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
-
+	//light settings
+	light = rt_light(rt_scale_color(rt_color(1, 1, 1), 255), rt_point(-5, 5, -10), 1.0);
+	ambient.color = rt_scale_color(rt_color(0.2, 1.0, 0.8), 255);
+	ambient.intensity = 0.5;
+	light.ambient = ambient;
+	
 	// camera settings
 	t_tuple from;
 	t_tuple to;

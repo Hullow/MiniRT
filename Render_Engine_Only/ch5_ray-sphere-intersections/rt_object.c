@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:19:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/03 17:34:59 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_object	rt_sphere(t_tuple color)
 	sphere.diameter = 2.0f;
 	sphere.color = color;
 	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
+	sphere.transform = rt_identity_matrix();
 	return (sphere);
 }
 
