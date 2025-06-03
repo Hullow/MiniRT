@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-bool	rt_is_shadowed(t_scene scene, t_tuple point)
+bool	rt_is_shadowed(t_scene *scene, t_tuple point)
 {
 	t_tuple	point_to_light;
 	float	distance;
@@ -20,10 +20,10 @@ bool	rt_is_shadowed(t_scene scene, t_tuple point)
 	t_xs	xs;
 	t_inter	hit;
 
-	point_to_light = rt_sub_tuple(scene.lux.coord, point);
+	point_to_light = rt_sub_tuple(scene->lux.coord, point);
 	distance = rt_magnitude(point_to_light);
 	ray = rt_ray(point, rt_normalize(point_to_light));
-	rt_intersect_scene(scene, ray, &xs);
+	rt_intersect_scene(scene, &ray, &xs);
 	hit = rt_hit(xs);
 	if (hit.t != 0 && hit.t < distance)
 		return (true);

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
-/* 
+
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_a = 0;
@@ -42,23 +42,39 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (5);
 	return (0);
 }
-*/
+
+/*int	main(int argc, char *argv[])
+{
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	rt_print_scene(scene);
+	return (0);
+}*/
 
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
-	//t_env		env;
+	t_env		env;
 
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	// test_example_scene_with_flat_spheres();
-	// test_example_scene_planes();
-	
 	env = mlx_set_env();
-	rt_render(scene.cam, scene, &env);
+	if (scene.n_obj > 0)
+		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
-
 	return (0);
 }
+
+/*
+int	main()
+{
+	test_example_scene_planes();
+	return (0);
+}
+	*/

@@ -35,7 +35,7 @@ t_camera	rt_calculate_camera_values(t_camera camera)
 	return (camera);
 }
 
-t_ray	rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y)
+t_ray	rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y)
 {
 	float	offset_xy[2];
 	float	world_xy[2];
@@ -43,13 +43,13 @@ t_ray	rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y)
 	t_tuple	direction;
 	t_tuple	pixel;
 
-	offset_xy[0] = (pixel_x + 0.5) * camera.pixel_size;
-	offset_xy[1] = (pixel_y + 0.5) * camera.pixel_size;
-	world_xy[0] = camera.half_width - offset_xy[0];
-	world_xy[1] = camera.half_height - offset_xy[1];
-	pixel = rt_mul_tuple_matrix(rt_inversion(camera.transform), \
+	offset_xy[0] = (pixel_x + 0.5) * camera->pixel_size;
+	offset_xy[1] = (pixel_y + 0.5) * camera->pixel_size;
+	world_xy[0] = camera->half_width - offset_xy[0];
+	world_xy[1] = camera->half_height - offset_xy[1];
+	pixel = rt_mul_tuple_matrix(rt_inversion(camera->transform), \
 		rt_point(world_xy[0], world_xy[1], -1));
-	origin = rt_mul_tuple_matrix(rt_inversion(camera.transform), \
+	origin = rt_mul_tuple_matrix(rt_inversion(camera->transform), \
 		rt_point(0, 0, 0));
 	direction = rt_normalize(rt_sub_tuple(pixel, origin));
 	return (rt_ray(origin, direction));

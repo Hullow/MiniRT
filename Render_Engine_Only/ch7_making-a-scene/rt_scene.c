@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-void	rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs)
+void	rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs)
 {
 	int			i;
 	int			index;
@@ -23,25 +23,25 @@ void	rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs)
 	i = 0;
 	xs->count = 0;
 	xs->inter = inter_array;
-	while (i < scene.n_obj)
+	while (i < scene->n_obj)
 	{
-		ray_transform = rt_inversion(scene.objects[i].transform);
-		scene.objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray.origin);
-		scene.objects[i].saved_ray.direction = \
-			rt_mul_tuple_matrix(ray_transform, ray.direction);
-		rt_intersects(scene.objects[i], xs, &index);
+		ray_transform = rt_inversion(scene->objects[i].transform);
+		scene->objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray->origin);
+		scene->objects[i].saved_ray.direction = \
+			rt_mul_tuple_matrix(ray_transform, ray->direction);
+		rt_intersects(&(scene->objects[i]), xs, &index);
 		i++;
 	}
 }
 
-t_comps	rt_prepare_computations(t_inter intersect, t_ray ray)
+t_comps	rt_prepare_computations(t_inter intersect, t_ray *ray)
 {
 	t_comps	comps;
 
 	comps.t = intersect.t;
 	comps.object = intersect.object;
 	comps.point = rt_position(ray, comps.t);
-	comps.eyev = rt_negate_vector(ray.direction);
+	comps.eyev = rt_negate_vector(ray->direction);
 	comps.normalv = rt_normal_at(comps.object, comps.point);
 	if (rt_dot_product(comps.normalv, comps.eyev) < 0)
 	{
@@ -55,16 +55,16 @@ t_comps	rt_prepare_computations(t_inter intersect, t_ray ray)
 	return (comps);
 }
 
-t_tuple	rt_shade_hit(t_scene scene, t_comps comp)
+t_tuple	rt_shade_hit(t_scene *scene, t_comps comp)
 {
 	t_tuple	color;
 
 	comp.in_shadow = rt_is_shadowed(scene, comp.over_point);
-	color = rt_lighting(scene.lux, comp);
+	color = rt_lighting(scene->lux, comp);
 	return (color);
 }
 
-t_tuple	rt_color_at(t_scene scene, t_ray ray)
+t_tuple	rt_color_at(t_scene *scene, t_ray *ray)
 {
 	t_tuple	color;
 	t_comps	comps;
@@ -80,7 +80,7 @@ t_tuple	rt_color_at(t_scene scene, t_ray ray)
 	return (color);
 }
 
-void	rt_render(t_camera camera, t_scene scene, t_env *env)
+void	rt_render(t_camera *camera, t_scene *scene, t_env *env)
 {
 	t_ray	ray;
 	int		x;
@@ -88,13 +88,13 @@ void	rt_render(t_camera camera, t_scene scene, t_env *env)
 	t_tuple	color;
 
 	y = 0;
-	while (y < camera.vsize - 1)
+	while (y < camera->vsize - 1)
 	{
 		x = 0;
-		while (x < camera.hsize - 1)
+		while (x < camera->hsize - 1)
 		{
 			ray = rt_ray_for_pixel(camera, x, y);
-			color = rt_color_at(scene, ray);
+			color = rt_color_at(scene, &ray);
 			color = rt_reinhard_tonemap(color);
 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
 			x++;

@@ -21,23 +21,23 @@ t_inter	rt_intersect(float t, t_object obj)
 	return (i);
 }
 
-void	rt_intersects(t_object object, t_xs *xs, int *i)
+void	rt_intersects(t_object *object, t_xs *xs, int *i)
 {
-	if (object.shape == SPHERE)
-		rt_discriminant(object.saved_ray, object, xs, i);
-	else if (object.shape == PLANE)
-		rt_ray_plane_x(object, object.saved_ray, xs, i);
-	else if (object.shape == CYLINDER)
-		rt_ray_cylinder_x(object, object.saved_ray, xs, i);
+	if (object->shape == SPHERE)
+		rt_discriminant(object->saved_ray, *object, xs, i);
+	else if (object->shape == PLANE)
+		rt_ray_plane_x(*object, object->saved_ray, xs, i);
+	else if (object->shape == CYLINDER)
+		rt_ray_cylinder_x(*object, object->saved_ray, xs, i);
 	else
 		xs->count = 0;
 }
 
-t_tuple	rt_position(t_ray ray, float t)
+t_tuple	rt_position(t_ray *ray, float t)
 {
 	t_tuple	position;
 
-	position = rt_add_tuple(ray.origin, rt_scale_vector(ray.direction, t));
+	position = rt_add_tuple(ray->origin, rt_scale_vector(ray->direction, t));
 	return (position);
 }
 

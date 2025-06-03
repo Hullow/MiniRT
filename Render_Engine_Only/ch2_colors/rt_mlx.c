@@ -38,8 +38,8 @@ int	key_handler(int keycode, t_env *env)
 	if (keycode == 65307)
 	{
 		printf("ESC key pressed, program stopping\n");
-		mlx_destroy_image(env->mlx, env->img);
-		mlx_destroy_window(env->mlx, env->mlx_win);
+		//mlx_destroy_image(env->mlx, env->img);
+		//mlx_destroy_window(env->mlx, env->mlx_win);
 		exit(1);
 	}
 	return (0);
@@ -50,8 +50,8 @@ int	window_closed(t_env *env)
 {
 	(void)env;
 	printf("Window closed, program stopping\n");
-	mlx_destroy_image(env->mlx, env->img);
-	mlx_destroy_window(env->mlx, env->mlx_win);
+	//mlx_destroy_image(env->mlx, env->img);
+	//mlx_destroy_window(env->mlx, env->mlx_win);
 	// exit(1);
 	return (0);
 }
