@@ -308,6 +308,7 @@ t_ray		rt_define_ray_to_wall(t_ray ray, \
 int			rgb_to_int(t_tuple c);
 void		rt_draw(t_env *env, t_object sp, t_ray ray);
 void		my_mlx_pixel_put(t_env *env, int x, int y, int color);
+void		mlx_free_all(t_env *env);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
 

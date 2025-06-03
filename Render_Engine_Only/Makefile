@@ -61,6 +61,7 @@ MAIN		= main
 
 COLOR		= rt_colors_operations \
 			rt_mlx \
+			rt_mlx_free \
 			rt_space
 
 LIGHT		= rt_light \
