@@ -326,3 +326,10 @@ Fixes:
 - scenes: added some test scenes
 
 - `rgb_to_int()`: simplified it with the help of Kurt (pkurt ?)
+
+
+# 3/6/25
+- Fixed cylinder caps
+- To do:
+	- re-add cy_swap (in cy_post_process)
+	
