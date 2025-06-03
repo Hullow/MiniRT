@@ -320,11 +320,15 @@ int			window_closed(t_env *env);
 #  define ENOTINVERTIBLE 132
 # endif
 
+# ifndef EDETERMINANT
+#  define EDETERMINANT 133
+# endif
+
 # ifndef EPSILON
 #  define EPSILON 0.00005
 # endif
 
-t_matrix	rt_identity_matrix(void);
+t_matrix	rt_identity_matrix(int size);
 void		rt_print_matrix(t_matrix m);
 int			rt_matrix_equality(t_matrix a, t_matrix b);
 t_matrix	rt_mul_matrix(t_matrix a, t_matrix b);
@@ -353,7 +357,7 @@ t_matrix	rt_set_transform(t_object object);
 //CH5 Ray-Sphere intersections
 
 # ifndef EDISCRIMINANT
-#  define EDISCRIMINANT 133
+#  define EDISCRIMINANT 134
 # endif
 
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
@@ -406,7 +410,7 @@ bool		rt_is_shadowed(t_scene *scene, t_tuple point);
 //CH9 Planes
 
 # ifndef ERAYPARALLEL
-#  define ERAYPARALLEL 134
+#  define ERAYPARALLEL 135
 # endif
 
 t_object	rt_plane(t_tuple color);

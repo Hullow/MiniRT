@@ -18,7 +18,7 @@ t_matrix	rt_rotation_x(float angle)
 {
 	t_matrix	rotation;
 
-	rotation = rt_identity_matrix();
+	rotation = rt_identity_matrix(4);
 	rotation.cell[1][1] = cosf(angle);
 	rotation.cell[1][2] = -sinf(angle);
 	rotation.cell[2][1] = sinf(angle);
@@ -32,7 +32,7 @@ t_matrix	rt_rotation_y(float angle)
 {
 	t_matrix	rotation;
 
-	rotation = rt_identity_matrix();
+	rotation = rt_identity_matrix(4);
 	rotation.cell[0][0] = cosf(angle);
 	rotation.cell[2][0] = -sinf(angle);
 	rotation.cell[0][2] = sinf(angle);
@@ -46,7 +46,7 @@ t_matrix	rt_rotation_z(float angle)
 {
 	t_matrix	rotation;
 
-	rotation = rt_identity_matrix();
+	rotation = rt_identity_matrix(4);
 	rotation.cell[0][0] = cosf(angle);
 	rotation.cell[0][1] = -sinf(angle);
 	rotation.cell[1][0] = sinf(angle);

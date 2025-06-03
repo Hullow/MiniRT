@@ -17,7 +17,7 @@ t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 {
 	t_matrix	orientation;
 
-	orientation = rt_identity_matrix();
+	orientation = rt_identity_matrix(4);
 	orientation.cell[0][0] = left.x;
 	orientation.cell[0][1] = left.y;
 	orientation.cell[0][2] = left.z;

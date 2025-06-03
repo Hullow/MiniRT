@@ -312,8 +312,8 @@ void	test_matrix()
 
 // 	printf("Identity matrix\n");
 	
-	matrix = rt_identity_matrix();
-	matrix2 = rt_identity_matrix();
+	matrix = rt_identity_matrix(4);
+	matrix2 = rt_identity_matrix(4);
 	// matrix2.cell[0][0] = 0;
 	// matrix2.cell[0][1] = 1;
 	// matrix2.cell[0][2] = 2;
@@ -358,7 +358,7 @@ void	test_matrix()
 // 	transp = rt_matrix_transpose(matrix);
 // 	rt_print_matrix(transp);
 // 	printf("Transpose identity\n");
-// 	transp = rt_identity_matrix();
+// 	transp = rt_identity_matrix(4);
 // 	rt_print_matrix(transp);
 // 	printf("\n");
 
@@ -812,7 +812,7 @@ void	test_intersect()
 
 	printf("Transform a sphere\n");
 
-	sphere.transform = rt_identity_matrix();
+	sphere.transform = rt_identity_matrix(4);
 	printf("Identity\n");
 	rt_print_matrix(sphere.transform);
 	printf("Transformed\n");
@@ -1244,7 +1244,7 @@ void	test_view_transform()
 	to = rt_point(0, 0, -1);
 	up = rt_vector(0, 1, 0);
 	view_transform = rt_view_transform(from, to, up);
-	if (rt_matrix_equality(view_transform, rt_identity_matrix()))
+	if (rt_matrix_equality(view_transform, rt_identity_matrix(4)))
 		printf("the view transformation matrix == identity matrix\n");
 	else
 		printf("the view transformation matrix NOT == identity matrix\n");
@@ -1378,12 +1378,12 @@ void	test_example_scene_planes()
 
 	// floor: a plane
 	floor = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
-	floor.transform = rt_identity_matrix();
+	floor.transform = rt_identity_matrix(4);
 	floor.material.specular = 0.0;
 
 	// left wall
 	left_wall = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
-	left_wall.transform = rt_identity_matrix();
+	left_wall.transform = rt_identity_matrix(4);
 	left_wall.transform = rt_mul_matrix(rt_rotation_x(M_PI / 2), left_wall.transform);
 	left_wall.transform = rt_mul_matrix(rt_rotation_y(- M_PI / 4), left_wall.transform);
 	left_wall.transform = rt_mul_matrix(rt_translation(rt_vector(0, 0, 5)), left_wall.transform);
@@ -1391,7 +1391,7 @@ void	test_example_scene_planes()
 	
 	// right wall
 	right_wall = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
-	right_wall.transform = rt_identity_matrix();
+	right_wall.transform = rt_identity_matrix(4);
 	right_wall.transform = rt_mul_matrix(rt_rotation_x(M_PI / 2), right_wall.transform);
 	right_wall.transform = rt_mul_matrix(rt_rotation_y(M_PI / 4), right_wall.transform);
 	right_wall.transform = rt_mul_matrix(rt_translation(rt_vector(0, 0, 5)), right_wall.transform);
@@ -1668,7 +1668,7 @@ void	test_planes()
 
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	plane.transform = rt_translation(rt_vector(2, 3, 4));
-	if (rt_matrix_equality(plane.transform, rt_identity_matrix()))
+	if (rt_matrix_equality(plane.transform, rt_identity_matrix(4)))
 		ft_printf("Plane transform is identity\n");
 	else
 		ft_printf("Plane transform is not identity\n");
@@ -1796,7 +1796,7 @@ void	test_render_plane()
 	xs.inter = inter;
 	camera = rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
-	plane.transform = rt_identity_matrix();
+	plane.transform = rt_identity_matrix(4);
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -2061,7 +2061,7 @@ void	test_cylinder_render()
 	cylinder.min = 1;
 	cylinder.max = 2;
 	cylinder.closed = 1;
-	cylinder.transform = rt_identity_matrix();
+	cylinder.transform = rt_identity_matrix(4);
 	objects[0] = cylinder;
 
 	//light settings

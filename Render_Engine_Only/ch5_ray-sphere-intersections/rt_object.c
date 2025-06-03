@@ -25,6 +25,7 @@ t_object	rt_sphere(t_tuple color)
 	sphere.diameter = 2.0f;
 	sphere.color = color;
 	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
+	sphere.transform = rt_identity_matrix(4);
 	return (sphere);
 }
 
