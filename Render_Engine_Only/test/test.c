@@ -1374,7 +1374,8 @@ void	test_example_scene_planes()
 	t_object	middle_sphere;
 	t_object	right_sphere;
 	t_object	left_sphere;
-	t_object	object_array[6];
+	t_object	cylinder;
+	t_object	object_array[7];
 
 	// floor: a plane
 	floor = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
@@ -1421,6 +1422,14 @@ void	test_example_scene_planes()
 	left_sphere.material.diffuse = 0.7;
 	left_sphere.material.specular = 0.3;
 
+	//cylinder
+	cylinder = rt_cylinder(rt_scale_color(rt_color(0.8, 1, 0.2), 255));
+	cylinder.min = 0;
+	cylinder.max = 1;
+	cylinder.closed = 1;
+	cylinder.transform = rt_rotation(rt_vector(-1, 1, 1));
+	cylinder.transform = rt_mul_matrix(rt_translation(rt_vector(1.5, 2, 0)), cylinder.transform);
+
 	// add objects to scene
 	object_array[0] = floor;
 	object_array[1] = left_wall;
@@ -1428,9 +1437,10 @@ void	test_example_scene_planes()
 	object_array[3] = middle_sphere;
 	object_array[4] = right_sphere;
 	object_array[5] = left_sphere;
+	object_array[6] = cylinder;
 
 	scene.objects = object_array;
-	scene.n_obj = 6;
+	scene.n_obj = 7;
 
 	// light
 	scene.lux = rt_light( \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 18:50:55 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/03 22:52:17 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ int	main(int argc, char *argv[])
 
 int	main()
 {
-	test_cylinder_render();
+	test_example_scene_planes();
 	return (0);
 }

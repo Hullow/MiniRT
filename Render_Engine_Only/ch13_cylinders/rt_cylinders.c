@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:14:19 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 19:53:45 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/03 22:50:18 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,54 +37,52 @@ static void	cy_swap(t_xs *xs, int i)
 	xs->inter[i + 1].t = buffer;
 }
 
-static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, int *i)
+static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, t_cyl_val *val)
 {
 	float	y0;
 	float	y1;
-	int		increment;
+	float	t0;
+	float	t1;
 
-	increment = 0;
-	if (xs->inter[*i].t > xs->inter[(*i) + 1].t)
-		cy_swap(xs, *i);
-	y0 = ray.origin.y + xs->inter[*i].t * ray.direction.y;
-	if (cylinder.min - EPSILON < y0 && y0 < cylinder.max + EPSILON)
+	t0 = cy_t(val->a, val->b, val->discr, -1);
+	t1 = cy_t(val->a, val->b, val->discr, 1);
+	y0 = ray.origin.y + t0 * ray.direction.y;
+	if (cylinder.min < y0 && y0 < cylinder.max)
 	{
+		xs->inter[val->i] = rt_intersect(t0, cylinder);
 		(xs->count)++;
-		increment++;
+		(val->i)++;
 	}
-	y1 = ray.origin.y + xs->inter[(*i) + 1].t * ray.direction.y;
-	if (cylinder.min - EPSILON < y1 && y1 < cylinder.max + EPSILON)
+	y1 = ray.origin.y + t1 * ray.direction.y;
+	if (cylinder.min < y1 && y1 < cylinder.max)
 	{
+		xs->inter[val->i] = rt_intersect(t1, cylinder);
 		(xs->count)++;
-		increment++;
+		(val->i)++;
 	}
-	(*i) += increment;
 }
 
 void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 {
-	float	a;
-	float	b;
-	float	c;
-	float	discr;
+	t_cyl_val	val;
 
 	errno = 0;
-	a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
-	if (a == 0)
-		discr = -1;
+	val.a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
+	if (is_equal_float(val.a, 0))
+		val.discr = -1;
 	else
 	{
-		b = 2 * cy_b(ray, 'x') + 2 * cy_b(ray, 'z');
-		c = ray.origin.x * ray.origin.x + ray.origin.z * ray.origin.z - 1;
-		discr = b * b - 4 * a * c;
+		val.b = 2 * (ray.origin.x * ray.direction.x + ray.origin.z * ray.direction.z);
+		val.c = ray.origin.x * ray.origin.x + ray.origin.z * ray.origin.z - 1;
+		val.discr = val.b * val.b - 4 * val.a * val.c;
 	}
-	if (discr < 0)
+	if (val.discr < 0)
 		errno = EDISCRIMINANT;
 	else
 	{
-		xs->inter[*i] = rt_intersect(cy_t(a, b, discr, -1), cylinder);
-		xs->inter[(*i) + 1] = rt_intersect(cy_t(a, b, discr, 1), cylinder);
-		cy_post_process(cylinder, ray, xs, i);
+		val.i = *i;
+		cy_post_process(cylinder, ray, xs, &val);
+		*i = val.i;
 	}
 	rt_intersect_caps(cylinder, ray, xs, i);
 }

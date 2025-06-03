@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/03 17:39:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/03 22:48:37 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,15 @@ typedef struct s_lighting_params {
 	t_tuple	diffuse;
 	t_tuple	specular;
 }	t_lighting_params;
+
+typedef struct s_cyl_val
+{
+	float	a;
+	float	b;
+	float	c;
+	int		i;
+	float	discr;
+}	t_cyl_val;
 
 //test
 
