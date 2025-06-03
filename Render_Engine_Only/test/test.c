@@ -2070,8 +2070,8 @@ void	test_cylinder_render()
 
 	//cylinder settings
 	cylinder = rt_cylinder(rt_scale_color(rt_color(0.8, 1.0, 0.2), 255));
-	cylinder.min = 1;
-	cylinder.max = 2;
+	cylinder.min = -1;
+	cylinder.max = -2;
 	cylinder.closed = 1;
 	cylinder.transform = rt_identity_matrix();
 	objects[0] = cylinder;

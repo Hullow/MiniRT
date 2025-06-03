@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:45:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 17:32:28 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/03 18:34:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ float	rt_minor(t_matrix m, int row, int col)
 	float		minor;
 	t_matrix	sub;
 
+	sub = rt_identity_matrix();
 	sub = rt_identity_matrix();
 	rt_sub_matrix(m, row, col, &sub);
 	minor = rt_determinant(sub);

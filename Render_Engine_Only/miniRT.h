@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/03 17:39:34 by fallan           ###   ########.fr       */
+/*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
+/*   Updated: 2025/06/03 18:34:53 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.00005
+#  define EPSILON 0.005
 # endif
 
 t_matrix	rt_identity_matrix(void);
