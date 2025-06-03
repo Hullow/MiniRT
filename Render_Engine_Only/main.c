@@ -48,7 +48,7 @@ int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
-	t_env		env;
+	//t_env		env;
 
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))

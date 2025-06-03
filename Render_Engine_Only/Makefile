@@ -84,11 +84,11 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-#TESTS		= test \
-			test_input \
-			test_shape \
-			print_objects \
-			test_thread
+TESTS		= test \
+			print_objects
+#			test_input
+#			test_shape
+#			test_thread
 
 TRANSF		= rt_rotation \
 			rt_transform
@@ -122,8 +122,8 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
 			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
 			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
-			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER)))
-#			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
+			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER))) \
+			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
@@ -137,8 +137,8 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
 			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
 			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
-			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER)))
-#			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
+			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER))) \
+			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -148,7 +148,7 @@ $(NAME): $(OBJ)
 	@echo "Building $(NAME)..."
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBDIRFLAGS) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBDIRFLAGS) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -169,7 +169,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(SHADOWDIR)
-#	mkdir -p $(OBJDIR)$(TESTDIR)
+	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(PLANESDIR)
@@ -178,7 +178,7 @@ $(OBJDIR):
 
 # Build object files
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(DFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean compiled files
 clean:
