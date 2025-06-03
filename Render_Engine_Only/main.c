@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main.c                                              :+:    :+:           */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 18:50:55 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/03 18:47:29 by fallan         ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	return (0);
 }*/
 /*
+
+/*int	main(int argc, char *argv[])
+{
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	rt_print_scene(scene);
+	return (0);
+}*/
+/*
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -69,7 +82,8 @@ int	main(int argc, char *argv[])
 		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
 	return (0);
-}*/
+}
+*/
 
 
 int	main()

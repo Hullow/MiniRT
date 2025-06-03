@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_matrix_inversion.c                              :+:      :+:    :+:   */
+/*   rt_matrix_inversion.c                               :+:    :+:           */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:45:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 16:55:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/03 18:48:58 by fallan         ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ float	rt_minor(t_matrix m, int row, int col)
 	float		minor;
 	t_matrix	sub;
 
+	sub = rt_identity_matrix();
 	rt_sub_matrix(m, row, col, &sub);
 	minor = rt_determinant(sub);
 	return (minor);
@@ -103,6 +104,7 @@ t_matrix	rt_inversion(t_matrix m)
 	det = rt_determinant(m);
 	if (fabs(det) < EPSILON)
 		return (errno = ENOTINVERTIBLE, rt_identity_matrix());
+	invert = rt_identity_matrix();
 	invert.rows = m.rows;
 	invert.columns = m.columns;
 	i = -1;
