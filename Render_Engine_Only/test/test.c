@@ -2049,31 +2049,50 @@ void	test_cylinder()
 void	test_cylinder_render()
 {
 	ft_printf("CH13 - Putting it together\n");
-	printf("Test camera\n***********\n");
 	t_camera	camera;
-	// t_ray		ray;
-	t_scene		*scene = malloc(sizeof(t_scene));
-	t_object	objects[7];
+	t_scene		scene;
+	t_light		light;
+	t_ambient	ambient;
+	t_object	objects[1];
+	t_object	cylinder;
 
-	scene->objects = objects;
+	//cylinder settings
+	cylinder = rt_cylinder(rt_scale_color(rt_color(0.8, 1.0, 0.2), 255));
+	cylinder.min = 0;
+	cylinder.max = 1;
+	cylinder.transform = rt_identity_matrix();
+	objects[0] = cylinder;
 
-	printf("\nrendering a world with a camera\n");
-	scene = test_default_scene(scene);
-	camera = rt_calculate_camera_values(camera);
-
+	//light settings
+	light = rt_light(rt_scale_color(rt_color(1, 1, 1), 255), rt_point(-5, 5, -10), 1.0);
+	ambient.color = rt_scale_color(rt_color(0.2, 1.0, 0.8), 255);
+	ambient.intensity = 0.5;
+	light.ambient = ambient;
+	
 	// camera settings
+	camera.coord = rt_point(0, 0, 0);
+	camera.orient = rt_vector(0, 0, 1);
+	camera.field_of_view = M_PI / 3;
+	camera.hsize = WINDOW_WIDTH;
+	camera.vsize = WINDOW_HEIGHT;
+	camera = rt_calculate_camera_values(camera);
 	t_tuple from;
 	t_tuple to;
 	t_tuple up;
-	from = rt_point(0, 0, -5);
-	to = rt_point(0, 0, 0);
-	up = rt_vector(0, 1, 0);
+	from = rt_point(0.0f, 0.0f, -5.0f);
+	to = rt_point(0.0f, 0.0f, 0.0f);
+	up = rt_vector(0.0f, 1.0f, 0.0f);
 	camera.transform = rt_view_transform(from, to, up);
+	
+	//assign scene
+	scene.cam = camera;
+	scene.objects = objects;
+	scene.n_obj = 1;
+	scene.lux = light;
 
 	// mlx settings
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(&camera, scene, &env);
+	rt_render(&camera, &scene, &env);
 	mlx_run_window(&env);
-	free(scene); // LEAK RISK (exit from mlx)
 }

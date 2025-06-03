@@ -54,7 +54,7 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	rt_print_scene(scene);
 	return (0);
 }*/
-
+/*
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -69,12 +69,11 @@ int	main(int argc, char *argv[])
 		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
 	return (0);
-}
+}*/
 
-/*
+
 int	main()
 {
-	test_example_scene_planes();
+	test_cylinder_render();
 	return (0);
 }
-	*/

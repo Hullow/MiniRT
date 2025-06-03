@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-static float	cy_t(float a, float b, float discriminant, int signe)
+static float	cy_t(float a, float b, float discriminant, float signe)
 {
 	float	t;
 
@@ -71,20 +71,20 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 	errno = 0;
 	a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
 	if (a == 0)
-		rt_intersect_caps(cylinder, ray, xs, i);
+		discr = -1;
 	else
 	{
 		b = 2 * cy_b(ray, 'x') + 2 * cy_b(ray, 'z');
 		c = ray.origin.x * ray.origin.x + ray.origin.z * ray.origin.z - 1;
 		discr = b * b - 4 * a * c;
-		if (discr < 0)
-			errno = EDISCRIMINANT;
-		else
-		{
-			xs->inter[*i] = rt_intersect(cy_t(a, b, discr, -1), cylinder);
-			xs->inter[(*i) + 1] = rt_intersect(cy_t(a, b, discr, 1), cylinder);
-		}
-		cy_post_process(cylinder, ray, xs, i);
-		rt_intersect_caps(cylinder, ray, xs, i);
 	}
+	if (discr < 0)
+		errno = EDISCRIMINANT;
+	else
+	{
+		xs->inter[*i] = rt_intersect(cy_t(a, b, discr, -1.0), cylinder);
+		xs->inter[(*i) + 1] = rt_intersect(cy_t(a, b, discr, 1.0), cylinder);
+		cy_post_process(cylinder, ray, xs, i);
+	}
+	rt_intersect_caps(cylinder, ray, xs, i);
 }
