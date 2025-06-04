@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 22:52:17 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/04 21:44:52 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	rt_print_scene(scene);
 	return (0);
 }*/
-/*
+
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -69,11 +69,11 @@ int	main(int argc, char *argv[])
 		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
 	return (0);
-}*/
+}
 
 
-int	main()
+/*int	main()
 {
 	test_example_scene_planes();
 	return (0);
-}
+}*/

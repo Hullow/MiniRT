@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/03 22:48:37 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/04 21:53:54 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_tuple
 # endif
 
 # ifndef WINDOW_NAME
-#  define WINDOW_NAME "micro_rt"
+#  define WINDOW_NAME "miniRT"
 # endif
 
 # ifndef MAX_OBJECTS
