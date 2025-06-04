@@ -18,7 +18,6 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 	char		**color;
 	t_matrix	transform;
 
-	// check validity
 	coord = ft_split(*needle, ',');
 	color = ft_split(*(needle +2), ',');
 	if (!rt_valid_color(color) || !rt_valid_coord(coord) || errno != 0)
@@ -26,12 +25,8 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 		ft_free_double_tab(coord, color);
 		return ;
 	}
-
-	// initialize sphere with color
 	*sphere = rt_sphere(rt_color(\
 		ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
-
-	// fill all other values
 	sphere->origin = rt_point(\
 		ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	sphere->diameter = ft_strtof(*(needle +1));
@@ -47,19 +42,14 @@ void	rt_assign_plane(t_object *plane, char **needle)
 	char		**color;
 	t_matrix	transform;
 
-	// check validity
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle +1), ',');
 	color = ft_split(*(needle +2), ',');
 	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) \
 		|| !rt_valid_color(color))
 		return (ft_free_tab(coord), ft_free_tab(norm), ft_free_tab(color));
-
-	// initialize plane with color
 	*plane = rt_plane(rt_color(\
 				ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
-
-	// fill all other values
 	plane->origin = rt_point(
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	plane->norm = rt_vector(
@@ -78,19 +68,14 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	char		**color;
 	t_matrix	transform;
 
-	// check validity
 	coord = ft_split(*needle, ',');
 	norm = ft_split(*(needle +1), ',');
 	color = ft_split(*(needle + 4), ',');
 	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) \
 	|| !rt_valid_color(color))
 		return (ft_free_tab(coord), ft_free_tab(norm), ft_free_tab(color));
-
-	// initialize cylinder with color
 	*cylinder = rt_cylinder(rt_color(\
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
-
-	// fill all other values
 	cylinder->origin = rt_point(
 			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
 	cylinder->norm = rt_vector(

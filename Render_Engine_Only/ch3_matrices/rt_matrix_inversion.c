@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_matrix_inversion.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 11:45:04 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 18:34:32 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:16:38 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ float	rt_determinant(t_matrix m)
 
 	if (m.rows == 2)
 		det = m.cell[0][0] * m.cell[1][1] - m.cell[0][1] * m.cell[1][0];
-	else
+	else if (m.rows > 2)
 	{
 		i = 0;
 		det = 0;
@@ -28,6 +28,13 @@ float	rt_determinant(t_matrix m)
 			det = det + m.cell[0][i] * rt_cofactor(m, 0, i);
 			i++;
 		}
+	}
+	else if (m.rows == 1)
+		det = m.cell[0][0];
+	else
+	{
+		det = 0;
+		errno = EDETERMINANT;
 	}
 	return (det);
 }
@@ -73,8 +80,7 @@ float	rt_minor(t_matrix m, int row, int col)
 	float		minor;
 	t_matrix	sub;
 
-	sub = rt_identity_matrix();
-	sub = rt_identity_matrix();
+	sub = rt_identity_matrix(m.rows - 1);
 	rt_sub_matrix(m, row, col, &sub);
 	minor = rt_determinant(sub);
 	return (minor);
@@ -103,9 +109,9 @@ t_matrix	rt_inversion(t_matrix m)
 
 	errno = 0;
 	det = rt_determinant(m);
-	if (fabs(det) < EPSILON)
-		return (errno = ENOTINVERTIBLE, (t_matrix) {.columns = 0, .rows = 0});
-	invert = rt_identity_matrix();
+	if (fabs(det) < EPSILON || errno == EDETERMINANT)
+		return (errno = ENOTINVERTIBLE, rt_identity_matrix(m.rows));
+	invert = rt_identity_matrix(m.rows);
 	invert.rows = m.rows;
 	invert.columns = m.columns;
 	i = -1;

@@ -18,9 +18,9 @@ t_tuple	rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point)
 	float	dist;
 
 	dist = point.x * point.x + point.z * point.z;
-	if (dist < 1 && point.y >= cylinder.max - EPSILON)
+	if (dist < 1 && point.y >= cylinder.max)
 		normal = rt_vector(0, 1, 0);
-	else if (dist < 1 && point.y <= cylinder.min + EPSILON)
+	else if (dist < 1 && point.y <= cylinder.min)
 		normal = rt_vector(0, -1, 0);
 	else
 		normal = rt_vector(point.x, 0, point.z);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 18:34:53 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:20:29 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 300
+#  define WINDOW_WIDTH 400
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 200
+#  define WINDOW_HEIGHT 300
 # endif
 
 # ifndef WINDOW_NAME
@@ -186,9 +186,10 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	t_tuple	coord;
-	float	intensity;
-	t_tuple	color;
+	t_tuple		coord;
+	float		intensity;
+	t_tuple		color;
+	t_ambient	ambient;
 }	t_light;
 
 //Scene
@@ -202,7 +203,6 @@ typedef struct s_scene
 	int			n_pl;
 	int			n_cy;
 	int			n_obj;
-	t_ambient	amb;
 	t_camera	cam;
 	t_light		lux;
 	t_object	*objects;
@@ -236,6 +236,38 @@ typedef struct s_lighting_params {
 	t_tuple	diffuse;
 	t_tuple	specular;
 }	t_lighting_params;
+
+typedef struct s_cyl_val
+{
+	float	a;
+	float	b;
+	float	c;
+	int		i;
+	float	discr;
+}	t_cyl_val;
+
+//test
+
+void		test_tuples(void);
+void		test_matrix(void);
+void		test_transform(void);
+void		test_intersect(void);
+void		test_mlx(void);
+void		test_light(void);
+void		test_light_render(void);
+void		test_scene(void);
+void		test_rgb_to_int(void);
+void		test_view_transform(void);
+void		test_camera(void);
+void		test_planes(void);
+void		test_render_plane(void);
+void		test_cylinder(void);
+void		test_cylinder_render(void);
+void		test_shadows(void);
+void		test_example_scene(void);
+t_scene		*test_default_scene(t_scene *scene);
+void		test_example_scene_planes(void);
+void		test_example_scene_with_flat_spheres(void);
 
 //CH0 Parsing
 
@@ -287,6 +319,7 @@ t_ray		rt_define_ray_to_wall(t_ray ray, \
 int			rgb_to_int(t_tuple c);
 void		rt_draw(t_env *env, t_object sp, t_ray ray);
 void		my_mlx_pixel_put(t_env *env, int x, int y, int color);
+void		mlx_free_all(t_env *env);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
 
@@ -298,11 +331,15 @@ int			window_closed(t_env *env);
 #  define ENOTINVERTIBLE 132
 # endif
 
+# ifndef EDETERMINANT
+#  define EDETERMINANT 133
+# endif
+
 # ifndef EPSILON
 #  define EPSILON 0.005
 # endif
 
-t_matrix	rt_identity_matrix(void);
+t_matrix	rt_identity_matrix(int size);
 void		rt_print_matrix(t_matrix m);
 int			rt_matrix_equality(t_matrix a, t_matrix b);
 t_matrix	rt_mul_matrix(t_matrix a, t_matrix b);
@@ -331,16 +368,16 @@ t_matrix	rt_set_transform(t_object object);
 //CH5 Ray-Sphere intersections
 
 # ifndef EDISCRIMINANT
-#  define EDISCRIMINANT 133
+#  define EDISCRIMINANT 134
 # endif
 
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
 void		rt_print_ray(t_ray ray);
-t_tuple		rt_position(t_ray ray, float t);
+t_tuple		rt_position(t_ray *ray, float t);
 t_object	rt_sphere(t_tuple color);
 void		rt_print_sphere(t_object sphere);
 t_inter		rt_intersect(float t, t_object obj);
-void		rt_intersects(t_object object, t_xs *xs, int *i);
+void		rt_intersects(t_object *object, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
 void		rt_discriminant(t_ray ray, t_object object, t_xs *xs, int *i);
 t_inter		rt_hit(t_xs xs);
@@ -365,26 +402,26 @@ t_tuple		rt_filmic_tonemap(t_tuple color);
 //CH7 Scene
 
 void		rt_print_scene(t_scene scene);
-void		rt_intersect_scene(t_scene scene, t_ray ray, t_xs *xs);
-t_comps		rt_prepare_computations(t_inter intersection, t_ray ray);
-t_tuple		rt_shade_hit(t_scene scene, t_comps comp);
-t_tuple		rt_color_at(t_scene scene, t_ray ray);
+void		rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs);
+t_comps		rt_prepare_computations(t_inter intersection, t_ray *ray);
+t_tuple		rt_shade_hit(t_scene *scene, t_comps comp);
+t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
 t_camera	rt_calculate_camera_values(t_camera camera);
-t_ray		rt_ray_for_pixel(t_camera camera, int pixel_x, int pixel_y);
+t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
-void		rt_render(t_camera camera, t_scene scene, t_env *env);
+void		rt_render(t_camera *camera, t_scene *scene, t_env *env);
 
 //CH8 Shadows
-bool		rt_is_shadowed(t_scene scene, t_tuple point);
+bool		rt_is_shadowed(t_scene *scene, t_tuple point);
 
 
 //CH9 Planes
 
 # ifndef ERAYPARALLEL
-#  define ERAYPARALLEL 134
+#  define ERAYPARALLEL 135
 # endif
 
 t_object	rt_plane(t_tuple color);
@@ -405,29 +442,6 @@ t_tuple		rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point);
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
-
-//test
-
-void		test_tuples(void);
-void		test_matrix(void);
-void		test_transform(void);
-void		test_intersect(void);
-void		test_mlx(void);
-void		test_light(void);
-void		test_light_render(void);
-void		test_scene(void);
-void		test_rgb_to_int(void);
-void		test_view_transform(void);
-void		test_camera(void);
-void		test_planes(void);
-void		test_render_plane(void);
-void		test_cylinder(void);
-void		test_cylinder_render(void);
-void		test_shadows(void);
-// void		test_example_scene(void);
-void		test_example_scene_planes(void);
-void		test_example_scene_with_flat_spheres(void);
-t_scene		*test_default_scene(t_scene *scene);
 
 
 #endif

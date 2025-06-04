@@ -312,8 +312,8 @@ void	test_matrix()
 
 // 	printf("Identity matrix\n");
 	
-	matrix = rt_identity_matrix();
-	matrix2 = rt_identity_matrix();
+	matrix = rt_identity_matrix(4);
+	matrix2 = rt_identity_matrix(4);
 	// matrix2.cell[0][0] = 0;
 	// matrix2.cell[0][1] = 1;
 	// matrix2.cell[0][2] = 2;
@@ -358,7 +358,7 @@ void	test_matrix()
 // 	transp = rt_matrix_transpose(matrix);
 // 	rt_print_matrix(transp);
 // 	printf("Transpose identity\n");
-// 	transp = rt_identity_matrix();
+// 	transp = rt_identity_matrix(4);
 // 	rt_print_matrix(transp);
 // 	printf("\n");
 
@@ -692,10 +692,10 @@ void	test_intersect()
 	printf("Distance\n");
 
 	ray = rt_ray(rt_point(2, 3, 4), rt_vector(1, 0, 0));
-	rt_print_tuple(rt_position(ray, 0));
-	rt_print_tuple(rt_position(ray, 1));
-	rt_print_tuple(rt_position(ray, -1));
-	rt_print_tuple(rt_position(ray, 2.5));
+	rt_print_tuple(rt_position(&ray, 0));
+	rt_print_tuple(rt_position(&ray, 1));
+	rt_print_tuple(rt_position(&ray, -1));
+	rt_print_tuple(rt_position(&ray, 2.5));
 	printf("\n");
 
 	printf("Intersection\n");
@@ -706,35 +706,35 @@ void	test_intersect()
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
 	sphere = rt_sphere(rt_color(255, 0, 0));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Intersection at tangent\n");
 	
 	ray = rt_ray(rt_point(0, 1, -5), rt_vector(0, 0, 1));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Miss the sphere\n");
 	
 	ray = rt_ray(rt_point(0, 2, -5), rt_vector(0, 0, 1));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Ray origin in sphere\n");
 	
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
 	printf("Sphere behind ray\n");
 	
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("XS Count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
@@ -742,23 +742,23 @@ void	test_intersect()
 	t_inter	hit;
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1)); //2 hits
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 1, -5), rt_vector(0, 0, 1)); //1 hit tangent
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 2, -5), rt_vector(0, 0, 1)); //no hit
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1)); //1 hit inside sphere
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1)); //2 hits negative
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	hit = rt_hit(xs);
 	printf("The hit is: %f\n", hit.t);
 	printf("\n");
@@ -812,7 +812,7 @@ void	test_intersect()
 
 	printf("Transform a sphere\n");
 
-	sphere.transform = rt_identity_matrix();
+	sphere.transform = rt_identity_matrix(4);
 	printf("Identity\n");
 	rt_print_matrix(sphere.transform);
 	printf("Transformed\n");
@@ -825,7 +825,7 @@ void	test_intersect()
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	sphere.transform = rt_scaling(rt_vector(2, 2, 2));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 	printf("\n");
 
@@ -833,7 +833,7 @@ void	test_intersect()
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	sphere.transform = rt_translation(rt_vector(5, 0, 0));
-	rt_intersects(&sphere, ray, &xs, &i);
+	rt_intersects(&sphere, &xs, &i);
 	printf("count = %d, [i - 2] = %f, [i - 1] = %f\n", xs.count, xs.inter[i - 2].t, xs.inter[i - 1].t);
 
 	free(xs.inter);
@@ -1050,10 +1050,10 @@ void	test_light_render()
 		{
 			xs.count = 0;
 			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
-			rt_intersects(&sphere, ray, &xs, &i);
+			rt_intersects(&sphere, &xs, &i);
 			if(xs.count != 0)
 			{
-				point = rt_position(ray, rt_hit(xs).t);
+				point = rt_position(&ray, rt_hit(xs).t);
 				normalv = rt_normal_at(xs.inter[i].object, point);
 				eyev = rt_negate_vector(ray.direction);
 				comp = (t_comps){
@@ -1107,7 +1107,7 @@ void	test_scene()
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	xs.inter = (t_inter *)calloc(scene.n_obj * 2, sizeof(t_inter));
 	xs.count = 0;
-	rt_intersect_scene(scene, ray, &xs);
+	rt_intersect_scene(&scene, &ray, &xs);
 	j = 0;
 	printf("xs.count = %d\n", xs.count);
 	while (j < scene.n_obj * 2)
@@ -1132,7 +1132,7 @@ void	test_scene()
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	sphere = scene.objects[0];
 	inter = rt_intersect(4, sphere);
-	comps = rt_prepare_computations(inter, ray);
+	comps = rt_prepare_computations(inter, &ray);
 	rt_print_sphere(comps.object);
 	rt_print_sphere(inter.object);
 	rt_print_tuple(comps.point);
@@ -1143,7 +1143,7 @@ void	test_scene()
 	printf("from the inside\n");
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
 	inter = rt_intersect(1, sphere);
-	comps = rt_prepare_computations(inter, ray);
+	comps = rt_prepare_computations(inter, &ray);
 	rt_print_sphere(comps.object);
 	rt_print_sphere(inter.object);
 	rt_print_tuple(comps.point);
@@ -1159,8 +1159,8 @@ void	test_scene()
 	scene.lux = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0);
 	sphere = scene.objects[0];
 	inter = rt_intersect(4, sphere);
-	comps = rt_prepare_computations(inter, ray);
-	color = rt_shade_hit(scene, comps);
+	comps = rt_prepare_computations(inter, &ray);
+	color = rt_shade_hit(&scene, comps);
 	rt_print_tuple(color);
 	printf("\n");
 
@@ -1172,15 +1172,15 @@ void	test_scene()
 	sphere.material = rt_material(0.1, 0.7, 0.2, 1);
 	sphere.color = rt_color(1.0 * 255, 1.0 * 255, 1.0 * 255);
 	inter = rt_intersect(0.5, sphere);
-	comps = rt_prepare_computations(inter, ray);
-	color = rt_shade_hit(scene, comps);
+	comps = rt_prepare_computations(inter, &ray);
+	color = rt_shade_hit(&scene, comps);
 	rt_print_tuple(color);
 	printf("\n");
 
 	printf("Shade hit ray missed\n");
 
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 1, 0));
-	color = rt_color_at(scene, ray);
+	color = rt_color_at(&scene, &ray);
 	rt_print_tuple(color);
 	printf("\n");
 	
@@ -1188,7 +1188,7 @@ void	test_scene()
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	
 	test_default_scene(&scene);
-	color = rt_color_at(scene, ray);
+	color = rt_color_at(&scene, &ray);
 	rt_print_tuple(color);
 	printf("\n");
 
@@ -1198,7 +1198,7 @@ void	test_scene()
 	scene.objects[0].material.ambient = 1;
 	scene.objects[1].material.ambient = 1;
 	
-	color = rt_color_at(scene, ray);
+	color = rt_color_at(&scene, &ray);
 	rt_print_tuple(color);
 	rt_print_tuple(scene.objects[1].color);
 	printf("\n");
@@ -1244,7 +1244,7 @@ void	test_view_transform()
 	to = rt_point(0, 0, -1);
 	up = rt_vector(0, 1, 0);
 	view_transform = rt_view_transform(from, to, up);
-	if (rt_matrix_equality(view_transform, rt_identity_matrix()))
+	if (rt_matrix_equality(view_transform, rt_identity_matrix(4)))
 		printf("the view transformation matrix == identity matrix\n");
 	else
 		printf("the view transformation matrix NOT == identity matrix\n");
@@ -1316,12 +1316,6 @@ void	test_example_scene_with_flat_spheres()
 	)));
 	right_wall.material = floor.material;
 
-	// middle sphere
-	middle_sphere = rt_sphere(rt_scale_color(rt_color(0.1, 1.0, 0.5), 255)); //
-	middle_sphere.transform = rt_translation(rt_vector(-0.5, 1, 0.5));
-	middle_sphere.material.diffuse = 0.7;
-	middle_sphere.material.specular = 0.3;
-
 	// right sphere
 	right_sphere = rt_sphere(rt_scale_color(rt_color(0.5, 1.0, 0.1), 255));
 	right_sphere.transform = rt_mul_matrix( \
@@ -1353,20 +1347,20 @@ void	test_example_scene_with_flat_spheres()
 
 	// light
 	scene.lux = rt_light( \
-		rt_scale_color(rt_color(1, 1, 1), 255),
-		rt_point(-10, 10, -10),
-		1
+		rt_scale_color(rt_color(1, 1, 1), 255), \
+		rt_point(-10, 10, -10), \
+		1\
 	);
 
 	// camera
-	scene.cam = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 3);
+	scene.cam = rt_calculate_camera_values(scene.cam);
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 
 	// mlx and rendering
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(scene.cam, scene, &env);
+	rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
 }
 
@@ -1380,32 +1374,28 @@ void	test_example_scene_planes()
 	t_object	middle_sphere;
 	t_object	right_sphere;
 	t_object	left_sphere;
-	t_object	object_array[6];
+	t_object	cylinder;
+	t_object	object_array[7];
 
-	// floor: a flattened sphere
-	floor = rt_sphere(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
-	floor.transform = rt_scaling(rt_vector(10, 0.01, 10));
+	// floor: a plane
+	floor = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
+	floor.transform = rt_identity_matrix(4);
 	floor.material.specular = 0.0;
 
 	// left wall
-	left_wall = rt_sphere(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
-	left_wall.transform = rt_scaling(rt_vector(10, 0.12, 10));
+	left_wall = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
+	left_wall.transform = rt_identity_matrix(4);
 	left_wall.transform = rt_mul_matrix(rt_rotation_x(M_PI / 2), left_wall.transform);
 	left_wall.transform = rt_mul_matrix(rt_rotation_y(- M_PI / 4), left_wall.transform);
 	left_wall.transform = rt_mul_matrix(rt_translation(rt_vector(0, 0, 5)), left_wall.transform);
 	left_wall.material = floor.material;
 	
 	// right wall
-	right_wall = rt_sphere(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
-	right_wall.transform = 
-	rt_mul_matrix(
-		rt_translation(rt_vector(0, 0, 5)),
-	rt_mul_matrix(
-		rt_rotation_y(M_PI / 4),
-	rt_mul_matrix(
-		rt_rotation_x(M_PI / 2),
-		rt_scaling(rt_vector(10, 0.01, 10))
-	)));
+	right_wall = rt_plane(rt_scale_color(rt_color(1, 0.9, 0.9), 255));
+	right_wall.transform = rt_identity_matrix(4);
+	right_wall.transform = rt_mul_matrix(rt_rotation_x(M_PI / 2), right_wall.transform);
+	right_wall.transform = rt_mul_matrix(rt_rotation_y(M_PI / 4), right_wall.transform);
+	right_wall.transform = rt_mul_matrix(rt_translation(rt_vector(0, 0, 5)), right_wall.transform);
 	right_wall.material = floor.material;
 
 	// middle sphere
@@ -1432,6 +1422,14 @@ void	test_example_scene_planes()
 	left_sphere.material.diffuse = 0.7;
 	left_sphere.material.specular = 0.3;
 
+	//cylinder
+	cylinder = rt_cylinder(rt_scale_color(rt_color(0.8, 1, 0.2), 255));
+	cylinder.min = 0;
+	cylinder.max = 1;
+	cylinder.closed = 1;
+	cylinder.transform = rt_rotation(rt_vector(-1, 1, 1));
+	cylinder.transform = rt_mul_matrix(rt_translation(rt_vector(1.5, 2, 0)), cylinder.transform);
+
 	// add objects to scene
 	object_array[0] = floor;
 	object_array[1] = left_wall;
@@ -1439,9 +1437,10 @@ void	test_example_scene_planes()
 	object_array[3] = middle_sphere;
 	object_array[4] = right_sphere;
 	object_array[5] = left_sphere;
+	object_array[6] = cylinder;
 
 	scene.objects = object_array;
-	scene.n_obj = 6;
+	scene.n_obj = 7;
 
 	// light
 	scene.lux = rt_light( \
@@ -1463,7 +1462,7 @@ void	test_example_scene_planes()
 	// mlx and rendering
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(scene.cam, scene, &env);
+	rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
 }
 
@@ -1479,7 +1478,7 @@ void	test_camera()
 
 	printf("\nrendering a world with a camera\n");
 	scene = test_default_scene(scene);
-	camera = rt_calculate_camera_values(WINDOW_WIDTH, WINDOW_HEIGHT, M_PI / 2);
+	camera = rt_calculate_camera_values(camera);
 
 	// camera settings
 	t_tuple from;
@@ -1493,7 +1492,7 @@ void	test_camera()
 	// mlx settings
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(camera, *scene, &env);
+	rt_render(&camera, scene, &env);
 	mlx_run_window(&env);
 	free(scene); // LEAK RISK (exit from mlx)
 }
@@ -1526,7 +1525,7 @@ void	test_pixel_at(t_tuple color)
 // 		while (x < camera.hsize - 1)
 // 		{
 // 			ray = rt_ray_for_pixel(camera, x, y);
-// 			color = rt_color_at(scene, ray);
+// 			color = rt_color_at(&scene, &ray);
 // 			color = rt_reinhard_tonemap(color);
 // 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
 // 			x++;
@@ -1568,7 +1567,7 @@ void	test_point_in_shadow(t_scene scene, t_tuple point, bool desired_value)
 		boolean_values[0] = "false";
 		boolean_values[1] = "true";
 	}
-	if (rt_is_shadowed(scene, point) == desired_value)
+	if (rt_is_shadowed(&scene, point) == desired_value)
 		printf("\t=> is_shadowed returns %s: OK\n", boolean_values[0]);
 	else
 		printf("\t=> is_shadowed returns %s: KO\n", boolean_values[1]);
@@ -1643,8 +1642,8 @@ void	test_shadows()
 
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
 	i = rt_intersect(4, scene2.objects[1]);
-	comps = rt_prepare_computations(i, ray);
-	c = rt_shade_hit(scene2, comps);
+	comps = rt_prepare_computations(i, &ray);
+	c = rt_shade_hit(&scene2, comps);
 	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), c);
 
 	printf("\n***Scenario***: The hit should offset the point\n");
@@ -1653,7 +1652,7 @@ void	test_shadows()
 	sphere3 = rt_sphere(rt_color(255, 255, 255));
 	sphere3.transform = rt_translation(rt_vector(0, 0, 1));
 	i = rt_intersect(5, sphere3);
-	comps = rt_prepare_computations(i, ray);
+	comps = rt_prepare_computations(i, &ray);
 	if (comps.over_point.z < -EPSILON / 2 && comps.point.z > comps.over_point.z)
 	{
 		printf("\t => all OK:\n");
@@ -1679,7 +1678,7 @@ void	test_planes()
 
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	plane.transform = rt_translation(rt_vector(2, 3, 4));
-	if (rt_matrix_equality(plane.transform, rt_identity_matrix()))
+	if (rt_matrix_equality(plane.transform, rt_identity_matrix(4)))
 		ft_printf("Plane transform is identity\n");
 	else
 		ft_printf("Plane transform is not identity\n");
@@ -1701,7 +1700,7 @@ void	test_planes()
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	plane.transform = rt_scaling(rt_vector(2, 2, 2));
-	rt_intersects(&plane, ray, &xs, &i);
+	rt_intersects(&plane, &xs, &i);
 	rt_print_ray(plane.saved_ray);
 	ft_printf("\n");
 
@@ -1709,7 +1708,7 @@ void	test_planes()
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	plane.transform = rt_translation(rt_vector(5, 0, 0));
-	rt_intersects(&plane, ray, &xs, &i);
+	rt_intersects(&plane, &xs, &i);
 	rt_print_ray(plane.saved_ray);
 	ft_printf("\n");
 
@@ -1750,7 +1749,7 @@ void	test_planes()
 	xs.inter = inter;
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 10, 0), rt_vector(0, 0, 1));
-	rt_intersects(&plane, ray, &xs, &i);
+	rt_intersects(&plane, &xs, &i);
 	ft_printf("intersects %d\n", xs.count);
 	ft_printf("\n");
 
@@ -1759,7 +1758,7 @@ void	test_planes()
 	i = 0;
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 0, 0), rt_vector(0, 0, 1));
-	rt_intersects(&plane, ray, &xs, &i);
+	rt_intersects(&plane, &xs, &i);
 	ft_printf("intersects %d\n", xs.count);
 	ft_printf("\n");
 
@@ -1768,7 +1767,7 @@ void	test_planes()
 	i = 0;
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, 1, 0), rt_vector(0, -1, 0));
-	rt_intersects(&plane, ray, &xs, &i);
+	rt_intersects(&plane, &xs, &i);
 	ft_printf("intersects count %d, t : %f, object %d\n", xs.count, xs.inter[0].t, xs.inter[0].object.shape);
 	ft_printf("\n");
 
@@ -1778,7 +1777,7 @@ void	test_planes()
 	i = 0;
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	ray = rt_ray(rt_point(0, -1, 0), rt_vector(0, 1, 0));
-	rt_intersects(&plane, ray, &xs, &i);
+	rt_intersects(&plane, &xs, &i);
 	ft_printf("intersects count %d, t : %f, object %d\n", xs.count, xs.inter[0].t, xs.inter[0].object.shape);
 	ft_printf("\n");
 }
@@ -1807,7 +1806,7 @@ void	test_render_plane()
 	xs.inter = inter;
 	camera = rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
-	plane.transform = rt_identity_matrix();
+	plane.transform = rt_identity_matrix(4);
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
 	env = mlx_set_env();
@@ -1824,10 +1823,10 @@ void	test_render_plane()
 			i = 0;
 			xs.count = 0;
 			ray = rt_define_ray_to_wall(ray, w, h, wall_z);
-			rt_intersects(&plane, ray, &xs, &i);
+			rt_intersects(&plane, &xs, &i);
 			if(xs.count != 0)
 			{
-				point = rt_position(ray, rt_hit(xs).t);
+				point = rt_position(&ray, rt_hit(xs).t);
 				normalv = rt_normal_at(xs.inter[0].object, point);
 				eyev = rt_negate_vector(ray.direction);
 				comp = (t_comps){
@@ -2060,7 +2059,6 @@ void	test_cylinder()
 void	test_cylinder_render()
 {
 	ft_printf("CH13 - Putting it together\n");
-	printf("Test camera\n***********\n");
 	t_camera	camera;
 	t_scene		scene;
 	t_light		light;
@@ -2073,7 +2071,7 @@ void	test_cylinder_render()
 	cylinder.min = -1;
 	cylinder.max = -2;
 	cylinder.closed = 1;
-	cylinder.transform = rt_identity_matrix();
+	cylinder.transform = rt_identity_matrix(4);
 	objects[0] = cylinder;
 
 	//light settings
@@ -2083,18 +2081,22 @@ void	test_cylinder_render()
 	light.ambient = ambient;
 	
 	// camera settings
-	t_tuple from;
-	t_tuple to;
-	t_tuple up;
-	from = rt_point(0, 0, -5);
-	to = rt_point(0, 0, 0);
-	up = rt_vector(0, 1, 0);
-	camera.transform = rt_view_transform(from, to, up);
+	camera.coord = rt_point(0, 0, -5);
+	camera.orient = rt_vector(0, 0, 1);
+	camera.field_of_view = M_PI / 3;
+	camera.hsize = WINDOW_WIDTH;
+	camera.vsize = WINDOW_HEIGHT;
+	camera = rt_calculate_camera_values(camera);
+	
+	//assign scene
+	scene.cam = camera;
+	scene.objects = objects;
+	scene.n_obj = 1;
+	scene.lux = light;
 
 	// mlx settings
 	t_env	env;
 	env = mlx_set_env();
-	rt_render(camera, *scene, &env);
+	rt_render(&camera, &scene, &env);
 	mlx_run_window(&env);
-	free(scene); // LEAK RISK (exit from mlx)
 }

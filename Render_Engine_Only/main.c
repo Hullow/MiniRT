@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 18:34:43 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:22:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-/* 
+
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_a = 0;
@@ -54,7 +54,15 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	rt_print_scene(scene);
 	return (0);
 }*/
-/*
+
+/* 
+int	main()
+{
+	test_example_scene_planes();
+	return (0);
+}
+*/
+
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -64,19 +72,9 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	// test_example_scene_with_flat_spheres();
-	// test_example_scene_planes();
-	
 	env = mlx_set_env();
-	rt_render(scene.cam, scene, &env);
+	if (scene.n_obj > 0)
+		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
-	return (0);
-}*/
-
-
-int	main()
-{
-	// test_cylinder();
-	test_cylinder_render();
 	return (0);
 }

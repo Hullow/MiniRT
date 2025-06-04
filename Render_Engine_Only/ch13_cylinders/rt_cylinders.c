@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_cylinders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:14:19 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 18:35:01 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:19:11 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,28 @@ static void	cy_swap(t_xs *xs, int i)
 	xs->inter[i + 1].t = buffer;
 }
 
-typedef struct s_cyl_val
-{
-	float	a;
-	float	b;
-	float	c;
-	float	discr;
-}	t_cyl_val;
-
-static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, int *i, t_cyl_val val)
+static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, t_cyl_val *val)
 {
 	float	y0;
 	float	y1;
 	float	t0;
 	float	t1;
 
-	t0 = cy_t(val.a, val.b, val.discr, -1);
-	t1 = cy_t(val.a, val.b, val.discr, 1);
+	t0 = cy_t(val->a, val->b, val->discr, -1);
+	t1 = cy_t(val->a, val->b, val->discr, 1);
 	y0 = ray.origin.y + t0 * ray.direction.y;
 	if (cylinder.min < y0 && y0 < cylinder.max)
 	{
-		xs->inter[*i] = rt_intersect(t0, cylinder);
+		xs->inter[val->i] = rt_intersect(t0, cylinder);
 		(xs->count)++;
-		(*i)++;
+		(val->i)++;
 	}
 	y1 = ray.origin.y + t1 * ray.direction.y;
 	if (cylinder.min < y1 && y1 < cylinder.max)
 	{
-		xs->inter[*i] = rt_intersect(t1, cylinder);
+		xs->inter[val->i] = rt_intersect(t1, cylinder);
 		(xs->count)++;
-		(*i)++;
+		(val->i)++;
 	}
 }
 
@@ -89,6 +81,9 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 		errno = EDISCRIMINANT;
 	else
 	{
-		cy_post_process(cylinder, ray, xs, i, val);
+		val.i = *i;
+		cy_post_process(cylinder, ray, xs, &val);
+		*i = val.i;
 	}
+	rt_intersect_caps(cylinder, ray, xs, i);
 }

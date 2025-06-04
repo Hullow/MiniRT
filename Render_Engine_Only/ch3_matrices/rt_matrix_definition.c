@@ -13,14 +13,14 @@
 #include "miniRT.h"
 
 /// @brief initializes and returns an identity matrix (on the stack, no malloc)
-t_matrix	rt_identity_matrix(void)
+t_matrix	rt_identity_matrix(int size)
 {
 	t_matrix	matrix;
 	int			i;
 	int			j;
 
-	matrix.rows = 4;
-	matrix.columns = 4;
+	matrix.rows = size;
+	matrix.columns = size;
 	i = 0;
 	while (i < 4)
 	{

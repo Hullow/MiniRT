@@ -17,7 +17,7 @@ t_matrix	rt_translation(t_tuple t)
 {
 	t_matrix	translate;
 
-	translate = rt_identity_matrix();
+	translate = rt_identity_matrix(4);
 	translate.cell[0][3] = t.x;
 	translate.cell[1][3] = t.y;
 	translate.cell[2][3] = t.z;
@@ -29,7 +29,7 @@ t_matrix	rt_scaling(t_tuple t)
 {
 	t_matrix	scaling;
 
-	scaling = rt_identity_matrix();
+	scaling = rt_identity_matrix(4);
 	scaling.cell[0][0] = t.x;
 	scaling.cell[1][1] = t.y;
 	scaling.cell[2][2] = t.z;
