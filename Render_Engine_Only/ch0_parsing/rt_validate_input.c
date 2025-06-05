@@ -43,7 +43,6 @@ int	rt_valid_coord(char **coord)
 	int	i;
 
 	i = 3;
-	errno = 0;
 	while (i > 0 && *coord)
 	{
 		ft_strtof(*coord);
