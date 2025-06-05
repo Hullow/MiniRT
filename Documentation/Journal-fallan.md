@@ -346,3 +346,8 @@ wrong values, and that Light had intensity too low (at 0.1 => 0.7 fixed the imag
 # 5/6/25
 - Debugging plane + cylinder rotations with pberset
 - For rotation (of cylinders at least), I seem to have a solution (thanks Claude!!)
+=> ok, it works
+
+- Remaining problems:
+	- **acne** on walls in sceneExample.rt
+	- **weird shadow** effects in sceneExample.rt
