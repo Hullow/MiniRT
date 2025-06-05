@@ -333,3 +333,12 @@ Fixes:
 - To do:
 	- re-add cy_swap (in cy_post_process)
 	
+
+# 4/6/25
+- Testing renders
+- One hour spent debugging rt_assign_object, then rt_sphere, 
+when there was no problem, only that rt_print_tuple used ft_printf which printing
+wrong values, and that Light had intensity too low (at 0.1 => 0.7 fixed the image)
+- Renders: sceneSphere.rt seems ok, sceneDefault seems not, sceneExample.rt doesn't render (rt_valid_orient issue is signalled).
+- Empty line in file or (except at the end: only one empty line after text is okay, but 2+ is not) => segfault
+- Issue printing plane properly
