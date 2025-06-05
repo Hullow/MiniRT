@@ -12,6 +12,15 @@
 
 #include "miniRT.h"
 
+typedef struct s_rota_values
+{
+	float cos_angle;
+	float angle;
+	float cos_a;
+	float sin_a;
+	float one_minus_cos;
+}	t_rota_values;
+
 // Init a rotation matrix of angle around x
 //angle is in radians
 t_matrix	rt_rotation_x(float angle)
@@ -26,48 +35,56 @@ t_matrix	rt_rotation_x(float angle)
 	return (rotation);
 }
 
-// Init a rotation matrix of angle around y
-//angle is in radians
-t_matrix	rt_rotation_y(float angle)
+static void	clean_matrix(t_matrix *m)
 {
-	t_matrix	rotation;
+	int	i;
+	int	j;
 
-	rotation = rt_identity_matrix(4);
-	rotation.cell[0][0] = cosf(angle);
-	rotation.cell[2][0] = -sinf(angle);
-	rotation.cell[0][2] = sinf(angle);
-	rotation.cell[2][2] = cosf(angle);
-	return (rotation);
+	i = 0;
+	while (i < m->rows)
+	{
+		j = 0;
+		while (j < m->columns)
+		{
+			if (fabs(m->cell[i][j]) < EPSILON)
+				m->cell[i][j] = 0.0f;
+			j++;
+		}
+		i++;
+	}
 }
 
-// Init a rotation matrix of angle around z
-//angle is in radians
-t_matrix	rt_rotation_z(float angle)
+static void	rodrigues_rotation(t_rota_values vals, t_tuple axis, t_matrix *rotation)
 {
-	t_matrix	rotation;
-
-	rotation = rt_identity_matrix(4);
-	rotation.cell[0][0] = cosf(angle);
-	rotation.cell[0][1] = -sinf(angle);
-	rotation.cell[1][0] = sinf(angle);
-	rotation.cell[1][1] = cosf(angle);
-	return (rotation);
+	rotation->cell[0][0] = vals.cos_a + axis.x * axis.x * vals.one_minus_cos;
+	rotation->cell[0][1] = axis.x * axis.y * vals.one_minus_cos - axis.z * vals.sin_a;
+	rotation->cell[0][2] = axis.x * axis.z * vals.one_minus_cos + axis.y * vals.sin_a;
+	rotation->cell[1][0] = axis.y * axis.x * vals.one_minus_cos + axis.z * vals.sin_a;
+	rotation->cell[1][1] = vals.cos_a + axis.y * axis.y * vals.one_minus_cos;
+	rotation->cell[1][2] = axis.y * axis.z * vals.one_minus_cos - axis.x * vals.sin_a;
+	rotation->cell[2][0] = axis.z * axis.x * vals.one_minus_cos - axis.y * vals.sin_a;
+	rotation->cell[2][1] = axis.z * axis.y * vals.one_minus_cos + axis.x * vals.sin_a;
+	rotation->cell[2][2] = vals.cos_a + axis.z * axis.z * vals.one_minus_cos;
 }
 
-// Init a rotation matrix around the 3 axis
-// Takes in the object's normal vector
-t_matrix	rt_rotation(t_tuple norm)
+t_matrix rt_rotation(t_tuple norm)
 {
-	t_matrix	rotate;
-	float		alpha;
-	float		beta;
-	float		gamma;
-
-	alpha = atan2f(norm.x, norm.z);
-	beta = atan2f(-norm.z, sqrtf(norm.x * norm.x + norm.y * norm.y));
-	gamma = atan2f(norm.y, norm.x);
-	rotate = rt_rotation_z(alpha);
-	rotate = rt_mul_matrix(rotate, rt_rotation_y(beta));
-	rotate = rt_mul_matrix(rotate, rt_rotation_x(gamma));
-	return (rotate);
+	t_tuple axis;
+	t_rota_values	vals;
+	t_matrix rotation = rt_identity_matrix(4);
+	
+	if (rt_is_equal_tuple(norm, rt_vector(0.0, 1.0, 0.0)))
+	return (rt_identity_matrix(4));
+	if (rt_is_equal_tuple(norm, rt_vector(0.0, -1.0, 0.0)))
+	return (rt_rotation_x(M_PI));
+	norm = rt_normalize(norm);
+	vals.cos_angle = rt_dot_product(rt_vector(0.0, 1.0, 0.0), norm);
+	vals.angle = acosf(vals.cos_angle);
+	vals.cos_a = cosf(vals.angle);
+	vals.sin_a = sinf(vals.angle);
+	vals.one_minus_cos = 1.0f - vals.cos_a;
+	axis = rt_cross_product(rt_vector(0.0, 1.0, 0.0), norm);
+	rodrigues_rotation(vals, axis, &rotation);
+	clean_matrix(&rotation);
+	return (rotation);
 }

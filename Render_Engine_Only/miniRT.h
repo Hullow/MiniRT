@@ -46,11 +46,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 800
+#  define WINDOW_WIDTH 300
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 600
+#  define WINDOW_HEIGHT 300
 # endif
 
 # ifndef WINDOW_NAME
@@ -360,8 +360,6 @@ t_matrix	rt_inversion(t_matrix m);
 t_matrix	rt_translation(t_tuple t);
 t_matrix	rt_scaling(t_tuple t);
 t_matrix	rt_rotation_x(float angle);
-t_matrix	rt_rotation_y(float angle);
-t_matrix	rt_rotation_z(float angle);
 t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_set_transform(t_object object);
 

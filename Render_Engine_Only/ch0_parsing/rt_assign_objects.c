@@ -84,7 +84,6 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	cylinder->height = ft_strtof(*(needle + 3));
 	transform = rt_set_transform(*cylinder);
 	cylinder->transform = transform;
-
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);

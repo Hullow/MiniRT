@@ -24,12 +24,12 @@ t_matrix	rt_set_transform(t_object object)
 	else if (object.shape == CYLINDER)
 	{
 		transform = rt_scaling(\
-			rt_vector(object.diameter, object.height, object.diameter));
+			rt_vector(object.diameter / 2, object.height, object.diameter / 2));
 		transform = rt_mul_matrix(rt_rotation(object.norm), transform);
 	}
-	else
+	else if (object.shape == PLANE)
 	{
-		transform = rt_rotation(rt_normalize(object.norm));
+		transform = rt_rotation(object.norm);
 	}
 	transform = rt_mul_matrix(rt_translation(\
 		rt_vector(object.origin.x, object.origin.y, object.origin.z)), transform);

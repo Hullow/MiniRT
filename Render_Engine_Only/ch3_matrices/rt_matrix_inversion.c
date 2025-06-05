@@ -109,7 +109,7 @@ t_matrix	rt_inversion(t_matrix m)
 
 	errno = 0;
 	det = rt_determinant(m);
-	if (fabs(det) < EPSILON || errno == EDETERMINANT)
+	if (fabsf(det) < EPSILON || errno == EDETERMINANT)
 		return (errno = ENOTINVERTIBLE, rt_identity_matrix(m.rows));
 	invert = rt_identity_matrix(m.rows);
 	invert.rows = m.rows;
