@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:29:51 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:45:12 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_tuple	rt_cross_product(t_tuple a, t_tuple b)
 	cross_y = a.z * b.x - a.x * b.z;
 	cross_z = a.x * b.y - a.y * b.x;
 	cross = rt_vector(cross_x, cross_y, cross_z);
+
 	return (cross);
 }
 
