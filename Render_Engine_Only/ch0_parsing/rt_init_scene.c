@@ -29,7 +29,7 @@ t_matrix	rt_set_transform(t_object object)
 	}
 	else
 	{
-		transform = rt_rotation(object.norm);
+		transform = rt_rotation(rt_normalize(object.norm));
 	}
 	transform = rt_mul_matrix(rt_translation(\
 		rt_vector(object.origin.x, object.origin.y, object.origin.z)), transform);

@@ -47,6 +47,7 @@ int	rt_read_id(const char *file, t_scene *scene)
 		free(line);
 		line = get_next_line(fd);
 	}
+	scene->n_obj = scene->n_sp + scene->n_cy + scene-> n_pl;
 	if (line != NULL)
 	{
 		free(line);

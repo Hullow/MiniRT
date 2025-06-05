@@ -53,7 +53,6 @@ int	rt_count_object(const char *line, t_scene *scene)
 // Otherwise 0
 int	rt_check_uniques(t_scene *scene)
 {
-	scene->n_obj = scene->n_sp + scene->n_cy + scene-> n_pl;
 	if (scene->n_a != 1 || scene->n_cam != 1 || scene->n_l != 1)
 	{
 		errno = ERANGE;
