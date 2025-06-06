@@ -70,31 +70,34 @@ t_camera	rt_camera_parse(t_tuple coord, t_tuple orient, float field_of_view)
 	return (camera);
 }
 
+
+// from default world (p.92)
 t_scene	*test_default_scene(t_scene *scene)
 {
+	t_light		light;
+	t_object	sphere_1;
+	t_object	sphere_2;
 	// t_object	plane_1;
 	// t_object	plane_2;
-	// t_object	sphere_1;
-	// t_object	sphere_2;
 	// t_object	sphere_3;
 	// t_object	sphere_4;
 	// t_object	sphere_5;
-	t_object	cylinder;
-	t_light		light;
-
-	// plane_1 = rt_plane(rt_color(255, 0.2 * 255, 255));
-	// plane_1.transform = rt_translation(rt_vector(0, -5, 0));
-	// plane_1.transform = rt_mul_matrix(plane_1.transform, rt_rotation_z(M_PI / 12));
-
-	// plane_2 = rt_plane(rt_color(255, 0.5 * 255, 255));
-	// plane_2.transform = rt_translation(rt_vector(0, 5, 0));
-	// plane_2.transform = rt_mul_matrix(plane_2.transform, rt_rotation_z(M_PI / 12));
+	// t_object	cylinder;
 	
-	// sphere_1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255));
-	// sphere_1.transform = rt_translation(rt_vector(0, 3, 0));
+	// light:
+	light = rt_light (rt_color(255, 255, 255), rt_point(0, 0, 2), 1);
+	light.coord = rt_point(-10, 10, -10);
+	scene->lux = light;
+
+	// objects:
+	scene->n_obj = 2;
+
+	sphere_1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255));
+	sphere_1.material.diffuse = 0.7;
+	sphere_1.material.specular = 0.2;
 	
-	// sphere_2 = rt_sphere(rt_color(255, 255, 255));
-	// sphere_2.transform = rt_translation(rt_vector(3, 1, 0));
+	sphere_2 = rt_sphere(rt_color(255, 255, 255));
+	sphere_2.transform = rt_scaling(rt_vector(0.5, 0.5, 0.5));
 
 	// sphere_3 = rt_sphere(rt_color(255, 0, 0));
 	// sphere_3.transform = rt_translation(rt_vector(2, -2, 0));
@@ -104,22 +107,29 @@ t_scene	*test_default_scene(t_scene *scene)
 
 	// sphere_5 = rt_sphere(rt_color(0, 255, 0));
 	// sphere_5.transform = rt_translation(rt_vector(-3, 1, 0));
-
-	cylinder = rt_cylinder(rt_color(255, 0.2 * 255, 255));
-	cylinder.min = 1;
-	cylinder.max = 2;
-
-	light = rt_light (rt_color(255, 255, 255), rt_point(0, 0, 2), 1);
-	scene->n_obj = 1;
-	// scene->objects[0] = sphere_1;
-	// scene->objects[1] = sphere_2;
+	
+	// plane_1 = rt_plane(rt_color(255, 0.2 * 255, 255));
+	// plane_1.transform = rt_translation(rt_vector(0, -5, 0));
+	// plane_1.transform = rt_mul_matrix(plane_1.transform, rt_rotation_z(M_PI / 12));
+	
+	// plane_2 = rt_plane(rt_color(255, 0.5 * 255, 255));
+	// plane_2.transform = rt_translation(rt_vector(0, 5, 0));
+	// plane_2.transform = rt_mul_matrix(plane_2.transform, rt_rotation_z(M_PI / 12));
+	
+	// cylinder = rt_cylinder(rt_color(255, 0.2 * 255, 255));
+	// cylinder.min = 1;
+	// cylinder.max = 2;
+	
+	
+	scene->objects[0] = sphere_1;
+	scene->objects[1] = sphere_2;
 	// scene->objects[2] = sphere_3;
 	// scene->objects[3] = sphere_4;
 	// scene->objects[4] = sphere_5;
 	// scene->objects[5] = plane_1;
 	// scene->objects[6] = plane_2;
-	scene->objects[0] = cylinder;
-	scene->lux = light;
+	// scene->objects[0] = cylinder;
+
 	return (scene);
 }
 
@@ -1660,13 +1670,6 @@ void	test_shadows()
 	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), result);
 
 
-
-
-
-
-
-
-
 	t_scene	scene;
 	t_object scene_objects[7];
 	scene.objects = scene_objects;
@@ -1703,46 +1706,49 @@ void	test_shadows()
 	t_ray		ray;
 	t_inter		i;
 	t_tuple		c;
+	t_comps		comps2;
 	
 	printf("\n***Scenario***: shade_hit() is given an intersection in shadow\n");
-	scene2.n_obj = 2;
 	scene2.lux = rt_light(rt_color(1 * 255, 1 * 255, 1 * 255), rt_point(0, 0, -10), 1);
-	sphere1 = rt_sphere(rt_color(0.8 * 255, 1.0 * 255, 0.6 * 255)); // color from test_default_scene 
+	scene2.lux.ambient.color = rt_color(1 * 255, 1 * 255, 1 * 255);
+	scene2.lux.ambient.intensity = 0.1;
+	sphere1 = rt_sphere(rt_color(1.0 * 255, 1.0 * 255, 1.0 * 255)); // color from test_default_scene 
+	
 	sphere2 = rt_sphere(rt_color(1.0 * 255, 1.0 * 255, 1.0 * 255)); // color from test_default_scene 
 	sphere2.transform = rt_translation(rt_vector(0, 0, 10));
-		
+	
+	scene2.n_obj = 2;
 	scene2_objects[0] = sphere1;
 	scene2_objects[1] = sphere2;
-	
 	scene2.objects = scene2_objects;
 
 	ray = rt_ray(rt_point(0, 0, 5), rt_vector(0, 0, 1));
 	i = rt_intersect(4, scene2.objects[1]);
-	comps = rt_prepare_computations(i, &ray);
-	c = rt_shade_hit(&scene2, comps);
+	comps2 = rt_prepare_computations(i, &ray);
+	c = rt_shade_hit(&scene2, comps2);
 	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), c);
 
-	printf("\n***Scenario***: The hit should offset the point\n");
+	printf("\n\n***Scenario***: The hit should offset the point\n");
 	t_object	sphere3;
 	ray = rt_ray(rt_point(0, 0, -5), rt_vector(0, 0, 1));
 	sphere3 = rt_sphere(rt_color(255, 255, 255));
 	sphere3.transform = rt_translation(rt_vector(0, 0, 1));
 	i = rt_intersect(5, sphere3);
-	comps = rt_prepare_computations(i, &ray);
-	if (comps.over_point.z < -EPSILON / 2 && comps.point.z > comps.over_point.z)
+	comps2 = rt_prepare_computations(i, &ray);
+	if (comps2.over_point.z < -EPSILON / 2 && comps2.point.z > comps2.over_point.z)
 	{
 		printf("\t => all OK:\n");
-		printf("comps.over_point.z < -EPSILON/2 : OK\n");
-		printf("comps.point.z > comps.over_point.z: OK\n");
-		printf("comps.point.z: %f, comps.over_point.z: %f, EPSILON: %f\n", comps.point.z, comps.over_point.z, EPSILON);
+		printf("comps2.over_point.z < -EPSILON/2 : OK\n");
+		printf("comps2.point.z > comps2.over_point.z: OK\n");
+		printf("comps2.point.z: %f, comps2.over_point.z: %f, EPSILON: %f\n", comps2.point.z, comps2.over_point.z, EPSILON);
 	}
 	else
 	{
 		printf("\t => KO:\n");
-		if ((comps.point.z > comps.over_point.z) == false)
-			printf("comps.point.z > comps.over_point.z: KO\n");
-		if ((comps.over_point.z < EPSILON / 2) == false)
-			printf("comps.over_point.z < -EPSILON/2 : KO\n");
+		if ((comps2.point.z > comps2.over_point.z) == false)
+			printf("comps2.point.z > comps2.over_point.z: KO\n");
+		if ((comps2.over_point.z < EPSILON / 2) == false)
+			printf("comps2.over_point.z < -EPSILON/2 : KO\n");
 	}
 	
 }	

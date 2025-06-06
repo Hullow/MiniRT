@@ -355,3 +355,7 @@ wrong values, and that Light had intensity too low (at 0.1 => 0.7 fixed the imag
 # 6/6/25
 - Bug found in parsing: if '# ' at beginning of a line, infinite loop
 - Shadow problem(s): shadow tests no longer passing
+- Finally fixed ambient after long discussion with pberset and reading light chapter => I had forgotten to use the material's color in calculating ambient lighting.
+We chose to not use the material.ambient component but rather the ambient light only. 
+- Shadow tests now pass with new rt_lighting and update test_default_scene.
+But this doesn't fix our shadow problem.
