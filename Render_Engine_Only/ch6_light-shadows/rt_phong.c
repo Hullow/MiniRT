@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 17:48:13 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/05 17:59:14 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 	eyev = comp.eyev;
 	normalv = comp.normalv;
 	v.diffuse = rt_scale_color(
-		in.color, obj.material.diffuse * in.light_dot_normal);
+			in.color, obj.material.diffuse * in.light_dot_normal);
 	in.reflect = rt_reflect(rt_negate_vector(in.dir_to_light), normalv);
 	in.reflect = rt_normalize(in.reflect);
 	in.reflect_dot_camera = rt_dot_product(in.reflect, eyev);
@@ -40,33 +40,29 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 	{
 		in.factor = powf(in.reflect_dot_camera, obj.material.shininess);
 		v.specular = rt_scale_color(
-			l.color, l.intensity * obj.material.specular * in.factor);
+				l.color, l.intensity * obj.material.specular * in.factor);
 	}
 	return (v);
 }
 
 /// @brief computes ambient, diffuse and specular components of a pixel's color
+/// @details - ambient = ambient color * intensity * material ambient component
+///			 - if object is in shadows, return ambient light only
+///			 - otherwise, calculates diffuse and specular lighting
+///			 - the color returned is an addition of all types of lighting
 /// @param l light
 /// @param comp the prepared computations
 /// @return the color of the point with lighting applied
 t_tuple	rt_lighting(t_light l, t_comps comp)
 {
+	t_tuple				ambient_color;
 	t_lighting_params	v;
 	t_intermediate_vars	intm;
-	
-	/////// OLD AMBIENT ///////
-	// v.ambient = rt_scale_color(intm.color, comp.object.material.ambient); 
 
-	/////// NEW AMBIENT ///////
-	t_tuple		ambient_color;
-	ambient_color = rt_scale_color(l.ambient.color, l.ambient.intensity); // from input
-	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient); // material
-
-	// if object is in shadows, the only lighting is ambient:
+	ambient_color = rt_scale_color(l.ambient.color, l.ambient.intensity);
+	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient);
 	if (comp.in_shadow == true)
-	return (v.ambient);
-	
-	/////// DIFFUSE AND SPECULAR ///////
+		return (v.ambient);
 	intm.color = rt_scale_color(comp.object.color, l.intensity);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
@@ -74,8 +70,6 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 		v = rt_dark_diffuse_specular(v);
 	else
 		v = rt_colorize_diffuse_specular(l, comp, intm, v);
-
-		/////// RETURN : ADD ALL COLOR COMPONENTS TOGETHER ///////
 	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
 }
 
