@@ -87,6 +87,7 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 	if (!rt_valid_orient(orient) || !rt_valid_coord(coord) || errno != 0)
 	{
 		ft_free_double_tab(coord, orient);
+		errno = EINVAL;
 		return ;
 	}
 	scene->cam.orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)),

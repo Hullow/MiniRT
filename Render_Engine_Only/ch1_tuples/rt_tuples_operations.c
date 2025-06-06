@@ -27,14 +27,9 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 	add.x = a.x + b.x;
 	add.y = a.y + b.y;
 	add.z = a.z + b.z;
-	if (a.w == POINT && b.w == VECTOR)
-		add.w = POINT;
-	else if (a.w == VECTOR && b.w == POINT)
-		add.w = POINT;
-	else if (a.w == VECTOR && b.w == VECTOR)
-		add.w = VECTOR;
-	else
-		add.w = VECTOR;
+	if (is_equal_float(a.w, POINT) && is_equal_float(b.w, POINT))
+		return (rt_point(0, 0, 0));
+	add.w = a.w + b.w;
 	return (add);
 }
 
@@ -56,14 +51,9 @@ t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 	sub.x = a.x - b.x;
 	sub.y = a.y - b.y;
 	sub.z = a.z - b.z;
-	if (a.w == POINT && b.w == POINT)
-		sub.w = VECTOR;
-	else if (a.w == POINT && b.w == VECTOR)
-		sub.w = POINT;
-	else if (a.w == VECTOR && b.w == VECTOR)
-		sub.w = VECTOR;
-	else
-		sub.w = VECTOR;
+	if (is_equal_float(a.w, VECTOR) && is_equal_float(b.w, POINT))
+		return (rt_vector(0, 0, 0));
+	sub.w = a.w - b.w;
 	return (sub);
 }
 

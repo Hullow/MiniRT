@@ -45,6 +45,11 @@ int	rt_read_id(const char *file, t_scene *scene)
 	{
 		rt_count_object(line, scene);
 		free(line);
+		if (errno == EINVAL)
+		{
+			line = NULL;
+			break ;
+		}
 		line = get_next_line(fd);
 	}
 	scene->n_obj = scene->n_sp + scene->n_cy + scene-> n_pl;

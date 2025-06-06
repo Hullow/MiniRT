@@ -36,7 +36,6 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	rt_init_counters(scene);
 	if (rt_read_id(argv[1], scene))
 		return (3);
-	scene->objects = (t_object *)ft_calloc(scene->n_obj, sizeof(t_object));
 	if (rt_check_uniques(scene))
 		return (4);
 	if (rt_init_scene(argv[1], scene))
@@ -44,36 +43,15 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	return (0);
 }
 
-/*int	main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
+	t_env		env;
 
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	rt_print_scene(scene);
-	return (0);
-}*/
-
-/* 
-int	main()
-{
-	test_example_scene_planes();
-	return (0);
-}
-*/
-
-int	main(int argc, char *argv[])
-{
-	t_scene		scene;
-	t_env		env;
-
-	if (build_scene(argc, argv, &scene))
-	{
-		free(scene.objects);
-		return (1);
-	}
 	env = mlx_set_env();
 	if (scene.n_obj > 0)
 		rt_render(&(scene.cam), &scene, &env);
@@ -90,14 +68,5 @@ int	main(int argc, char *argv[])
 // 	scene.objects = objects;
 // 	if (build_scene(argc, argv, &scene))
 // 		return (1);
-// 	rt_print_scene(scene);
 // 	return (0);
 // }
-
-
-
-/*int	main()
-{
-	test_example_scene_planes();
-	return (0);
-}*/

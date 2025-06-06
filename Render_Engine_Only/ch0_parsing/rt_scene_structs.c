@@ -30,20 +30,27 @@ int	rt_count_object(const char *line, t_scene *scene)
 {
 	while ((ft_isspace(*line) || *line == ' '))
 		line++;
-	if (rt_id_format(*line, *(line + 1), *(line + 2)))
+	if (*line)
 	{
-		scene->n_a += (*line == 'A' && rt_id_format(*line, *(line + 1), 0));
-		scene->n_cam += (*line == 'C' && rt_id_format(*line, *(line + 1), 0));
-		scene->n_l += (*line == 'L' && rt_id_format(*line, *(line + 1), 0));
-		scene->n_sp += (*line == 's' && \
-			rt_id_format(*line, *(line + 1), *(line + 2)));
-		scene->n_pl += (*line == 'p' && \
-			rt_id_format(*line, *(line + 1), *(line + 2)));
-		scene->n_cy += (*line == 'c' && \
-			rt_id_format(*line, *(line + 1), *(line + 2)));
+		if (rt_id_format(*line, *(line + 1), *(line + 2)))
+		{
+			scene->n_a += (*line == 'A' && rt_id_format(*line, *(line + 1), *(line + 2)));
+			scene->n_cam += (*line == 'C' && rt_id_format(*line, *(line + 1), *(line + 2)));
+			scene->n_l += (*line == 'L' && rt_id_format(*line, *(line + 1), *(line + 2)));
+			scene->n_sp += (*line == 's' && \
+				rt_id_format(*line, *(line + 1), *(line + 2)));
+			scene->n_pl += (*line == 'p' && \
+				rt_id_format(*line, *(line + 1), *(line + 2)));
+			scene->n_cy += (*line == 'c' && \
+				rt_id_format(*line, *(line + 1), *(line + 2)));
+		}
+		else if (*line)
+		{
+			errno = EINVAL;
+			rt_handle_error(RT_COUNT_OBJECT, errno, (char *)line);
+			return (1);
+		}
 	}
-	else if (*line)
-		return (rt_handle_error(RT_COUNT_OBJECT, EINVAL, (char *)line), 1);
 	return (0);
 }
 

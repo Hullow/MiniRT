@@ -18,7 +18,7 @@ CC			= cc
 
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -O3 #-g3
+DFLAGS		= -g3 #-O3
 INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
 LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm
@@ -75,7 +75,6 @@ MATRIX		= rt_matrix_definition \
 RAYS		= rt_hit \
 			rt_intersection \
 			rt_object \
-			rt_plane_cylinder \
 			rt_ray \
 			rt_ray_transform
 

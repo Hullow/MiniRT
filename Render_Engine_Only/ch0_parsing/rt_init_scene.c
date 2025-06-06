@@ -19,7 +19,7 @@ t_matrix	rt_set_transform(t_object object)
 	if (object.shape == SPHERE)
 	{
 		transform = rt_scaling(\
-			rt_vector(object.diameter, object.diameter, object.diameter));
+			rt_vector(object.diameter / 2, object.diameter / 2, object.diameter / 2));
 	}
 	else if (object.shape == CYLINDER)
 	{
@@ -52,22 +52,27 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	char		**needle;
 	static int	i;
 
-	if (i > scene->n_obj || i < 0)
-		i = 0;
-	needle = values + 1;
-	if (**values == 'L')
-		rt_assign_light(scene, needle);
-	else if (**values == 'A')
-		rt_assign_ambient(scene, needle);
-	else if (**values == 'C')
+	if (*values != NULL)
 	{
-		rt_assign_camera(scene, needle);
-		scene->cam = rt_calculate_camera_values(scene->cam);
-	}
-	else
-	{
-		rt_assign_object(&(scene->objects[i]), needle, **values);
-		i++;
+		if (i > scene->n_obj || i < 0)
+			i = 0;
+		needle = values + 1;
+		if (**values == 'L')
+			rt_assign_light(scene, needle);
+		else if (**values == 'A')
+			rt_assign_ambient(scene, needle);
+		else if (**values == 'C')
+		{
+			rt_assign_camera(scene, needle);
+			if (errno)
+				return ;
+			scene->cam = rt_calculate_camera_values(scene->cam);
+		}
+		else
+		{
+			rt_assign_object(&(scene->objects[i]), needle, **values);
+			i++;
+		}
 	}
 }
 
