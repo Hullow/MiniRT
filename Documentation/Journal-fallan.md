@@ -351,3 +351,7 @@ wrong values, and that Light had intensity too low (at 0.1 => 0.7 fixed the imag
 - Remaining problems:
 	- **acne** on walls in sceneExample.rt
 	- **weird shadow** effects in sceneExample.rt
+
+# 6/6/25
+- Bug found in parsing: if '# ' at beginning of a line, infinite loop
+- Shadow problem(s): shadow tests no longer passing

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_phong.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 17:48:13 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 11:21:35 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 
 	// if object is in shadows, the only lighting is ambient:
 	if (comp.in_shadow == true)
-	return (v.ambient);
+		return (rt_color(255, 192, 203));
+		// return (v.ambient);
 	
 	/////// DIFFUSE AND SPECULAR ///////
 	intm.color = rt_scale_color(comp.object.color, l.intensity);
