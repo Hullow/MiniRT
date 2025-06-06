@@ -6,7 +6,7 @@
 /*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/04 15:20:29 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/06 20:04:16 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@
 
 //tuples
 
-//hard defines plutôt
-typedef enum e_type
-{
-	VECTOR,
-	POINT,
-	COLOR
-}	t_type;
+
+# ifndef VECTOR
+#  define VECTOR 0.000000
+# endif
+
+# ifndef POINT
+#  define POINT 1.000000
+# endif
+
+# ifndef COLOR
+#  define COLOR 2.000000
+# endif
 
 typedef struct s_tuple
 {
