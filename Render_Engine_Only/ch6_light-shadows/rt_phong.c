@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 17:59:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 12:43:33 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	ambient_color = rt_scale_color(l.ambient.color, l.ambient.intensity);
 	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient);
 	if (comp.in_shadow == true)
-		return (v.ambient);
+		return (rt_color(255, 192, 203));
+		// return (v.ambient);
+	
+	/////// DIFFUSE AND SPECULAR ///////
 	intm.color = rt_scale_color(comp.object.color, l.intensity);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
