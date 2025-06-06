@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 15:19:06 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:35:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,7 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 	add.x = a.x + b.x;
 	add.y = a.y + b.y;
 	add.z = a.z + b.z;
-	if (a.w == POINT && b.w == VECTOR)
-		add.w = POINT;
-	else if (a.w == VECTOR && b.w == POINT)
-		add.w = POINT;
-	else if (a.w == VECTOR && b.w == VECTOR)
-		add.w = VECTOR;
-	else
-		add.w = VECTOR;
+	add.w = a.w + b.w;
 	return (add);
 }
 

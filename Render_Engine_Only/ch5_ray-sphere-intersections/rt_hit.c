@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:34:35 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 16:49:48 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:26:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ t_inter	rt_hit(t_xs xs)
 	t_inter	hit;
 
 	hit.t = INFINITY;
+	hit.is_present = false;
 	i = 0;
 	while (i < xs.count)
 	{
-		if (xs.inter[i].t > 0)
+		if (xs.inter[i].t > EPSILON)
 		{
 			if (xs.inter[i].t < hit.t)
+			{
 				hit = xs.inter[i];
+				hit.is_present = true;
+			}
 		}
 		i++;
 	}
-	if (hit.t == INFINITY)
-		return (rt_intersect(0, rt_sphere(rt_color(0, 0, 0))));
 	return (hit);
 }

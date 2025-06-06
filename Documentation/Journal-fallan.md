@@ -359,3 +359,9 @@ wrong values, and that Light had intensity too low (at 0.1 => 0.7 fixed the imag
 We chose to not use the material.ambient component but rather the ambient light only. 
 - Shadow tests now pass with new rt_lighting and update test_default_scene.
 But this doesn't fix our shadow problem.
+
+- To do: 
+    - start by investigating shadows from decentered sphere (-2,0,0), or:
+	- sphere on plane with shadow on itself: `../Sources/scenes/scene-sphere-plane.rt`
+
+=> added boolean `is_present` to t_inter. Changes result; I get a nice disk with no nuance if we check for `hit.t < distance`, and the same "inverted shadow" as before if we check `hit.t > distance`

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 16:54:38 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:37:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ void	rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs)
 	while (i < scene->n_obj)
 	{
 		ray_transform = rt_inversion(scene->objects[i].transform);
-		// printf("rt_intersect_scene: scene->objects[i].transform:\n");
-		// rt_print_matrix(scene->objects[i].transform);
-		// printf("rt_intersect_scene: ray_transform:\n");
-		// rt_print_matrix(ray_transform);
-		// exit(1);
 		scene->objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray->origin);
 		scene->objects[i].saved_ray.direction = \
 			rt_mul_tuple_matrix(ray_transform, ray->direction);
@@ -74,13 +69,13 @@ t_tuple	rt_color_at(t_scene *scene, t_ray *ray)
 	t_tuple	color;
 	t_comps	comps;
 	t_xs	xs;
-	t_inter	inter;
+	t_inter	hit;
 
 	rt_intersect_scene(scene, ray, &xs);
-	inter = rt_hit(xs);
-	if (inter.t == 0)
+	hit = rt_hit(xs);
+	if (hit.is_present == false)
 		return (rt_color(0, 0, 0));
-	comps = rt_prepare_computations(inter, ray);
+	comps = rt_prepare_computations(hit, ray);
 	color = rt_shade_hit(scene, comps);
 	return (color);
 }
@@ -100,7 +95,7 @@ void	rt_render(t_camera *camera, t_scene *scene, t_env *env)
 		{
 			ray = rt_ray_for_pixel(camera, x, y);
 			color = rt_color_at(scene, &ray);
-			// color = rt_reinhard_tonemap(color);
+			color = rt_reinhard_tonemap(color);
 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
 			x++;
 		}

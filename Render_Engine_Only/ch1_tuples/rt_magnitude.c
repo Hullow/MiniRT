@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:06:43 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 14:42:08 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:11:05 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_tuple	rt_normalize(t_tuple vector)
 		rt_print_tuple(vector);
 		return (vector);
 	}
-	if (vector.w != VECTOR)
+	if (!is_equal_float(vector.w, VECTOR))
 	{
 		rt_handle_error(RT_NORMALIZE, EINVAL, "\ninput is not a vector");
 		return (vector);

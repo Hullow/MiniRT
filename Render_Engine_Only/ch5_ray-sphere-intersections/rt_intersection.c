@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 16:14:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:20:41 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_inter	rt_intersect(float t, t_object obj)
 
 	i.object = obj;
 	i.t = t;
+	i.is_present = true;
 	return (i);
 }
 

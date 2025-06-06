@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 16:59:32 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:40:33 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@
 //Structs
 
 //tuples
-
-/* typedef enum e_type
-{
-	VECTOR,
-	POINT,
-	COLOR
-}	t_type; */
 
 # define VECTOR 0.000
 # define POINT 1.000
@@ -159,6 +152,7 @@ typedef struct s_intersect
 {
 	t_object	object;
 	float		t;
+	bool		is_present;
 }	t_inter;
 
 typedef struct s_xs
@@ -340,8 +334,9 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.0005
+#  define EPSILON 0.00001 
 # endif
+
 
 t_matrix	rt_identity_matrix(int size);
 void		rt_print_matrix(t_matrix m);
