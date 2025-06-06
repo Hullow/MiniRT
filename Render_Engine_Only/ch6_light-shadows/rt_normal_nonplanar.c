@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:22:59 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:11:06 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:03:14 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,18 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 
 t_tuple	rt_normal_at(t_object obj, t_tuple world_point)
 {
-	t_tuple		object_point;
-	t_tuple		object_normal;
+	t_tuple		local_point;
+	t_tuple		local_normal;
 	t_tuple		world_normal;
 	t_matrix	invert;
 
 	invert = rt_inversion(obj.transform);
-	object_point = rt_mul_tuple_matrix(invert, world_point);
-	object_point.w = POINT;
-	object_normal = rt_local_normal_at(obj, object_point);
+	local_point = rt_mul_tuple_matrix(invert, world_point);
+	local_point.w = POINT;
+	local_normal = rt_local_normal_at(obj, local_point);
 	world_normal = \
-		rt_mul_tuple_matrix(rt_matrix_transpose(invert), object_normal);
+		rt_mul_tuple_matrix(rt_matrix_transpose(invert), local_normal);
+	world_normal.w = VECTOR;
 	return (rt_normalize(world_normal));
 }
 

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:03:54 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 17:50:23 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:54:38 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs)
 	while (i < scene->n_obj)
 	{
 		ray_transform = rt_inversion(scene->objects[i].transform);
+		// printf("rt_intersect_scene: scene->objects[i].transform:\n");
+		// rt_print_matrix(scene->objects[i].transform);
+		// printf("rt_intersect_scene: ray_transform:\n");
+		// rt_print_matrix(ray_transform);
+		// exit(1);
 		scene->objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray->origin);
 		scene->objects[i].saved_ray.direction = \
 			rt_mul_tuple_matrix(ray_transform, ray->direction);
@@ -38,18 +43,18 @@ t_comps	rt_prepare_computations(t_inter intersect, t_ray *ray)
 {
 	t_comps	comps;
 
-	comps.t = intersect.t;
+	comps.t = intersect.t; // never 0 (or infinity because of the previous step)
 	comps.object = intersect.object;
 	comps.point = rt_position(ray, comps.t);
 	comps.eyev = rt_negate_vector(ray->direction);
 	comps.normalv = rt_normal_at(comps.object, comps.point);
 	if (rt_dot_product(comps.normalv, comps.eyev) < 0)
 	{
-		comps.inside = 1;
+		comps.inside = true;
 		comps.normalv = rt_negate_vector(comps.normalv);
 	}
 	else
-		comps.inside = 0;
+		comps.inside = false;
 	comps.over_point = \
 		rt_add_tuple(comps.point, rt_scale_vector(comps.normalv, EPSILON));
 	return (comps);
@@ -95,7 +100,7 @@ void	rt_render(t_camera *camera, t_scene *scene, t_env *env)
 		{
 			ray = rt_ray_for_pixel(camera, x, y);
 			color = rt_color_at(scene, &ray);
-			color = rt_reinhard_tonemap(color);
+			// color = rt_reinhard_tonemap(color);
 			my_mlx_pixel_put(env, x, y, rgb_to_int(color));
 			x++;
 		}

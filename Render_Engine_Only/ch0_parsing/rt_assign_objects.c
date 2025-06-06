@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 16:32:16 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:21:57 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 	sphere->diameter = ft_strtof(*(needle +1));
 	transform = rt_set_transform(*sphere);
 	sphere->transform = transform;
+	printf("rt_assign_sphere - sphere.diameter: %f\n", sphere->diameter);
+	// printf("rt_assign_sphere - sphere.transform:\n");
+	// rt_print_matrix(transform);
 	ft_free_double_tab(coord, color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 15:31:11 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:23:04 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_matrix	rt_set_transform(t_object object)
 	{
 		transform = rt_scaling(\
 			rt_vector(object.diameter, object.diameter, object.diameter));
+		printf("rt_set_transform: object.diameter {%f}\n", object.diameter);
+		rt_print_matrix(transform);
 	}
 	else if (object.shape == CYLINDER)
 	{

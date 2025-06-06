@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:06:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:19:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,23 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 ///
 /// - if a is a POINT and b a VECTOR, returns a POINT
 ///
+/// - if a is a POINT and b a POINT, returns a VECTOR
+///
 /// - error cases:
 /// 	(1) a is a VECTOR, b is a POINT;
-/// 	(2) a and b are POINT;
 ///
 /// @return the tuple resulting from the subtraction
 t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 {
 	t_tuple	sub;
 
+	if (a.w == VECTOR && b.w == POINT)
+		return (rt_handle_error(RT_SUB_TUPLE, EINVAL, 
+			"cannot subtract point from vector"), rt_point(0, 0, 0));
 	sub.x = a.x - b.x;
 	sub.y = a.y - b.y;
 	sub.z = a.z - b.z;
-	if (a.w == POINT && b.w == POINT)
-		sub.w = VECTOR;
-	else if (a.w == POINT && b.w == VECTOR)
-		sub.w = POINT;
-	else if (a.w == VECTOR && b.w == VECTOR)
-		sub.w = VECTOR;
-	else
-		sub.w = VECTOR;
+	sub.w = a.w - b.w;
 	return (sub);
 }
 

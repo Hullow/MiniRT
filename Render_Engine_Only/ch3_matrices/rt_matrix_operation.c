@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:21:37 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:03:59 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:46:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static float	mat_dot_product(float *a, t_tuple b)
 {
 	float	dot;
 
-	dot = a[0] * b.x + a[1] * b.y + a[2] * b.z + a[3] * (float)b.w;
+	dot = a[0] * b.x + a[1] * b.y + a[2] * b.z + (float)b.w * a[3];
 	return (dot);
 }
 

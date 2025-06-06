@@ -6,21 +6,20 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 14:22:28 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:08:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v)
+void	rt_dark_diffuse_specular(t_lighting_params *v)
 {
-	v.diffuse = rt_color(0, 0, 0);
-	v.specular = rt_color(0, 0, 0);
-	return (v);
+	v->diffuse = rt_color(0, 0, 0);
+	v->specular = rt_color(0, 0, 0);
 }
 
-t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
-	t_intermediate_vars in, t_lighting_params v)
+void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
+	t_intermediate_vars in, t_lighting_params *v)
 {
 	t_object	obj;
 	t_tuple		eyev;
@@ -29,20 +28,19 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 	obj = comp.object;
 	eyev = comp.eyev;
 	normalv = comp.normalv;
-	v.diffuse = rt_scale_color(
+	v->diffuse = rt_scale_color(
 			in.effective_color, obj.material.diffuse * in.light_dot_normal);
 	in.reflect = rt_reflect(rt_negate_vector(in.dir_to_light), normalv);
 	in.reflect = rt_normalize(in.reflect);
 	in.reflect_dot_camera = rt_dot_product(in.reflect, eyev);
 	if (in.reflect_dot_camera <= 0)
-		v.specular = rt_color(0, 0, 0);
+		v->specular = rt_color(0, 0, 0);
 	else
 	{
 		in.factor = powf(in.reflect_dot_camera, obj.material.shininess);
-		v.specular = rt_scale_color(
+		v->specular = rt_scale_color(
 				l.color, l.intensity * obj.material.specular * in.factor);
 	}
-	return (v);
 }
 
 /// @brief computes ambient, diffuse and specular components of a pixel's color
@@ -65,12 +63,13 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 			rt_scale_color(l.ambient.color, l.ambient.intensity));
 	if (comp.in_shadow == true)
 		return (v.ambient);
+	// rt_print_tuple(comp.point);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
 	if (intm.light_dot_normal < 0)
-		v = rt_dark_diffuse_specular(v);
+		rt_dark_diffuse_specular(&v);
 	else
-		v = rt_colorize_diffuse_specular(l, comp, intm, v);
+		rt_colorize_diffuse_specular(l, comp, intm, &v);
 	return (v.ambient, rt_add_color(v.diffuse, v.specular));
 }
 

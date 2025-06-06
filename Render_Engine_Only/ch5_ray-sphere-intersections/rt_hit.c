@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_hit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:34:35 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 20:27:15 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/06 16:49:48 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ t_inter	rt_hit(t_xs xs)
 		i++;
 	}
 	if (hit.t == INFINITY)
-		return (rt_intersect(INFINITY, rt_sphere(rt_color(0, 0, 0))));
+		return (rt_intersect(0, rt_sphere(rt_color(0, 0, 0))));
 	return (hit);
 }

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 13:26:17 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:59:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,33 @@
 
 //tuples
 
-typedef enum e_type
+/* typedef enum e_type
 {
 	VECTOR,
 	POINT,
 	COLOR
-}	t_type;
+}	t_type; */
+
+# define VECTOR 0.000
+# define POINT 1.000
+# define COLOR 2.000
 
 typedef struct s_tuple
 {
 	float	x;
 	float	y;
 	float	z;
-	t_type	w;
+	float	w;
 }	t_tuple;
 
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 800
+#  define WINDOW_WIDTH 400
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 600
+#  define WINDOW_HEIGHT 300
 # endif
 
 # ifndef WINDOW_NAME
@@ -336,7 +340,7 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.005
+#  define EPSILON 0.0005
 # endif
 
 t_matrix	rt_identity_matrix(int size);
@@ -392,9 +396,9 @@ void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
 t_tuple		rt_lighting(t_light l, t_comps comp);
-t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v);
-t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
-	t_intermediate_vars in, t_lighting_params v);
+void	rt_dark_diffuse_specular(t_lighting_params *v);
+void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
+	t_intermediate_vars in, t_lighting_params *v);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple		rt_filmic_tonemap(t_tuple color);

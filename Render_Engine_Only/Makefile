@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/02 14:02:17 by fallan            #+#    #+#              #
-#    Updated: 2025/06/06 14:33:09 by fallan           ###   ########.fr        #
+#    Updated: 2025/06/06 15:14:40 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC			= cc
 
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -g3 # -O3
+DFLAGS		= -O3 #-g3
 INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
 LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm
