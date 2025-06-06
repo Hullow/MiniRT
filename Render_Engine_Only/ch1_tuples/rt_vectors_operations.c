@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:29:51 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 17:38:41 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 14:24:26 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,7 @@ t_tuple	rt_hadamard(t_tuple color1, t_tuple color2)
 	output.x = color1.x * color2.x;
 	output.y = color1.y * color2.y;
 	output.z = color1.z * color2.z;
+	if (color1.w == COLOR && color2.w == COLOR)
+		output.w = COLOR;
 	return (output);
 }

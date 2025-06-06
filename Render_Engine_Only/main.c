@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 11:25:21 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/06 12:56:32 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-/* 
+
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_a = 0;
@@ -42,7 +42,7 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (5);
 	return (0);
 }
- */
+
 /*int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -58,7 +58,7 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 
 
 
-/* int	main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
@@ -73,11 +73,11 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	mlx_run_window(&env);
 	return (0);
 }
- */
 
 
+/* 
 int	main()
 {
 	test_shadows();
 	return (0);
-}
+} */

@@ -1,5 +1,20 @@
 #include "miniRT.h"
 
+/// @brief Initializes a light object
+/// @param color t_tuple type COLOR
+/// @param coord t_tuple type POINT
+/// @param intensity float
+/// @return The initialized light structure
+t_light	rt_light(t_tuple color, t_tuple coord, float intensity)
+{
+	t_light	light;
+
+	light.color = color;
+	light.coord = coord;
+	light.intensity = intensity;
+	return (light);
+}
+
 
 // Init a rotation matrix of angle around x
 //angle is in radians
@@ -1618,6 +1633,10 @@ void	test_point_in_shadow(t_scene scene, t_tuple point, bool desired_value)
 		printf("\n\t=> is_shadowed returns %s: KO\n", boolean_values[1]);
 }
 
+
+
+
+
 void	test_shadows()
 {
 	printf("Test Shadows:\n**************\n");
@@ -1629,7 +1648,9 @@ void	test_shadows()
 	t_tuple result;
 	comps.eyev = rt_vector(0, 0, -1);
 	comps.normalv = rt_vector(0, 0, -1);
-	light = rt_light(rt_color(1 * 255, 1 * 255, 1 * 255), rt_point(0, 0, -10), 1.0f);
+	light = rt_light(
+		rt_color(1 * 255, 1 * 255, 1 * 255), rt_point(0, 0, -10), 1.0f);
+	light.ambient = (t_ambient){.color = rt_color(255, 255, 255), .intensity = 0.1};
 	comps.in_shadow = true;
 
 	comps.point = rt_point(0, 0, 0);
@@ -1637,6 +1658,14 @@ void	test_shadows()
 
 	result = rt_lighting(light, comps);
 	check_color(rt_color(0.1 * 255, 0.1 * 255, 0.1 * 255), result);
+
+
+
+
+
+
+
+
 
 	t_scene	scene;
 	t_object scene_objects[7];

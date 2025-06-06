@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 12:43:33 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 14:22:28 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 	eyev = comp.eyev;
 	normalv = comp.normalv;
 	v.diffuse = rt_scale_color(
-			in.color, obj.material.diffuse * in.light_dot_normal);
+			in.effective_color, obj.material.diffuse * in.light_dot_normal);
 	in.reflect = rt_reflect(rt_negate_vector(in.dir_to_light), normalv);
 	in.reflect = rt_normalize(in.reflect);
 	in.reflect_dot_camera = rt_dot_product(in.reflect, eyev);
@@ -55,25 +55,23 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 /// @return the color of the point with lighting applied
 t_tuple	rt_lighting(t_light l, t_comps comp)
 {
-	t_tuple				ambient_color;
 	t_lighting_params	v;
 	t_intermediate_vars	intm;
 
-	ambient_color = rt_scale_color(l.ambient.color, l.ambient.intensity);
-	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient);
+	intm.effective_color = 
+		rt_hadamard(comp.object.color, rt_scale_color(l.color, l.intensity));
+	v.ambient = 
+		rt_hadamard(intm.effective_color, 
+			rt_scale_color(l.ambient.color, l.ambient.intensity));
 	if (comp.in_shadow == true)
-		return (rt_color(255, 192, 203));
-		// return (v.ambient);
-	
-	/////// DIFFUSE AND SPECULAR ///////
-	intm.color = rt_scale_color(comp.object.color, l.intensity);
+		return (v.ambient);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
 	if (intm.light_dot_normal < 0)
 		v = rt_dark_diffuse_specular(v);
 	else
 		v = rt_colorize_diffuse_specular(l, comp, intm, v);
-	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
+	return (v.ambient, rt_add_color(v.diffuse, v.specular));
 }
 
 /// @brief Tonemapping that gives good results.

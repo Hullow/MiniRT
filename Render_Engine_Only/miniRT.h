@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/04 15:20:29 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/06 13:26:17 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 400
+#  define WINDOW_WIDTH 800
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 300
+#  define WINDOW_HEIGHT 600
 # endif
 
 # ifndef WINDOW_NAME
@@ -223,7 +223,7 @@ typedef struct s_comps
 // Variables for final calculation
 
 typedef struct s_intermediate_vars {
-	t_tuple	color;
+	t_tuple	effective_color;
 	t_tuple	dir_to_light;
 	float	light_dot_normal;
 	t_tuple	reflect;
