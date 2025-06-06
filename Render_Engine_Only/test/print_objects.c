@@ -2,7 +2,7 @@
 
 void	rt_print_tuple(t_tuple t)
 {
-	printf("x = %f y = %f z = %f ", t.x, t.y, t.z);
+	printf("x = %0.3f, y = %0.3f, z = %0.3f ", t.x, t.y, t.z);
 	if (t.w == VECTOR)
 		printf("of type VECTOR\n");
 	if (t.w == POINT)

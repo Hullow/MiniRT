@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 16:51:42 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/05 17:48:13 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,20 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	t_lighting_params	v;
 	t_intermediate_vars	intm;
 	
-	intm.color = rt_scale_color(comp.object.color, l.intensity);
-	/////// AMBIENT ///////
-	// t_tuple				ambient_color;
-		// from input:
-	// ambient_color = rt_scale_color (l.ambient.color, l.ambient.intensity);
-		// with material:
-	// v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient);
-	
-	v.ambient = rt_scale_color(intm.color, comp.object.material.ambient);
+	/////// OLD AMBIENT ///////
+	// v.ambient = rt_scale_color(intm.color, comp.object.material.ambient); 
+
+	/////// NEW AMBIENT ///////
+	t_tuple		ambient_color;
+	ambient_color = rt_scale_color(l.ambient.color, l.ambient.intensity); // from input
+	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient); // material
 
 	// if object is in shadows, the only lighting is ambient:
 	if (comp.in_shadow == true)
-		return (v.ambient);
-
-		/////// DIFFUSE AND SPECULAR ///////
+	return (v.ambient);
+	
+	/////// DIFFUSE AND SPECULAR ///////
+	intm.color = rt_scale_color(comp.object.color, l.intensity);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
 	if (intm.light_dot_normal < 0)

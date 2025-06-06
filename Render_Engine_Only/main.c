@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/04 21:44:52 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:22:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,26 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (5);
 	return (0);
 }
+
+/*int	main(int argc, char *argv[])
+{
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	rt_print_scene(scene);
+	return (0);
+}*/
+
+/* 
+int	main()
+{
+	test_example_scene_planes();
+	return (0);
+}
+*/
 
 int	main(int argc, char *argv[])
 {

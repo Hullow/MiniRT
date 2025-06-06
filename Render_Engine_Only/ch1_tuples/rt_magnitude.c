@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:06:43 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:06:23 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/05 14:42:08 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ t_tuple	rt_normalize(t_tuple vector)
 	{
 		rt_handle_error(RT_NORMALIZE, EINVAL, "\nvector is null	vector, \
 			cannot normalize");
+		printf("null vector was: ");
+		rt_print_tuple(vector);
 		return (vector);
 	}
 	if (vector.w != VECTOR)

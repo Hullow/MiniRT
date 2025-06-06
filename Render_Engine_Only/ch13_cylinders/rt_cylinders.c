@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rt_cylinders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:14:19 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 22:50:18 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/04 15:19:11 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static float	cy_t(float a, float b, float discriminant, int signe)
+static float	cy_t(float a, float b, float discriminant, float signe)
 {
 	float	t;
 
@@ -61,6 +61,7 @@ static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, t_cyl_val *v
 		(val->i)++;
 	}
 }
+
 
 void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 {
