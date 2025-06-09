@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_phong.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/05 17:48:13 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/09 21:46:08 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 
 	/////// NEW AMBIENT ///////
 	t_tuple		ambient_color;
-	ambient_color = rt_scale_color(l.ambient.color, l.ambient.intensity); // from input
+	ambient_color = rt_scale_color(l.ambient.color, l.ambient.ratio); // from input
 	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient); // material
 
 	// if object is in shadows, the only lighting is ambient:

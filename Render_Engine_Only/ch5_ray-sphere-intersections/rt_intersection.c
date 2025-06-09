@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:43:50 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 18:39:27 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/09 22:48:15 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 	t_tuple	sp_ray;
 
 	errno = 0;
-	sp_ray = rt_sphere_to_ray(ray.origin, sphere.origin);
+	sp_ray = rt_sphere_to_ray(ray.origin, rt_point(0, 0, 0));
 	a = rt_dot_product(ray.direction, ray.direction);
 	b = 2 * rt_dot_product(ray.direction, sp_ray);
 	c = rt_dot_product(sp_ray, sp_ray) - 1;

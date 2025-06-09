@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_init_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 15:31:11 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/09 23:15:42 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ t_matrix	rt_set_transform(t_object object)
 	if (object.shape == SPHERE)
 	{
 		transform = rt_scaling(\
-			rt_vector(object.diameter / 2, object.diameter / 2, object.diameter / 2));
+			rt_vector(object.radius, object.radius, object.radius));
 	}
 	else if (object.shape == CYLINDER)
 	{
 		transform = rt_scaling(\
-			rt_vector(object.diameter / 2, object.height, object.diameter / 2));
+			rt_vector(object.radius, object.height, object.radius));
 		transform = rt_mul_matrix(rt_rotation(object.norm), transform);
 	}
 	else if (object.shape == PLANE)
@@ -50,12 +50,9 @@ static void	rt_assign_object(t_object *object, char **needle, char type)
 static void	rt_assign_values(t_scene *scene, char **values)
 {
 	char		**needle;
-	static int	i;
 
 	if (*values != NULL)
 	{
-		if (i > scene->n_obj || i < 0)
-			i = 0;
 		needle = values + 1;
 		if (**values == 'L')
 			rt_assign_light(scene, needle);
@@ -66,13 +63,14 @@ static void	rt_assign_values(t_scene *scene, char **values)
 			rt_assign_camera(scene, needle);
 			if (errno)
 				return ;
-			scene->cam = rt_calculate_camera_values(scene->cam);
+		}
+		else if (scene->n_obj < MAX_OBJECTS - 1)
+		{
+			rt_assign_object(&(scene->objects[scene->n_obj]), needle, **values);
+			scene->n_obj++;
 		}
 		else
-		{
-			rt_assign_object(&(scene->objects[i]), needle, **values);
-			i++;
-		}
+			return (rt_handle_error(RT_ASSIG_VALS, ENOMEM, "Too many objects"));
 	}
 }
 
@@ -89,30 +87,18 @@ static void	rt_spacify(char *line)
 // Reads file to assign values in scene
 int	rt_init_scene(const char *file, t_scene *scene)
 {
-	int		fd;
 	char	*line;
 	char	**splitted;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (rt_handle_error("rt_init_scene", errno, (char *)file), 1);
-	
-	while (1)
+	rt_spacify(line);
+	splitted = ft_split(line, ' ');
+	if (!splitted)
+		return (1);
+	rt_assign_values(scene, splitted);
+	ft_free_tab(splitted);
+	if (errno)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		rt_spacify(line);
-		splitted = ft_split(line, ' ');
-		rt_assign_values(scene, splitted);
-		ft_free_tab(splitted);
-		free(line);
-		if (errno)
-		{
-			close(fd);
-			return (2);
-		}
+		return (2);
 	}
-	close(fd);
 	return (0);
 }

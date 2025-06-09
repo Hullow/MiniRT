@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_object.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:19:56 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 18:35:06 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/09 23:04:09 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,41 @@
 /// @param color t_tuple type COLOR not in material because norminette
 /// @param material t_material
 /// @return The initialized struct.
-t_object	rt_sphere(t_tuple color)
+t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color)
 {
 	t_object	sphere;
 
 	sphere.shape = SPHERE;
-	sphere.origin = rt_point(0, 0, 0);
-	sphere.diameter = 2.0f;
+	sphere.origin = origin;
+	sphere.radius = diameter / 2;
 	sphere.color = color;
 	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
-	sphere.transform = rt_identity_matrix(4);
 	return (sphere);
 }
 
-t_object	rt_plane(t_tuple color)
+t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color)
 {
 	t_object	plane;
 
 	plane.shape = PLANE;
-	plane.origin = rt_point(0, 0, 0);
-	plane.norm = rt_vector(0, 1, 0);
+	plane.origin = origin;
+	plane.norm = norm;
 	plane.color = color;
 	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
 	return (plane);
 }
 
-t_object	rt_cylinder(t_tuple color)
+t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color)
 {
 	t_object	cylinder;
 
 	cylinder.shape = CYLINDER;
-	cylinder.diameter = 2.0;
 	cylinder.height = INFINITY;
 	cylinder.min = 0;
-	cylinder.max = 1;
 	cylinder.closed = 1;
 	cylinder.color = color;
 	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
-	cylinder.norm = rt_vector(0, 1, 0);
-	cylinder.origin = rt_point(0, 0, 0);
+	cylinder.norm = norm;
+	cylinder.origin = origin;
 	return (cylinder);
 }

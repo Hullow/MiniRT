@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   rt_camera.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 14:37:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/09 22:03:57 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_camera	rt_calculate_camera_values(t_camera camera)
+t_camera	rt_calc_camera_vals(t_camera camera, t_tuple coord, t_tuple orient)
 {
 	float	half_view;
 	float	aspect;
 
-	camera.transform = rt_view_transform(camera.coord, \
-		rt_add_tuple(camera.coord, camera.orient), rt_vector(0, 1, 0));
+	camera.transform = rt_view_transform(coord, \
+		rt_add_tuple(coord, orient), rt_vector(0, 1, 0));
 	half_view = tanf(camera.field_of_view / 2);
+	camera.hsize = WINDOW_WIDTH;
+	camera.vsize = WINDOW_HEIGHT;
 	aspect = (float) camera.hsize / camera.vsize;
 	if (aspect >= 1.0)
 	{

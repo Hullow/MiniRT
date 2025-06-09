@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_scene_structs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:27:15 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:00 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/09 21:35:05 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,20 @@ int	rt_count_object(const char *line, t_scene *scene)
 	{
 		if (rt_id_format(*line, *(line + 1), *(line + 2)))
 		{
-			scene->n_a += (*line == 'A' && rt_id_format(*line, *(line + 1), *(line + 2)));
-			scene->n_cam += (*line == 'C' && rt_id_format(*line, *(line + 1), *(line + 2)));
-			scene->n_l += (*line == 'L' && rt_id_format(*line, *(line + 1), *(line + 2)));
-			scene->n_sp += (*line == 's' && \
-				rt_id_format(*line, *(line + 1), *(line + 2)));
-			scene->n_pl += (*line == 'p' && \
-				rt_id_format(*line, *(line + 1), *(line + 2)));
-			scene->n_cy += (*line == 'c' && \
-				rt_id_format(*line, *(line + 1), *(line + 2)));
+			if (rt_init_scene(line, scene))
+			{
+				free(line);
+				line = NULL;
+				return (1);
+			}
 		}
 		else if (*line)
 		{
 			errno = EINVAL;
 			rt_handle_error(RT_COUNT_OBJECT, errno, (char *)line);
-			return (1);
+			free(line);
+			line = NULL;
+			return (2);
 		}
 	}
 	return (0);

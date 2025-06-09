@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/04 15:22:04 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/09 23:16:00 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ static void	rt_init_counters(t_scene *scene)
 	scene->n_a = 0;
 	scene->n_cam = 0;
 	scene->n_l = 0;
-	scene->n_sp = 0;
-	scene->n_pl = 0;
-	scene->n_cy = 0;
+	scene->n_obj = 0;
 }
 
 static int	build_scene(int argc, char *argv[], t_scene *scene)
@@ -38,12 +36,10 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (3);
 	if (rt_check_uniques(scene))
 		return (4);
-	if (rt_init_scene(argv[1], scene))
-		return (5);
 	return (0);
 }
 
-int	main(int argc, char *argv[])
+/*int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
@@ -58,15 +54,15 @@ int	main(int argc, char *argv[])
 	mlx_run_window(&env);
 	free(scene.objects);
 	return (0);
+}*/
+
+int	main(int argc, char *argv[])
+{
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	return (0);
 }
-
-// int	main(int argc, char *argv[])
-// {
-// 	t_scene		scene;
-// 	t_object	objects[MAX_OBJECTS];
-
-// 	scene.objects = objects;
-// 	if (build_scene(argc, argv, &scene))
-// 		return (1);
-// 	return (0);
-// }
