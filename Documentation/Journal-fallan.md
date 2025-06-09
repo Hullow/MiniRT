@@ -365,3 +365,9 @@ But this doesn't fix our shadow problem.
 	- sphere on plane with shadow on itself: `../Sources/scenes/scene-sphere-plane.rt`
 
 => added boolean `is_present` to t_inter. Changes result; I get a nice disk with no nuance if we check for `hit.t < distance`, and the same "inverted shadow" as before if we check `hit.t > distance`
+
+# 7/6/25
+- Testing scenes without parsing:
+	- test_self_shadow: 
+		- sphere still full green, looks like only ambient 
+		- plane doesn't render at all, even when the only object. Weird

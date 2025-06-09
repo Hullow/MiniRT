@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   rt_camera.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:12:12 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 14:37:34 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 19:21:56 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_camera	rt_calculate_camera_values(t_camera camera)
+void	rt_calculate_camera_values(t_camera *camera)
 {
 	float	half_view;
 	float	aspect;
 
-	camera.transform = rt_view_transform(camera.coord, \
-		rt_add_tuple(camera.coord, camera.orient), rt_vector(0, 1, 0));
-	half_view = tanf(camera.field_of_view / 2);
-	aspect = (float) camera.hsize / camera.vsize;
+	camera->transform = rt_view_transform(camera->coord, \
+		rt_add_tuple(camera->coord, camera->orient), rt_vector(0, 1, 0));
+	half_view = tanf(camera->field_of_view / 2);
+	aspect = (float) camera->hsize / camera->vsize;
 	if (aspect >= 1.0)
 	{
-		camera.half_width = half_view;
-		camera.half_height = half_view / aspect;
+		camera->half_width = half_view;
+		camera->half_height = half_view / aspect;
 	}
 	else
 	{
-		camera.half_width = half_view * aspect;
-		camera.half_height = half_view;
+		camera->half_width = half_view * aspect;
+		camera->half_height = half_view;
 	}
-	camera.pixel_size = (camera.half_width * 2) / (camera.hsize);
-	return (camera);
+	camera->pixel_size = (camera->half_width * 2) / (camera->hsize);
+	// return (camera);
 }
 
 t_ray	rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_init_scene.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 16:23:04 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 19:30:04 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	else if (**values == 'C')
 	{
 		rt_assign_camera(scene, needle);
-		scene->cam = rt_calculate_camera_values(scene->cam);
+		// scene->cam = rt_calculate_camera_values(scene->cam);
 	}
 	else
 	{

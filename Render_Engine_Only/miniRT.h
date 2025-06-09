@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 18:40:33 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/06 19:45:31 by francis          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,8 @@ void		test_example_scene(void);
 t_scene		*test_default_scene(t_scene *scene);
 void		test_example_scene_planes(void);
 void		test_example_scene_with_flat_spheres(void);
+void		test_decentered_sphere(void);
+void		test_self_shadow(void);
 
 //CH0 Parsing
 
@@ -408,7 +410,7 @@ t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-t_camera	rt_calculate_camera_values(t_camera camera);
+void		rt_calculate_camera_values(t_camera *camera);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera *camera, t_scene *scene, t_env *env);
