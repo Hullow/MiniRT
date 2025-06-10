@@ -58,7 +58,7 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 	t_tuple	sp_ray;
 
 	errno = 0;
-	sp_ray = rt_sphere_to_ray(ray.origin, sphere.origin);
+	sp_ray = rt_sphere_to_ray(ray.origin, rt_point(0.0f, 0.0f, 0.0f));
 	a = rt_dot_product(ray.direction, ray.direction);
 	b = 2 * rt_dot_product(ray.direction, sp_ray);
 	c = rt_dot_product(sp_ray, sp_ray) - 1;

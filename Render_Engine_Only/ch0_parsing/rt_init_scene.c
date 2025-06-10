@@ -62,7 +62,7 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	else if (**values == 'C')
 	{
 		rt_assign_camera(scene, needle);
-		scene->cam = rt_calculate_camera_values(scene->cam);
+		rt_calculate_camera_values(&(scene->cam));
 	}
 	else
 	{

@@ -55,7 +55,7 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 		ft_free_tab(color);
 		return ;
 	}
-	scene->lux.ambient.color = rt_color(
+	scene->lux.ambient.color = rt_color(\
 			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2)));
 	ft_free_tab(color);
 }
@@ -89,9 +89,9 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 		ft_free_double_tab(coord, orient);
 		return ;
 	}
-	scene->cam.orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)),
+	scene->cam.orient = rt_vector(ft_strtof(*orient), ft_strtof(*(orient + 1)),\
 			ft_strtof(*(orient +2)));
-	scene->cam.coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)),
+	scene->cam.coord = rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)),\
 			ft_strtof(*(coord +2)));
 	scene->cam.hsize = WINDOW_WIDTH;
 	scene->cam.vsize = WINDOW_HEIGHT;

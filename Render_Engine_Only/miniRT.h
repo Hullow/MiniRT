@@ -223,7 +223,7 @@ typedef struct s_comps
 // Variables for final calculation
 
 typedef struct s_intermediate_vars {
-	t_tuple	color;
+	t_tuple	effective_color;
 	t_tuple	dir_to_light;
 	float	light_dot_normal;
 	t_tuple	reflect;
@@ -245,6 +245,7 @@ typedef struct s_cyl_val
 	int		i;
 	float	discr;
 }	t_cyl_val;
+
 
 //test
 
@@ -392,9 +393,9 @@ void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 void		rt_print_material(t_material mat);
 t_tuple		rt_lighting(t_light l, t_comps comp);
-t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v);
-t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
-	t_intermediate_vars in, t_lighting_params v);
+void	rt_dark_diffuse_specular(t_lighting_params *v);
+void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
+	t_intermediate_vars in, t_lighting_params *v);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple		rt_filmic_tonemap(t_tuple color);
@@ -409,14 +410,13 @@ t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-t_camera	rt_calculate_camera_values(t_camera camera);
+void		rt_calculate_camera_values(t_camera *camera);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera *camera, t_scene *scene, t_env *env);
 
 //CH8 Shadows
 bool		rt_is_shadowed(t_scene *scene, t_tuple point);
-
 
 //CH9 Planes
 

@@ -59,6 +59,7 @@ t_tuple	rt_scale_color(t_tuple c1, float s)
 	{
 		rt_handle_error(RT_SCALE_COLOR, EINVAL, \
 			"\nthe input tuple is not a color");
+		exit(0);
 		mul = rt_color(0, 0, 0);
 		return (mul);
 	}

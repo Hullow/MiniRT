@@ -1031,7 +1031,7 @@ void	test_light_render()
 	int			i;
 
 	xs.inter = (t_inter *)calloc(2, sizeof(t_inter));
-	camera = rt_camera_parse(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
+	rt_camera_parse(rt_point(0, 0, -5), rt_vector(0, 0, 1), 90.0f);
 	sphere = rt_sphere(rt_color(255, 0.2 * 255, 255));
 	light = rt_light(rt_color(255, 255, 255), rt_point(-10, 10, -10), 1.0f);
 	ray = rt_ray(camera.coord, camera.orient);
@@ -1353,7 +1353,7 @@ void	test_example_scene_with_flat_spheres()
 	);
 
 	// camera
-	scene.cam = rt_calculate_camera_values(scene.cam);
+	rt_calculate_camera_values(&(scene.cam));
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 
@@ -1448,6 +1448,7 @@ void	test_example_scene_planes()
 		rt_point(-10, 10, -10),
 		1
 	);
+	scene.lux.ambient = (t_ambient){.color = rt_color(255, 255, 255), .intensity = 0.2};
 
 	// camera
 	scene.cam.field_of_view = 70;
@@ -1455,7 +1456,7 @@ void	test_example_scene_planes()
 	scene.cam.coord = rt_point(0, 0, -5);
 	scene.cam.hsize = WINDOW_WIDTH;
 	scene.cam.vsize = WINDOW_HEIGHT;
-	scene.cam = rt_calculate_camera_values(scene.cam);
+	rt_calculate_camera_values(&(scene.cam));
 	scene.cam.transform = rt_view_transform( \
 		rt_point(0, 1.5, -5), rt_point(0, 1, 0), rt_vector(0, 1, 0));
 
@@ -1478,7 +1479,7 @@ void	test_camera()
 
 	printf("\nrendering a world with a camera\n");
 	scene = test_default_scene(scene);
-	camera = rt_calculate_camera_values(camera);
+	rt_calculate_camera_values(&camera);
 
 	// camera settings
 	t_tuple from;
@@ -1804,7 +1805,7 @@ void	test_render_plane()
 	int			i;
 	
 	xs.inter = inter;
-	camera = rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
+	rt_camera_parse(rt_point(0, 2, -5), rt_vector(0, -0.5, 1), 90.0f);
 	plane = rt_plane(rt_color(255, 0.2 * 255, 255));
 	plane.transform = rt_identity_matrix(4);
 	light = rt_light(rt_color(255, 255, 255), rt_point(0, 0.1, 5), 1.0f);
@@ -2086,10 +2087,10 @@ void	test_cylinder_render()
 	camera.field_of_view = M_PI / 3;
 	camera.hsize = WINDOW_WIDTH;
 	camera.vsize = WINDOW_HEIGHT;
-	camera = rt_calculate_camera_values(camera);
+	rt_calculate_camera_values(&camera);
 	
 	//assign scene
-	scene.cam = camera;
+	camera;
 	scene.objects = objects;
 	scene.n_obj = 1;
 	scene.lux = light;

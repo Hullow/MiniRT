@@ -86,10 +86,10 @@ SCENE		= rt_scene \
 SHADOW		= rt_shadow
 
 TESTS		= test \
-			print_objects
-#			test_input
-#			test_shape
-#			test_thread
+			print_objects \
+			test_input \
+			test_shape \
+			test_thread
 
 TRANSF		= rt_rotation \
 			rt_transform
