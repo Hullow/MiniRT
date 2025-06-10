@@ -39,7 +39,7 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	return (0);
 }
 
-/*int	main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
@@ -52,11 +52,10 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	if (scene.n_obj > 0)
 		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
-	free(scene.objects);
 	return (0);
-}*/
+}
 
-int	main(int argc, char *argv[])
+/*int	main(int argc, char *argv[])
 {
 	t_scene		scene;
 	t_object	objects[MAX_OBJECTS];
@@ -71,4 +70,4 @@ int	main(int argc, char *argv[])
 	printf("sphere1.radius %f\n", scene.objects[0].radius);
 	printf("sphere2.radius %f\n", scene.objects[1].radius);
 	return (0);
-}
+}*/
