@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/03 22:48:37 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/10 16:59:45 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 800
+#  define WINDOW_WIDTH 400
 # endif
 
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 600
+#  define WINDOW_HEIGHT 300
 # endif
 
 # ifndef WINDOW_NAME
@@ -155,7 +155,9 @@ typedef struct s_intersect
 {
 	t_object	object;
 	float		t;
+	bool		is_present;
 }	t_inter;
+
 
 typedef struct s_xs
 {

@@ -1448,7 +1448,7 @@ void	test_example_scene_planes()
 		rt_point(-10, 10, -10),
 		1
 	);
-	scene.lux.ambient = (t_ambient){.color = rt_color(255, 255, 255), .intensity = 0.2};
+	scene.lux.ambient = (t_ambient){.color = rt_color(255, 0, 0), .intensity = 0.9};
 
 	// camera
 	scene.cam.field_of_view = 70;

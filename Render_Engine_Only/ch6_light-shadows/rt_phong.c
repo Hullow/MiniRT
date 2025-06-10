@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/02 16:51:42 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:06:37 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 		rt_dark_diffuse_specular(&v);
 	else
 		rt_colorize_diffuse_specular(l, comp, intm, &v);
-	return (v.ambient, rt_add_color(v.diffuse, v.specular));
+	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
 }
 
 /// @brief Tonemapping that gives good results.
