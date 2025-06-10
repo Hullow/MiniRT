@@ -17,7 +17,7 @@ t_tuple	rt_add_color(t_tuple c1, t_tuple c2)
 	t_tuple	add;
 
 	errno = 0;
-	if (c1.w != COLOR || c2.w != COLOR)
+	if (!is_equal_float(c1.w, COLOR) || !is_equal_float(c2.w, COLOR))
 	{
 		rt_handle_error(RT_ADD_COLOR, EINVAL, \
 			"\none of the inputs is not a color");
@@ -36,7 +36,7 @@ t_tuple	rt_sub_color(t_tuple c1, t_tuple c2)
 	t_tuple	sub;
 
 	errno = 0;
-	if (c1.w != COLOR || c2.w != COLOR)
+	if (!is_equal_float(c1.w, COLOR) || !is_equal_float(c2.w, COLOR))
 	{
 		rt_handle_error(RT_SUB_COLOR, EINVAL, \
 			"\none of the inputs is not a color");
@@ -55,7 +55,7 @@ t_tuple	rt_scale_color(t_tuple c1, float s)
 	t_tuple	mul;
 
 	errno = 0;
-	if (c1.w != COLOR)
+	if (!is_equal_float(c1.w, COLOR))
 	{
 		rt_handle_error(RT_SCALE_COLOR, EINVAL, \
 			"\nthe input tuple is not a color");
@@ -74,7 +74,7 @@ t_tuple	rt_mul_color(t_tuple c1, t_tuple c2)
 	t_tuple	mul;
 
 	errno = 0;
-	if (c1.w != COLOR || c2.w != COLOR)
+	if (!is_equal_float(c1.w, COLOR) || !is_equal_float(c2.w, COLOR))
 	{
 		rt_handle_error(RT_MUL_COLOR, EINVAL, \
 			"\none of the inputs is not a color");

@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:34:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 16:21:57 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:40:11 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 	t_matrix	transform;
 
 	coord = ft_split(*needle, ',');
-	color = ft_split(*(needle +2), ',');
+	color = ft_split(*(needle + 2), ',');
 	if (!rt_valid_color(color) || !rt_valid_coord(coord) || errno != 0)
 	{
 		ft_free_double_tab(coord, color);
 		return ;
 	}
-	*sphere = rt_sphere(rt_color(\
-		ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
-	sphere->origin = rt_point(\
-		ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
-	sphere->diameter = ft_strtof(*(needle +1));
+	*sphere = rt_sphere(rt_point(ft_strtof(*coord),	ft_strtof(*(coord + 1)), \
+		ft_strtof(*(coord + 2))), ft_strtof(*(needle + 1)), \
+			rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), \
+			ft_strtof(*(color + 2))));
 	transform = rt_set_transform(*sphere);
 	sphere->transform = transform;
-	printf("rt_assign_sphere - sphere.diameter: %f\n", sphere->diameter);
+	printf("rt_assign_sphere - sphere.radius: %f\n", sphere->radius);
 	// printf("rt_assign_sphere - sphere.transform:\n");
 	// rt_print_matrix(transform);
 	ft_free_double_tab(coord, color);
@@ -46,17 +45,16 @@ void	rt_assign_plane(t_object *plane, char **needle)
 	t_matrix	transform;
 
 	coord = ft_split(*needle, ',');
-	norm = ft_split(*(needle +1), ',');
-	color = ft_split(*(needle +2), ',');
+	norm = ft_split(*(needle + 1), ',');
+	color = ft_split(*(needle + 2), ',');
 	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) \
 		|| !rt_valid_color(color))
 		return (ft_free_tab(coord), ft_free_tab(norm), ft_free_tab(color));
-	*plane = rt_plane(rt_color(\
-				ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
-	plane->origin = rt_point(
-			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
-	plane->norm = rt_vector(
-			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
+	*plane = rt_plane(rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), \
+		ft_strtof(*(coord + 2))), rt_vector(ft_strtof(*norm), \
+			ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2))), rt_color(\
+				ft_strtof(*color), ft_strtof(*(color + 1)), \
+					ft_strtof(*(color + 2))));
 	transform = rt_set_transform(*plane);
 	plane->transform = transform;
 	ft_free_tab(coord);
@@ -72,22 +70,20 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 	t_matrix	transform;
 
 	coord = ft_split(*needle, ',');
-	norm = ft_split(*(needle +1), ',');
+	norm = ft_split(*(needle + 1), ',');
 	color = ft_split(*(needle + 4), ',');
 	if (!rt_valid_orient(norm) || !rt_valid_coord(coord) \
 	|| !rt_valid_color(color))
 		return (ft_free_tab(coord), ft_free_tab(norm), ft_free_tab(color));
-	*cylinder = rt_cylinder(rt_color(\
-			ft_strtof(*color), ft_strtof(*(color +1)), ft_strtof(*(color +2))));
-	cylinder->origin = rt_point(
-			ft_strtof(*coord), ft_strtof(*(coord +1)), ft_strtof(*(coord +2)));
-	cylinder->norm = rt_vector(
-			ft_strtof(*norm), ft_strtof(*(norm +1)), ft_strtof(*(norm +2)));
-	cylinder->diameter = ft_strtof(*(needle +2));
-	cylinder->height = ft_strtof(*(needle + 3));
+	*cylinder = rt_cylinder(rt_point(ft_strtof(*coord), \
+		ft_strtof(*(coord + 1)), ft_strtof(*(coord + 2))), rt_vector(\
+			ft_strtof(*norm), ft_strtof(*(norm + 1)), ft_strtof(*(norm + 2))), \
+				rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), \
+					ft_strtof(*(color + 2))));
+	cylinder->radius = ft_strtof(*(needle + 2)) / 2;
+	cylinder->max = ft_strtof(*(needle + 3));
 	transform = rt_set_transform(*cylinder);
 	cylinder->transform = transform;
-
 	ft_free_tab(coord);
 	ft_free_tab(norm);
 	ft_free_tab(color);

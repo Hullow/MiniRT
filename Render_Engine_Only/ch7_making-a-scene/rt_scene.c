@@ -28,7 +28,7 @@ void	rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs)
 		ray_transform = rt_inversion(scene->objects[i].transform);
 		scene->objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray->origin);
 		scene->objects[i].saved_ray.direction = \
-			rt_mul_tuple_matrix(ray_transform, ray->direction);
+			rt_normalize(rt_mul_tuple_matrix(ray_transform, ray->direction));
 		rt_intersects(&(scene->objects[i]), xs, &index);
 		i++;
 	}

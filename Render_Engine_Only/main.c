@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 19:48:18 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:40:51 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-/* 
+
 static void	rt_init_counters(t_scene *scene)
 {
 	scene->n_a = 0;
 	scene->n_cam = 0;
 	scene->n_l = 0;
-	scene->n_sp = 0;
-	scene->n_pl = 0;
-	scene->n_cy = 0;
+	scene->n_obj = 0;
 }
 
 static int	build_scene(int argc, char *argv[], t_scene *scene)
@@ -38,24 +36,9 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (3);
 	if (rt_check_uniques(scene))
 		return (4);
-	if (rt_init_scene(argv[1], scene))
-		return (5);
 	return (0);
 }
- */
-/*int	main(int argc, char *argv[])
-{
-	t_scene		scene;
-	t_object	objects[MAX_OBJECTS];
 
-	scene.objects = objects;
-	if (build_scene(argc, argv, &scene))
-		return (1);
-	rt_print_scene(scene);
-	return (0);
-}*/
-
-/* 
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -71,14 +54,20 @@ int	main(int argc, char *argv[])
 	mlx_run_window(&env);
 	return (0);
 }
- */
 
-
-int	main()
+/*int	main(int argc, char *argv[])
 {
-	// test_shadows();
-	// test_example_scene_planes();
-	// test_decentered_sphere();
-	test_self_shadow();
+	t_scene		scene;
+	t_object	objects[MAX_OBJECTS];
+
+	scene.objects = objects;
+	if (build_scene(argc, argv, &scene))
+		return (1);
+	printf("nobj %d\nsphere1.color rgb %f %f %f\n", scene.n_obj, scene.objects[0].color.x, scene.objects[0].color.y, scene.objects[0].color.z);
+	printf("sphere2.color rgb %f %f %f\n", scene.objects[1].color.x, scene.objects[1].color.y, scene.objects[1].color.z);
+	printf("sphere1.origin xyz %f %f %f\n", scene.objects[0].origin.x, scene.objects[0].origin.y, scene.objects[0].origin.z);
+	printf("sphere2.origin xyz %f %f %f\n", scene.objects[1].origin.x, scene.objects[1].origin.y, scene.objects[1].origin.z);
+	printf("sphere1.radius %f\n", scene.objects[0].radius);
+	printf("sphere2.radius %f\n", scene.objects[1].radius);
 	return (0);
-}
+}*/

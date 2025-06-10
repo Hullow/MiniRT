@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:22:59 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 17:03:14 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:32:52 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 	if (obj.shape == SPHERE)
 		normal = rt_vector(point.x, point.y, point.z);
 	else if (obj.shape == PLANE)
-		normal = obj.norm;
+		normal = rt_vector(0, 1, 0);
 	else if (obj.shape == CYLINDER)
 		normal = rt_local_normal_capped_cylinder(obj, point);
 	else

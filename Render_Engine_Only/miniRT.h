@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francis <francis@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 19:45:31 by francis          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:31:20 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 //tuples
 
-# define VECTOR 0.000
-# define POINT 1.000
-# define COLOR 2.000
+#  define VECTOR 0.000000
+#  define POINT 1.000000
+#  define COLOR 2.000000
 
 typedef struct s_tuple
 {
@@ -43,7 +43,7 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 400
+#  define WINDOW_WIDTH 300
 # endif
 
 # ifndef WINDOW_HEIGHT
@@ -51,7 +51,7 @@ typedef struct s_tuple
 # endif
 
 # ifndef WINDOW_NAME
-#  define WINDOW_NAME "micro_rt"
+#  define WINDOW_NAME "miniRT"
 # endif
 
 # ifndef MAX_OBJECTS
@@ -60,6 +60,7 @@ typedef struct s_tuple
 
 /* function names for error prints */
 # define RT_COUNT_OBJECT		" – rt_count_object\n"
+# define RT_ASSIG_VALS			" - rt_assign_values\n"
 # define RT_VALID_COORD			" – rt_valid_coord\n"
 # define RT_VALID_COLOR			" – rt_valid_color\n"
 # define RT_VALID_ORIENT		" – rt_valid_orient\n"
@@ -140,7 +141,7 @@ typedef struct s_object
 	t_material	material;
 	t_ray		saved_ray;
 	t_matrix	transform;
-	float		diameter;
+	float		radius;
 	float		height;
 	float		min;
 	float		max;
@@ -165,9 +166,17 @@ typedef struct s_xs
 
 typedef struct s_ambient
 {
-	float	intensity;
+	float	ratio;
 	t_tuple	color;
 }	t_ambient;
+
+typedef struct s_light
+{
+	t_tuple		coord;
+	float		intensity;
+	t_tuple		color;
+	t_ambient	ambient;
+}	t_light;
 
 typedef struct s_camera
 {
@@ -182,14 +191,6 @@ typedef struct s_camera
 	float		pixel_size;
 }	t_camera;
 
-typedef struct s_light
-{
-	t_tuple		coord;
-	float		intensity;
-	t_tuple		color;
-	t_ambient	ambient;
-}	t_light;
-
 //Scene
 
 typedef struct s_scene
@@ -197,9 +198,6 @@ typedef struct s_scene
 	int			n_a;
 	int			n_l;
 	int			n_cam;
-	int			n_sp;
-	int			n_pl;
-	int			n_cy;
 	int			n_obj;
 	t_camera	cam;
 	t_light		lux;
@@ -273,8 +271,8 @@ void		test_self_shadow(void);
 
 int			rt_check_ext(const char *file);
 int			rt_read_id(const char *file, t_scene *scene);
-int			rt_init_scene(const char *file, t_scene *scene);
-int			rt_count_object(const char *line, t_scene *scene);
+int			rt_init_scene(char *file, t_scene *scene);
+int			rt_count_object(char *line, t_scene *scene);
 int			rt_valid_color(char **color);
 int			rt_valid_coord(char **coord);
 int			rt_valid_orient(char **orient);
@@ -292,7 +290,6 @@ void		rt_assign_cylinder(t_object *cylinder, char **needle);
 t_tuple		rt_point(float x, float y, float z);
 t_tuple		rt_vector(float x, float y, float z);
 t_tuple		rt_color(float r, float g, float b);
-void		rt_print_tuple(t_tuple t);
 t_tuple		rt_add_tuple(t_tuple a, t_tuple b);
 t_tuple		rt_sub_tuple(t_tuple a, t_tuple b);
 t_tuple		rt_negate_vector(t_tuple	a);
@@ -336,12 +333,11 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.00001 
+#  define EPSILON 0.00001
 # endif
 
 
 t_matrix	rt_identity_matrix(int size);
-void		rt_print_matrix(t_matrix m);
 int			rt_matrix_equality(t_matrix a, t_matrix b);
 t_matrix	rt_mul_matrix(t_matrix a, t_matrix b);
 t_tuple		rt_mul_tuple_matrix(t_matrix m, t_tuple t);
@@ -361,8 +357,6 @@ t_matrix	rt_inversion(t_matrix m);
 t_matrix	rt_translation(t_tuple t);
 t_matrix	rt_scaling(t_tuple t);
 t_matrix	rt_rotation_x(float angle);
-t_matrix	rt_rotation_y(float angle);
-t_matrix	rt_rotation_z(float angle);
 t_matrix	rt_rotation(t_tuple norm);
 t_matrix	rt_set_transform(t_object object);
 
@@ -373,10 +367,8 @@ t_matrix	rt_set_transform(t_object object);
 # endif
 
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
-void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray *ray, float t);
-t_object	rt_sphere(t_tuple color);
-void		rt_print_sphere(t_object sphere);
+t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color);
 t_inter		rt_intersect(float t, t_object obj);
 void		rt_intersects(t_object *object, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
@@ -389,9 +381,7 @@ t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_tuple		rt_normal_at(t_object obj, t_tuple point);
 t_tuple		rt_reflect(t_tuple in, t_tuple normal);
 t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
-void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
-void		rt_print_material(t_material mat);
 t_tuple		rt_lighting(t_light l, t_comps comp);
 void	rt_dark_diffuse_specular(t_lighting_params *v);
 void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
@@ -402,7 +392,6 @@ t_tuple		rt_filmic_tonemap(t_tuple color);
 
 //CH7 Scene
 
-void		rt_print_scene(t_scene scene);
 void		rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray *ray);
 t_tuple		rt_shade_hit(t_scene *scene, t_comps comp);
@@ -410,9 +399,9 @@ t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-void		rt_calculate_camera_values(t_camera *camera);
+t_camera	rt_calc_camera_vals(t_camera camera, \
+				t_tuple coord, t_tuple orient);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
-void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera *camera, t_scene *scene, t_env *env);
 
 //CH8 Shadows
@@ -425,15 +414,13 @@ bool		rt_is_shadowed(t_scene *scene, t_tuple point);
 #  define ERAYPARALLEL 135
 # endif
 
-t_object	rt_plane(t_tuple color);
-void		rt_print_plane(t_object plane);
+t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color);
 void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
 //CH13 Cylinders
 
-t_object	rt_cylinder(t_tuple color);
-void		rt_print_cylinder(t_object cylinder);
+t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color);
 void		rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i);
 int			rt_check_cap(t_ray ray, float t);
 void		rt_intersect_caps(t_object cylinder, t_ray ray, t_xs *xs, int *i);

@@ -53,7 +53,7 @@ float	rt_dot_product(t_tuple a, t_tuple b)
 {
 	float	dot;
 
-	if (a.w != VECTOR || b.w != VECTOR)
+	if (!is_equal_float(a.w, VECTOR) || !is_equal_float(b.w, VECTOR))
 	{
 		rt_handle_error(RT_DOT_PRODUCT, EINVAL, "\none of the inputs\
 			 is not a vector");
@@ -73,10 +73,12 @@ t_tuple	rt_cross_product(t_tuple a, t_tuple b)
 	float	cross_z;
 
 	errno = 0;
-	if (a.w != VECTOR || b.w != VECTOR)
+	if (!is_equal_float(a.w, VECTOR) || !is_equal_float(b.w, VECTOR))
 	{
 		rt_handle_error(RT_CROSS_PRODUCT, EINVAL, "\none of the inputs\
 			is not a vector");
+		printf("tuple a: %f\n", a.w);
+		printf("tuple b: %f\n", b.w);
 		cross = rt_vector(0, 0, 0);
 		return (cross);
 	}

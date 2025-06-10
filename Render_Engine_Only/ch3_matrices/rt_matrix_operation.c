@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:21:37 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/06 15:46:48 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:33:28 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static float	mat_dot_product(float *a, t_tuple b)
 {
 	float	dot;
 
-	dot = a[0] * b.x + a[1] * b.y + a[2] * b.z + (float)b.w * a[3];
+	dot = a[0] * b.x + a[1] * b.y + a[2] * b.z + a[3] * b.w;
 	return (dot);
 }
 
@@ -59,7 +59,6 @@ t_tuple	rt_mul_tuple_matrix(t_matrix m, t_tuple t)
 	int		i;
 	t_tuple	mul;
 
-	mul.w = t.w;
 	i = 0;
 	while (i < 4)
 	{
@@ -73,8 +72,14 @@ t_tuple	rt_mul_tuple_matrix(t_matrix m, t_tuple t)
 			mul.y = mat_dot_product(buffer, t);
 		if (i == 2)
 			mul.z = mat_dot_product(buffer, t);
+		if (i == 3)
+			mul.w = mat_dot_product(buffer, t);
 		i++;
 	}
+	if (is_equal_float(mul.w, POINT))
+		mul.w = POINT;
+	else
+		mul.w = VECTOR;
 	return (mul);
 }
 

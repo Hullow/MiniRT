@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
+#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/02 14:02:17 by fallan            #+#    #+#              #
-#    Updated: 2025/06/07 11:30:04 by francis          ###   ########.fr        #
+#    Updated: 2025/06/10 15:36:08 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC			= cc
 
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		=  -g3 # -O3
+DFLAGS		= -g3 #-O3
 INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
 LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm
@@ -75,7 +75,6 @@ MATRIX		= rt_matrix_definition \
 RAYS		= rt_hit \
 			rt_intersection \
 			rt_object \
-			rt_plane_cylinder \
 			rt_ray \
 			rt_ray_transform
 
@@ -85,8 +84,8 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-TESTS		= test \
-			print_objects
+#TESTS		= test
+#			print_objects
 #			test_input
 #			test_shape
 #			test_thread
@@ -124,7 +123,7 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
 			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
 			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER))) \
-			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
+#			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
@@ -139,7 +138,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
 			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
 			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER))) \
-			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
+#			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -170,7 +169,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(SHADOWDIR)
-	mkdir -p $(OBJDIR)$(TESTDIR)
+#	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(PLANESDIR)

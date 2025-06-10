@@ -16,9 +16,9 @@ t_ray	rt_ray(t_tuple origin, t_tuple direction)
 {
 	t_ray	ray;
 
-	if (origin.w != POINT)
+	if (!is_equal_float(origin.w, POINT))
 		rt_handle_error(RT_RAY, EINVAL, "origin is not a point");
-	if (direction.w != VECTOR)
+	if (!is_equal_float(direction.w, VECTOR))
 		rt_handle_error(RT_RAY, EINVAL, "direction is not a vector");
 	ray.origin = origin;
 	ray.direction = direction;

@@ -45,7 +45,6 @@ t_tuple	rt_normalize(t_tuple vector)
 		rt_handle_error(RT_NORMALIZE, EINVAL, "\nvector is null	vector, \
 			cannot normalize");
 		printf("null vector was: ");
-		rt_print_tuple(vector);
 		return (vector);
 	}
 	if (!is_equal_float(vector.w, VECTOR))
@@ -56,6 +55,6 @@ t_tuple	rt_normalize(t_tuple vector)
 	norm.x = vector.x / rt_magnitude(vector);
 	norm.y = vector.y / rt_magnitude(vector);
 	norm.z = vector.z / rt_magnitude(vector);
-	norm.w = (float)vector.w / rt_magnitude(vector);
+	norm.w = VECTOR;
 	return (norm);
 }
