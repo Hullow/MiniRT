@@ -254,8 +254,8 @@ typedef struct s_cyl_val
 
 int			rt_check_ext(const char *file);
 int			rt_read_id(const char *file, t_scene *scene);
-int			rt_init_scene(const char *file, t_scene *scene);
-int			rt_count_object(const char *line, t_scene *scene);
+int			rt_init_scene(char *file, t_scene *scene);
+int			rt_count_object(char *line, t_scene *scene);
 int			rt_valid_color(char **color);
 int			rt_valid_coord(char **coord);
 int			rt_valid_orient(char **orient);

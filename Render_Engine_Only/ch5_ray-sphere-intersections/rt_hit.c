@@ -32,6 +32,7 @@ t_inter	rt_hit(t_xs xs)
 		i++;
 	}
 	if (hit.t == INFINITY)
-		return (rt_intersect(INFINITY, rt_sphere(rt_color(0, 0, 0))));
+		return (rt_intersect(0, rt_sphere(rt_point(0, 0, 0), 2, \
+			rt_color(0, 0, 0))));
 	return (hit);
 }

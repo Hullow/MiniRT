@@ -26,7 +26,7 @@ static int	rt_id_format(const char a, const char b, const char c)
 }
 
 // Checks the line for an object identifier and increments the counter
-int	rt_count_object(const char *line, t_scene *scene)
+int	rt_count_object(char *line, t_scene *scene)
 {
 	while ((ft_isspace(*line) || *line == ' '))
 		line++;

@@ -70,7 +70,7 @@ static void	rt_assign_values(t_scene *scene, char **values)
 			scene->n_obj++;
 		}
 		else
-			return (rt_handle_error(RT_ASSIG_VALS, ENOMEM, "Too many objects"));
+			return (rt_handle_error(RT_ASSIG_VALS, ENOMEM, "Too many objects"), (void)1);
 	}
 }
 
@@ -85,13 +85,12 @@ static void	rt_spacify(char *line)
 }
 
 // Reads file to assign values in scene
-int	rt_init_scene(const char *file, t_scene *scene)
+int	rt_init_scene(char *file, t_scene *scene)
 {
-	char	*line;
 	char	**splitted;
 
-	rt_spacify(line);
-	splitted = ft_split(line, ' ');
+	rt_spacify(file);
+	splitted = ft_split(file, ' ');
 	if (!splitted)
 		return (1);
 	rt_assign_values(scene, splitted);
