@@ -95,7 +95,7 @@ void	rt_print_light(t_light light)
 	printf("color:\n");
 	rt_print_tuple(light.color);
 	printf("intensity: %f\n", light.intensity);
-	printf("Ambient intensity %f\n", light.ambient.intensity);
+	printf("Ambient intensity %f\n", light.ambient.ratio);
 	printf("Ambient color\n");
 	rt_print_tuple(light.ambient.color);
 }

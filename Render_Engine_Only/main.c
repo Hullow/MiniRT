@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/09 23:16:00 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/11 22:27:21 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	//rt_print_scene(scene);
+	rt_print_scene(scene);
 	env = mlx_set_env();
 	if (scene.n_obj > 0)
 		rt_render(&(scene.cam), &scene, &env);
