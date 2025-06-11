@@ -12,15 +12,14 @@
 
 #include "miniRT.h"
 
-t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v)
+void	rt_dark_diffuse_specular(t_lighting_params *v)
 {
-	v.diffuse = rt_color(0, 0, 0);
-	v.specular = rt_color(0, 0, 0);
-	return (v);
+	v->diffuse = rt_color(0, 0, 0);
+	v->specular = rt_color(0, 0, 0);
 }
 
-t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
-	t_intermediate_vars in, t_lighting_params v)
+void	rt_colorize_diffuse_specular(t_light l, t_comps comp,\
+	t_intermediate_vars in, t_lighting_params *v)
 {
 	t_object	obj;
 	t_tuple		eyev;
@@ -29,20 +28,19 @@ t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp,
 	obj = comp.object;
 	eyev = comp.eyev;
 	normalv = comp.normalv;
-	v.diffuse = rt_scale_color(
-		in.color, obj.material.diffuse * in.light_dot_normal);
+	v->diffuse = rt_scale_color(\
+			in.effective_color, obj.material.diffuse * in.light_dot_normal);
 	in.reflect = rt_reflect(rt_negate_vector(in.dir_to_light), normalv);
 	in.reflect = rt_normalize(in.reflect);
 	in.reflect_dot_camera = rt_dot_product(in.reflect, eyev);
 	if (in.reflect_dot_camera <= 0)
-		v.specular = rt_color(0, 0, 0);
+		v->specular = rt_color(0, 0, 0);
 	else
 	{
 		in.factor = powf(in.reflect_dot_camera, obj.material.shininess);
-		v.specular = rt_scale_color(
-			l.color, l.intensity * obj.material.specular * in.factor);
+		v->specular = rt_scale_color(\
+				l.color, l.intensity * obj.material.specular * in.factor);
 	}
-	return (v);
 }
 
 /// @brief computes ambient, diffuse and specular components of a pixel's color
@@ -53,29 +51,20 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 {
 	t_lighting_params	v;
 	t_intermediate_vars	intm;
-	
-	/////// OLD AMBIENT ///////
-	// v.ambient = rt_scale_color(intm.color, comp.object.material.ambient); 
 
-	/////// NEW AMBIENT ///////
-	t_tuple		ambient_color;
-	ambient_color = rt_scale_color(l.ambient.color, l.ambient.ratio); // from input
-	v.ambient = rt_scale_color(ambient_color, comp.object.material.ambient); // material
-
-	// if object is in shadows, the only lighting is ambient:
+	intm.effective_color = 
+		rt_hadamard(comp.object.color, rt_scale_color(l.color, l.intensity));
+	v.ambient = \
+		rt_hadamard(intm.effective_color, \
+			rt_scale_color(l.ambient.color, l.ambient.ratio));
 	if (comp.in_shadow == true)
-	return (v.ambient);
-	
-	/////// DIFFUSE AND SPECULAR ///////
-	intm.color = rt_scale_color(comp.object.color, l.intensity);
+		return (v.ambient);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
 	if (intm.light_dot_normal < 0)
-		v = rt_dark_diffuse_specular(v);
+		rt_dark_diffuse_specular(&v);
 	else
-		v = rt_colorize_diffuse_specular(l, comp, intm, v);
-
-		/////// RETURN : ADD ALL COLOR COMPONENTS TOGETHER ///////
+		rt_colorize_diffuse_specular(l, comp, intm, &v);
 	return (rt_add_color(v.ambient, rt_add_color(v.diffuse, v.specular)));
 }
 

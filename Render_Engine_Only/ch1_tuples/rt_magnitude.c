@@ -27,8 +27,7 @@ float	rt_magnitude(t_tuple vector)
 	}
 	mag = sqrtf(vector.x * vector.x + \
 		vector.y * vector.y + \
-		vector.z * vector.z + \
-		vector.w * vector.w);
+		vector.z * vector.z);
 	return (mag);
 }
 

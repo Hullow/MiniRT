@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:36 by pberset           #+#    #+#             */
 /*   Updated: 2025/06/09 23:15:33 by pberset          ###   ########.fr       */
@@ -52,7 +52,7 @@ typedef struct s_tuple
 //Canvas
 
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 300
+#  define WINDOW_WIDTH 400
 # endif
 
 # ifndef WINDOW_HEIGHT
@@ -69,7 +69,7 @@ typedef struct s_tuple
 
 /* function names for error prints */
 # define RT_COUNT_OBJECT		" – rt_count_object\n"
-# define RT_ASSIG_VALS			" - rt_assign_values\n"
+# define RT_ASSIG_VALS			" – rt_assign_values\n"
 # define RT_VALID_COORD			" – rt_valid_coord\n"
 # define RT_VALID_COLOR			" – rt_valid_color\n"
 # define RT_VALID_ORIENT		" – rt_valid_orient\n"
@@ -78,16 +78,16 @@ typedef struct s_tuple
 # define RT_COLOR				" – rt_color\n"
 # define RT_NEGATE_VECTOR		" – rt_negate_vector\n"
 # define RT_SCALE_VECTOR		" – rt_scale_vector\n"
-# define RT_SUB_TUPLE			" - rt_sub_tuple\n"
-# define RT_ADD_TUPLE			" - rt_add_tuple\n"
+# define RT_SUB_TUPLE			" – rt_sub_tuple\n"
+# define RT_ADD_TUPLE			" – rt_add_tuple\n"
 # define RT_DIVIDE_TUPLE		" – rt_divide_tuple\n"
 # define RT_DOT_PRODUCT			" – rt_dot_product\n"
 # define RT_CROSS_PRODUCT		" – rt_cross_product\n"
-# define RT_SUB_COLOR			" - rt_sub_color\n"
-# define RT_ADD_COLOR			" - rt_add_color\n"
-# define RT_SCALE_COLOR			" - rt_scale_color\n"
-# define RT_MUL_COLOR			" - rt_mul_color\n"
-# define RT_RAY					" - rt_ray\n"
+# define RT_SUB_COLOR			" – rt_sub_color\n"
+# define RT_ADD_COLOR			" – rt_add_color\n"
+# define RT_SCALE_COLOR			" – rt_scale_color\n"
+# define RT_MUL_COLOR			" – rt_mul_color\n"
+# define RT_RAY					" – rt_ray\n"
 
 # define UNSPECIFIED 			" – unspecified function\n"
 
@@ -162,7 +162,9 @@ typedef struct s_intersect
 {
 	t_object	object;
 	float		t;
+	bool		is_present;
 }	t_inter;
+
 
 typedef struct s_xs
 {
@@ -227,7 +229,7 @@ typedef struct s_comps
 // Variables for final calculation
 
 typedef struct s_intermediate_vars {
-	t_tuple	color;
+	t_tuple	effective_color;
 	t_tuple	dir_to_light;
 	float	light_dot_normal;
 	t_tuple	reflect;
@@ -249,6 +251,30 @@ typedef struct s_cyl_val
 	int		i;
 	float	discr;
 }	t_cyl_val;
+
+
+//test
+
+void		test_tuples(void);
+void		test_matrix(void);
+void		test_transform(void);
+void		test_intersect(void);
+void		test_mlx(void);
+void		test_light(void);
+void		test_light_render(void);
+void		test_scene(void);
+void		test_rgb_to_int(void);
+void		test_view_transform(void);
+void		test_camera(void);
+void		test_planes(void);
+void		test_render_plane(void);
+void		test_cylinder(void);
+void		test_cylinder_render(void);
+void		test_shadows(void);
+void		test_example_scene(void);
+t_scene		*test_default_scene(t_scene *scene);
+void		test_example_scene_planes(void);
+void		test_example_scene_with_flat_spheres(void);
 
 //CH0 Parsing
 
@@ -365,9 +391,9 @@ t_tuple		rt_reflect(t_tuple in, t_tuple normal);
 t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 t_tuple		rt_lighting(t_light l, t_comps comp);
-t_lighting_params	rt_dark_diffuse_specular(t_lighting_params v);
-t_lighting_params	rt_colorize_diffuse_specular(t_light l, t_comps comp, \
-	t_intermediate_vars in, t_lighting_params v);
+void	rt_dark_diffuse_specular(t_lighting_params *v);
+void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
+	t_intermediate_vars in, t_lighting_params *v);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
 t_tuple		rt_normalize_color(t_tuple color);
 t_tuple		rt_filmic_tonemap(t_tuple color);
@@ -381,14 +407,12 @@ t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-t_camera	rt_calc_camera_vals(t_camera camera, \
-				t_tuple coord, t_tuple orient);
+t_camera	rt_calc_camera_vals(t_camera camera, t_tuple coord, t_tuple orient);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
 void		rt_render(t_camera *camera, t_scene *scene, t_env *env);
 
 //CH8 Shadows
 bool		rt_is_shadowed(t_scene *scene, t_tuple point);
-
 
 //CH9 Planes
 

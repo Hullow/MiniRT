@@ -17,10 +17,13 @@
 /// @param material t_material
 /// @return The initialized struct.
 t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color)
+t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color)
 {
 	t_object	sphere;
 
 	sphere.shape = SPHERE;
+	sphere.origin = origin;
+	sphere.radius = diameter / 2;
 	sphere.origin = origin;
 	sphere.radius = diameter / 2;
 	sphere.color = color;
@@ -29,17 +32,19 @@ t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color)
 }
 
 t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color)
+t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color)
 {
 	t_object	plane;
 
 	plane.shape = PLANE;
 	plane.origin = origin;
-	plane.norm = norm;
+	plane.norm = rt_normalize(norm);
 	plane.color = color;
 	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
 	return (plane);
 }
 
+t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color)
 t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color)
 {
 	t_object	cylinder;
@@ -48,9 +53,11 @@ t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color)
 	cylinder.height = INFINITY;
 	cylinder.min = 0;
 	cylinder.closed = 1;
+	cylinder.min = 0;
+	cylinder.closed = 1;
 	cylinder.color = color;
 	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
-	cylinder.norm = norm;
+	cylinder.norm = rt_normalize(norm);
 	cylinder.origin = origin;
 	return (cylinder);
 }

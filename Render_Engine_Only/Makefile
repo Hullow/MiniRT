@@ -6,7 +6,7 @@
 #    By: francis <francis@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/02 14:02:17 by fallan            #+#    #+#              #
-#    Updated: 2025/06/04 17:31:42 by francis          ###   ########.fr        #
+#    Updated: 2025/06/10 16:59:36 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC			= cc
 
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -g3 #-O3
+DFLAGS		= -O3 #-g3
 INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
 LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm
@@ -84,10 +84,11 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-#TESTS		= test
-#			print_objects
-#			test_input
-#			test_shape
+#TESTS		= test_parse
+#			test \
+#			print_objects \
+#			test_input \
+#			test_shape \
 #			test_thread
 
 TRANSF		= rt_rotation \
