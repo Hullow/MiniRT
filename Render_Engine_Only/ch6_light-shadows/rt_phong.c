@@ -56,7 +56,7 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 		rt_hadamard(comp.object.color, rt_scale_color(l.color, l.intensity));
 	v.ambient = \
 		rt_hadamard(intm.effective_color, \
-			rt_scale_color(l.ambient.color, l.ambient.intensity));
+			rt_scale_color(l.ambient.color, l.ambient.ratio));
 	if (comp.in_shadow == true)
 		return (v.ambient);
 	// rt_print_tuple(comp.point);

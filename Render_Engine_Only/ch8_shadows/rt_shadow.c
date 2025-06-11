@@ -25,7 +25,7 @@ bool	rt_is_shadowed(t_scene *scene, t_tuple point)
 	ray = rt_ray(point, rt_normalize(point_to_light));
 	rt_intersect_scene(scene, &ray, &xs);
 	hit = rt_hit(xs);
-	if (hit.is_present == true && (hit.t < distance)) // N.b.: try hit.t > distance for a kind of "inverted shadow". Other options: !(is_equal_float(hit.t, 0)), OR: hit.t > (EPSILON * 20)
+	if (hit.is_present == true && (hit.t < distance))
 		return (true);
 	return (false);
 }

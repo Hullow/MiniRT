@@ -63,6 +63,7 @@ typedef struct s_tuple
 
 /* function names for error prints */
 # define RT_COUNT_OBJECT		" – rt_count_object\n"
+# define RT_ASSIG_VALS			" – rt_assign_values\n"
 # define RT_VALID_COORD			" – rt_valid_coord\n"
 # define RT_VALID_COLOR			" – rt_valid_color\n"
 # define RT_VALID_ORIENT		" – rt_valid_orient\n"
@@ -71,16 +72,16 @@ typedef struct s_tuple
 # define RT_COLOR				" – rt_color\n"
 # define RT_NEGATE_VECTOR		" – rt_negate_vector\n"
 # define RT_SCALE_VECTOR		" – rt_scale_vector\n"
-# define RT_SUB_TUPLE			" - rt_sub_tuple\n"
-# define RT_ADD_TUPLE			" - rt_add_tuple\n"
+# define RT_SUB_TUPLE			" – rt_sub_tuple\n"
+# define RT_ADD_TUPLE			" – rt_add_tuple\n"
 # define RT_DIVIDE_TUPLE		" – rt_divide_tuple\n"
 # define RT_DOT_PRODUCT			" – rt_dot_product\n"
 # define RT_CROSS_PRODUCT		" – rt_cross_product\n"
-# define RT_SUB_COLOR			" - rt_sub_color\n"
-# define RT_ADD_COLOR			" - rt_add_color\n"
-# define RT_SCALE_COLOR			" - rt_scale_color\n"
-# define RT_MUL_COLOR			" - rt_mul_color\n"
-# define RT_RAY					" - rt_ray\n"
+# define RT_SUB_COLOR			" – rt_sub_color\n"
+# define RT_ADD_COLOR			" – rt_add_color\n"
+# define RT_SCALE_COLOR			" – rt_scale_color\n"
+# define RT_MUL_COLOR			" – rt_mul_color\n"
+# define RT_RAY					" – rt_ray\n"
 
 # define UNSPECIFIED 			" – unspecified function\n"
 
@@ -169,7 +170,7 @@ typedef struct s_xs
 
 typedef struct s_ambient
 {
-	float	intensity;
+	float	ratio;
 	t_tuple	color;
 }	t_ambient;
 
@@ -277,7 +278,7 @@ void		test_example_scene_with_flat_spheres(void);
 int			rt_check_ext(const char *file);
 int			rt_read_id(const char *file, t_scene *scene);
 int			rt_init_scene(const char *file, t_scene *scene);
-int			rt_count_object(const char *line, t_scene *scene);
+int			rt_count_object(char *line, t_scene *scene);
 int			rt_valid_color(char **color);
 int			rt_valid_coord(char **coord);
 int			rt_valid_orient(char **orient);
@@ -412,7 +413,7 @@ t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-void		rt_calculate_camera_values(t_camera *camera);
+t_camera	rt_calc_camera_vals(t_camera camera, t_tuple coord, t_tuple orient);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera *camera, t_scene *scene, t_env *env);

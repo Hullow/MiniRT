@@ -12,26 +12,29 @@
 
 #include "miniRT.h"
 
-void	rt_calculate_camera_values(t_camera *camera)
+t_camera	rt_calc_camera_vals(t_camera camera, t_tuple coord, t_tuple orient)
 {
 	float	half_view;
 	float	aspect;
 
-	camera->transform = rt_view_transform(camera->coord, \
-		rt_add_tuple(camera->coord, camera->orient), rt_vector(0, 1, 0));
-	half_view = tanf(camera->field_of_view / 2);
-	aspect = (float) camera->hsize / camera->vsize;
+	camera.transform = rt_view_transform(coord, \
+		rt_add_tuple(coord, orient), rt_vector(0, 1, 0));
+	half_view = tanf(camera.field_of_view / 2);
+	camera.hsize = WINDOW_WIDTH;
+	camera.vsize = WINDOW_HEIGHT;
+	aspect = (float) camera.hsize / camera.vsize;
 	if (aspect >= 1.0)
 	{
-		camera->half_width = half_view;
-		camera->half_height = half_view / aspect;
+		camera.half_width = half_view;
+		camera.half_height = half_view / aspect;
 	}
 	else
 	{
-		camera->half_width = half_view * aspect;
-		camera->half_height = half_view;
+		camera.half_width = half_view * aspect;
+		camera.half_height = half_view;
 	}
-	camera->pixel_size = (camera->half_width * 2) / (camera->hsize);
+	camera.pixel_size = (camera.half_width * 2) / (camera.hsize);
+	return (camera);
 }
 
 t_ray	rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y)
