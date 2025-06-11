@@ -59,7 +59,7 @@ float	rt_dot_product(t_tuple a, t_tuple b)
 			 is not a vector");
 		return (-1);
 	}
-	dot = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+	dot = a.x * b.x + a.y * b.y + a.z * b.z;
 	return (dot);
 }
 

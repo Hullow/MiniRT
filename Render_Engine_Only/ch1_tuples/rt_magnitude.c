@@ -27,8 +27,8 @@ float	rt_magnitude(t_tuple vector)
 	}
 	mag = sqrtf(vector.x * vector.x + \
 		vector.y * vector.y + \
-		vector.z * vector.z + \
-		vector.w * vector.w);
+		vector.z * vector.z);
+	mag.w = VECTOR;
 	return (mag);
 }
 
@@ -54,6 +54,6 @@ t_tuple	rt_normalize(t_tuple vector)
 	norm.x = vector.x / rt_magnitude(vector);
 	norm.y = vector.y / rt_magnitude(vector);
 	norm.z = vector.z / rt_magnitude(vector);
-	norm.w = (float)vector.w / rt_magnitude(vector);
+	norm.w = VECTOR;
 	return (norm);
 }
