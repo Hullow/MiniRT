@@ -20,7 +20,6 @@ t_matrix	rt_set_transform(t_object object)
 	{
 		transform = rt_scaling(\
 			rt_vector(object.radius, object.radius, object.radius));
-			rt_vector(object.radius, object.radius, object.radius));
 	}
 	else if (object.shape == CYLINDER)
 	{
@@ -52,26 +51,6 @@ static void	rt_assign_values(t_scene *scene, char **values)
 {
 	char		**needle;
 
-	if (*values != NULL)
-	{
-		needle = values + 1;
-		if (**values == 'L')
-			rt_assign_light(scene, needle);
-		else if (**values == 'A')
-			rt_assign_ambient(scene, needle);
-		else if (**values == 'C')
-		{
-			rt_assign_camera(scene, needle);
-			if (errno)
-				return ;
-		}
-		else if (scene->n_obj < MAX_OBJECTS - 1)
-		{
-			rt_assign_object(&(scene->objects[scene->n_obj]), needle, **values);
-			scene->n_obj++;
-		}
-		else
-			return (rt_handle_error(RT_ASSIG_VALS, ENOMEM, "Too many objects"), (void)1);
 	if (*values != NULL)
 	{
 		needle = values + 1;
