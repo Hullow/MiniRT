@@ -85,7 +85,7 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-TESTS		= test_parse
+#TESTS		= test_parse
 #			test \
 #			print_objects \
 #			test_input \

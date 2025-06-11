@@ -16,44 +16,41 @@
 /// @param color t_tuple type COLOR not in material because norminette
 /// @param material t_material
 /// @return The initialized struct.
-t_object	rt_sphere(t_tuple color)
+t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color)
 {
 	t_object	sphere;
 
 	sphere.shape = SPHERE;
-	sphere.origin = rt_point(0, 0, 0);
-	sphere.diameter = 2.0f;
+	sphere.origin = origin;
+	sphere.radius = diameter / 2;
 	sphere.color = color;
 	sphere.material = rt_material(0.1, 0.9, 0.9, 200.0);
-	sphere.transform = rt_identity_matrix(4);
 	return (sphere);
 }
 
-t_object	rt_plane(t_tuple color)
+t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color)
 {
 	t_object	plane;
 
 	plane.shape = PLANE;
-	plane.origin = rt_point(0, 0, 0);
-	plane.norm = rt_vector(0, 1, 0);
+	plane.origin = origin;
+	plane.norm = rt_normalize(norm);
 	plane.color = color;
 	plane.material = rt_material(0.1, 0.9, 0.9, 200.0f);
 	return (plane);
 }
 
-t_object	rt_cylinder(t_tuple color)
+t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color)
 {
 	t_object	cylinder;
 
 	cylinder.shape = CYLINDER;
-	cylinder.diameter = 2.0;
 	cylinder.height = INFINITY;
-	cylinder.min = -INFINITY;
-	cylinder.max = INFINITY;
-	cylinder.closed = 0;
+	cylinder.min = 0;
+	cylinder.closed = 1;
 	cylinder.color = color;
 	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
-	cylinder.norm = rt_vector(0, 1, 0);
-	cylinder.origin = rt_point(0, 0, 0);
+	cylinder.norm = rt_normalize(norm);
+	cylinder.origin = origin;
 	return (cylinder);
 }

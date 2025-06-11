@@ -143,7 +143,7 @@ typedef struct s_object
 	t_material	material;
 	t_ray		saved_ray;
 	t_matrix	transform;
-	float		diameter;
+	float		radius;
 	float		height;
 	float		min;
 	float		max;
@@ -377,7 +377,7 @@ t_matrix	rt_set_transform(t_object object);
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
 void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray *ray, float t);
-t_object	rt_sphere(t_tuple color);
+t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color);
 void		rt_print_sphere(t_object sphere);
 t_inter		rt_intersect(float t, t_object obj);
 void		rt_intersects(t_object *object, t_xs *xs, int *i);
@@ -426,14 +426,14 @@ bool		rt_is_shadowed(t_scene *scene, t_tuple point);
 #  define ERAYPARALLEL 135
 # endif
 
-t_object	rt_plane(t_tuple color);
+t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color);
 void		rt_print_plane(t_object plane);
 void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
 //CH13 Cylinders
 
-t_object	rt_cylinder(t_tuple color);
+t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color);
 void		rt_print_cylinder(t_object cylinder);
 void		rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i);
 int			rt_check_cap(t_ray ray, float t);

@@ -19,12 +19,12 @@ t_matrix	rt_set_transform(t_object object)
 	if (object.shape == SPHERE)
 	{
 		transform = rt_scaling(\
-			rt_vector(object.diameter, object.diameter, object.diameter));
+			rt_vector(object.radius, object.radius, object.radius));
 	}
 	else if (object.shape == CYLINDER)
 	{
 		transform = rt_scaling(\
-			rt_vector(object.diameter, object.height, object.diameter));
+			rt_vector(object.radius, object.max, object.radius));
 		transform = rt_mul_matrix(rt_rotation(object.norm), transform);
 	}
 	else

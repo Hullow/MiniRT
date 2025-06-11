@@ -52,7 +52,7 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
-	rt_print_scene(scene);
+	//rt_print_scene(scene);
 	env = mlx_set_env();
 	if (scene.n_obj > 0)
 		rt_render(&(scene.cam), &scene, &env);
