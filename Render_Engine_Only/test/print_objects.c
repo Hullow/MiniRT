@@ -118,8 +118,11 @@ void	rt_print_scene(t_scene scene)
 
 	i = 0;
 	ft_printf("N_OBJ : %d\n", scene.n_obj);
+	ft_printf("\n");
 	rt_print_light(scene.lux);
+	ft_printf("\n");
 	rt_print_camera(scene.cam);
+	ft_printf("\n");
 	while (i < scene.n_obj)
 	{
 		if (scene.objects[i].shape == SPHERE)

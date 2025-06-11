@@ -43,18 +43,6 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 	return (0);
 }
 
-/*int	main(int argc, char *argv[])
-{
-	t_scene		scene;
-	t_object	objects[MAX_OBJECTS];
-
-	scene.objects = objects;
-	if (build_scene(argc, argv, &scene))
-		return (1);
-	rt_print_scene(scene);
-	return (0);
-}*/
-/*
 int	main(int argc, char *argv[])
 {
 	t_scene		scene;
@@ -64,16 +52,16 @@ int	main(int argc, char *argv[])
 	scene.objects = objects;
 	if (build_scene(argc, argv, &scene))
 		return (1);
+	rt_print_scene(scene);
 	env = mlx_set_env();
 	if (scene.n_obj > 0)
 		rt_render(&(scene.cam), &scene, &env);
 	mlx_run_window(&env);
 	return (0);
-}*/
-
-
-int	main()
-{
-	test_example_scene_planes();
-	return (0);
 }
+
+// int	main()
+// {
+// 	test_example_scene_planes();
+// 	return (0);
+// }
