@@ -276,8 +276,8 @@ void		test_example_scene_with_flat_spheres(void);
 
 int			rt_check_ext(const char *file);
 int			rt_read_id(const char *file, t_scene *scene);
-int			rt_init_scene(const char *file, t_scene *scene);
-int			rt_count_object(const char *line, t_scene *scene);
+int			rt_init_scene(char *file, t_scene *scene);
+int			rt_count_object(char *line, t_scene *scene);
 int			rt_valid_color(char **color);
 int			rt_valid_coord(char **coord);
 int			rt_valid_orient(char **orient);
@@ -412,7 +412,7 @@ t_tuple		rt_color_at(t_scene *scene, t_ray *ray);
 t_matrix	rt_view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
-void		rt_calculate_camera_values(t_camera *camera);
+t_camera	rt_calc_camera_vals(t_camera camera, t_tuple coord, t_tuple orient);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
 void		rt_print_camera(t_camera camera);
 void		rt_render(t_camera *camera, t_scene *scene, t_env *env);

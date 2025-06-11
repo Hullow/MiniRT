@@ -50,24 +50,27 @@ static void	rt_assign_object(t_object *object, char **needle, char type)
 static void	rt_assign_values(t_scene *scene, char **values)
 {
 	char		**needle;
-	static int	i;
 
-	if (i > scene->n_obj || i < 0)
-		i = 0;
-	needle = values + 1;
-	if (**values == 'L')
-		rt_assign_light(scene, needle);
-	else if (**values == 'A')
-		rt_assign_ambient(scene, needle);
-	else if (**values == 'C')
+	if (*values != NULL)
 	{
-		rt_assign_camera(scene, needle);
-		rt_calculate_camera_values(&(scene->cam));
-	}
-	else
-	{
-		rt_assign_object(&(scene->objects[i]), needle, **values);
-		i++;
+		needle = values + 1;
+		if (**values == 'L')
+			rt_assign_light(scene, needle);
+		else if (**values == 'A')
+			rt_assign_ambient(scene, needle);
+		else if (**values == 'C')
+		{
+			rt_assign_camera(scene, needle);
+			if (errno)
+				return ;
+		}
+		else if (scene->n_obj < MAX_OBJECTS - 1)
+		{
+			rt_assign_object(&(scene->objects[scene->n_obj]), needle, **values);
+			scene->n_obj++;
+		}
+		else
+			return (rt_handle_error("RT_ASSIG_VALS", ENOMEM, "Too many objects"), (void)1);
 	}
 }
 
@@ -82,32 +85,19 @@ static void	rt_spacify(char *line)
 }
 
 // Reads file to assign values in scene
-int	rt_init_scene(const char *file, t_scene *scene)
+int	rt_init_scene(char *file, t_scene *scene)
 {
-	int		fd;
-	char	*line;
 	char	**splitted;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (rt_handle_error("rt_init_scene", errno, (char *)file), 1);
-	
-	while (1)
+	rt_spacify(file);
+	splitted = ft_split(file, ' ');
+	if (!splitted)
+		return (1);
+	rt_assign_values(scene, splitted);
+	ft_free_tab(splitted);
+	if (errno)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		rt_spacify(line);
-		splitted = ft_split(line, ' ');
-		rt_assign_values(scene, splitted);
-		ft_free_tab(splitted);
-		free(line);
-		if (errno)
-		{
-			close(fd);
-			return (2);
-		}
+		return (2);
 	}
-	close(fd);
 	return (0);
 }

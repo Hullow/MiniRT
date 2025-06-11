@@ -17,9 +17,7 @@ static void	rt_init_counters(t_scene *scene)
 	scene->n_a = 0;
 	scene->n_cam = 0;
 	scene->n_l = 0;
-	scene->n_sp = 0;
-	scene->n_pl = 0;
-	scene->n_cy = 0;
+	scene->n_obj = 0;
 }
 
 static int	build_scene(int argc, char *argv[], t_scene *scene)
@@ -38,8 +36,6 @@ static int	build_scene(int argc, char *argv[], t_scene *scene)
 		return (3);
 	if (rt_check_uniques(scene))
 		return (4);
-	if (rt_init_scene(argv[1], scene))
-		return (5);
 	return (0);
 }
 
@@ -59,9 +55,3 @@ int	main(int argc, char *argv[])
 	mlx_run_window(&env);
 	return (0);
 }
-
-// int	main()
-// {
-// 	test_example_scene_planes();
-// 	return (0);
-// }

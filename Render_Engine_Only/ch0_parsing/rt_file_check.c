@@ -43,7 +43,8 @@ int	rt_read_id(const char *file, t_scene *scene)
 	line = get_next_line(fd);
 	while (line != NULL && *line != 0 && errno == 0)
 	{
-		rt_count_object(line, scene);
+		if (rt_count_object(line, scene))
+			return (errno);
 		free(line);
 		line = get_next_line(fd);
 	}
