@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:18:10 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/09 23:15:42 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/11 22:20:40 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ int	rt_init_scene(char *file, t_scene *scene)
 	rt_assign_values(scene, splitted);
 	ft_free_tab(splitted);
 	if (errno)
-	{
 		return (2);
-	}
 	return (0);
 }

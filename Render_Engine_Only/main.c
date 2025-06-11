@@ -55,9 +55,3 @@ int	main(int argc, char *argv[])
 	mlx_run_window(&env);
 	return (0);
 }
-
-// int	main()
-// {
-// 	test_example_scene_planes();
-// 	return (0);
-// }

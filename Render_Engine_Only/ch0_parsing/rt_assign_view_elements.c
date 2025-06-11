@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:06:53 by fallan            #+#    #+#             */
-/*   Updated: 2025/06/09 22:06:53 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/11 22:17:47 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 
 	errno = 0;
 	color = ft_split(*(needle + 1), ',');
+	if (!color)
+	{
+		rt_handle_error("RT_ASSIGN_AMBIENT", ENOMEM, "ft_split failed");
+		return ;
+	}
 	scene->lux.ambient.ratio = ft_strtof(*(needle));
 	if (scene->lux.ambient.ratio > 1.0 || scene->lux.ambient.ratio < 0.0)
 	{

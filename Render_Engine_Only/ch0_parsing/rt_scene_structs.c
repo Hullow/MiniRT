@@ -6,7 +6,7 @@
 /*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:27:15 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/09 21:35:05 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/11 22:20:53 by pberset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	rt_id_format(const char a, const char b, const char c)
 	return (0);
 }
 
-// Checks the line for an object identifier and increments the counter
 int	rt_count_object(char *line, t_scene *scene)
 {
 	while ((ft_isspace(*line) || *line == ' '))
