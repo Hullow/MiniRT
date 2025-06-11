@@ -84,7 +84,7 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-#TESTS		= test_parse
+TESTS		= test_parse
 #			test \
 #			print_objects \
 #			test_input \
@@ -124,7 +124,7 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
 			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
 			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER))) \
-#			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
+			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
@@ -139,7 +139,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
 			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
 			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER))) \
-#			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
+			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -170,7 +170,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(SHADOWDIR)
-#	mkdir -p $(OBJDIR)$(TESTDIR)
+	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(PLANESDIR)
