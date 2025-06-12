@@ -402,5 +402,6 @@ t_tuple		rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point);
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
+int			count_splits(char **split);
 
 #endif

@@ -40,12 +40,14 @@ t_matrix	rt_set_transform(t_object object)
 //Detects the type of object and calls the corresponding constructor
 static void	rt_assign_object(t_object *object, char **needle, char type)
 {
-	if (type == 's')
+	if (type == 's' && count_splits(needle) == 3)
 		rt_assign_sphere(object, needle);
-	if (type == 'c')
+	else if (type == 'c' && count_splits(needle) == 5)
 		rt_assign_cylinder(object, needle);
-	if (type == 'p')
+	else if (type == 'p' && count_splits(needle) == 3)
 		rt_assign_plane(object, needle);
+	else
+		rt_handle_error("RT_ASSIG_OBJ ", ENOMEM, &type);
 }
 
 static void	rt_assign_values(t_scene *scene, char **values)
@@ -53,20 +55,19 @@ static void	rt_assign_values(t_scene *scene, char **values)
 	char		**needle;
 
 	needle = values + 1;
-	if (**values == 'L')
+	if (**values == 'L' && count_splits(needle) == 3)
 		rt_assign_light(scene, needle);
 	else if (**values == 'A')
 		rt_assign_ambient(scene, needle);
-	else if (**values == 'C')
+	else if (**values == 'C' && count_splits(needle) == 3)
 		rt_assign_camera(scene, needle);
-	else if (scene->n_obj < MAX_OBJECTS - 1)
+	else if (ft_strchr("spc", **values) && scene->n_obj < MAX_OBJECTS - 1)
 	{
 		rt_assign_object(&(scene->objects[scene->n_obj]), needle, **values);
 		scene->n_obj++;
 	}
 	else
-		return (rt_handle_error("RT_ASSIG_VALS", ENOMEM, "Too many objects"), \
-			(void)1);
+		rt_handle_error("RT_ASSIG_VALS ", ENOMEM, *needle);
 }
 
 static void	rt_spacify(char *line)
@@ -88,11 +89,19 @@ int	rt_init_scene(char *file, t_scene *scene)
 	splitted = ft_split(file, ' ');
 	if (!splitted)
 	{
-		rt_handle_error("INIT_SCENE", ENOMEM, "ft_split failed");
+		rt_handle_error("INIT_SCENE ", ENOMEM, "ft_split failed");
 		return (1);
 	}
-	rt_assign_values(scene, splitted);
-	ft_free_tab(splitted);
+	if (count_splits(splitted) < 3)
+	{
+		rt_handle_error("INIT_SCENE ", ENOMEM, *splitted);
+		ft_free_tab(splitted);
+	}
+	else
+	{
+		rt_assign_values(scene, splitted);
+		ft_free_tab(splitted);
+	}
 	if (errno != 0)
 		return (2);
 	return (0);

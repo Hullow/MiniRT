@@ -66,3 +66,16 @@ int	rgb_to_int(t_tuple col_tuple)
 	color = r * 256 * 256 + g * 256 + b;
 	return (color);
 }
+
+int	count_splits(char **split)
+{
+	int	count;
+
+	count = 0;
+	while (*split)
+	{
+		count++;
+		split++;
+	}
+	return (count);
+}
