@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:00:49 by francis           #+#    #+#             */
-/*   Updated: 2025/06/12 11:56:23 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 17:20:55 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ bool	rt_is_shadowed(t_scene *scene, t_tuple point)
 	distance = rt_magnitude(point_to_light);
 	ray = rt_ray(point, rt_normalize(point_to_light));
 	hit = rt_intersect_scene(scene, &ray, &xs);
-	if (hit.is_present == true && (hit.t < distance) && (hit.t > (EPSILON)))
+	if (hit.is_present == true && (hit.t < distance) && \
+		(hit.t > (EPSILON * 2000)))
 		return (true);
 	return (false);
 }
