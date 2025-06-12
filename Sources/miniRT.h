@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                            :+:    :+:           */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:01:33 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/12 17:17:36 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 18:25:30 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.000005
+#  define EPSILON 0.0005
 # endif
 
 t_matrix	rt_identity_matrix(int size);
