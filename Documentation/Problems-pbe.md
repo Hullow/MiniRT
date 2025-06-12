@@ -50,3 +50,21 @@ in `rt_assign_objects.c`
 	cylinder->max = ft_strtof(*(needle + 3)) / 2;
 	cylinder->min = -ft_strtof(*(needle + 3)) / 2;
 ```
+## Segfault on incomplete definition line
+- Never checked
+- fix found `count splitted values before assignment`
+in `rt_utils.c` (new function), `rt_scene_struct.c` and `rt_init_scene.c`
+```c
+int	count_splits(char **split)
+{
+	int	count;
+
+	count = 0;
+	while (*split)
+	{
+		count++;
+		split++;
+	}
+	return (count);
+}
+```
