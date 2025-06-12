@@ -18,7 +18,7 @@ CC			= cc
 
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -g3
+DFLAGS		= -O3
 INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
 LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
 LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm

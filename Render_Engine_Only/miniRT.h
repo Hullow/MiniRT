@@ -338,7 +338,7 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.00005
+#  define EPSILON 0.000005
 # endif
 
 t_matrix	rt_identity_matrix(int size);

@@ -75,7 +75,6 @@ t_tuple	rt_color_at(t_scene *scene, t_ray *ray)
 	t_inter	hit;
 
 	hit = rt_intersect_scene(scene, ray, &xs);
-	// inter = rt_hit(&xs);
 	if (hit.t == 0)
 		return (rt_color(0, 0, 0));
 	comps = rt_prepare_computations(hit, ray);

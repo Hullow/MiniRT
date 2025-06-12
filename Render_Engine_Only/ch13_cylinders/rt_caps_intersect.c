@@ -23,7 +23,7 @@ int	rt_check_cap(t_ray ray, float t)
 
 	x = ray.origin.x + t * ray.direction.x;
 	z = ray.origin.z + t * ray.direction.z;
-	return ((x * x + z * z) <= 1 + EPSILON);
+	return ((x * x + z * z) <= 1.0f);
 }
 
 /// @brief Only matters if the cylinder is closed
@@ -35,8 +35,7 @@ void	rt_intersect_caps(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 	float	t;
 	int		j;
 
-	if (cylinder.closed == 0 || \
-			(ray.direction.y > -EPSILON && ray.direction.y < EPSILON))
+	if (cylinder.closed == 0 || is_equal_float(ray.direction.y, 0.0f))
 		return ;
 	j = 0;
 	t = (cylinder.min - ray.origin.y) / ray.direction.y;
