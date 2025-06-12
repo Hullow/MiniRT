@@ -34,18 +34,11 @@ int	rt_count_object(char *line, t_scene *scene)
 		if (rt_id_format(*line, *(line + 1), *(line + 2)))
 		{
 			if (rt_init_scene(line, scene))
-			{
-				free(line);
-				line = NULL;
 				return (1);
-			}
 		}
-		else if (*line)
+		else
 		{
-			errno = EINVAL;
-			rt_handle_error(RT_COUNT_OBJECT, errno, (char *)line);
-			free(line);
-			line = NULL;
+			rt_handle_error(RT_COUNT_OBJECT, EINVAL, (char *)line);
 			return (2);
 		}
 	}

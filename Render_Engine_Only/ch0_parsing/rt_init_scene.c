@@ -51,27 +51,20 @@ static void	rt_assign_values(t_scene *scene, char **values)
 {
 	char		**needle;
 
-	if (*values != NULL)
+	needle = values + 1;
+	if (**values == 'L')
+		rt_assign_light(scene, needle);
+	else if (**values == 'A')
+		rt_assign_ambient(scene, needle);
+	else if (**values == 'C')
+		rt_assign_camera(scene, needle);
+	else if (scene->n_obj < MAX_OBJECTS - 1)
 	{
-		needle = values + 1;
-		if (**values == 'L')
-			rt_assign_light(scene, needle);
-		else if (**values == 'A')
-			rt_assign_ambient(scene, needle);
-		else if (**values == 'C')
-		{
-			rt_assign_camera(scene, needle);
-			if (errno)
-				return ;
-		}
-		else if (scene->n_obj < MAX_OBJECTS - 1)
-		{
-			rt_assign_object(&(scene->objects[scene->n_obj]), needle, **values);
-			scene->n_obj++;
-		}
-		else
-			return (rt_handle_error("RT_ASSIG_VALS", ENOMEM, "Too many objects"), (void)1);
+		rt_assign_object(&(scene->objects[scene->n_obj]), needle, **values);
+		scene->n_obj++;
 	}
+	else
+		return (rt_handle_error("RT_ASSIG_VALS", ENOMEM, "Too many objects"), (void)1);
 }
 
 static void	rt_spacify(char *line)
@@ -92,12 +85,13 @@ int	rt_init_scene(char *file, t_scene *scene)
 	rt_spacify(file);
 	splitted = ft_split(file, ' ');
 	if (!splitted)
+	{
+		rt_handle_error("INIT_SCENE", ENOMEM, "ft_split failed");
 		return (1);
+	}
 	rt_assign_values(scene, splitted);
 	ft_free_tab(splitted);
-	if (errno)
-	{
+	if (errno != 0)
 		return (2);
-	}
 	return (0);
 }

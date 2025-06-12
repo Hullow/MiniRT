@@ -5,7 +5,7 @@ NAME	= libft.a
 CC	= cc
 
 # Compiler flags
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror -g3
 
 # Folders
 SRCDIR	= src/
