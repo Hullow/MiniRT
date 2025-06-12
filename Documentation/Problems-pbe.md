@@ -2,7 +2,8 @@
 
 ## Acne on rotated plane
 - commit f61158bc13cee0da8898bc871ef0ca3b416cf1a8 (Problems: note - render-worked)
-- scenePlane.rt:
+- fix found `commit e9a23afbc4fb70d9a8e3a533ce45e7b78c25cba3 (Fix: acne (playing with EPSILON))`
+in `scenePlane.rt`
 ```
 L   0,5,-10                        0.7 255,255,255
 A   0.2                            0,255,0

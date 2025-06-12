@@ -34,7 +34,7 @@ t_tuple	rt_local_normal_at(t_object obj, t_tuple point)
 	if (obj.shape == SPHERE)
 		normal = rt_vector(point.x, point.y, point.z);
 	else if (obj.shape == PLANE)
-		normal = rt_vector(0,1,0);
+		normal = rt_vector(0, 1, 0);
 	else if (obj.shape == CYLINDER)
 		normal = rt_local_normal_capped_cylinder(obj, point);
 	else
