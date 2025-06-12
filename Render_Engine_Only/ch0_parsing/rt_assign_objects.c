@@ -78,7 +78,8 @@ void	rt_assign_cylinder(t_object *cylinder, char **needle)
 				rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), \
 					ft_strtof(*(color + 2))));
 	cylinder->radius = ft_strtof(*(needle + 2)) / 2;
-	cylinder->max = ft_strtof(*(needle + 3));
+	cylinder->max = cylinder->origin.y + ft_strtof(*(needle + 3)) / 2;
+	cylinder->min = cylinder->origin.y - ft_strtof(*(needle + 3)) / 2;
 	transform = rt_set_transform(*cylinder);
 	cylinder->transform = transform;
 	ft_free_tab(coord);

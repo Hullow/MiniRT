@@ -45,8 +45,6 @@ t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color)
 	t_object	cylinder;
 
 	cylinder.shape = CYLINDER;
-	cylinder.height = INFINITY;
-	cylinder.min = 0;
 	cylinder.closed = 1;
 	cylinder.color = color;
 	cylinder.material = rt_material(0.1, 0.9, 0.9, 200.0);
