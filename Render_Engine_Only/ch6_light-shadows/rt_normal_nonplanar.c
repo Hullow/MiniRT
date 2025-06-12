@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:22:59 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/31 18:11:06 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 16:25:06 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_tuple	rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point)
 	float	dist;
 
 	dist = point.x * point.x + point.z * point.z;
-	if (dist < 1 && point.y >= cylinder.max)
+	if (dist < 1 && point.y >= cylinder.max - EPSILON)
 		normal = rt_vector(0, 1, 0);
-	else if (dist < 1 && point.y <= cylinder.min)
+	else if (dist < 1 && point.y <= cylinder.min + EPSILON)
 		normal = rt_vector(0, -1, 0);
 	else
 		normal = rt_vector(point.x, 0, point.z);
