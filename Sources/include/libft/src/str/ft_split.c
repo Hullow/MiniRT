@@ -28,7 +28,7 @@ static int	ft_count_splits(char const *str, char chr)
 		}
 		if ((*str == chr && letters) || !*str)
 			words++;
-		if (*str + 1)
+		if (*str && *str + 1)
 			str++;
 	}
 	return (words);

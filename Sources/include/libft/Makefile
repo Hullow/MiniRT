@@ -5,7 +5,7 @@ NAME	= libft.a
 CC	= cc
 
 # Compiler flags
-CFLAGS	= -Wall -Wextra -Werror -g -lm
+CFLAGS	= -Wall -Wextra -Werror -g3
 
 # Folders
 SRCDIR	= src/
@@ -34,7 +34,8 @@ SRCFD_	= ft_putchar_fd \
 	ft_puterr_fd \
 	ft_puthex_fd \
 	ft_putptr_fd \
-	ft_putuint_fd
+	ft_putuint_fd \
+	ft_putfloat_fd
 
 SRCMEM	= ft_memset \
 	ft_bzero \
@@ -90,7 +91,8 @@ SRCLST	= ft_lstnew \
 	ft_lstiter \
 	ft_lstmap
 
-SRCGNL	= get_next_line
+SRCGNL	= get_next_line \
+	get_next_line_utils
 
 SRCPRTF	= ft_printf
 

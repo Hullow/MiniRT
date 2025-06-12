@@ -8,7 +8,7 @@ subject: Personal journal for MiniRT project
 - Coordinate choice: left-handed, like the book (see Implementation.md)
 - Implemented math functions abs_float() and is_equal_float()
 - Tuples: implemented tuple type, tuple init functions point() and vector(), 
-tuple manipulation functions add_tuple(), subtract_tuple() and is_equal_tuple()
+tuple manipulation functions add_tuple(), subtract_tuple() and rt_is_equal_tuple()
 - To do next time: test tuple manipulation functions
 
 # 21/2/25
@@ -140,6 +140,14 @@ be feasible for each shape to manually preserve the sort order of that intersect
 via hex (FF0000)
 - Managed to draw a fully red window
 
+# 17/4/25
+- Working on ray-sphere intersection: finished writing formula, updated Makefile
+while discussing it with pberset
+- No success running it so far, and surprise: segfault, likely from numerous matrix calculation mallocs.
+Will look at pberset's malloc-less version instead of fixing it at this current stage.
+
+to do: add t_matrix *inverse_transform in t_sphere 
+
 # 18/4/25
 - Forked pberset's branch to new branch "no-malloc", reorganized tests in that 
 branch, rewrote test_tuple to remove mallocs and validated these tests from miniRT's main using make rather than ad-hoc compilation
@@ -194,3 +202,127 @@ object is intersected.
 - TL;DR ch.5 tests passed, except for 1-2 specific intersect functions not implemented.
 - Red disk success! Ayaaaaaa ! Japan flag too ! Issou
 
+# 8/5/25
+- Fixed makefile for macOS
+- Debugging in the afternoon at 42 but not for very long (I think)
+
+# 9/5/25
+- Reading through Light and Reflection (ch. 6)
+
+# 11/5/25
+- Trying to printf debug rt_lighting; pberset fixes the "hole" in the sphere, then add
+reinhard tone. It works ! Diffuse, ambient, specular :)
+- Makefile macOS: added conditional flag (ifeq...endif)
+- Git ordering: deleted no-malloc, polymorph branches, merged the other 3 together from
+pberset's work
+- Folder order: removed fdf folder in Documentation/, it's pollution
+- To do tomorrow: finish re-reading chapter and code, then order and re-add comments on functions
+
+# 13/4/25
+- Playing with sphere transformations (installed Blender to understand shearing better). All seems to work
+
+# 14/4/25
+- Started merging Render_Engine_Only with rest of project => will do it tomorrow with pberset
+- Started reading Chapter 7 Making a Scene. Created world type, also wrote the first tests to satisfy. Initialization works, with variadic arguments (should probably be removed later...)
+- Retouched `rt_discriminant` in Render_engine a bit (renamed `rt_ray_sphere_intersects` because that's what it is). (doesn't break sphere rendering).
+- Moved the contents of the inner loop of `test_light_render()` to a new function `rt_render_sphere_pixel()`
+- Started working on threaded version of this function `rt_thread_render_sphere_pixel()`. It compiles but is very slow, doesn't seem to work. Debugging with Gemini in Copilot
+
+# 15/5/25
+- Worked on multithreading a bit, and t_intersect_coll (aggregation of t_intersect)
+
+# 16/5/25
+- Discussed t_intersect structure(s) with pberset, decided I would focus on "merge"
+and he would continue working on t_intersect types
+- New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
+	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
+	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
+- Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
+# 15/5/25
+- Worked on multithreading a bit, and t_intersect_coll (aggregation of t_intersect)
+
+# 16/5/25
+- Discussed t_intersect structure(s) with pberset, decided I would focus on "merge"
+and he would continue working on t_intersect types
+- New branch ch6merge to merge `Render_Engine_Only/` folder with rest. Procedure:<br>
+	- go through each folder in Sources/, remove functions one by one and edit those in REO as needed
+	- when finished, mark file in REO with *_ok.c at the end, delete corresponding file(s) in Sources/
+- Finished, but worked on fallan by mistake. need to cherry-pick the last commit to ch6merge
+
+# 17/5/25
+- Cherry-picked the "merging render-engine with sources" commit in ch6merge branch
+- Compared tests in Sources/ with Render_Engine_Only: ordered things
+
+# 22/5/25
+- Refactoring + preparing merge
+- Ch7 begin: view_transformation => ok, passes tests.
+
+# 23/5/25
+- Successfully merged ch7 begin + folder reordering in pberset. Onwards!
+- Started working on camera (ch7). called init function `rt_camera_book` and the old
+parsing initialization function `rt_camera_parse`.
+- Modified rt_inversion and tested it (test_matrix, test_intersect -> partial tests ok)
+- only one sphere is shown, unclear why. we try to debug a bit
+=> fixed rt_hit to remove `(if errno = EDISCRIMINANT)` => it works!!!
+
+# 24/5/25
+- Discussed project with pberset: I will do Shadows, and he will, after
+debugging planes, connect input/parsing with scene drawing so we can do tests
+using files
+- Refactored rt_lighting for the norm => updated tests, 
+but `test_light_render()` seg faults. No time to fix that test now;
+I will commit and onwards.
+- Started working on Shadows (ch. 9)
+
+# 30/5/25
+- Back to work (on shadows)
+- `is_shadowed()` ok, done very quickly and straightforwardly
+- finished writing code and tests for chapter (`shade_hit()` and `prepare_computations()`),
+but it doesn't pass all tests for some reason.
+
+# 31/5/25
+- Trying to render shadow color appropriately, but last test still not passing. Material makes a difference, tried various default colors but none that make it work and make sense.
+- Scene with green spheres and flattened spheres as wall working (except rotated walls => no need to rotate in subject), now let's merge
+- Merge ok, now working on putting parsing with rendering. All is dark for now.
+- Ambient lighting in Phong reflection model (from [Wikipedia](https://en.wikipedia.org/wiki/Phong_reflection_model#Concepts)):
+
+> For each light source in the scene, components `i_s` and `i_d` are defined as the intensities (often as RGB values) of the specular and diffuse components of the light sources, respectively. A single term `i_a` controls the ambient lighting; it is sometimes computed as a sum of contributions from all light sources.
+
+> For each material in the scene, the following parameters are defined:
+	> `k_s`, which is a specular reflection constant, the ratio of reflection of the specular term of incoming light,
+	> `k_d`, which is a diffuse reflection constant, the ratio of reflection of the diffuse term of incoming light (Lambertian reflectance),
+	> `k_a`, which is an ambient reflection constant, the ratio of reflection of the ambient term present in all points in the scene rendered, and
+	> `α`, which is a shininess constant for this material, which is larger for surfaces that are smoother and more mirror-like. When this constant is large the specular highlight is small.
+
+(...)
+> Then the Phong reflection model provides an equation for computing the illumination of each surface point `I_p`:
+
+`I_p = k_a * i_a + (diffuse and specular)`
+
+=> in our project, `i_a` is the intensity of ambient lighting as an RGB value,
+given by our input ambient, and `k_a` the ambient reflection constant of an object's material
+
+- Coded example scene from Ch7_Scene "Putting it together" to `sceneExample.rt`
+
+
+# 2/6/25
+- Debugging in VSCode: need to do it from pberset's branch.
+- Notes:
+	- Cylinder:
+		- `rt_assign_cylinder` could be refactored for clarity, e.g. an intermediary struct
+		with norm, coord, origin which we init on stack and then forget. no need for all this data in
+		the cylinder struct
+		- cylinder.min, .max seem constant at -+INF ?
+
+- maybe a DARK or NULL_OBJECT to return if no intersection is clearer than a dark sphere of diameter 2 at origin
+
+Fixes:
+- fantom sphere: if intersect.t == 0, return black
+- rt_assign_objects (order)
+- camera init functions: removed transform reinitialisation + refactored.
+- ft_free_double_tab: new function
+- rt_lighting: no changes to function, only clean up
+- Makefile: added header
+- scenes: added some test scenes
+
+- `rgb_to_int()`: simplified it with the help of Kurt (pkurt ?)

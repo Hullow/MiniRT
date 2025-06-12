@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/06/02 14:02:17 by fallan            #+#    #+#              #
+#    Updated: 2025/06/12 16:31:21 by fallan           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # Target executable/library name
 NAME		= miniRT
 
@@ -6,99 +18,129 @@ CC			= cc
 
 # Compiler flags
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -g3
-LIBFLAGS	= -L$(LIBFTDIR) -lft -L$(MLXDIR) -lmlx -lXext -lX11 -lm
-INCLUDES	= -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
+DFLAGS		= -O3
+INCLUDES	= -I$(SRCDIR) -I$(INCLUDEDIR) -I$(LFTHEADER) -I$(MLXDIR)
+LIBDIRFLAGS	= -L$(LIBFTDIR) -L$(MLXDIR)
+LIBFLAGS	= -lft -lmlx -lXext -lX11 -lm
+UNAME_S		= $(shell uname -s)
+ifeq ($(UNAME_S),Darwin) # If the system is macOS
+        LIBDIRFLAGS += -L/opt/X11/lib
+endif
 
 # Folders
-SRCDIR		= src/
-OBJDIR		= obj/
-INCLUDEDIR	= include/
+SRCDIR		= ./
+OBJDIR		= ./obj/
+INCLUDEDIR	= ./include/
 
 LIBFTDIR	= $(INCLUDEDIR)libft/
 MLXDIR		= $(INCLUDEDIR)mlx/
 
-MATRIXDIR	= matrices/
-RAYSDIR		= rays/
-SCENEDIR	= scene/
-TESTDIR		= tests/
-TRANSFDIR	= transforms/
-TUPLEDIR	= tuples/
-UTILSDIR	= utils/
+PARSEDIR	= ch0_parsing/
+TUPLEDIR	= ch1_tuples/
+COLORDIR	= ch2_colors/
+MATRIXDIR	= ch3_matrices/
+TRANSFDIR	= ch4_transformations/
+RAYSDIR		= ch5_ray-sphere-intersections/
+LIGHTDIR	= ch6_light-shadows/
+SCENEDIR	= ch7_making-a-scene/
+SHADOWDIR	= ch8_shadows/
+PLANESDIR	= ch9_planes/
+CYLINDERDIR	= ch13_cylinders/
 
 # Libs
 LIBFT		= $(LIBFTDIR)libft.a
 MLX			= $(MLXDIR)libmlx.a
 
 # Header
-HEADERS		= $(INCLUDEDIR)$(NAME).h $(LFTHEADER)*.h $(MLXDIR)mlx.h
+HEADERS		= $(SRCDIR)$(NAME).h $(LFTHEADER)*.h $(MLXDIR)mlx.h
 LFTHEADER	= $(INCLUDEDIR)libft/header/
 
 # Source files
-MAIN		= miniRT
+MAIN		= main
 
-MATRIX		= rt_matrix_basic_ops \
-			rt_matrix_general \
-			rt_matrix_sub_det_cof
+COLOR		= rt_colors_operations \
+			rt_mlx \
+			rt_mlx_free \
+			rt_space
 
-RAYS		= rt_raycast \
-			rt_intersections
+LIGHT		= rt_light \
+			rt_normal_nonplanar \
+			rt_phong
 
-SCENE		= rt_file_check \
-			rt_init_scene \
+MATRIX		= rt_matrix_definition \
+			rt_matrix_inversion \
+			rt_matrix_operation
+
+RAYS		= rt_hit \
+			rt_intersection \
+			rt_object \
+			rt_plane_cylinder \
+			rt_ray \
+			rt_ray_transform
+
+SCENE		= rt_scene \
+			rt_camera \
+			rt_view_transform
+
+SHADOW		= rt_shadow
+
+TRANSF		= rt_rotation \
+			rt_transform
+
+TUPLE		= rt_magnitude \
+			rt_tuples_definition \
+			rt_tuples_operations \
+			rt_vectors_operations
+
+PARSE		= rt_assign_objects \
+			rt_file_check \
 			rt_scene_structs \
 			rt_validate_input \
-			rt_assign_objects \
 			rt_assign_view_elements \
+			rt_init_scene \
+			rt_utils
 
-TESTS		= rt_test_tuple \
-			rt_test_matrix \
-			rt_test_ray_sphere \
-			rt_test_transforms_and_rays \
-#			rt_test_input.c \
-#			rt_test_analog_clock.c
+PLANE		= rt_planes
 
-TRANSF		= rt_transform \
-			rt_rotation \
-			rt_handle_transform
-
-TUPLE		= rt_tuple_basic_ops \
-			rt_tuple_general \
-			rt_tuple_advanced_ops
-
-UTILS		= rt_utils \
-			rt_mlx \
-			rt_free
+CYLINDER	= rt_cylinders \
+			rt_caps_intersect
 
 SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
+			$(addprefix $(SRCDIR)$(COLORDIR), $(addsuffix .c, $(COLOR))) \
+			$(addprefix $(SRCDIR)$(LIGHTDIR), $(addsuffix .c, $(LIGHT))) \
 			$(addprefix $(SRCDIR)$(MATRIXDIR), $(addsuffix .c, $(MATRIX))) \
 			$(addprefix $(SRCDIR)$(RAYSDIR), $(addsuffix .c, $(RAYS))) \
 			$(addprefix $(SRCDIR)$(SCENEDIR), $(addsuffix .c, $(SCENE))) \
-			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS))) \
+			$(addprefix $(SRCDIR)$(SHADOWDIR), $(addsuffix .c, $(SHADOW))) \
 			$(addprefix $(SRCDIR)$(TRANSFDIR), $(addsuffix .c, $(TRANSF))) \
 			$(addprefix $(SRCDIR)$(TUPLEDIR), $(addsuffix .c, $(TUPLE))) \
-			$(addprefix $(SRCDIR)$(UTILSDIR), $(addsuffix .c, $(UTILS)))
+			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
+			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
+			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER))) \
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
+			$(addprefix $(OBJDIR)$(COLORDIR), $(addsuffix .o, $(COLOR))) \
+			$(addprefix $(OBJDIR)$(LIGHTDIR), $(addsuffix .o, $(LIGHT))) \
 			$(addprefix $(OBJDIR)$(MATRIXDIR), $(addsuffix .o, $(MATRIX))) \
 			$(addprefix $(OBJDIR)$(RAYSDIR), $(addsuffix .o, $(RAYS))) \
 			$(addprefix $(OBJDIR)$(SCENEDIR), $(addsuffix .o, $(SCENE))) \
-			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS))) \
+			$(addprefix $(OBJDIR)$(SHADOWDIR), $(addsuffix .o, $(SHADOW))) \
 			$(addprefix $(OBJDIR)$(TRANSFDIR), $(addsuffix .o, $(TRANSF))) \
 			$(addprefix $(OBJDIR)$(TUPLEDIR), $(addsuffix .o, $(TUPLE))) \
-			$(addprefix $(OBJDIR)$(UTILSDIR), $(addsuffix .o, $(UTILS)))
-
+			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
+			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
+			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER))) \
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
 
 # Build target
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADERS)
 	@echo "Building $(NAME)..."
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBFLAGS) -o $(NAME)
+	$(CC) $(DFLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(MLX) $(LIBDIRFLAGS) $(LIBFLAGS) -o $(NAME)
 
 # Build libft
 $(LIBFT):
@@ -112,18 +154,22 @@ $(MLX):
 $(OBJDIR):
 	@echo "Creating $(NAME) obj directories..."
 	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)$(COLORDIR)
+	mkdir -p $(OBJDIR)$(LIGHTDIR)
 	mkdir -p $(OBJDIR)$(MATRIXDIR)
+	mkdir -p $(OBJDIR)$(PARSEDIR)
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
-	mkdir -p $(OBJDIR)$(TESTDIR)
+	mkdir -p $(OBJDIR)$(SHADOWDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
-	mkdir -p $(OBJDIR)$(UTILSDIR)
+	mkdir -p $(OBJDIR)$(PLANESDIR)
+	mkdir -p $(OBJDIR)$(CYLINDERDIR)
 	@echo "Compiling $(NAME)..."
 
 # Build object files
-$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
-	$(CC) $(CFLAGS) $(DFLAGS) $(INCLUDES) $(LIBFLAGS) -c $< -o $@
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADERS)
+	$(CC) $(DFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean compiled files
 clean:
@@ -145,10 +191,3 @@ re: fclean
 
 # Phony targets
 .PHONY: all clean fclean re
-
-# $@ nom de la cible
-# $< nom de la premiere dependance
-# $ˆ liste des dependances
-# $? liste des dependances mises a jour
-# $* nom du fichier sans son extension
-# $(wildcard *.c)
