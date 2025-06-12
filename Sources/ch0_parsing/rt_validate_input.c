@@ -59,6 +59,12 @@ int	rt_valid_coord(char **coord)
 	return (1);
 }
 
+static int	is_null_vector(char **orient)
+{
+	return (!ft_strtof(*orient) && !ft_strtof(*(orient + 1)) \
+		&& !ft_strtof(*(orient + 2)));
+}
+
 int	rt_valid_orient(char **orient)
 {
 	int		i;
@@ -66,6 +72,8 @@ int	rt_valid_orient(char **orient)
 
 	i = 3;
 	errno = 0;
+	if (is_null_vector(orient))
+		return (rt_handle_error(RT_VALID_ORIENT, EINVAL, "Null Orient"), 0);
 	while (i > 0 && *orient)
 	{
 		ver = ft_strtof(*orient);
