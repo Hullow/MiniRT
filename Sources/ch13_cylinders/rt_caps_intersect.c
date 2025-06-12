@@ -21,8 +21,8 @@ int	rt_check_cap(t_ray ray, float t)
 	float	x;
 	float	z;
 
-	x = ray.origin.x + t * ray.direction.x;
-	z = ray.origin.z + t * ray.direction.z;
+	x = ray.origin.x + t * ray.dir.x;
+	z = ray.origin.z + t * ray.dir.z;
 	return ((x * x + z * z) <= 1.0f);
 }
 
@@ -35,17 +35,17 @@ void	rt_intersect_caps(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 	float	t;
 	int		j;
 
-	if (cylinder.closed == 0 || is_equal_float(ray.direction.y, 0.0f))
+	if (cylinder.closed == 0 || is_equal_float(ray.dir.y, 0.0f))
 		return ;
 	j = 0;
-	t = (cylinder.min - ray.origin.y) / ray.direction.y;
+	t = (cylinder.min - ray.origin.y) / ray.dir.y;
 	if (rt_check_cap(ray, t))
 	{
 		xs->inter[(*i) + j] = rt_intersect(t, cylinder);
 		j++;
 		(xs->count)++;
 	}
-	t = (cylinder.max - ray.origin.y) / ray.direction.y;
+	t = (cylinder.max - ray.origin.y) / ray.dir.y;
 	if (rt_check_cap(ray, t))
 	{
 		xs->inter[(*i) + j] = rt_intersect(t, cylinder);

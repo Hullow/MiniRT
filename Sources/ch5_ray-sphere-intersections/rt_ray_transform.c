@@ -21,6 +21,6 @@ t_ray	rt_ray_transform(t_matrix m, t_ray r)
 	t_ray	transformed;
 
 	transformed.origin = rt_mul_tuple_matrix(m, r.origin);
-	transformed.direction = rt_mul_tuple_matrix(m, r.direction);
+	transformed.dir = rt_mul_tuple_matrix(m, r.dir);
 	return (transformed);
 }

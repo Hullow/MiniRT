@@ -27,9 +27,10 @@ t_inter	rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs)
 	while (i < scene->n_obj)
 	{
 		ray_transform = rt_inversion(scene->objects[i].transform);
-		scene->objects[i].saved_ray.origin = rt_mul_tuple_matrix(ray_transform, ray->origin);
-		scene->objects[i].saved_ray.direction = \
-			rt_mul_tuple_matrix(ray_transform, ray->direction);
+		scene->objects[i].saved_ray.origin = \
+			rt_mul_tuple_matrix(ray_transform, ray->origin);
+		scene->objects[i].saved_ray.dir = \
+			rt_mul_tuple_matrix(ray_transform, ray->dir);
 		rt_intersects(&(scene->objects[i]), xs, &index);
 		i++;
 	}
@@ -44,7 +45,7 @@ t_comps	rt_prepare_computations(t_inter intersect, t_ray *ray)
 	comps.t = intersect.t;
 	comps.object = intersect.object;
 	comps.point = rt_position(ray, comps.t);
-	comps.eyev = rt_negate_vector(ray->direction);
+	comps.eyev = rt_negate_vector(ray->dir);
 	comps.normalv = rt_normal_at(comps.object, comps.point);
 	if (rt_dot_product(comps.normalv, comps.eyev) < 0)
 	{
@@ -103,6 +104,7 @@ void	rt_render(t_scene *scene, t_env *env)
 		}
 		y++;
 		if ((y + 1) % 100 == 0)
-			ft_printf("Progressing: %f\n", (float)((float)(y + 1) / (float)WINDOW_HEIGHT * 100.0f));
+			ft_printf("Progressing: %f\n", (y + 1) / \
+				(float)WINDOW_HEIGHT * 100.0f);
 	}
 }

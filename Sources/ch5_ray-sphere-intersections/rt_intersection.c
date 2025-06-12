@@ -37,7 +37,7 @@ t_tuple	rt_position(t_ray *ray, float t)
 {
 	t_tuple	position;
 
-	position = rt_add_tuple(ray->origin, rt_scale_vector(ray->direction, t));
+	position = rt_add_tuple(ray->origin, rt_scale_vector(ray->dir, t));
 	return (position);
 }
 
@@ -59,8 +59,8 @@ void	rt_discriminant(t_ray ray, t_object sphere, t_xs *xs, int *i)
 
 	errno = 0;
 	sp_ray = rt_sphere_to_ray(ray.origin, rt_point(0.0f, 0.0f, 0.0f));
-	a = rt_dot_product(ray.direction, ray.direction);
-	b = 2 * rt_dot_product(ray.direction, sp_ray);
+	a = rt_dot_product(ray.dir, ray.dir);
+	b = 2 * rt_dot_product(ray.dir, sp_ray);
 	c = rt_dot_product(sp_ray, sp_ray) - 1;
 	discr = b * b - 4 * a * c;
 	if (discr < 0)

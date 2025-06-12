@@ -32,7 +32,8 @@ t_matrix	rt_set_transform(t_object object)
 		transform = rt_rotation(object.norm);
 	}
 	transform = rt_mul_matrix(rt_translation(\
-		rt_vector(object.origin.x, object.origin.y, object.origin.z)), transform);
+		rt_vector(object.origin.x, object.origin.y, object.origin.z)), \
+			transform);
 	return (transform);
 }
 
@@ -64,7 +65,8 @@ static void	rt_assign_values(t_scene *scene, char **values)
 		scene->n_obj++;
 	}
 	else
-		return (rt_handle_error("RT_ASSIG_VALS", ENOMEM, "Too many objects"), (void)1);
+		return (rt_handle_error("RT_ASSIG_VALS", ENOMEM, "Too many objects"), \
+			(void)1);
 }
 
 static void	rt_spacify(char *line)

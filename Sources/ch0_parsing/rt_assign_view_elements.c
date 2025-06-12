@@ -45,8 +45,8 @@ void	rt_assign_ambient(t_scene *scene, char **needle)
 	char	**color;
 
 	errno = 0;
-	scene->lux.ambient.intensity = ft_strtof(*(needle));
-	if (scene->lux.ambient.intensity > 1.0 || scene->lux.ambient.intensity < 0.0)
+	scene->lux.ambient.ratio = ft_strtof(*(needle));
+	if (scene->lux.ambient.ratio > 1.0 || scene->lux.ambient.ratio < 0.0)
 	{
 		errno = ERANGE;
 		perror("Error\nwrong intensity value");

@@ -17,11 +17,11 @@ void	rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i)
 	float		t;
 
 	errno = 0;
-	if (fabs(ray.direction.y) < EPSILON)
+	if (fabs(ray.dir.y) < EPSILON)
 		errno = ERAYPARALLEL;
 	else
 	{
-		t = -ray.origin.y / ray.direction.y;
+		t = -ray.origin.y / ray.dir.y;
 		xs->count++;
 		xs->inter[*i] = rt_intersect(t, plane);
 		(*i)++;

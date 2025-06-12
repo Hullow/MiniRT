@@ -62,7 +62,7 @@ int	rgb_to_int(t_tuple col_tuple)
 	color = 0;
 	r = (int)(col_tuple.x * 255);
 	g = (int)(col_tuple.y * 255);
-	b = (int)(col_tuple.z * 255);	
+	b = (int)(col_tuple.z * 255);
 	color = r * 256 * 256 + g * 256 + b;
 	return (color);
 }

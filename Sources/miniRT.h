@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/12 16:38:29 by fallan           ###   ########.fr       */
+/*   Created: 2025/06/12 17:01:33 by pberset           #+#    #+#             */
+/*   Updated: 2025/06/12 17:01:37 by pberset          ###   Lausanne.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typedef enum e_shape
 typedef struct s_ray
 {
 	t_tuple	origin;
-	t_tuple	direction;
+	t_tuple	dir;
 }	t_ray;
 
 /// @brief Object struct. Color and material separated because norminette
@@ -154,7 +154,6 @@ typedef struct s_intersect
 	bool		is_present;
 }	t_inter;
 
-
 typedef struct s_xs
 {
 	int			count;
@@ -165,7 +164,7 @@ typedef struct s_xs
 
 typedef struct s_ambient
 {
-	float	intensity;
+	float	ratio;
 	t_tuple	color;
 }	t_ambient;
 
@@ -359,11 +358,10 @@ t_tuple		rt_reflect(t_tuple in, t_tuple normal);
 t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
 t_material	rt_material(float amb, float dif, float spec, float shine);
 t_tuple		rt_lighting(t_light l, t_comps comp);
-void	rt_dark_diffuse_specular(t_lighting_params *v);
-void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
-	t_intermediate_vars in, t_lighting_params *v);
+void		rt_dark_diffuse_specular(t_lighting_params *v);
+void		rt_colorize_diffuse_specular(t_light l, t_comps comp,
+				t_intermediate_vars in, t_lighting_params *v);
 t_tuple		rt_reinhard_tonemap(t_tuple color);
-t_tuple		rt_normalize_color(t_tuple color);
 t_tuple		rt_filmic_tonemap(t_tuple color);
 
 //CH7 Scene

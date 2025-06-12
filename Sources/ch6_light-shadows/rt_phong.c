@@ -18,7 +18,7 @@ void	rt_dark_diffuse_specular(t_lighting_params *v)
 	v->specular = rt_color(0, 0, 0);
 }
 
-void	rt_colorize_diffuse_specular(t_light l, t_comps comp,\
+void	rt_colorize_diffuse_specular(t_light l, t_comps comp, \
 	t_intermediate_vars in, t_lighting_params *v)
 {
 	t_object	obj;
@@ -52,11 +52,11 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 	t_lighting_params	v;
 	t_intermediate_vars	intm;
 
-	intm.effective_color = 
+	intm.effective_color = \
 		rt_hadamard(comp.object.color, rt_scale_color(l.color, l.intensity));
 	v.ambient = \
 		rt_hadamard(intm.effective_color, \
-			rt_scale_color(l.ambient.color, l.ambient.intensity));
+			rt_scale_color(l.ambient.color, l.ambient.ratio));
 	if (comp.in_shadow == true)
 		return (v.ambient);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
@@ -82,23 +82,6 @@ t_tuple	rt_reinhard_tonemap(t_tuple color)
 	normal.y = color.y / (1 + color.y * exposure);
 	normal.z = color.z / (1 + color.z * exposure);
 	normal.w = COLOR;
-	return (normal);
-}
-
-/// @brief Sets all colors between 0 and 1 proportionally.
-/// 	   Loses a lot of contrast
-/// @param color 
-/// @return the normalized color
-t_tuple	rt_normalize_color(t_tuple color)
-{
-	float	max;
-	t_tuple	normal;
-
-	max = fmax(fmax(color.x, color.y), color.z);
-	normal.x = color.x / max;
-	normal.y = color.y / max;
-	normal.z = color.z / max;
-	normal.w = color.w;
 	return (normal);
 }
 

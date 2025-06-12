@@ -25,7 +25,7 @@ void	rt_assign_sphere(t_object *sphere, char **needle)
 		ft_free_double_tab(coord, color);
 		return ;
 	}
-	*sphere = rt_sphere(rt_point(ft_strtof(*coord),	ft_strtof(*(coord + 1)), \
+	*sphere = rt_sphere(rt_point(ft_strtof(*coord), ft_strtof(*(coord + 1)), \
 		ft_strtof(*(coord + 2))), ft_strtof(*(needle + 1)), \
 			rt_color(ft_strtof(*color), ft_strtof(*(color + 1)), \
 				ft_strtof(*(color + 2))));

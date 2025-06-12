@@ -112,7 +112,7 @@ p.47
 	- distance(t_ray ray, float t)
 	- multiplication d'un vecteur par un scalaire
 	- retourne un point : le point à la distance t du point de départ du ray dans la direction du vecteur du ray
-	- return ray.origin + ray.direction * t
+	- return ray.origin + ray.dir * t
 
 ### Sphere intersect
 
@@ -171,8 +171,8 @@ p.47
 		- Négatif : aucune intersection
 	- soient une sphère et un rayon
 		- sphere_to_ray = ray.origin - sphere.origin
-		- a = dot_product(ray.direction, ray.direction)
-		- b = 2 * dot_product(ray.direction, sphere_to_ray)
+		- a = dot_product(ray.dir, ray.dir)
+		- b = 2 * dot_product(ray.dir, sphere_to_ray)
 		- c = dot_product(sphere_to_ray, sphere_to_ray) - r²
 		- discriminant = powf(b, 2) - 4 * a * c
 		- if discriminant < 0

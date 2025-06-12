@@ -20,7 +20,7 @@ t_inter	rt_hit(t_xs *xs)
 	int		i;
 	t_inter	hit;
 
-	hit.object = rt_sphere(rt_point(0,0,0), 2.0f, rt_color(255, 255, 255));
+	hit.object = rt_sphere(rt_point(0, 0, 0), 2.0f, rt_color(255, 255, 255));
 	hit.object.transform = rt_identity_matrix(4);
 	hit.t = INFINITY;
 	hit.is_present = false;

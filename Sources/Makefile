@@ -136,7 +136,7 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
 
 # Build target
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADERS)
 	@echo "Building $(NAME)..."
 	@cp $(LIBFT) $(NAME)
 	@cp $(MLX) $(NAME)
@@ -168,7 +168,7 @@ $(OBJDIR):
 	@echo "Compiling $(NAME)..."
 
 # Build object files
-$(OBJDIR)%.o: $(SRCDIR)%.c | $(HEADERS)
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADERS)
 	$(CC) $(DFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean compiled files

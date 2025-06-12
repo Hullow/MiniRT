@@ -58,11 +58,11 @@ intersection algorithm on page 57. As with the sphere algorithm, you’ll com-
 pute a discriminant value, which will be negative if the ray does not intersect.
 Here’s some pseudocode:
 function local_intersect(cylinder, ray)
-a ← ray.direction.x² + ray.direction.z²
+a ← ray.dir.x² + ray.dir.z²
 # ray is parallel to the y axis
 return () if a is approximately zero
-b ← 2 * ray.origin.x * ray.direction.x +
-2 * ray.origin.z * ray.direction.z
+b ← 2 * ray.origin.x * ray.dir.x +
+2 * ray.origin.z * ray.dir.z
 c ← ray.origin.x² + ray.origin.z² - 1
 disc ← b² - 4 * a * c
 # ray does not intersect the cylinder
@@ -108,11 +108,11 @@ Make this pass by using the discriminant to find the t values for the points
 of intersection. The highlighted lines in the following pseudocode demonstrate
 the calculation you need:
 function local_intersect(cylinder, ray)
-a ← ray.direction.x² + ray.direction.z²
+a ← ray.dir.x² + ray.dir.z²
 # ray is parallel to the y axis
 return () if a is approximately zero
-b ← 2 * ray.origin.x * ray.direction.x +
-2 * ray.origin.z * ray.direction.z
+b ← 2 * ray.origin.x * ray.dir.x +
+2 * ray.origin.z * ray.dir.z
 c ← ray.origin.x² + ray.origin.z² - 1
 disc ← b² - 4 * a * c
 # ray does not intersect the cylinder
@@ -230,12 +230,12 @@ t1 ← (-b + √(disc)) / (2 * a)
 if t0 > t1 then swap(t0, t1)
 xs = ()➤
 ➤
-y0 ← ray.origin.y + t0 * ray.direction.y➤
+y0 ← ray.origin.y + t0 * ray.dir.y➤
 if cylinder.minimum < y0 and y0 < cylinder.maximum➤
 add intersection(t0, cylinder) to xs➤
 end if➤
 ➤
-y1 ← ray.origin.y + t1 * ray.direction.y➤
+y1 ← ray.origin.y + t1 * ray.dir.y➤
 if cylinder.minimum < y1 and y1 < cylinder.maximum➤
 add intersection(t1, cylinder) to xs➤
 end if➤
@@ -313,25 +313,25 @@ the points of intersection (if any) to the xs collection. Here it is in pseudoco
 # checks to see if the intersection at `t` is within a radius
 # of 1 (the radius of your cylinders) from the y axis.
 function check_cap(ray, t)
-x ← ray.origin.x + t * ray.direction.x
-z ← ray.origin.z + t * ray.direction.z
+x ← ray.origin.x + t * ray.dir.x
+z ← ray.origin.z + t * ray.dir.z
 return (x² + z²) <= 1
 end
 function intersect_caps(cyl, ray, xs)
 # caps only matter if the cylinder is closed, and might possibly be
 # intersected by the ray.
-if cyl is not closed or ray.direction.y is close to zero
+if cyl is not closed or ray.dir.y is close to zero
 return
 end if
 # check for an intersection with the lower end cap by intersecting
 # the ray with the plane at y=cyl.minimum
-t ← (cyl.minimum - ray.origin.y) / ray.direction.y
+t ← (cyl.minimum - ray.origin.y) / ray.dir.y
 if check_cap(ray, t)
 add intersection(t, cyl) to xs
 end if
 # check for an intersection with the upper end cap by intersecting
 # the ray with the plane at y=cyl.maximum
-t ← (cyl.maximum - ray.origin.y) / ray.direction.y
+t ← (cyl.maximum - ray.origin.y) / ray.dir.y
 if check_cap(ray, t)
 add intersection(t, cyl) to xs
 end if

@@ -23,9 +23,9 @@ static float	cy_t(float a, float b, float discriminant, int signe)
 static float	cy_b(t_ray ray, char axis)
 {
 	if (axis == 'x')
-		return ( ray.origin.x * ray.direction.x);
+		return (ray.origin.x * ray.dir.x);
 	else
-		return (ray.origin.z * ray.direction.z);
+		return (ray.origin.z * ray.dir.z);
 }
 
 static void	cy_swap(t_xs *xs, int i)
@@ -37,7 +37,8 @@ static void	cy_swap(t_xs *xs, int i)
 	xs->inter[i + 1].t = buffer;
 }
 
-static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, t_cyl_val *val)
+static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, \
+	t_cyl_val *val)
 {
 	float	y0;
 	float	y1;
@@ -46,14 +47,14 @@ static void	cy_post_process(t_object cylinder, t_ray ray, t_xs *xs, t_cyl_val *v
 
 	t0 = cy_t(val->a, val->b, val->discr, -1);
 	t1 = cy_t(val->a, val->b, val->discr, 1);
-	y0 = ray.origin.y + t0 * ray.direction.y;
+	y0 = ray.origin.y + t0 * ray.dir.y;
 	if (cylinder.min < y0 && y0 < cylinder.max)
 	{
 		xs->inter[val->i] = rt_intersect(t0, cylinder);
 		(xs->count)++;
 		(val->i)++;
 	}
-	y1 = ray.origin.y + t1 * ray.direction.y;
+	y1 = ray.origin.y + t1 * ray.dir.y;
 	if (cylinder.min < y1 && y1 < cylinder.max)
 	{
 		xs->inter[val->i] = rt_intersect(t1, cylinder);
@@ -67,12 +68,12 @@ void	rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i)
 	t_cyl_val	val;
 
 	errno = 0;
-	val.a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
+	val.a = ray.dir.x * ray.dir.x + ray.dir.z * ray.dir.z;
 	if (is_equal_float(val.a, 0))
 		val.discr = -1;
 	else
 	{
-		val.b = 2 * (ray.origin.x * ray.direction.x + ray.origin.z * ray.direction.z);
+		val.b = 2 * (ray.origin.x * ray.dir.x + ray.origin.z * ray.dir.z);
 		val.c = ray.origin.x * ray.origin.x + ray.origin.z * ray.origin.z - 1;
 		val.discr = val.b * val.b - 4 * val.a * val.c;
 	}

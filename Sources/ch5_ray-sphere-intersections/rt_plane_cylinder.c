@@ -21,17 +21,17 @@ void	rt_ray_plane_x(t_ray ray, t_object plane, t_intersect *x)
 	t_tuple	local_intersect;
 	float	t;
 
-	if (abs(ray.direction.y) < EPSILON) // edge case: ray paralel to plane normal
+	if (abs(ray.dir.y) < EPSILON) // edge case: ray paralel to plane normal
 	{
 		x->x_count = 0;
 		x->ray = ray;
 		x->object = plane;
 		return ;
 	}
-	t = -ray.origin.y / ray.direction.y;
-	local_intersect = rt_point(ray.origin.x + t * ray.direction.x, \
-								ray.origin.y + t * ray.direction.y, \
-								ray.origin.y + t * ray.direction.z);
+	t = -ray.origin.y / ray.dir.y;
+	local_intersect = rt_point(ray.origin.x + t * ray.dir.x, \
+								ray.origin.y + t * ray.dir.y, \
+								ray.origin.y + t * ray.dir.z);
 	x->object = plane;
 	x->ray = ray;
 	x->x_count = 1;

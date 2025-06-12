@@ -21,6 +21,6 @@ t_ray	rt_ray(t_tuple origin, t_tuple direction)
 	if (direction.w != VECTOR)
 		rt_handle_error(RT_RAY, EINVAL, "direction is not a vector");
 	ray.origin = origin;
-	ray.direction = direction;
+	ray.dir = direction;
 	return (ray);
 }

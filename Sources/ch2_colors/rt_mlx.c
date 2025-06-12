@@ -54,7 +54,8 @@ t_env	mlx_set_env(void)
 	t_env		env;
 
 	env.mlx = mlx_init();
-	env.mlx_win = mlx_new_window(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
+	env.mlx_win = mlx_new_window(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, \
+		WINDOW_NAME);
 	env.img = mlx_new_image(env.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	env.addr = mlx_get_data_addr \
 		(env.img, &env.bits_per_pixel, &env.line_length, &env.endian);

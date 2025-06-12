@@ -92,7 +92,7 @@ size_t	gnl_ft_strlcpy(char *dst, char *src, size_t dstsize)
 			dst[i] = src[i];
 			i++;
 		}
-	dst[i] = '\0';
+		dst[i] = '\0';
 	}
 	return (gnl_ft_strlen(src));
 }
