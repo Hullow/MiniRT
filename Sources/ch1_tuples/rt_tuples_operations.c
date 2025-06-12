@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:06:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:10:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,7 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 	add.x = a.x + b.x;
 	add.y = a.y + b.y;
 	add.z = a.z + b.z;
-	if (a.w == POINT && b.w == VECTOR)
-		add.w = POINT;
-	else if (a.w == VECTOR && b.w == POINT)
-		add.w = POINT;
-	else if (a.w == VECTOR && b.w == VECTOR)
-		add.w = VECTOR;
-	else
-		add.w = VECTOR;
+	add.w = a.w + b.w;
 	return (add);
 }
 
@@ -56,14 +49,7 @@ t_tuple	rt_sub_tuple(t_tuple a, t_tuple b)
 	sub.x = a.x - b.x;
 	sub.y = a.y - b.y;
 	sub.z = a.z - b.z;
-	if (a.w == POINT && b.w == POINT)
-		sub.w = VECTOR;
-	else if (a.w == POINT && b.w == VECTOR)
-		sub.w = POINT;
-	else if (a.w == VECTOR && b.w == VECTOR)
-		sub.w = VECTOR;
-	else
-		sub.w = VECTOR;
+	sub.w = a.w - b.w;
 	return (sub);
 }
 
@@ -77,7 +63,7 @@ t_tuple	rt_negate_vector(t_tuple a)
 	negate.x = -a.x;
 	negate.y = -a.y;
 	negate.z = -a.z;
-	negate.w = a.w;
+	negate.w = VECTOR;
 	return (negate);
 }
 

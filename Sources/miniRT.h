@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 17:01:33 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/12 17:01:37 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/06/12 18:25:30 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ int			window_closed(t_env *env);
 # endif
 
 # ifndef EPSILON
-#  define EPSILON 0.000005
+#  define EPSILON 0.0005
 # endif
 
 t_matrix	rt_identity_matrix(int size);
@@ -402,5 +402,6 @@ t_tuple		rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point);
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
+int			count_splits(char **split);
 
 #endif
