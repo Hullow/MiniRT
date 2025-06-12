@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_planes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:06:07 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 15:06:09 by pberset          ###   Lausanne.ch       */
+/*   Updated: 2025/06/12 19:16:51 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i)
 	float		t;
 
 	errno = 0;
-	if (fabs(ray.dir.y) < EPSILON)
+	if (is_equal_float(ray.dir.y, 0.0f))
 		errno = ERAYPARALLEL;
 	else
 	{

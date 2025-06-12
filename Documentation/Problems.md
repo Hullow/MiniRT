@@ -1,6 +1,25 @@
 # Problems
 
 ## Fixed (12-6-18:28)
+
+## Weird triangle on plane
+==> seems fixed with `local_normal_at()`:
+```c
+	else if (obj.shape == PLANE)
+		normal = rt_vector(0,1,0);
+```
+- commit ID: e9a23afbc4fb70 ("Fix: acne (playing with EPSILON)")
+- SceneWall-bug.rt:
+```
+L  -10.0,10.0,-16.0     0.6                  255,255,255
+A  0.2                                       255,255,255
+C  7,3.5,-7            -0.9,-0.1,1      60
+
+pl  0,0,5               -0.7071,0.0,0.7071   255,230,230
+pl  0,0,5               0.7071,0.0,0.7071    255,230,230
+pl  0,0,0               0.0,1.0,0.0          255,230,230
+```
+
 ### Weird triangle on plane + acne
 - commit ID: 1c27ca5f1a9ad9 ("Fix acne" - render-worked)
 - SceneExample with:
