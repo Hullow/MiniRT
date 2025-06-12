@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pberset <pberset@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:13:25 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/03 22:52:17 by pberset          ###   ########.fr       */
+/*   Updated: 2025/06/12 11:56:23 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char *argv[])
 	//rt_print_scene(scene);
 	env = mlx_set_env();
 	if (scene.n_obj > 0)
-		rt_render(&(scene.cam), &scene, &env);
+		rt_render(&scene, &env);
 	mlx_run_window(&env);
 	return (0);
 }
