@@ -91,7 +91,8 @@ SRCLST	= ft_lstnew \
 	ft_lstiter \
 	ft_lstmap
 
-SRCGNL	= get_next_line
+SRCGNL	= get_next_line \
+	get_next_line_utils
 
 SRCPRTF	= ft_printf
 

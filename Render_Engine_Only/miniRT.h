@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                            :+:    :+:           */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/12 11:58:13 by fallan         ########   odam.nl        */
+/*   Updated: 2025/06/12 13:44:21 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINIRT_H
 # define MINIRT_H
@@ -21,6 +19,7 @@
 # include <math.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "./mlx/mlx.h"
 # include "./libft/header/libft.h"
 
