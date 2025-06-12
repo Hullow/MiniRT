@@ -6,7 +6,7 @@
 #    By: fallan <fallan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/02 14:02:17 by fallan            #+#    #+#              #
-#    Updated: 2025/06/12 11:56:25 by fallan           ###   ########.fr        #
+#    Updated: 2025/06/12 16:31:21 by fallan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ endif
 
 # Folders
 SRCDIR		= ./
-OBJDIR		= ../Sources/obj/
-INCLUDEDIR	= ../Sources/include/
+OBJDIR		= ./obj/
+INCLUDEDIR	= ./include/
 
 LIBFTDIR	= $(INCLUDEDIR)libft/
 MLXDIR		= $(INCLUDEDIR)mlx/
@@ -46,7 +46,6 @@ SCENEDIR	= ch7_making-a-scene/
 SHADOWDIR	= ch8_shadows/
 PLANESDIR	= ch9_planes/
 CYLINDERDIR	= ch13_cylinders/
-TESTDIR		= test/
 
 # Libs
 LIBFT		= $(LIBFTDIR)libft.a
@@ -85,13 +84,6 @@ SCENE		= rt_scene \
 
 SHADOW		= rt_shadow
 
-#TESTS		= test_parse
-#			test \
-#			print_objects \
-#			test_input \
-#			test_shape \
-#			test_thread
-
 TRANSF		= rt_rotation \
 			rt_transform
 
@@ -125,7 +117,6 @@ SRC			= $(addprefix $(SRCDIR), $(addsuffix .c, $(MAIN))) \
 			$(addprefix $(SRCDIR)$(PARSEDIR), $(addsuffix .c, $(PARSE))) \
 			$(addprefix $(SRCDIR)$(PLANESDIR), $(addsuffix .c, $(PLANE))) \
 			$(addprefix $(SRCDIR)$(CYLINDERDIR), $(addsuffix .c, $(CYLINDER))) \
-			$(addprefix $(SRCDIR)$(TESTDIR), $(addsuffix .c, $(TESTS)))
 
 # Object files
 OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
@@ -140,7 +131,6 @@ OBJ			= $(addprefix $(OBJDIR), $(addsuffix .o, $(MAIN))) \
 			$(addprefix $(OBJDIR)$(PARSEDIR), $(addsuffix .o, $(PARSE))) \
 			$(addprefix $(OBJDIR)$(PLANESDIR), $(addsuffix .o, $(PLANE))) \
 			$(addprefix $(OBJDIR)$(CYLINDERDIR), $(addsuffix .o, $(CYLINDER))) \
-			$(addprefix $(OBJDIR)$(TESTDIR), $(addsuffix .o, $(TESTS)))
 
 # Default target
 all: $(MLX) $(LIBFT) $(OBJDIR) $(NAME)
@@ -171,7 +161,6 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)$(RAYSDIR)
 	mkdir -p $(OBJDIR)$(SCENEDIR)
 	mkdir -p $(OBJDIR)$(SHADOWDIR)
-	mkdir -p $(OBJDIR)$(TESTDIR)
 	mkdir -p $(OBJDIR)$(TRANSFDIR)
 	mkdir -p $(OBJDIR)$(TUPLEDIR)
 	mkdir -p $(OBJDIR)$(PLANESDIR)
@@ -202,10 +191,3 @@ re: fclean
 
 # Phony targets
 .PHONY: all clean fclean re
-
-# $@ nom de la cible
-# $< nom de la premiere dependance
-# $ˆ liste des dependances
-# $? liste des dependances mises a jour
-# $* nom du fichier sans son extension
-# $(wildcard *.c)
