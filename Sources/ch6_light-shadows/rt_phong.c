@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:30:23 by pberset           #+#    #+#             */
-/*   Updated: 2025/06/10 17:06:37 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 16:37:01 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ t_tuple	rt_lighting(t_light l, t_comps comp)
 			rt_scale_color(l.ambient.color, l.ambient.intensity));
 	if (comp.in_shadow == true)
 		return (v.ambient);
-	// rt_print_tuple(comp.point);
 	intm.dir_to_light = rt_normalize(rt_sub_tuple(l.coord, comp.point));
 	intm.light_dot_normal = rt_dot_product(intm.dir_to_light, comp.normalv);
 	if (intm.light_dot_normal < 0)

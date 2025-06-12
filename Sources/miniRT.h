@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/12 13:44:21 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 16:38:29 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdbool.h>
 # include <errno.h>
 # include <fcntl.h>
-# include "./mlx/mlx.h"
-# include "./libft/header/libft.h"
+# include "mlx.h"
+# include "libft.h"
 
 //Structs
 
@@ -53,7 +53,7 @@ typedef struct s_tuple
 # endif
 
 # ifndef WINDOW_NAME
-#  define WINDOW_NAME "micro_rt"
+#  define WINDOW_NAME "miniRT"
 # endif
 
 # ifndef MAX_OBJECTS
@@ -82,9 +82,6 @@ typedef struct s_tuple
 # define RT_RAY					" - rt_ray\n"
 
 # define UNSPECIFIED 			" – unspecified function\n"
-
-//  	EDOM 	Math argument out of domain of func
-//  	ERANGE 	Math result not representable
 
 typedef struct s_env {
 	void	*mlx;
@@ -247,30 +244,6 @@ typedef struct s_cyl_val
 	float	discr;
 }	t_cyl_val;
 
-
-//test
-
-void		test_tuples(void);
-void		test_matrix(void);
-void		test_transform(void);
-void		test_intersect(void);
-void		test_mlx(void);
-void		test_light(void);
-void		test_light_render(void);
-void		test_scene(void);
-void		test_rgb_to_int(void);
-void		test_view_transform(void);
-void		test_camera(void);
-void		test_planes(void);
-void		test_render_plane(void);
-void		test_cylinder(void);
-void		test_cylinder_render(void);
-void		test_shadows(void);
-void		test_example_scene(void);
-t_scene		*test_default_scene(t_scene *scene);
-void		test_example_scene_planes(void);
-void		test_example_scene_with_flat_spheres(void);
-
 //CH0 Parsing
 
 int			rt_check_ext(const char *file);
@@ -294,7 +267,6 @@ void		rt_assign_cylinder(t_object *cylinder, char **needle);
 t_tuple		rt_point(float x, float y, float z);
 t_tuple		rt_vector(float x, float y, float z);
 t_tuple		rt_color(float r, float g, float b);
-void		rt_print_tuple(t_tuple t);
 t_tuple		rt_add_tuple(t_tuple a, t_tuple b);
 t_tuple		rt_sub_tuple(t_tuple a, t_tuple b);
 t_tuple		rt_negate_vector(t_tuple	a);
@@ -325,8 +297,6 @@ void		mlx_free_all(t_env *env);
 int			key_handler(int keycode, t_env *env);
 int			window_closed(t_env *env);
 
-/* and then minilibx */
-
 //CH3 Matrices
 
 # ifndef ENOTINVERTIBLE
@@ -342,7 +312,6 @@ int			window_closed(t_env *env);
 # endif
 
 t_matrix	rt_identity_matrix(int size);
-void		rt_print_matrix(t_matrix m);
 int			rt_matrix_equality(t_matrix a, t_matrix b);
 t_matrix	rt_mul_matrix(t_matrix a, t_matrix b);
 t_tuple		rt_mul_tuple_matrix(t_matrix m, t_tuple t);
@@ -374,10 +343,8 @@ t_matrix	rt_set_transform(t_object object);
 # endif
 
 t_ray		rt_ray(t_tuple origin, t_tuple direction);
-void		rt_print_ray(t_ray ray);
 t_tuple		rt_position(t_ray *ray, float t);
 t_object	rt_sphere(t_tuple origin, float diameter, t_tuple color);
-void		rt_print_sphere(t_object sphere);
 t_inter		rt_intersect(float t, t_object obj);
 void		rt_intersects(t_object *object, t_xs *xs, int *i);
 t_tuple		rt_sphere_to_ray(t_tuple ray_origin, t_tuple sphere_origin);
@@ -390,9 +357,7 @@ t_ray		rt_ray_transform(t_matrix m, t_ray r);
 t_tuple		rt_normal_at(t_object obj, t_tuple point);
 t_tuple		rt_reflect(t_tuple in, t_tuple normal);
 t_light		rt_light(t_tuple color, t_tuple coord, float intensity);
-void		rt_print_light(t_light light);
 t_material	rt_material(float amb, float dif, float spec, float shine);
-void		rt_print_material(t_material mat);
 t_tuple		rt_lighting(t_light l, t_comps comp);
 void	rt_dark_diffuse_specular(t_lighting_params *v);
 void	rt_colorize_diffuse_specular(t_light l, t_comps comp,
@@ -403,7 +368,6 @@ t_tuple		rt_filmic_tonemap(t_tuple color);
 
 //CH7 Scene
 
-void		rt_print_scene(t_scene scene);
 t_inter		rt_intersect_scene(t_scene *scene, t_ray *ray, t_xs *xs);
 t_comps		rt_prepare_computations(t_inter intersection, t_ray *ray);
 t_tuple		rt_shade_hit(t_scene *scene, t_comps comp);
@@ -413,7 +377,6 @@ t_matrix	rt_orientation_matrix(t_tuple left, t_tuple true_up, \
 				t_tuple forward);
 t_camera	rt_calc_camera_vals(t_camera camera, t_tuple coord, t_tuple orient);
 t_ray		rt_ray_for_pixel(t_camera *camera, int pixel_x, int pixel_y);
-void		rt_print_camera(t_camera camera);
 void		rt_render(t_scene *scene, t_env *env);
 
 //CH8 Shadows
@@ -426,14 +389,12 @@ bool		rt_is_shadowed(t_scene *scene, t_tuple point);
 # endif
 
 t_object	rt_plane(t_tuple origin, t_tuple norm, t_tuple color);
-void		rt_print_plane(t_object plane);
 void		rt_ray_plane_x(t_object plane, t_ray ray, t_xs *xs, int *i);
 t_tuple		rt_local_normal_at(t_object obj, t_tuple point);
 
 //CH13 Cylinders
 
 t_object	rt_cylinder(t_tuple origin, t_tuple norm, t_tuple color);
-void		rt_print_cylinder(t_object cylinder);
 void		rt_ray_cylinder_x(t_object cylinder, t_ray ray, t_xs *xs, int *i);
 int			rt_check_cap(t_ray ray, float t);
 void		rt_intersect_caps(t_object cylinder, t_ray ray, t_xs *xs, int *i);
@@ -443,6 +404,5 @@ t_tuple		rt_local_normal_capped_cylinder(t_object cylinder, t_tuple point);
 
 void		*rt_handle_error(char *function, int errno_value, char *message);
 int			is_equal_float(float a, float b);
-
 
 #endif
