@@ -6,7 +6,7 @@
 /*   By: fallan <fallan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:56:27 by pberset           #+#    #+#             */
-/*   Updated: 2025/05/23 10:06:03 by fallan           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:10:10 by fallan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_tuple	rt_add_tuple(t_tuple a, t_tuple b)
 	add.y = a.y + b.y;
 	add.z = a.z + b.z;
 	add.w = a.w + b.w;
-
 	return (add);
 }
 
