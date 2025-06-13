@@ -76,7 +76,7 @@ void	rt_assign_camera(t_scene *scene, char **needle)
 
 	errno = 0;
 	scene->cam.field_of_view = ft_strtof(*(needle + 2)) * (M_PI / 180);
-	if (scene->cam.field_of_view > 180.0 || scene->cam.field_of_view < 0.0)
+	if (ft_strtof(*(needle + 2)) > 180.0 || ft_strtof(*(needle + 2)) < 0.0)
 	{
 		rt_handle_error("Assign_Camera", ERANGE, "Field of view out of range");
 		return ;
