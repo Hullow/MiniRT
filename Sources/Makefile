@@ -46,7 +46,6 @@ SCENEDIR	= ch7_making-a-scene/
 SHADOWDIR	= ch8_shadows/
 PLANESDIR	= ch9_planes/
 CYLINDERDIR	= ch13_cylinders/
-BONUSDIR	= bonus/
 
 # Libs
 LIBFT		= $(LIBFTDIR)libft.a
@@ -183,7 +182,6 @@ fclean: clean
 	@rm -rf $(NAME)
 	@make -C $(LIBFTDIR) fclean
 	@make -C $(MLXDIR) clean
-	@make -C $(BONUSDIR) fclean
 
 # Rebuild from scratch
 re: fclean
@@ -191,9 +189,5 @@ re: fclean
 	@echo ""
 	@$(MAKE) --no-print-directory all
 
-# Build bonus
-bonus:
-	@$(MAKE) -C $(BONUSDIR) all
-
 # Phony targets
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
