@@ -48,7 +48,7 @@ float	ft_strtof(const char *str)
 	if (!valid_floatstr(str))
 	{
 		errno = EINVAL;
-		perror(str);
+		return (-1);
 	}
 	output = ft_atof(str);
 	if (isinf(output) || output > FLT_MAX || output < -FLT_MAX)
